@@ -1,0 +1,166 @@
+<dashboard>
+        <label>xsDiscoverTrend</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsDiscoverTrend</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Predictive Analysis</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext"> Discover any trend of y_field(s) over
+                                        x_field(s) using linear regression. The trend is determined
+                                        across the context associated with the field. This context
+                                        of the y_field is a prerequisite for the command to run.
+                                        Trend is calculated as follows: Take the lowest X value and
+                                        calculate the Y value, take the the highest X value and
+                                        calcuate the Y value. For each semantic term in the Y
+                                        Context, calculate the CIX for the low and high Y. The trend
+                                        for each semantic term is (hi_Y_CIX - low_Y_CIX) / numRows.
+                                        For each semantic term, the following columns are written:
+                                        x,y,bf,bv,semanticTerm,trend.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsDiscoverTrend (y_field)+ [OVER
+                                        (x_field)+] [BY field]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">xsDiscoverTrend ArrDelay OVER _time BY
+                                        Carrier</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Determines the trend of Arrival delays
+                                        over time for each Carrier.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">field, x_field, y_field</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">x_field (field name containing an X
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as x in the formula. You may specificy more than one
+                                        field to perform discovery against. Each field name is
+                                        separated by a blank space.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">y_field (field name containing a Y
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as x in the formula. You may specificy more than one
+                                        field to perform Discovery against. Each field name is
+                                        separated by a blank space.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The xsDiscoverTrend function will return
+                                        results for multiple values of x and y. Specify 1 to n
+                                        fields in the data set, each of which will be used as x and
+                                        y in the formula.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">fieldname</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Specifies the field in the data set by
+                                        which the trend will grouped by.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">filename</span>
+                        </p>
+                        <p><span
+                                        class="explanation">Specifies the lookup file to which the
+                                        output will be written.</span>.</p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The trend (direction) of the discovery for
+                                        each semantic term in the context associated with the
+                                        y_field. See <a
+                                                href="xsDisplayContext">xsDisplayContext</a> for
+                                        details about display of the context. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20130717.1</p>
+
+                </html>
+        </row>
+</dashboard>

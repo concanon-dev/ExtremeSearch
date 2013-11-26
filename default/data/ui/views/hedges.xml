@@ -1,0 +1,286 @@
+<dashboard>
+  <label>Hedges and Synonyms</label>
+  <row>
+    <html>
+      <a
+        href="xtreme_overview">
+        <img
+          alt="Return to Overview"
+          src="/static/app/xtreme/images/overview_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="command_reference">
+        <img
+          alt="Jump to Command Reference"
+          src="/static/app/xtreme/images/commandreference_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="http://www.sciantaanalytics.com/?q=documentation"
+        target="_blank">
+        <img
+          alt="Support Site"
+          src="/static/app/xtreme/images/doc_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="http://www.sciantaanalytics.com/?q=support_pages"
+        target="_blank">
+        <img
+          alt="Support Site"
+          src="/static/app/xtreme/images/support_button.png" />
+      </a>
+      <span
+        class="insetrt">Scianta Analytics Help</span>
+      <p>
+        <span
+          class="head2">Embracing Nuance: Hedges</span>
+      </p>
+      <p><strong>Semantic terms</strong> and <strong>contexts</strong> are the basis of Conceptual
+        Search but they don't, on their own, support a very nuanced view of the world. A true
+        Cognitive Computing system, a system designed to "think" like we do, needs to understand
+        nuance.</p>
+      <p>Scianta Extreme Search for Splunk employs the notion of "hedges" to capture nuanced
+        variation to semantic terms. Hedges are linguistic modifiers, adjectives, that modify the
+        meaning of a semantic term. Currently, Extreme Search for Splunk supports the following
+        linguistic <strong>hedges</strong>:</p>
+      <ul>
+        <li>about</li>
+        <li>above</li>
+        <li>after</li>
+        <li>before</li>
+        <li>close</li>
+        <li>extremely</li>
+        <li>generally</li>
+        <li>not</li>
+        <li>positively</li>
+        <li>slightly</li>
+        <li>somewhat</li>
+        <li>very</li>
+        <li>vicinity</li>
+      </ul>
+      <p>Hedges allow us to look for people who are "very tall" or network segments where network
+        latency is "extremely long" or performance that is "not typical". Just like in natural
+        language a <strong>hedge</strong> acts as an adjective to alter the meaning of a
+          <strong>term</strong>. Remember that our semantic terms are characterized mathematically
+        by a membership function. Hedges act to change the shape of a term's membership function in
+        a way that is appropriate to the linguistic meaning of the hedge.</p>
+      <p>Figure 1 illustrates a <strong>context</strong> pertaining to a common demonstration data
+        set , the FAA flight statistics data set. The data set includes a record of flight
+        characteristics for every domestic commerical airline flight in the United States,</p>
+      <p>The <strong>context</strong> depicted is that of <em>ArrDelay</em>, the Arrival Delay of
+        commercial flights. In this <strong>context</strong>, we've defined five
+          <strong>terms</strong>: incredible, early, ontime, late and outrageous. As we've said, the
+        terms used were defined by the user. In this case, the term "incredible" is used to describe
+        flights where the arrival time was significantly earlier than scheduled. "Outrageous"
+        describes flights where the arrival delay was very long. The "Ontime" term is characterized
+        by a bell-shaped curve centered around the scheduled arrival time.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/arrdelay_800.png" /><br /> Figure 1 </p>
+      <p>The <strong>term</strong>
+        <em>Ontime</em> is isolated in Figure 2. We'll use <em>Ontime</em> to illustrate the effect
+        of various <strong>hedges</strong> on a target <strong>semantic term</strong>.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/ontime_800.png" /><br /> Figure 2 </p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/extremely_ontime_800.png" /><br /> Figure 3 </p>
+      <p>Figure 3 is a graph of the <strong>concept</strong> of <em>Ontime</em>, as modified by the
+          <strong>hedge</strong>
+        <em>extremely</em>. Note that the resulting <strong>hedged concept</strong>
+        <em>Extremely Ontime</em> is more narrow, the resulting values closer to the scheduled
+        arrival time at the center of the <em>Ontime</em> bell curve. This is linguistically
+        consistent with what we mean when we say "Extremely Ontime".</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/somewhat_ontime_800.png" /><br /> Figure 4 </p>
+      <p>Figure 4 is a graph of the <strong>concept</strong> of <em>Ontime</em>, as modified by the
+          <strong>hedge</strong>
+        <em>somewhat</em>. The resulting <strong>hedged concept</strong>
+        <em>Somewhat Ontime</em> is wider, the resulting values deviating more from the scheduled
+        arrival time at the center of the <em>Ontime</em> bell curve. This is also linguistically
+        consistent with what we mean when we say "Somewhat Ontime".</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/not_ontime_800.png" /><br /> Figure 5 </p>
+      <p>Figure 5 is a graph of the <strong>concept</strong> of <em>Ontime</em>, as modified by the
+          <strong>hedge</strong>
+        <em>not</em>. The resulting <strong>hedged concept</strong>
+        <em>Not Ontime</em> is what we'd expect: the mathematical inverse of the
+          <strong>term</strong>
+        <em>Ontime</em>.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/above_ontime_800.png" /><br /> Figure 6 </p>
+      <p>If you were asked to draw the <strong>hedged concept</strong>
+        <em>Above Ontime</em>, you'd probably draw something like Figure 6. This is the
+          <strong>term</strong>
+        <em>Ontime</em>, as modified by the <strong>hedge</strong>
+        <em>above</em>. The <strong>hedge</strong>
+        <em>Below</em> works in a similar fashion, encompasing values below the center of
+          <em>Ontime</em>.</p>
+      <p>
+        <span
+          class="head4">Compound Hedges</span>
+      </p>
+      <p>Here things start to get interesting. As humans, we're used to thinking about concepts
+        modified by any number of adjectives. For example, you might decide that the latest reality
+        TV show is "not very watchable". Both <em>Not</em> and <em>Very</em> are
+          <strong>hedges</strong> to the term <em>Watchable</em>. Scianta Extreme Search supports an
+        unlimited number of <strong>hedges</strong> applied to a <strong>semantic term</strong>.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/not_very_ontime_800.png" /><br /> Figure 7 </p>
+      <p>The chart in Figure 7 depicts the <strong>compound hedge</strong>
+        <em>Not Very</em> applied to the <strong>term</strong>
+        <em>Ontime</em>. As we'd expect, the first <strong>hedge</strong>, <em>Very</em>, narrows
+        the set. The second <strong>hedge</strong>, <em>Not</em>, inverts <em>Very</em>. Note that
+        the hedge closest to the <strong>term</strong> is applied first.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/very_not_ontime_800.png" /><br /> Figure 8 </p>
+      <p>Just as in human thought, the order in which we apply linguistic modifiers affects the
+        result. Figure 8 shows the result of <em>Very Not Ontime</em>. In this case, the
+          <strong>hedge</strong>
+        <em>Not</em> is applied first. Then the <strong>hedge</strong>
+        <em>Very</em> is applied, making the results "more not" than without the <em>Very</em>
+        <strong>hedge</strong>. As we see in Figure 9, this notion of an unlimited number of
+          <strong>compound hedges</strong> can be taken to the extreme.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/highly_complex_800.png" /><br /> Figure 9 </p>
+      <p>Figure 9 is the result of the following querry in Extreme Search for Splunk: <em>Quite
+          Extremely Not Somewhat Close to Below Ontime</em>. If it makes your head hurt trying to
+        figure out what this means, you're not alone. The takeaway is this: If you can dream it up,
+        Extreme Search will search for it, right there in the Splunk search bar.</p>
+      <p>
+        <span
+          class="head2">Broadening Our Vocabulary: Synonyms</span>
+      </p>
+      <p>Cognitive computing requires an understanding of human thought and the language used to
+        describe that thought. Our baker's dozen <strong>linquistic hedges</strong> go a long way
+        toward capturing the important linguistic modifiers used in human thought, as long as you
+        speak English and know which words we've chosen to represent each hedge. That would not make
+        for a particularly powerful Conceptual Search system. Human-Centered Computing should not
+        require the user to understand which particular linguistic forms the system thinks are
+        important. In order to better understand the linguistic forms the user has chosen, Extreme
+        Search supports <strong>synonyms</strong>.</p>
+      <p>If your were paying particularly close attention during the discussion of highly complex
+          <strong>hedges</strong> in Figure 9, you may have picked up on the use of <em>Quite</em>
+        in the <strong>hedged term</strong>
+        <em>Quite Extremely Not Somewhat Close to Below Ontime</em>. You may have noticed that
+        "quite" is not included in the Extreme Search list of hedge words. The word <em>quite</em>
+        is treated by Extreme Search as a <strong>synonym</strong> for the <strong>hedge</strong>
+        <em>somewhat</em>. The word "quite" is listed in a <strong>synonyms</strong> file called
+          <code>synonyms.csv</code> which resides in the <code>xtreme/lookups/</code> directory. The
+          <code>synonyms.csv</code> file is a simple two factor comma separated values table, with
+        values stated as <code>word,hedge</code>. A reserved hedge word <code>"_noise"</code> allows
+        the system to ignore noisewords such as "a", "an", "to" and "the". </p>
+      <p>If you look at <code>synonyms.csv</code> you'll see the following two lines:</p>
+      <code>quite,somewhat</code>
+      <br />
+      <code>to,_noise</code>
+      <p>These two lines allow <em>quite</em> to be treated as <em>somewhat</em> and the phrase
+          <em>close to</em> to be treated as <em>close</em>.</p>
+      <p>The Extreme Search <code>synonyms.csv</code> file can be modified by the user. This allows
+        Extreme Search for Splunk to be easily customized to support multiple languages as well as
+        industry, company or use-case-specific <strong>hedges</strong>. Non-English
+          <code>synonyms</code> files are availabe from Scianta Analytics.</p>
+      <p>
+        <span
+          class="head4">Related Extreme Search Commands: </span>
+      </p>
+      <ul>
+        <li>
+          <a
+            href="xsCloneSemanticTerm">xsCloneSemanticTerm</a>
+        </li>
+        <li>
+          <a
+            href="xsCloneContext">xsCloneContext</a>
+        </li>
+        <li>
+          <a
+            href="xsCreateContext">xsCreateContext</a>
+        </li>
+        <li>
+          <a
+            href="xsDeleteContext">xsDeleteContext</a>
+        </li>
+        <li>
+          <a
+            href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a>
+        </li>
+        <li>
+          <a
+            href="xsDisplayContext">xsDisplayContext</a>
+        </li>
+        <li>
+          <a
+            href="xsFindMemebership">xsFindMemebership</a>
+        </li>
+        <li>
+          <a
+            href="xsGenerateContext">xsGenerateContext</a>
+        </li>
+        <li>
+          <a
+            href="xsGetWhereCIX">xsGetWhereCIX</a>
+        </li>
+        <li>
+          <a
+            href="xsRenameContext">xsRenameContext</a>
+        </li>
+        <li>
+          <a
+            href="xsUpdateContext">xsUpdateContext</a>
+        </li>
+        <li>
+          <a
+            href="xsWhere">xsWhere</a>
+        </li>
+      </ul>
+      <br />
+      <span
+        class="head2">Learn More About Cognitive Computing</span>
+      <p>To learn more about conceptual search and its place in cognitive computing, consider
+        downloading <a
+          href="http://www.sciantaanalytics.com/sites/default/files/SA-IDXR-REFERENCE-V01_Cognitive_Computing_20130925.1docx.pdf">
+          Principles of Cognitive Computing by Earl Cox. Chief Scientist, Scianta Analytics</a></p>
+      <p>You might also want to take a look at <a
+          href="http://www.sciantaanalytics.com/?q=learn"
+          target="_blank"> the <strong>Learn</strong> section of the Scianta Analytics web site.</a>
+      </p>
+      <p
+        align="center">
+        <span
+          class="head5">Sciante Extreme Search for Splunk is part of the Scianta Analytics Cognitive
+          Computing Suite</span>
+        <br />
+        <a
+          href="http://www.sciantaanalytics.com/"
+          target="_blank">
+          <img
+            alt="Scianta Analytics"
+            src="/static/app/xtreme/images/Scianta_Analytics_150.png" />
+        </a>
+      </p>
+      <p>VERSION: 20130930.1</p>
+    </html>
+  </row>
+</dashboard>

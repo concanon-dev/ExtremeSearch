@@ -1,0 +1,145 @@
+<dashboard>
+        <label>xsDisplaySemanticTerm</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsDisplaySemanticTerm</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Displays one or more Semantic Terms (with
+                                        heges) as an area chart. This command is a "generating"
+                                        command, which means it must be run as the first
+                                        command.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsDisplaySemanticTerm [hedge]* set FROM
+                                        context [IN scope] [; [hedge]* set FROM context [IN scope] ]* [USING
+                                        synonyms]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| xsDisplaySemanticTerm somewhat tall from
+                                        Height; not very short from Height</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Displays the hedged semantic terms
+                                        'tall' and 'short'.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">context, hedge, scope, set</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">context</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of a Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">hedge</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The hedge to be applied to the set. You
+                                        may specify as many hedges as you like.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">scope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The location of a Context (private, app, global).</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">set</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of a Semantic Term.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The semantic term(s) is displayed in table
+                                        or chart format. See <a
+                                                href="xsCreateContext">xsCreateContext</a> for
+                                        details about creating a term set. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20131107.3</p>
+
+                </html>
+        </row>
+</dashboard>

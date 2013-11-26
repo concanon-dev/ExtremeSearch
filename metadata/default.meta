@@ -1,0 +1,18 @@
+[]
+access = read : [ * ], write : [ admin ]
+export = system
+[views]
+access = read : [ * ], write : [ admin ]
+export = none
+
+[views/create_context]
+access = read : [ * ], write : [ admin ]
+export = system
+
+[views/display_context]
+access = read : [ * ], write : [ admin ]
+export = system
+
+[views/generate_context]
+access = read : [ * ], write : [ admin ]
+export = system

@@ -1,0 +1,243 @@
+<dashboard>
+  <label>Conceptual Search</label>
+  <row>
+    <html>
+      <a
+        href="xtreme_overview">
+        <img
+          alt="Return to Overview"
+          src="/static/app/xtreme/images/overview_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="command_reference">
+        <img
+          alt="Jump to Command Reference"
+          src="/static/app/xtreme/images/commandreference_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="http://www.sciantaanalytics.com/?q=documentation"
+        target="_blank">
+        <img
+          alt="Support Site"
+          src="/static/app/xtreme/images/doc_button.png" />
+      </a>
+      <img
+        src="/static/app/xtreme/images/space.png" />
+      <a
+        href="http://www.sciantaanalytics.com/?q=support_pages"
+        target="_blank">
+        <img
+          alt="Support Site"
+          src="/static/app/xtreme/images/support_button.png" />
+      </a>
+      <span
+        class="insetrt">Scianta Analytics Help</span>
+      <p>
+        <span
+          class="head2">An Introduction to Conceptual Search</span>
+      </p>
+      <p>
+        <span
+          class="head2">Concepts and Semantic Terms</span>
+      </p>
+      <p>As humans, we tend to think conceptually. A concept can be characterized by a semantic term
+        that represents it. Terms such as Tall, Short, Long, Early, Late, Fast, and Slow are
+        meaningful to us because they represent concepts that we understand based on our historical
+        experience. Let's think for a moment about the concept of <strong>tall</strong> as it
+        relates to people. We share a common notion of what <strong>tall</strong> means, based upon
+        our shared experience. If someone tells us a person is <strong>tall</strong>, we have a good
+        understanding of what that means. </p>
+      <p>Let's consider some examples:</p> Is Kareem Abdul Jabar <strong>tall</strong>? Certanly. Do
+      you know exactly what his height is, in inches? Probably not, but we can all agree that he's
+        <strong>tall</strong>.<br /> Was Napolean <strong>tall</strong>? No. In fact, he's become an
+      icon for an alternate concept: <strong>short</strong>.<br /> Actor Brad Garrett? He's quite
+        <strong>tall</strong>
+      <br />Tom Cruise? By most measures, he is not <strong>tall</strong>.<br /> Osama bin Laden?
+      People agree that he was very <strong>tall</strong>.<br />
+      <p>Tall is not defined by some threshold parameter. Is someone who stands 6'8&quot; considered
+        tall? Sure. How 'bout someone 5'11&quot;? Also tall. And 5'10&quot;? We'd probably agree
+        that yes, 5'10&quot; is still considered tall. It may be less tall than Kareem, but still
+        tall.</p>
+      <p> Note that there is no threshold parameter that determines <strong>tall</strong> vs not
+          <strong>tall</strong>. <strong>Tall</strong> is a <strong>Concept</strong>, not a
+        threshold value. This turns out to true of most all concepts, from characterizations of
+        height to network latency to sales performance to musical talent to public sentiment.<br />
+        <br />In fact, we can graph a mathematical representation of the <strong>concept</strong> of
+          <strong>tall</strong>. The graph in Figure 1 might be one definition of
+          <strong>tall</strong>. Note that the X axis is Height, in inches, ranging from 48 inches
+        to 84 inches, a fair guess at the range of heights we'd see in a large sample of humans. The
+        Y axis depicts the degree of membership in this <strong>concept</strong> of
+          <strong>tall</strong>. In our depection, a person who stands 60&quot; has zero membership
+        in the concept of <strong>tall</strong>. Someone 84&quot; has a membership of 1, or 100%. In
+        this scenario, an 84&quot; person is &quot;more tall&quot; than a 72&quot; person. If we
+        were looking at the underlying fuzzy mathematics that represent our concept of
+          <strong>tall</strong>, we'd say that 84&quot; has 100% membership in the set
+          <strong>tall</strong>, while 72&quot; has a bit under 50%.</p>
+      <p
+        align="center"><img
+          src="/static/app/xtreme/images/tall_set_600.png"
+          width="400"
+          height="220"
+          alt="tall" /><br /> Figure 1</p>
+      <p
+        align="left"> A question arises here. Most people would agree that, among a large sample of
+        humans, we think of 72&quot; as quite tall. The notion that 72&quot; has less than 50%
+        membership in our concept of <strong>tall</strong> doesn't seem quite right. That's OK. This
+        just means that the straight line function we drew to represent our concept of
+          <strong>tall</strong> is probably not a very accurate representation of the concept. We
+        can fix that. The graph in Figure 2 is another definition of our concept of
+          <strong>tall</strong>. This one probably comes closer to an accurate representation of
+        what we think of, when we think of <strong>tall</strong>.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/tall_set_s_600.png"
+          width="400"
+          height="220" /><br /> Figure 2</p>
+      <p>
+        <span
+          class="head2">Capturing Points of View: Contexts</span>
+      </p>
+      <p>When we're thinking about an idea like the <strong>height</strong> of people, we consider a
+        number of related <strong>concepts</strong>. The <strong>concepts</strong>
+        <strong>tall</strong> and <strong>short</strong> are two "conceptually coherent" terms that
+        describe concepts relating to height. In Extreme Search, we call this conceptually coherent
+        grouping of concepts a <strong>context</strong>. A <strong>context</strong> defines a
+        particular view of the world based on the meaning of the terms that define it. Such a
+          <strong>context</strong> can be seen in Figure 3.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/height-s_600.png"
+          width="400"
+          height="220" /><br /> Figure 3 </p>
+      <p>The <strong>context</strong>
+        <em>height</em> in Figure 3 illustrates an important characteristic of
+          <strong>terms</strong> within a <strong>context</strong>: that is, that terms or concepts
+        often overlap. It it very possible for a value under analysis to have membership in more
+        than one <strong> concept</strong>. In our example here, a person can be somewhat tall and
+        somewhat short at the same time. This idea is true of most any <strong>context</strong>
+        applying to most any knowledge domain. It embodies the way we, as humans, think of the world
+        and it is an extraordinarily powerful tenent of cognitive computing.</p>
+      <p
+        align="center">
+        <img
+          src="/static/app/xtreme/images/height_demo_600.png"
+          width="400"
+          height="220" /><br /> Figure 4 </p>
+      <p>Figure 4 illustrates another definition of the <strong>context</strong>
+        <em>height</em>. This illustration is the display of a <strong>context</strong> called
+          <em>height</em> which we've defined in Extreme Search for Splunk. Note that this
+          <strong>context</strong> is comprised of five <tstrong>terms</tstrong>: tiny, short,
+        typical, tall and gigantic. There's nothing particularly special about these five names.
+        They simply have meaning to the author when describing the notion of <em>height</em>.
+        They're defined by the user and represent that user's perspective with regard to the height
+        of humans.</p>
+      <p>In Extreme Search, we allow users to define contexts either with or without regard to a
+        particular data set. These contexts are saved in Extreme Search and can be used to analyze
+        subsequent data sets or the same data set in a various time ranges. A subject matter expert
+        might define a context with which the staff of his company should analyze a particular
+        knowledge domain. For examle, a network expert might define a <strong>context</strong>
+        called <em>latency</em> that support personnel or a monitoring system would use when
+        analyzing real time network performance. If the <strong>context</strong> was generated using
+        baseline data, applying it in real time analysis would immediately identify anomolies,
+        without the need to learn baseline behavior. Scianta's concept-based cognitive computing
+        engine can quickly model baseline behavior without the need for more conventional
+        parameteric machine learning.</p>
+      <p><em>So this is pretty interesting. What does it get us?</em></p>
+      <p><strong>Semantic Terms</strong> and collections of them which we call
+          <strong>Contexts</strong> are critical components in concept-based cognitive computing.
+        They facilitate the ability to gain deep insight from your data by asking
+          <em>qualitative</em>, rather than <em>quantitative</em> questions, and to ask those
+        questions in natural language.</p>
+      <span
+        class="head4">Conceptual Coherence</span>
+      <p>In our example of the linear (Figure 1) vs S-shaped (Figure 2) definitions of the term
+          <strong>tall</strong>, we noted that the shape of the membership function for a
+          <strong>term</strong> is significant. I fact, it is important that the shape of the
+          <strong>term</strong> represent the linguistic meaning of the <strong>term</strong>. When
+        we say <strong>tall</strong>, the set of values that have membership in that
+          <strong>concept</strong> should make linguistic sense. In the same way that someone would
+        be confused if you called Karrem Abdul Jabar <strong>short</strong> and Napolean
+          <strong>tall</strong>, they can be confused if we define semantic terms in Extreme Search
+        that don't make linguistic sense. It is also important that all <strong>terms</strong>
+        defined in a <strong>context</strong> be conceptually coherent – that they share the same
+        "universe of discourse". It would be confusing if one <strong>term</strong> dealt with
+          <em>Time</em> and another dealt with <em>Distance</em>.</p>
+      <span
+        class="head2">Embracing Nuance: Hedges</span>
+      <p><bold>Semantic terms</bold> and <strong>contexts</strong> are the basis of Conceptual
+        Search but they don't, on their own, support a very nuanced view of the world. A true
+        Cognitive Computing system, a system designed to "think" like we do, needs to understand
+        nuance.</p>
+      <p>Scianta Extreme Search for Splunk employs the notion of "hedges" to capture nuanced
+        variation to semantic terms. Hedges are linguistic modifiers, adjectives, that modify the
+        meaning of a semantic term. To learn more about <strong>hedges</strong> and other methods
+        employed by Extreme Search to embrace the nuance ot human thought, click on Learn More.</p>
+      <a
+        href="hedges">
+        <img
+          alt="Learn More"
+          src="/static/app/xtreme/images/learn_button.png" />
+      </a>
+      <p><span
+          class="head4">Related Extreme Search Commands: </span></p>
+      <ul>
+        <li><a
+            href="xsCloneSemanticTerm">xsCloneSemanticTerm</a></li>
+        <li><a
+            href="xsCloneContext">xsCloneContext</a></li>
+        <li><a
+            href="xsCreateContext">xsCreateContext</a></li>
+        <li><a
+            href="xsDeleteContext">xsDeleteContext</a></li>
+        <li><a
+            href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a></li>
+        <li><a
+            href="xsDisplayContext">xsDisplayContext</a></li>
+        <li><a
+            href="xsFindMemebership">xsFindMemebership</a></li>
+        <li><a
+            href="xsGenerateContext">xsGenerateContext</a></li>
+        <li><a
+            href="xsGetWhereCIX">xsGetWhereCIX</a></li>
+        <li><a
+            href="xsRenameContext">xsRenameContext</a></li>
+        <li><a
+            href="xsUpdateContext">xsUpdateContext</a></li>
+        <li><a
+            href="xsWhere">xsWhere</a></li>
+      </ul>
+      <br />
+      <span
+        class="head2">Learn More About Cognitive Computing</span>
+      <p>To learn more about conceptual search and its place in cognitive computing, consider
+        downloading <a
+          href="http://www.sciantaanalytics.com/sites/default/files/SA-IDXR-REFERENCE-V01_Cognitive_Computing.pdf">
+          Principles of Cognitive Computing by Earl Cox. Chief Scientist, Scianta Analytics</a></p>
+      <p>You might also want to take a look at <a
+          href="http://www.sciantaanalytics.com/?q=learn"
+          target="_blank"> the <strong>Learn</strong> section of the Scianta Analytics web site.</a>
+      </p>
+      <p
+        align="center">
+        <span
+          class="head5">Sciante Extreme Search for Splunk is part of the Scianta Analytics Cognitive
+          Computing Suite</span>
+        <br />
+        <a
+          href="http://www.sciantaanalytics.com/"
+          target="_blank">
+          <img
+            alt="Scianta Analytics"
+            src="/static/app/xtreme/images/Scianta_Analytics_150.png" />
+        </a>
+      </p>
+      <p>VERSION: 20130929.3</p>
+    </html>
+  </row>
+</dashboard>

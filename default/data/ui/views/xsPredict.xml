@@ -1,0 +1,130 @@
+<dashboard>
+        <label>xsPredict</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsPredict</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Predictive Analytics</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Predict the values, using linear
+                                        regression, of a set of fields when a field is a certain
+                                        value</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xspredict (y_field)+ WHEN x_field IS
+                                        value"</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">xsPredict ArrDelay WHEN AirTime IS 200</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Predicts the value of ArrDelay when
+                                        AirTime is 200</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4"> Example Output: </span>
+                                <span
+                                        class="code">x,y,bf,bv,numRows,slope,intercept,errA,errB,R,PredictedValue<br />
+                                        AirTime,ArrDelay,*,*,9822,0.0104709573,1.7359849740,0.0048634284,0.6463668658,0.0217212912,3.8301764340</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">x_field, y_field, value</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">value</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The value of the x_field(s)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">x_field</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The field to use to predict y_field.
+                                        Given X, what is Y?</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">y_field</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The field(s) to predict</span>.</p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20130716.4</p>
+
+                </html>
+        </row>
+</dashboard>

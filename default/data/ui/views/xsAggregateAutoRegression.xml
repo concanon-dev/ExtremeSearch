@@ -1,0 +1,141 @@
+<dashboard>
+        <label>xsAggregateAutoRegression</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsAggregateAutoRegression</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Statistical Reasoning</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+
+                                <span
+                                        class="explanation">Aggregates (combines) auto regression
+                                        algorithms that have the same x field, BY field and BY value
+                                        into a new algorithm. Takes input from the output of
+                                        previous xsPerform commands. The algorithms are matched by
+                                        field and a weighted average (by count) is used to aggregate
+                                        the results. This can be used to aggregate the results of
+                                        minor periods into more major periods. An effective way to
+                                        specify the input data stream is to pipe the output of
+                                                <b>inputlookup.</b></span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsAggregateAutoRegression [OUTPUT
+                                        filename]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4"> Example: </span>
+                                <span
+                                        class="code">| inputlookup hourly.csv |
+                                        xsAggregateAutoRegression OUTPUT daily</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Aggregate the hourly auto regressions
+                                        previously saved in the file 'hourly.csv' and saves the
+                                        results in the lookup file 'daily.csv'.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| inputlookup daily.csv |
+                                        xsAggregateAutoRegression OUTPUT weekly</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Aggregate the daily auto regressions
+                                        previously saved in the file 'daily.csv' and saves the
+                                        results in the lookup file 'weekly.csv'.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">filename</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">filename</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of a lookup file to store the
+                                        results. The file created is 'filename.csv'. The file is
+                                        stored in the lookups directory of this app. The file format
+                                        is comma separated values. The '.csv' file extension is
+                                        applied automatically and should not be included in the <span
+                                                class="para">filename</span> parameter.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The newly created algorithms are returned
+                                        as a table in the OUTPUT file.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br /> Version 201300717.1</p>
+                </html>
+        </row>
+</dashboard>

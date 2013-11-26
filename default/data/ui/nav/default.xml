@@ -1,0 +1,44 @@
+<nav
+    search_view="search"
+    color="#0069c2">
+
+    <view
+        name="xtreme_overview"
+        default="true" />
+
+    <collection
+        label="Conceptual Search">
+        <collection
+            label="Contexts">
+            <view
+                name="create_context" />
+            <view
+                name="display_context" />
+            <view
+                name="generate_context" />
+        </collection>
+
+        <collection
+            label="Semantic Terms">
+            <view
+                name="create_semantic_term" />
+            <view
+                name="generate_semantic_term" />
+        </collection>
+    </collection>
+
+    <collection
+        label="Documentation">
+        <view
+            name="xtreme_overview" />
+        <view
+            name="command_reference" />
+        <view
+            name="concept_intro" />
+        <view
+            name="hedges" />
+    </collection>
+
+    <view
+        name="flashtimeline" />
+</nav>

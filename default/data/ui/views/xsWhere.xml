@@ -1,0 +1,197 @@
+<dashboard>
+        <label>xsWhere</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsWhere</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Determine which events are compatible with
+                                        a semantic query. An event is compatible with the query if
+                                        the compatibility index (xcix) is greater than the alfacut.
+                                        The default alfacut is 0.2. If an event meets this
+                                        condition, it is written to the output stream with the value
+                                        of the xcix added as a field named by cixname. The default
+                                        is "WhereCIX". If not, the event is disposed. The xcix is
+                                        generated using one of two functions, avg or weighted. The
+                                        avg function sums the membership values of eah query and
+                                        divides by the count. The weighted function is similar to a
+                                        weighted average. The xcix is calculated by putting a higher
+                                        value on memberhip in terms that are closer to the beginning
+                                        of the query, and then divides by the weighted count. Since
+                                        the xcix is added to each event that meets the alfacut,
+                                        other commands can then be applied to generate more
+                                        intelligent information.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xswhere [alfacut=value] [cixname=string]
+                                        [cixtype=avg|weighted] xswhere-option (xswhere-andor-option
+                                        xswhere-option)*</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">... | xswhere AirTime is minimal or AirTime is
+                                        short</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Returns all of the events where the
+                                        field AirTime is minimal or AirTime is short, as determined
+                                        by the set "AirTime"</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">... | xswhere cixtype=weighted AirTime is
+                                        minimal or AirTime is short</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Returns all of the events where the
+                                        field AirTime is minimal or AirTime is short, as determined
+                                        by the set "AirTime". The algorithm used to determined the
+                                        compatability index is "weighted average". </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">alfacut, cixname, cixtype, synonyms,
+                                        xswhere-andor-option, xswhere-option</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">alfacut</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The minimal acceptable value of the
+                                        compatability index (CiX) needed for the event to be
+                                        considered as a match for the query. The default is
+                                        0.2.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">cixname</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the field containing the
+                                        Compatability Index (Cix). The default is "WhereCIX".</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">cixtype</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The function used to generate the cix.
+                                        The choices are "average" and "weighted". The default is
+                                        "average". </span>. </p>
+                        <p>
+                                <span
+                                        class="para">synonyms</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The lookup file that contains the
+                                        synonyms to be used as hedges. This is a csv file that lives
+                                        in the lookups directory.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">xswhere-andor-option</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The connector between xswhere-option.
+                                        This can be AND or OR. </span>. </p>
+                        <p>
+                                <span
+                                        class="para">xswhere-option</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The compatibility query. The query is
+                                        structured as follows: field [IN contextField] IS [hedge]*
+                                        set. The field must be one of the fields in the event. The
+                                        contextField is optional. If contextField is specified, it
+                                        is evaluated as follows: First, determine if this is the
+                                        name of a field. If so, then use the contents of that field
+                                        in each event as the name of the context, else use the value
+                                        of the context as the name of the term set.<br />If the
+                                        contextField is not specified, the query uses a context of
+                                        the same name as the field. A hedge can be one or more of
+                                        the following: above, after, before, below, close extremely,
+                                        generally, not, positively, slightly, somewhat, very,
+                                        vicinity. The set is the name of a set in the context.
+                                </span>. </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20130717.1</p>
+                </html>
+        </row>
+</dashboard>

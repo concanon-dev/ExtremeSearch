@@ -1,0 +1,122 @@
+<dashboard>
+        <label>xsDeleteContext</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsDeleteContext</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Deletes a Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsDeleteContext context [IN scope]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| xsDeleteContext AirTime in app</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Deletes the Context called
+                                        'AirTime' in the current app.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">context, scope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">context</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the existing Context to
+                                        delete.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">scope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The scope to find the existing Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The context is deleted. See <a
+                                                href="xsRenameContext">xsRenameContext</a> for
+                                        details about renaming a context. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20131107.2</p>
+
+                </html>
+        </row>
+</dashboard>

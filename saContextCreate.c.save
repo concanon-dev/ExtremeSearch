@@ -1,0 +1,175 @@
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "saContext.h"
+
+extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, 
+                                      char *);
+extern saSemanticTermTypePtr saSemanticTermCreateCurveDecrease(char *, double, double, double,
+                                                               double, double);
+extern saSemanticTermTypePtr saSemanticTermCreateCurveIncrease(char *, double, double, double, 
+                                                               double, double);
+extern saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
+
+saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev, char *terms[],
+                                            int numTerms, char *shape, char *endShape, int count,
+                                            char *notes) 
+{
+    if (numTerms > SA_CONTEXT_MAXTERMS)
+        return(NULL);
+
+    // create the context
+    saContextTypePtr p = saContextInit(name, (float)0.0, (float)0.0, avg, sdev, count, 
+                                       numTerms, SA_CONTEXT_TYPE_DOMAIN, notes);
+    // calculate the necessary sizes
+    double center = avg;
+    double domainSize = sdev * (numTerms + 1);
+    double domainMin = center - (domainSize / 2); 
+    double domainMax = center + (domainSize / 2); 
+    double termSize = SA_SEMANTICTERM_DEFAULT_SDEV_SIZE * sdev;
+
+    // create the center semantic term
+    double termMin = center - (termSize/2);
+    double termMax = center + (termSize/2);
+    int termIndex = numTerms / 2;
+    p->semanticTerms[termIndex] = saSemanticTermCreatePI(terms[termIndex], domainMin, domainMax,
+                                                         termMin, termMax, center);
+
+    // create the "higher" semantic terms
+    int i = termIndex + 1;
+    double higherCenter = center;
+    double higherMax = termMax;
+    double higherMin = termMin;
+fprintf(stderr, "hm=%10.4f hx=%10.4f hc=%10.4f\n", higherMin, higherMax, higherCenter);
+    while(i < numTerms)
+    {
+        higherMin = higherCenter;
+        higherCenter = higherMax;
+        higherMax = higherMin + termSize;
+fprintf(stderr, "hm=%10.4f hx=%10.4f hc=%10.4f %d %d\n", higherMin, higherMax, higherCenter, numTerms, i);
+        if (i == numTerms - 1)
+        {
+            if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_CURVE))
+                p->semanticTerms[i] = saSemanticTermCreateCurveIncrease(terms[i], domainMin, 
+                                                                        domainMax, higherMin,
+                                                                        higherMax, higherCenter);
+        }
+        else
+        {
+            if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
+                p->semanticTerms[i] = saSemanticTermCreatePI(terms[i], domainMin, domainMax, 
+                                                             higherMin, higherMax, center);
+        }
+        i++;
+    }
+
+    // create the "lower" semantic terms
+    i = termIndex - 1;
+    double lowerCenter = center;
+    double lowerMax = termMax;
+    double lowerMin = termMin;
+fprintf(stderr, "lm=%10.4f lx=%10.4f lc=%10.4f\n", lowerMin, lowerMax, lowerCenter);
+    while(i >= 0)
+    {
+        lowerMax = lowerCenter;
+        lowerCenter = lowerMin;
+        lowerMin = lowerMax - termSize;
+fprintf(stderr, "lm=%10.4f lx=%10.4f lc=%10.4f %d %d\n", lowerMin, lowerMax, lowerCenter, numTerms, i);
+        if (i == 0)
+        {
+            if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_CURVE))
+                p->semanticTerms[i] = saSemanticTermCreateCurveDecrease(terms[i], domainMin, 
+                                                                        domainMax, lowerMin,
+                                                                        lowerMax, lowerCenter);
+        }
+        else
+        {
+            if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
+                p->semanticTerms[i] = saSemanticTermCreatePI(terms[i], domainMin, domainMax, 
+                                                             lowerMin, lowerMax, lowerCenter);
+        }
+        i--;
+    }
+    return(p);
+}
+
+saContextTypePtr saContextCreateDomain(char *name, double domainMin, double domainMax, 
+                                       char *terms[], int numTerms, char *shape, char *endShape,
+                                       int count, char *notes) 
+{
+    if (numTerms > SA_CONTEXT_MAXTERMS)
+        return(NULL);
+
+    // create the context
+    saContextTypePtr p = saContextInit(name, domainMin, domainMax, (float)0.0, (float)0.0, count, 
+                                       numTerms, SA_CONTEXT_TYPE_DOMAIN, notes);
+    // calculate the necessary sizes
+    double domainSize = domainMax - domainMin;
+    double center = domainMin + domainSize / 2;
+    double termSize = SA_SEMANTICTERM_DEFAULT_OVERLAP * (domainSize / numTerms);
+
+    // create the center semantic term
+    double termMin = center - (termSize/2);
+    double termMax = center + (termSize/2);
+    int termIndex = numTerms / 2;
+    p->semanticTerms[termIndex] = saSemanticTermCreatePI(terms[termIndex], domainMin, domainMax,
+                                                         termMin, termMax, center);
+
+    // create the "higher" semantic terms
+    int i = termIndex + 1;
+    double higherCenter = center;
+    double higherMax = termMax;
+    double higherMin = termMin;
+fprintf(stderr, "hm=%10.4f hx=%10.4f hc=%10.4f\n", higherMin, higherMax, higherCenter);
+    while(i < numTerms)
+    {
+        higherMin = higherCenter;
+        higherCenter = higherMax;
+        higherMax = higherMin + termSize;
+fprintf(stderr, "hm=%10.4f hx=%10.4f hc=%10.4f %d %d\n", higherMin, higherMax, higherCenter, numTerms, i);
+        if (i == numTerms - 1)
+        {
+            if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_CURVE))
+                p->semanticTerms[i] = saSemanticTermCreateCurveIncrease(terms[i], domainMin, 
+                                                                        domainMax, higherMin,
+                                                                        higherMax, higherCenter);
+        }
+        else
+        {
+            if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
+                p->semanticTerms[i] = saSemanticTermCreatePI(terms[i], domainMin, domainMax, 
+                                                             higherMin, higherMax, center);
+        }
+        i++;
+    }
+
+    // create the "lower" semantic terms
+    i = termIndex - 1;
+    double lowerCenter = center;
+    double lowerMax = termMax;
+    double lowerMin = termMin;
+fprintf(stderr, "lm=%10.4f lx=%10.4f lc=%10.4f\n", lowerMin, lowerMax, lowerCenter);
+    while(i >= 0)
+    {
+        lowerMax = lowerCenter;
+        lowerCenter = lowerMin;
+        lowerMin = lowerMax - termSize;
+fprintf(stderr, "lm=%10.4f lx=%10.4f lc=%10.4f %d %d\n", lowerMin, lowerMax, lowerCenter, numTerms, i);
+        if (i == 0)
+        {
+            if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_CURVE))
+                p->semanticTerms[i] = saSemanticTermCreateCurveDecrease(terms[i], domainMin, 
+                                                                        domainMax, lowerMin,
+                                                                        lowerMax, lowerCenter);
+        }
+        else
+        {
+            if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
+                p->semanticTerms[i] = saSemanticTermCreatePI(terms[i], domainMin, domainMax, 
+                                                             lowerMin, lowerMax, lowerCenter);
+        }
+        i--;
+    }
+    return(p);
+}

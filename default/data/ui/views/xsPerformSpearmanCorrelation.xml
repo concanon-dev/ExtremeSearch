@@ -1,0 +1,187 @@
+<dashboard>
+        <label>xsPerformCorrelation</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <br />
+                        <p>
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsPerformCorrelation</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Statistical Reasoning</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Performs correlation of fields.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsPerformCorrelation (x_field)+ [WITH
+                                        (y_field)+] [BY field]</span>
+                        </p>
+                        <br />
+                        <br />
+                        <span
+                                class="head4">Example: </span>
+                        <span
+                                class="code">xsPerformCorrelation AirTime WITH ArrDelay BY
+                                Carrier</span>
+                        <p>
+                                <span
+                                        class="explanation">Performs a correlation of AirTime with
+                                        ArrDelay by Carrier.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4"> Example Output: </span>
+                                <span
+                                        class="code">x,y,bf,bv,numRows,R<br />
+                                        AirTime,ArrDelay,Carrier,MQ,35761,0.0197818647<br />
+                                        AirTime,ArrDelay,Carrier,HA,5852,0.0554321829<br />
+                                        AirTime,ArrDelay,Carrier,FL,19005,0.0683258955<br />
+                                        AirTime,ArrDelay,Carrier,F9,6430,0.0635786923<br />
+                                        AirTime,ArrDelay,Carrier,EV,56362,0.0180418587<br />
+                                        AirTime,ArrDelay,Carrier,DL,54981,-0.0076816654<br />
+                                        AirTime,ArrDelay,Carrier,UA,41148,0.0158608515<br />
+                                        AirTime,ArrDelay,Carrier,OO,47301,-0.0113693402<br />
+                                        AirTime,ArrDelay,Carrier,YV,11739,-0.0344412901<br />
+                                        AirTime,ArrDelay,Carrier,WN,89816,-0.0395732346<br />
+                                        AirTime,ArrDelay,Carrier,VX,4056,-0.0860895585<br />
+                                        AirTime,ArrDelay,Carrier,US,33946,0.0205224370<br />
+                                        AirTime,ArrDelay,Carrier,B6,17774,0.0042461718<br />
+                                        AirTime,ArrDelay,Carrier,AS,10934,0.0042090576<br />
+                                        AirTime,ArrDelay,Carrier,AA,42920,0.0106204206<br /></span>
+                        </p>
+                        <span
+                                class="head4">Example: </span>
+                        <span
+                                class="code">xsPerformCorrelation AirTime ArrDelay</span>
+                        <p>
+                                <span
+                                        class="explanation">Performs a correlation of all of the
+                                        combinations of AirTime and ArrDelay (AirTime with AirTime,
+                                        AirTime with ArrDelay, ArrDelay with AirTime and ArrDelay
+                                        with ArrDelay).</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4"> Example Output: </span>
+                                <span
+                                        class="code">x,y,bf,bv,numRows,R<br /> AirTime,AirTime,*,*
+                                        478026,1.0000000000<br />
+                                        ArrDelay,ArrDelay,*,*,478026,1.0000000000<br />
+                                        AirTime,ArrDelay,*,*,478026,-0.0004703646<br />
+                                        ArrDelay,AirTime,*,*,478026,-0.0004703646</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Where:</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">x = x field<br />y = y field <br /> bf =
+                                        BY field name<br /> bv = BY field value<br /> numRows =
+                                        number of rows contributing to function<br /> R = Pearsons R
+                                        correlation<br />
+                                </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext"> (x_field)+ WITH (y_field)+ BY
+                                        fieldname</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">x_field (field name containing an X
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as x in the formula. You may specificy more than one
+                                        field to perform correlation. Each field name is separated
+                                        by a blank space.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">y_field (field name containing a Y
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as y in the formula. You may specificy more than one
+                                        field to perform correlation. Each field name is separated
+                                        by a blank space. If specified, the number of y_fields must
+                                        be the same as the number of x_fields.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">BY fieldname</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Specifies the field in the data set by
+                                        which the corelation will be grouped by.</span>
+                        </p>
+                        <br />
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p> Version 20130716.5</p>
+                </html>
+        </row>
+</dashboard>

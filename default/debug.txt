@@ -1,0 +1,11 @@
+#
+# format: 
+#    (data|log|output),<level>,<debug_dir>
+#
+# if <level> = 0, then no logging
+# 
+# <debug_dir> may contain $SPLUNK_HOME
+#
+data,0,$SPLUNK_HOME/var/log/xtreme
+log,0,$SPLUNK_HOME/var/log/xtreme
+output,0,$SPLUNK_HOME/var/log/xtreme

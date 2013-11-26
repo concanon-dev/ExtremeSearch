@@ -1,0 +1,64 @@
+<form>
+    <label>Create Semantic Term</label>
+    <fieldset>
+        <html>
+            <p style="padding-top: 20px">
+Enter values in each field as necessary to create the Semantic Term
+            </p>
+        </html>
+        <!-- 
+             For each field, create a text box; 
+             Upon first load, the box will be populated with '*'; 
+             If user leaves the box empty, then search will use '*'; 
+             All tokens will be followed by a *
+          -->
+        <input type="text" token="name">
+            <default></default>
+            <label>Term Name</label>
+        </input>
+        <input type="dropdown" token="shape">
+            <default>pi</default>
+            <label>Shape of Term</label>
+            <choice value="decline">Decline</choice>
+            <choice value="decrease">Decrease</choice>
+            <choice value="growth">Growth</choice>
+            <choice value="increase">Increase</choice>
+            <choice value="pi">PI</choice>
+            <choice value="trapezoid">Trapezoid</choice>
+            <choice value="triangle">Triangle</choice>
+        </input>
+        <input type="text" token="presearch">
+            <default></default>
+            <label>Data Search</label>
+            <seed></seed>
+        </input>
+        <input type="text" token="datafield">
+            <default></default>
+            <label>Field to build Semantic Term for</label>
+            <seed></seed>
+        </input>
+    </fieldset>
+
+    <!-- 
+         define master search template; leave time unbounded so that the time input can be used 
+      -->
+    <searchTemplate>
+$presearch$ | stats avg($datafield$) as avg count($datafield$) as count max($datafield$) as max min($datafield$) as min stdev($datafield$) as stdev | xsCreateContext name="$datafield$_$name$" terms="$name$" type=domain shape="$shape$" endshape="$shape$"
+    </searchTemplate>
+
+    <row>   
+        <!-- 
+             show results as a table 
+          -->
+        <chart>
+            <title>Context</title>
+            <option name="charting.chart">column</option>
+            <option name="axisTitleX.text">buckets</option>
+            <option name="axisTitleY.text">CIX</option>
+        </chart>
+        <table>
+            <option name="showPager">true</option>
+            <option name="count">10</option>
+        </table>      
+    </row>
+</form>

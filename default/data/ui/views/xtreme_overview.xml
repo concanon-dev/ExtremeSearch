@@ -1,0 +1,273 @@
+<?xml-stylesheet type="text/css" href="application.css"?>
+<dashboard>
+  <label>Overview</label>
+  <row>
+    <html>
+      <img
+        src="/static/app/xtreme/images/ess_400.png" />
+      <p>
+        <a
+          href="command_reference">
+          <img
+            alt="Jump to Command Reference"
+            src="/static/app/xtreme/images/commandreference_button.png" />
+        </a>
+        <img
+          src="/static/app/xtreme/images/space.png" />
+        <a
+          href="http://www.sciantaanalytics.com/?q=documentation"
+          target="_blank">
+          <img
+            alt="Support Site"
+            src="/static/app/xtreme/images/doc_button.png" />
+        </a>
+        <img
+          src="/static/app/xtreme/images/space.png" />
+        <a
+          href="http://www.sciantaanalytics.com/?q=support_pages"
+          target="_blank">
+          <img
+            alt="Support Site"
+            src="/static/app/xtreme/images/support_button.png" />
+        </a>
+      </p>
+      <p>
+        <span
+          class="head2">Introduction</span>
+      </p>
+      <p>Extreme Search is unique. Most Splunk apps are designed as separate apps or add-ons,
+        working externally to Splunk to deliver solutions in a variety of vertical problem spaces.
+        By contrast, Scianta Analytics Extreme Search works <strong>within</strong> Splunk,
+        extending Splunk's Search Processing Language (SPL) with Scianta Analytics' proprietary
+        cognitive computing technology. Extreme Search for Splunk transforms Splunk into an
+        extraordinarily powerful cognitive-computing-based analytics platform.</p>
+      <p>Like most Splunk apps, Extreme Search presents an application view, including documentation
+        and dashboards. This page is being displayed from within that application view. The Extreme
+        Search application view provides dashboards to assit in managing your implementation and
+        enhance visualization. It includes a robust set of help pages, like this one, to give you a
+        quick reference to the product's operation. It also provides direct links from within the
+        app to Scianta Analytics' online documentation, tutorials and support.</p>
+      <p> It is important to note that it is not necessary to use the Extreme Search application
+        view to use Extreme Search. Since Extreme Search operates as an extension to Splunk's search
+        language, it is available to any Splunk app. The Extreme Search binaries, which provide the
+        product's core cognitive computing functionality, are compiled natively for each operating
+        system and are distributed by Splunk along with conventional Splunk search commands, to
+        operate in parallel on each indexer. If you run more than one operating system in your
+        Splunk environment, you'll want to make sure you install the correct binaries for each
+        OS.</p>
+      <p>
+        <span
+          class="head4">What is Extreme Search for Splunk Enterprise?</span>
+      </p>
+      <p> Scianta's <strong>Extreme Search Engine</strong> is an integrated collection of powerful
+        cognitive-computing-based analytics functions engineered for speed and transportability. The
+        suite provides fast, flexible, and comprehensive statistical reasoning, predictive analytics
+        and conceptual query capabilies in any computing environment. <strong>Extreme Search for
+          Splunk</strong> is an implementation of the Sciant Extreme Search Engine which is
+        engineered specifically for Big Data using the Splunk platform. The engine is optimized to
+        run multiple, parallel threads on each Splunk indexer and is compiled to operate natively in
+        Linux, Windows or Mac OS. This allows <strong>Scianta Extreme Search for Splunk</strong> to
+        deliver extraordinary performance, even on gigantic data sets. </p>
+      <p>Extreme Search is, first and foremost, a powerful cognitive computing engine. It is
+        designed to "think" the way you think and to "understand" concept-based queries written in
+        natural language.</p>
+      <p>
+        <span
+          class="head4">Converse with your data™</span>
+      </p>
+      <p> Splunk is arguably the world's most powerful Big Data engine. <strong>Extreme Search for
+          Splunk Enterprise</strong> transforms Splunk into the world's most powerful
+        human-centered, cognitive computing platform for Big Data. Extreme Search understands
+        concepts and semantic terms in the same way you understand them. This allows you to converse
+        with your data the same way you converse with your co-workers, using powerful qualitative
+        concepts in place of arcane quantitative parameters. </p>
+      <p>Why is this important? Because it allows regular users to gain deep insight from their data
+        simply by asking questions.</p>
+      <p>
+        <span
+          class="head2">Command Categories</span>
+      </p>
+      <p>Extreme Search commands can be divided into three operational categories:</p>
+      <ul>
+        <span
+          class="head5">
+          <li>Conceptual Search</li>
+        </span> Qualitative, concept-based data exploration. <span
+          class="head5">
+          <li>Statistical Reasoning</li></span> Powerful regression and correlation tools for data
+        analysis. <span
+          class="head5">
+          <li>Predictive Analytics</li></span> State-of-the-art machine learning tools. </ul>
+      <p>The <a
+          href="command_reference">Command Reference</a> describes each command in each of the three
+        categories.</p>
+      <p>
+        <span
+          class="head2">Conceptual Search</span>
+      </p>
+      <span
+        class="head4">Terminology</span>
+      <p>To understand Extreme Search concept based search, it is useful to understand some
+        terminology used in the product and its documentation:</p>
+      <ul>
+        <li><strong>Concept: </strong>An idea represented by a <strong>semantic term</strong>. In
+          Extreme Search, these terms are usually user defined as part of a <strong>Context .
+            </strong><em>Tall, Short, Fast and Slow are </em><strong>Terms</strong> used to describe
+            <strong>Concepts</strong>.</li>
+        <li><strong>Context: </strong>A collection of terms that form a conceptually coherent view
+          of a knowledge domain. <em>Height</em> might be a <strong>Context</strong> comprised of
+          the <strong>Terms</strong>
+          <em>Tall</em> and <em>Short</em>. <em>Speed</em> might be a <strong>Context</strong>
+          comprised of the <strong>Terms</strong>
+          <em>Fast</em> and <em>Slow</em></li>
+        <li><strong>Semantic Term</strong> or <strong>Term: </strong>A linguistic representation of
+          a <strong>Concept</strong>. In the underlying cognitive computing engine that drives
+          Extreme Search for Splunk, each <strong>Term</strong> is characterized by a <strong>Fuzzy
+            Set</strong>. </li>
+      </ul>
+      <p>For an introduction to conceptual search, click on "Learn More". </p>
+      <p>To discover more about conceptual search, its role in human-based cognitive computing and
+        the science upon which Extreme Search is based, click on "Deep Dive" to download
+          <strong>Volume 1: Principles of Cognitive Computing</strong>, Earl Cox, Chief Scientist,
+        Scianta Analytics. (pdf)</p>
+      <p>
+        <a
+          href="concept_intro">
+          <img
+            alt="Learn More"
+            src="/static/app/xtreme/images/learn_button.png" />
+        </a>
+        <img
+          src="/static/app/xtreme/images/space.png" />
+        <a
+          href="http://www.sciantaanalytics.com/sites/default/files/SA-IDXR-REFERENCE-V01_Cognitive_Computing.pdf"
+          target="_blank">
+          <img
+            alt="Deep Dive"
+            src="/static/app/xtreme/images/deepdive_button.png" />
+        </a>
+      </p>
+      <p>
+        <span
+          class="head2">Statistical Reasoning</span>
+      </p>
+      <p>Scianta Extreme Search includes powerful statistical reasoning functions that facilitate
+        analysis of very large data sets quickly and intuitively within Splunk. Extreme Search
+        supports the following categories of Statistical Reasoning functions:</p>
+      <ul>
+        <span
+          class="head5">
+          <li>Linear Regression</li>
+          <li>Non-linear Regression</li>
+          <li>Auto Regression</li>
+          <li>Correlation</li>
+        </span>
+      </ul>
+      <p>Learn more about Statistical Reasoning in Extreme Search in the <a
+          href="command_reference">Command Reference.</a></p>
+      <p>
+        <span
+          class="head2">Predictive Analytics</span>
+      </p>
+      <p>Scianta Extreme Search for Splunk Enterprise is part of the Scianta Analytics Cognitive
+        Computing Suite. Our Cognitive Computing Suite delivers industry-leading, proprietary
+        cognitive modeling, machine learning and predictive analytics to the world of Big Data.
+        Extreme Search for Splunk Enterprise includes concept-based predictive analytics functions
+        that run natively, within Splunk.</p>
+      <p>Learn more about Predictive Analytics in Extreme Search in the <a
+          href="command_reference">Command Reference.</a></p>
+      <p>
+        <span
+          class="head2">Using Extreme Search</span>
+      </p>
+      <p>We encourage you to review the Extreme Search <a
+          href="command_reference">Command Reference.</a> Taken together, these commands deliver to
+        Splunk users the power of Scianta Analytics' cognitive-computing-based conceptual search,
+        stastical reasoning and predictive analytics technology natively, within the Splunk
+        platform. As a query processor, the components can also be combined and used as a data
+        filter to collect, filter, and rank information based on the qualitative semantics
+        associated with each data element. Because Extreme Search is tightly integrated with Splunk,
+        results are delivered alongside the results of native Splunk search commands.</p>
+      <p>
+        <span
+          class="head4">Using Extreme Search from the Splunk Search app</span>
+      </p>
+      <p>All Extreme Search functions may be entered as commands directly within Splunk Search.
+        Results are returned within the Splunk web interface. It is not necessary to use an external
+        interface or the Extreme Search app view. Some Scianta Analytics cognitive computing suites,
+        such as the Scianta Analytics Studio, execute Extreme Search functions and display results
+        through their own user interfaces. Please see the documentation for these systems to learn
+        how they work with Extreme Search for Splunk.</p>
+      <p>
+        <span
+          class="head4">Using Extreme Search from the Extreme Search application view</span>
+      </p>
+      <p>Extreme Search includes dashboards designed to make it easier to develop and apply concepts
+        and contexts without the need to enter Splunk Search. The following dashboards are
+        accessible from the <strong>Conceptual Search</strong> menu in the Extreme Search
+        application view.</p>
+      <ul>
+        <span
+          class="head5">
+          <li>
+            <a
+              href="create_context">Contexts: Create Context</a>
+          </li>
+          <li>
+            <a
+              href="generate_context">Contexts: Generate Context</a>
+          </li>
+          <li>
+            <a
+              href="display_context">Contexts: Display Context</a>
+          </li>
+          <li>
+            <a
+              href="generate_semantic_term">Contexts: Generate Semantic Term</a>
+          </li>
+        </span>
+      </ul>
+      <p>
+        <span
+          class="head2">Documentation and Help</span>
+      </p>
+      <p>Detailed information about each Extreme Search command is provided within your Splunk
+        environment by Splunk's interactive help system. In addition the Extreme Search application
+        view includes <strong>Help</strong> pages like this one within the application view. Some
+        important <strong>Help</strong> pages include:</p>
+      <ul>
+        <span
+          class="head5">
+          <li>
+            <a
+              href="command_reference">Extreme Search Command Reference</a>
+          </li>
+          <li>
+            <a
+              href="concept_intro">Introduction to Conceptual Search</a>
+          </li>
+        </span>
+      </ul>
+      <p>Complete documentation for Extreme Search for Splunk is available online in the <a
+          href="http://www.sciantaanalytics.com/?q=learn"
+          target="_blank"><strong>Learn</strong> section of the Scianta Analytics web site</a>.</p>
+      <br />
+      <p
+        align="center">
+        <span
+          class="head5">Sciante Extreme Search for Splunk Enterprise is part of the Scianta
+          Analytics Cognitive Computing Suite</span>
+        <br />
+        <a
+          href="http://www.sciantaanalytics.com/"
+          target="_blank">
+          <img
+            alt="Scianta Analytics"
+            src="/static/app/xtreme/images/Scianta_Analytics_150.png" />
+        </a>
+      </p>
+      <br />
+      <p>VERSION: 20131001.1</p>
+    </html>
+  </row>
+</dashboard>

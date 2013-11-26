@@ -1,0 +1,197 @@
+<dashboard>
+        <label>xsPerformNonLinearRegression</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <br />
+                        <p>
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsPerformNonLinearRegression</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Statistical Reasoning</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Performs a non linear regression using the
+                                        following formula: y= ceof0*x*x + coef1*x + coef2 and sends
+                                        the output to a specified file.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsPerformNonLinearRegression (x_field)+
+                                        OVER (y_field)+ [BY field] [OUTPUT filename] </span>
+                        </p>
+                        <br />
+                        <br />
+                        <span
+                                class="head4">Example: </span>
+                        <span
+                                class="code">xsPerformNonLinearRegression AirTime OVER ArrDelay BY
+                                Carrier OUTPUT ArrDelay_auto</span>
+                        <p>
+                                <span
+                                        class="explanation">Performs a non-linear regression where
+                                        x=AirTime and y=ArrDelay by Carrier and sends the output to
+                                        the lookup file ArrDelay_auto.csv.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4"> Example Output: </span>
+                                <span
+                                        class="code"> x,y,bf,bv,numRows,coef0,coef1,coef2<br />
+                                        AirTime,ArrDelay,Carrier,B6,118,78.2604583585,18.6901866764,0.9680026802
+                                        AirTime,ArrDelay,Carrier,AS,41,1.1325924020,0.1557147973,0.0040202551
+                                        AirTime,ArrDelay,Carrier,AA,135,-26.0565180546,-3.5230130010,-0.0846049259
+                                        AirTime,ArrDelay,Carrier,DL,94,-103.4711161173,-11.5135877840,-0.2499337704
+                                        AirTime,ArrDelay,Carrier,UA,96,-187.8388775137,-22.7350956484,-0.4859345237
+                                        AirTime,ArrDelay,Carrier,US,113,-85.2347784626,-6.9494818248,-0.0840156803
+                                        AirTime,ArrDelay,Carrier,OO,82,198.9509270901,27.3017214549,0.6730170371
+                                        AirTime,ArrDelay,Carrier,MQ,94,-0.5512952076,-0.1478082821,-0.0003013436
+                                        AirTime,ArrDelay,Carrier,YV,24,-1.6202881521,-0.1124871661,-0.0010837227
+                                        AirTime,ArrDelay,Carrier,HA,12,-196.2344572256,-219.2221626283,-39.8398350399
+                                        AirTime,ArrDelay,Carrier,EV,52,15.8423239651,1.3738515117,0.0211298248
+                                        AirTime,ArrDelay,Carrier,F9,8,2.0334106189,0.1670090165,0.0027021810
+                                        AirTime,ArrDelay,Carrier,WN,87,301.0510037695,24.6300835293,0.3429219966
+                                        AirTime,ArrDelay,Carrier,FL,28,-5.9103290850,-0.4708288806,-0.0069072303
+                                        AirTime,ArrDelay,Carrier,VX,9,-1.9957166109,-0.1476301836,-0.0021120042</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Where:</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">x = x field<br />y = y field <br /> bf =
+                                        BY field name<br /> bv = BY field value<br /> numRows =
+                                        number of rows contributing to function<br /> coef0 = the
+                                        first coefficient<br /> coef1 = the second coefficient<br />
+                                        coef2 = the third coeffiecient</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext"> (x_field)+ OVER (y_field)+ BY fieldname
+                                        OUTPUT filename</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">x_field (field name containing an X
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as x in the formula. You may specificy more than one
+                                        field to perform regression against. Each field name is
+                                        separated by a blank space.<span
+                                                class="bodytext"> y= ceof0*x*x + coef1*x +
+                                                coef2</span>.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">y_field (field name containing a Y
+                                        value)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A field in the data set which will be
+                                        used as y in the formula. You may specificy more than one
+                                        field to perform regression against. Each field name is
+                                        separated by a blank space.<span
+                                                class="bodytext"> y= ceof0*x*x + coef1*x +
+                                                coef2</span>.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The xsPerformNonLinearRegression
+                                        function will return results for multiple values of x and y.
+                                        Specify 1 to n fields in the data set, each of which will be
+                                        used as x and y in the formula <span
+                                                class="bodytext"> y= ceof0*x*x + coef1*x +
+                                                coef2</span>.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">BY fieldname</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Specifies the field in the data set by
+                                        which the regression will be performed.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">OUTPUT (filename)</span>
+                        </p>
+                        <p><span
+                                        class="explanation">Specifies the lookup file to which the
+                                        output will be written.</span>.</p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">Performs the requested regression and send
+                                        the output in Comma Separated Value format to the specified
+                                        file name. If the file exists, it will be
+                                        overwritten.</span>
+                        </p>
+                        <br />
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p> Version 20130715.3 </p>
+                </html>
+        </row>
+</dashboard>

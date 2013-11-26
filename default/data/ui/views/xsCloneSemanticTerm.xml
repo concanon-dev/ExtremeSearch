@@ -1,0 +1,150 @@
+<dashboard>
+        <label>xsCloneSemanticTerm</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsCloneSemanticTerm</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Copies a semantic term from one context to
+                                        another.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsCloneSemanticTerm oldSemanticTerm FROM
+                                        oldContext [IN oldScope] TO newContext [IN newScope]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| xsCloneSemanticTerm late in ArrDelay_monday IN private
+                                        to late in ArrDelay_monday IN app</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Clones the Semantic Term 'late' in Context
+                                        'ArrDelay_monday' in private scope to 'late' in Context
+                                        'ArrDelay_monday' in app scope.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext">newContext, newScope, oldContext,
+                                        oldScope, semanticTerm</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">newContext</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the new Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">newScope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The scope of the new Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">oldContext</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the old Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">oldScope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The scope of the old Context.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">semanticTerm</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the existing Semantic
+                                        Term.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The semantic term is cloned. See <a
+                                                href="xsRenameSemanticTerm">xsRenameSemanticTerm</a>
+                                        for details about renaming a semantic term. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20131105.3</p>
+                </html>
+        </row>
+</dashboard>

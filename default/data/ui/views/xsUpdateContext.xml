@@ -1,0 +1,200 @@
+<dashboard>
+        <label>xsUpdateContext</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsUpdateContext</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Updates a Context with specified
+                                        parameters</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsUpdateContext old=filename name=string
+                                        [terms=&quot;string(,string)*&quot;] [type=(ZC|SD)]
+                                        [avg=double] [count=int] [max=double] [min=double]
+                                        [stdev=double]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">xsUpdateContext old=AirTime name=AirTime
+                                        avg=200 count=500000 max=800 min=0 stdev=80.10</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Updates a Zero-Centered (default
+                                        type=ZC) Context called AirTime, with new
+                                        avg/count/min/max/stdev as defined.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">... | stats avg(AirTime) as avg count(AirTime)
+                                        as count max(AirTime) as max min(AirTime) as min
+                                        stdev(AirTime) as stdev | xsUpdateContext old=AirTime
+                                        name=AirTime </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Updates a Zero-centered Context by using
+                                        the stats command to calculate the avg/count/max/min/stdev
+                                        to determine new values. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext"> avg, count, max, min, name, stdev, terms,
+                                        type</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">avg</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The average value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats avg(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">count</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The number of fields. This parameter can
+                                        be passed as part of the command or via search input using
+                                        stats count(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">max</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The maximum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats max(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">min</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The minimum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats min(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">name (term set name)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A legal string which specifies the name
+                                        by which the created Context will be known.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">terms (array of term names)</span>
+                        </p>
+                        <p><span
+                                        class="explanation">A comma delimited set of legal strings
+                                        which define the names of the terms within the Context
+                                </span>. </p>
+                        <p>
+                                <span
+                                        class="para">stdev</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The standard deviation of the field
+                                        values. This parameter can be passed as part of the command
+                                        or via search input using stats stdev(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">type (term set type)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">ZC - Zero Centered : sizes semantic
+                                        terms to fit the min, max, centered on (min+max)/2. If no
+                                        type is specified, the function defaults to ZC.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">SD - Standard Deviation : sizes semantic
+                                        terms 2 stdevs in size, centered on avg</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The context created by xsUpdateContext is
+                                        displayed in table or chart format. See <a
+                                                href="xsDisplayContext">xsDisplayContext</a> for
+                                        details about display of the created term set. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20130717.1</p>
+
+                </html>
+        </row>
+</dashboard>

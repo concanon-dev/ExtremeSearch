@@ -1,0 +1,179 @@
+<dashboard>
+        <label>xsApplyAutoRegression</label>
+        <row>
+                <html>
+                        <a
+                                href="xtreme_overview">
+                                <img
+                                        alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="command_reference">
+                                <img
+                                        alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=documentation"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img
+                                src="/static/app/xtreme/images/space.png" />
+                        <a
+                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                                target="_blank">
+                                <img
+                                        alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span
+                                class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Command: </span>
+                                <span
+                                        class="cmd">xsApplyAutoRegression</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Category: </span>
+                                <span
+                                        class="bodytext">Statistical Reasoning</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Description: </span>
+                                <span
+                                        class="bodytext">Apply auto regression against a set of
+                                        events containing the specified fields. The algorithm is
+                                        derived from either a specified lookup file or by specifying
+                                        a series of 3 coefficients and one or more fields. If the
+                                        algorithm is derived from a lookup file, the fields are
+                                        embedded in the file.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Syntax: </span>
+                                <span
+                                        class="bodytext">xsApplyAutoRegression ((FROM filename) |
+                                        (coef0=value coef1=value ceof2=value OVER (field)+))</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| xsApplyAutoRegression FROM
+                                        ArrDelay_auto</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Applies autoregression against a set of
+                                        coefficients and fields specified in the file
+                                        ArrDelay_auto.csv.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Example: </span>
+                                <span
+                                        class="code">| xsApplyAutoRegression coef0=78.260
+                                        coef1=18.690 coef2=0.9680 OVER AirTime</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">Applies autoregression against the
+                                        specified coefficients OVER the field AirTime</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext"> (filename) or (coef0=value, coef1=value,
+                                        coef2=value, OVER field)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">filename (name of lookup file)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">This file is typically an output file
+                                        generated by an xsPerform or xsAggregate function. It is in
+                                        standard comma separated values (csv) format. The .csv file
+                                        name extension is implied, and should not be included as
+                                        part of the filename parameter.</span>
+                        </p>
+                        <p
+                                class="para">Lookup File Example:</p>
+                        <p
+                                class="para"><span
+                                        class="bodytext">ArrDelay_auto.csv</span> = </p>
+                        <p
+                                class="code">x,bf,bv,numRows,coef0,coef1,coef2<br />
+                                AirTime,Carrier,B6,118,78.2604583585,18.6901866764,0.9680026802<br />
+                                AirTime,Carrier,AS,41,1.1325924020,0.1557147973,0.0040202551<br />
+                                AirTime,Carrier,AA,135,-26.0565180546,-3.5230130010,-0.0846049259<br />
+                                AirTime,Carrier,DL,94,-103.4711161173,-11.5135877840,-0.2499337704<br />
+                                AirTime,Carrier,UA,96,-187.8388775137,-22.7350956484,-0.4859345237<br />
+                                AirTime,Carrier,US,113,-85.2347784626,-6.9494818248,-0.0840156803<br />
+                                AirTime,Carrier,OO,82,198.9509270901,27.3017214549,0.6730170371<br />
+                                AirTime,Carrier,MQ,94,-0.5512952076,-0.1478082821,-0.0003013436<br />
+                                AirTime,Carrier,YV,24,-1.6202881521,-0.1124871661,-0.0010837227<br />
+                                AirTime,Carrier,HA,12,-196.2344572256,-219.2221626283,-39.8398350399<br />
+                                AirTime,Carrier,EV,52,15.8423239651,1.3738515117,0.0211298248<br />
+                                AirTime,Carrier,F9,8,2.0334106189,0.1670090165,0.0027021810<br />
+                                AirTime,Carrier,WN,87,301.0510037695,24.6300835293,0.3429219966<br />
+                                AirTime,Carrier,FL,28,-5.9103290850,-0.4708288806,-0.0069072303<br />
+                                AirTime,Carrier,VX,9,-1.9957166109,-0.1476301836,-0.0021120042</p>
+                        <p>
+                                <span
+                                        class="para">value (for coef0, coef1 and coef2)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A real number representing a regression
+                                        coefficient.</span>
+                                <span
+                                        class="explanation" />
+                        </p>
+                        <p>
+                                <span
+                                        class="para">field</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A valid field name.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="explanation">A new field, PredictedValue, is added to
+                                        the output. The result of applying the regression for each
+                                        event is stored in PredictedValue for that event.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br /> Version 20130716.5</p>
+
+                </html>
+        </row>
+</dashboard>

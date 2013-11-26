@@ -1,0 +1,112 @@
+/* Scianta Help Style Sheet
+/*
+/* Revised 20130708.4 WE Thackrey, Scianta Analytics */
+/*
+/*-------------------------------------------*
+/*Reset
+/*-------------------------------------------*/
+
+.cmdname {
+	font-size: medium;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+}
+.cmd {
+	font-size: 130%;
+	font-weight: bold;
+	color: #000;
+}
+.head2 {
+	font-size: 180%;;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+}
+.head3 {
+	font-size: 150%;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+	}
+.head4 {
+	font-size: 130%;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+}
+.head5 {
+	font-size: 110%;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+}
+.head6 {
+	font-size: 100%;
+	font-style: normal;
+	font-weight: bold;
+	color: #0069C2;
+}
+.bodytext {
+	font-size: medium;
+	font-weight: normal;
+	color: #000;
+}
+.tableeven {
+	font-size: medium;
+	font-weight: normal;
+	color: #000;
+	background-color: #EDEDED;
+}
+.tableodd {
+	font-size: medium;
+	font-weight: normal;
+	color: #000;
+}
+.explanation {
+	font-size: medium;
+	font-style: normal;
+	font-weight: normal;
+	color: #000;
+}
+
+.code {
+  font-size: medium;
+  color: #000;
+  background: #d8d8d8;
+  text-shadow: 1px 1px #fff;
+  border: 1px solid #bbbbbb;
+  display: block;
+  padding: 7px;
+  margin: 5px 0;
+  border-radius: 7px;
+}
+
+.para {
+	color: #000;
+	font-size: medium;
+	font-style: normal;
+	font-weight: bold;
+}
+.insetrt {
+  font-size: 100%;
+  color: #fff;
+  float: right;
+  align: center;
+  background: #0069C2;
+  border: 1px solid #0069C2;
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 7px;
+}
+.insetlt {
+  font-size: 100%;
+  color: #fff;
+  float: left;
+  align: center;
+  background: #0069C2;
+  border: 1px solid #0069C2;
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 7px;
+}
