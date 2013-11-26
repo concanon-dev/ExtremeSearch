@@ -13,23 +13,23 @@
 #include <unistd.h>
 #include "saConstants.h"
 
-static char inbuf[MAXNUMCOLS];
-static char tempbuf[MAXNUMCOLS];
-static char *fieldList[MAXNUMCOLS];
+static char inbuf[SA_CONSTANTS_MAXNUMCOLS];
+static char tempbuf[SA_CONSTANTS_MAXNUMCOLS];
+static char *fieldList[SA_CONSTANTS_MAXNUMCOLS];
 
-static char *byF[MAXNUMCOLS];
-static char *byV[MAXNUMCOLS];
-static double A[MAXNUMCOLS];
-static double B[MAXNUMCOLS];
-static double errA[MAXNUMCOLS];
-static double errB[MAXNUMCOLS];
-static double guess[MAXNUMCOLS];
-static int numRows[MAXNUMCOLS];
-static double R[MAXNUMCOLS];
-static char *X[MAXNUMCOLS];
-static char *Y[MAXNUMCOLS];
+static char *byF[SA_CONSTANTS_MAXNUMCOLS];
+static char *byV[SA_CONSTANTS_MAXNUMCOLS];
+static double A[SA_CONSTANTS_MAXNUMCOLS];
+static double B[SA_CONSTANTS_MAXNUMCOLS];
+static double errA[SA_CONSTANTS_MAXNUMCOLS];
+static double errB[SA_CONSTANTS_MAXNUMCOLS];
+static double guess[SA_CONSTANTS_MAXNUMCOLS];
+static int numRows[SA_CONSTANTS_MAXNUMCOLS];
+static double R[SA_CONSTANTS_MAXNUMCOLS];
+static char *X[SA_CONSTANTS_MAXNUMCOLS];
+static char *Y[SA_CONSTANTS_MAXNUMCOLS];
 
-static char *indexString[MAXNUMCOLS];
+static char *indexString[SA_CONSTANTS_MAXNUMCOLS];
 static int numIndexes = 0;
 
 void printLine(char *[], int);
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
    int numFields;
    int i;
-   for(i=0; i<MAXNUMCOLS; i++)
+   for(i=0; i<SA_CONSTANTS_MAXNUMCOLS; i++)
    {
        numRows[i] = 0;
        R[i] = 0.0;
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
    int yIndex = -1;
 
    // Get the header
-   numFields = getCSVLine(inbuf, fieldList);
+   numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
        if (!compareField(fieldList[i], "bf"))
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
    while(!feof(stdin))
    {
        int index = -1;
-       numFields = getCSVLine(inbuf, fieldList);
+       numFields = saCSVGetLine(inbuf, fieldList);
        if (!feof(stdin))
        {
            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
@@ -174,7 +174,8 @@ int main(int argc, char* argv[])
    }
 
    // write out the results
-   fprintf(stdout, "x,y,bf,bv,numRows,slope,intercept,errA,errB,R,%s\n", PREDICTION_COLUMN);
+   fprintf(stdout, "x,y,bf,bv,numRows,slope,intercept,errA,errB,R,%s\n", 
+           SA_CONSTANTS_PREDICTION_COLUMN);
    for(i=0; i<=maxIndex; i++)
    {
        fprintf(stdout, "%s,%s,%s,%s,%d,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], A[i], B[i], errA[i], errB[i], R[i], guess[i]);

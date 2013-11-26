@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsprespearmancorrelate -O2 -Wall -lm obj/$Platform/xsprespearmancorrelate.o obj/$Platform/saSpearmanCorrelation.o obj/$Platform/saStatistics.o obj/$Platform/csv.o obj/$Platform/saInsertUniqueValue.o obj/$Platform/saSignal.o obj/$Platform/saMatrixArgs.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsprespearmancorrelate -O2 -Wall -lm obj/$Platform/xsprespearmancorrelate.o obj/$Platform/saSpearmanCorrelation.o obj/$Platform/saStatistics.o obj/$Platform/saCSV.o obj/$Platform/saInsertUniqueValue.o obj/$Platform/saSignal.o obj/$Platform/saMatrixArgs.o obj/$Platform/saLicensing.o $LicenseLib

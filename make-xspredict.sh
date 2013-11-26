@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xspreregress -O2 -Wall -lm obj/$Platform/xspreregress.o obj/$Platform/saLinearRegression.o obj/$Platform/saCSV.o obj/$Platform/saInsertUniqueValue.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o obj/$Platform/saDebug.o $LicenseLib
+$gcc -o bin/$Platform/xspredict -O2 -Wall obj/$Platform/xspredict.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib

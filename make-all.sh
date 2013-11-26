@@ -44,5 +44,10 @@ fi
 ./make-xsDisplaySemanticTerm.sh
 ./make-xspreautoregress.sh
 ./make-xsprecorrelate.sh
+./make-xspredict.sh
+./make-xsprelicense.sh
+./make-xsprequadregress.sh
+./make-xspreregress.sh
+./make-xsprespearmancorrelate.sh
 
 cp LimeLM/TurboActivate.dat bin/$Platform

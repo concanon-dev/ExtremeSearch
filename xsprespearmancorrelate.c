@@ -11,30 +11,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "xconstants.h"
+#include "saConstants.h"
 
-static char inbuf[MAXROWSIZE];
-static char tempbuf[MAXROWSIZE];
-static char *fieldList[MAXNUMCOLS];
+static char inbuf[SA_CONSTANTS_MAXROWSIZE];
+static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
+static char *fieldList[SA_CONSTANTS_MAXNUMCOLS];
 
-static int totalRows[MAXAXIS];
-static int bFieldIndex[MAXAXIS];
-static int xFieldIndex[MAXAXIS];
-static int yFieldIndex[MAXAXIS];
-static char *bList[MAXAXIS];
-static char *xList[MAXAXIS];
-static char *yList[MAXAXIS];
+static int totalRows[SA_CONSTANTS_MAXAXIS];
+static int bFieldIndex[SA_CONSTANTS_MAXAXIS];
+static int xFieldIndex[SA_CONSTANTS_MAXAXIS];
+static int yFieldIndex[SA_CONSTANTS_MAXAXIS];
+static char *bList[SA_CONSTANTS_MAXAXIS];
+static char *xList[SA_CONSTANTS_MAXAXIS];
+static char *yList[SA_CONSTANTS_MAXAXIS];
 
-static char *bAxis[MAXROWSIZE];
-static char *bValues[MAXROWSIZE];
-static double tempXDoubles[MAXROWSIZE];
-static double tempYDoubles[MAXROWSIZE];
+static char *bAxis[SA_CONSTANTS_MAXROWSIZE];
+static char *bValues[SA_CONSTANTS_MAXROWSIZE];
+static double tempXDoubles[SA_CONSTANTS_MAXROWSIZE];
+static double tempYDoubles[SA_CONSTANTS_MAXROWSIZE];
 static int numTempDoubles;
 static int numUniqueBValues;
-static double *xAxis[MAXAXIS];
-static double *yAxis[MAXAXIS];
+static double *xAxis[SA_CONSTANTS_MAXAXIS];
+static double *yAxis[SA_CONSTANTS_MAXAXIS];
 
-extern int getCSVLine(char [], char *[]);
+extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int parseFieldList(char *[], char *);
 extern int saLinearCorrelation(double [], double [], int, int, double *);
@@ -50,9 +50,9 @@ int main(int argc, char* argv[])
     bool hasByClause;
     bool mustMatchFields;
     bool ySpecified;
-    char fieldB[MAXSTRING];
-    char fieldX[MAXSTRING];
-    char fieldY[MAXSTRING];
+    char fieldB[SA_CONSTANTS_MAXSTRING];
+    char fieldX[SA_CONSTANTS_MAXSTRING];
+    char fieldY[SA_CONSTANTS_MAXSTRING];
     int c;
 
     if (!isLicensed())
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     if (!ySpecified)
-        saMatrixArgs(fieldX, fieldY, MAXSTRING);
+        saMatrixArgs(fieldX, fieldY, SA_CONSTANTS_MAXSTRING);
 
     int numBAxis = -1;
     if (hasByClause)
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     // Initialize index pointers
     int foundCount = 0;
     int i;
-    for(i=0; i<MAXAXIS; i++)
+    for(i=0; i<SA_CONSTANTS_MAXAXIS; i++)
     {
         totalRows[i] = 0;
         bFieldIndex[i] = -1;
@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     }
 
     // Get Header line
-    int numFields = getCSVLine(inbuf, fieldList);
+    int numFields = saCSVGetLine(inbuf, fieldList);
 
     // Find the x and y fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -197,15 +197,15 @@ int main(int argc, char* argv[])
         // allocate data arrays
         for(i=0; i<numXAxis; i++)
         {
-            xAxis[i] = malloc(sizeof(double)*MAXNUMROWS);
-            yAxis[i] = malloc(sizeof(double)*MAXNUMROWS);
+            xAxis[i] = malloc(sizeof(double)*SA_CONSTANTS_MAXNUMROWS);
+            yAxis[i] = malloc(sizeof(double)*SA_CONSTANTS_MAXNUMROWS);
         }
 
         numUniqueBValues = 0;
         bool done = false;
         while(done == false)
         {
-            getCSVLine(inbuf, fieldList);
+            saCSVGetLine(inbuf, fieldList);
             if (!feof(stdin))
             {
                 for(i=0; i<numXAxis; i++)
