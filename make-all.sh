@@ -36,12 +36,29 @@ else
   cp LimeLM/Linux/x64/libTurboActivate.so bin/$Platform
 fi
 
+./make-fix-intersplunk.sh
+./make-xsAggregateAutoRegression.sh*
+./make-xsAggregateCorrelation.sh*
+./make-xsAggregateLinearRegression.sh*
+./make-xsAggregateQuadRegression.sh*
+./make-xsAggregateSpearmanCorrelation.sh*
+./make-xsApplyAutoRegression.sh
+./make-xsApplyAutoRegressionFromFile.sh
+./make-xsApplyLinearRegression.sh
+./make-xsApplyLinearRegressionFromFile.sh
+./make-xsApplyQuadRegression.sh
+./make-xsApplyQuadRegressionFromFile.sh
 ./make-xsCloneContext.sh
 ./make-xsCloneSemanticTerm.sh
 ./make-xsCreateContext.sh
 ./make-xsDeleteContext.sh
 ./make-xsDisplayContext.sh
 ./make-xsDisplaySemanticTerm.sh
+./make-xsPerformAutoRegression.sh
+./make-xsPerformCorrelation.sh
+./make-xsPerformLinearRegression.sh
+./make-xsPerformQuadRegression.sh
+./make-xsPerformSpearmanCorrelation.sh
 ./make-xspreautoregress.sh
 ./make-xsprecorrelate.sh
 ./make-xspredict.sh

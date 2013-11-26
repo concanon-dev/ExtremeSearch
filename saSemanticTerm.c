@@ -251,6 +251,97 @@ saSemanticTermTypePtr saSemanticTermCreatePI(char *name, double domainMin, doubl
     return(p);
 }
 
+saSemanticTermTypePtr saSemanticTermCreateTrapezoid(char *name, double domainMin, double domainMax,
+                                             double termMin, double termMax, double center)
+{
+    int i;
+
+    // make sure term is not inverted
+    if (termMin >= termMax || termMax <= termMin)
+        return(NULL);
+
+    // make sure term fits inside context
+    if (termMin < domainMin || termMax > domainMax)
+        return(NULL);
+
+    // make sure center is between min and max
+    if (center <= termMin || center >= termMax)
+        return(NULL);
+
+    double domainSize = domainMax - domainMin;
+    double termSize = termMax - termMin;
+    double trapSize = termSize * SA_SEMANTICTERM_TRAPEZOID_SIZE;
+    saSemanticTermTypePtr p = saSemanticTermInit(name, domainMin, domainMax);
+    p->shape = malloc(strlen(SA_SEMANTICTERM_SHAPE_TRAPEZOID)+1);
+    strcpy(p->shape, SA_SEMANTICTERM_SHAPE_TRAPEZOID);
+    p->domainMin = domainMin;
+    p->domainMax = domainMax;
+    p->numPoints = 4;
+    p->points[0] = termMin;
+    p->points[1] = termMin + trapSize;
+    p->points[2] = termMax - trapSize;
+    p->points[3] = termMax;
+
+    for(i=0;i<SA_SEMANTICTERM_VECTORSIZE;i++)
+    {
+        double bucketSize = domainMin + (float)i/(SA_SEMANTICTERM_VECTORSIZE) * domainSize;
+        if (bucketSize > termMin)
+        {
+        if (bucketSize < (termMin + trapSize))
+            p->vector[i]=(float)((bucketSize - termMin)/trapSize);
+        else if (bucketSize > (termMax - trapSize))
+            p->vector[i]=(float)(1 - (bucketSize - (termMax-trapSize))/trapSize);
+        else
+            p->vector[i]=(float)1.0;
+        }
+    }
+    return(p);
+}
+
+saSemanticTermTypePtr saSemanticTermCreateTriangle(char *name, double domainMin, double domainMax,
+                                             double termMin, double termMax, double center)
+{
+    int i;
+
+    // make sure term is not inverted
+    if (termMin >= termMax || termMax <= termMin)
+        return(NULL);
+
+    // make sure term fits inside context
+    if (termMin < domainMin || termMax > domainMax)
+        return(NULL);
+
+    // make sure center is between min and max
+    if (center <= termMin || center >= termMax)
+        return(NULL);
+
+    double domainSize = domainMax - domainMin;
+    double termSize = termMax - termMin;
+    saSemanticTermTypePtr p = saSemanticTermInit(name, domainMin, domainMax);
+    p->shape = malloc(strlen(SA_SEMANTICTERM_SHAPE_TRIANGLE)+1);
+    strcpy(p->shape, SA_SEMANTICTERM_SHAPE_TRIANGLE);
+    p->domainMin = domainMin;
+    p->domainMax = domainMax;
+    p->numPoints = 3;
+    p->points[0] = termMin;
+    p->points[1] = center;
+    p->points[2] = termMax;
+
+    for(i=0;i<SA_SEMANTICTERM_VECTORSIZE;i++)
+    {
+        double bucketSize = domainMin + (float)i/(SA_SEMANTICTERM_VECTORSIZE) * domainSize;
+        if (bucketSize > termMin)
+        {
+            if (bucketSize < center)
+                p->vector[i]=(float)((bucketSize - termMin)/(termSize/2));
+            else if (bucketSize == center)
+                p->vector[i] = (float)1.0;
+            else
+                p->vector[i]=(float)(1 - (bucketSize - center)/(termSize/2));
+        }
+    }
+    return(0);
+}
 
 
 saSemanticTermTypePtr saSemanticTermInit(char *name, double domainMin, double domainMax)
