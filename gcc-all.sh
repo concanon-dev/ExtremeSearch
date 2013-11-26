@@ -25,12 +25,14 @@ $GCC -c saContext.c                      -o obj/$Platform/saContext.o
 $GCC -c saContextCreate.c                -o obj/$Platform/saContextCreate.o
 $GCC -c saCSV.c                          -o obj/$Platform/saCSV.o
 $GCC -c saDebug.c                        -o obj/$Platform/saDebug.o
+$GCC -c saGeoLiteCity.c                  -o obj/$Platform/saGeoLiteCity.o
 $GCC -c saHash.c                         -o obj/$Platform/saHash.o
 $GCC -c saHedge.c                        -o obj/$Platform/saHedge.o
 $GCC -c saInsertUniqueValue.c            -o obj/$Platform/saInsertUniqueValue.o
 $GCC -c saLicenseMain.c                  -o obj/$Platform/saLicenseMain.o
 $GCC -c saLinearCorrelation.c            -o obj/$Platform/saLinearCorrelation.o
 $GCC -c saLinearRegression.c             -o obj/$Platform/saLinearRegression.o
+$GCC -c saListDir.c                      -o obj/$Platform/saListDir.o
 $GCC -c saMatrixArgs.c                   -o obj/$Platform/saMatrixArgs.o
 $GCC -c saOpenFile.c                     -o obj/$Platform/saOpenFile.o
 $GCC -c saQuadRegression.c               -o obj/$Platform/saQuadRegression.o
@@ -56,8 +58,12 @@ $GCC -c xsCloneContext.c                 -o obj/$Platform/xsCloneContext.o
 $GCC -c xsCloneSemanticTerm.c            -o obj/$Platform/xsCloneSemanticTerm.o
 $GCC -c xsCreateContext.c                -o obj/$Platform/xsCreateContext.o
 $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
+$GCC -c xsDeleteSemanticTerm.c           -o obj/$Platform/xsDeleteSemanticTerm.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
 $GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
+$GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
+$GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
+$GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
 $GCC -c xsPerformAutoRegression.c        -o obj/$Platform/xsPerformAutoRegression.o
 $GCC -c xsPerformCorrelation.c           -o obj/$Platform/xsPerformCorrelation.o
 $GCC -c xsPerformLinearRegression.c      -o obj/$Platform/xsPerformLinearRegression.o

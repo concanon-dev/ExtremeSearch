@@ -54,6 +54,8 @@ fi
 ./make-xsDeleteContext.sh
 ./make-xsDisplayContext.sh
 ./make-xsDisplaySemanticTerm.sh
+./make-xsLicense.sh
+./make-xsListContexts.sh
 ./make-xsPerformAutoRegression.sh
 ./make-xsPerformCorrelation.sh
 ./make-xsPerformLinearRegression.sh

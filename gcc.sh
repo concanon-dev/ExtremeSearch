@@ -10,4 +10,5 @@ else
   Platform='Linux/x64'
 fi
 
-$GCC -c ${1}.c  -o obj/$Platform/${1}.o
+F=`echo $1 | sed -e 's/\.c//g'`
+$GCC -c ${F}.c  -o obj/$Platform/${1}.o
