@@ -42,6 +42,7 @@ fi
 ./make-xsDeleteContext.sh
 ./make-xsDisplayContext.sh
 ./make-xsDisplaySemanticTerm.sh
-
+./make-xspreautoregress.sh
+./make-xsprecorrelate.sh
 
 cp LimeLM/TurboActivate.dat bin/$Platform

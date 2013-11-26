@@ -20,17 +20,21 @@ if [ ! -d obj/$Platform ]; then
 fi
 
 $GCC -c fix-intersplunk.c                -o obj/$Platform/fix-intersplunk.o
+$GCC -c saAutoRegression.c               -o obj/$Platform/saAutoRegression.o
 $GCC -c saContext.c                      -o obj/$Platform/saContext.o
 $GCC -c saContextCreate.c                -o obj/$Platform/saContextCreate.o
 $GCC -c saCSV.c                          -o obj/$Platform/saCSV.o
 $GCC -c saDebug.c                        -o obj/$Platform/saDebug.o
 $GCC -c saHash.c                         -o obj/$Platform/saHash.o
 $GCC -c saHedge.c                        -o obj/$Platform/saHedge.o
-$GCC -c saLicensing.c                    -o obj/$Platform/saLicensing.o
+$GCC -c saInsertUniqueValue.c            -o obj/$Platform/saInsertUniqueValue.o
+$GCC -c saLinearCorrelation.c            -o obj/$Platform/saLinearCorrelation.o
+$GCC -c saMatrixArgs.c                   -o obj/$Platform/saMatrixArgs.o
 $GCC -c saOpenFile.c                     -o obj/$Platform/saOpenFile.o
 $GCC -c saSignal.c                       -o obj/$Platform/saSignal.o
 $GCC -c saSemanticTerm.c                 -o obj/$Platform/saSemanticTerm.o
 $GCC -c saSplunk.c                       -o obj/$Platform/saSplunk.o
+$GCC -c saStatistics.c                   -o obj/$Platform/saStatistics.o
 $GCC -c test.c                           -o obj/$Platform/test.o
 $GCC -c test2.c                          -o obj/$Platform/test2.o
 $GCC -c xsCloneContext.c                 -o obj/$Platform/xsCloneContext.o
@@ -39,6 +43,9 @@ $GCC -c xsCreateContext.c                -o obj/$Platform/xsCreateContext.o
 $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
 $GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
+$GCC -c xspreautoregress.c               -o obj/$Platform/xspreautoregress.o
+$GCC -c xsprecorrelate.c                 -o obj/$Platform/xsprecorrelate.o
+
 
 if [ "$OSTYPE" = "cygwin" ]; then 
 $GCC -c strsep.c                         -o obj/$Platform/strsep.o
