@@ -43,7 +43,7 @@ Enter values in each field as necessary to create the Context
         </input>
         <input type="text" token="datafield">
             <default></default>
-            <label>Field to build Context for</label>
+            <label>Field Name</label>
             <seed></seed>
         </input>
         <input type="text" token="notes">

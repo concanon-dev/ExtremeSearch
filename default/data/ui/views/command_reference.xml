@@ -170,13 +170,23 @@
           class="tableodd">
           <td>
             <a
+              href="xsCreateUDContext">xsCreateUDContext</a>
+          </td>
+          <td>Conceptual Search</td>
+          <td>Creates a context, which contains semantic terms based on a variety of methods of
+            mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
+        </tr>
+        <tr
+          class="tableeven">
+          <td>
+            <a
               href="xsDeleteContext">xsDeleteContext</a>
           </td>
           <td>Conceptual Search</td>
           <td>Deletes a Context.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsDeleteSemanticTerm">xsDeleteSemanticTerm</a>
@@ -185,7 +195,7 @@
           <td>Deletes a Semantic Term from a Context.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsDiscoverTrend">xsDiscoverTrend</a>
@@ -195,7 +205,7 @@
             maps the results to the semantic term represented by the Y field.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsDisplayContext">xsDisplayContext</a>
@@ -204,7 +214,7 @@
           <td>Displays all of the semantic terms in a context.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a>
@@ -213,7 +223,7 @@
           <td>Displays one or more semantic terms (with hedges).</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsDisplayWhere">xsDisplayWhere</a>
@@ -222,7 +232,7 @@
           <td>Displays the (hedged) concepts used by xsWhere.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsFindMemebership">xsFindMemebership</a>
@@ -230,16 +240,6 @@
           <td>Conceptual Search</td>
           <td>Returns the membership value of a data value in a specified semantic term, or returns
             the data value given a membership value in a specified semantic term.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsGenerateContext">xsGenerateContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Creates a context, which contains semantic terms based on a variety of methods of
-            mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
         </tr>
         <tr
           class="tableodd">
@@ -359,15 +359,6 @@
           class="tableodd">
           <td>
             <a
-              href="xsUpdateContext">xsUpdateContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Creates a new Context by combining an old set with new data.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
               href="xsWhere">xsWhere</a>
           </td>
           <td>Conceptual Search</td>
@@ -390,7 +381,7 @@
         </a>
       </p>
       <br />
-      <p>VERSION: 20131121.4</p>
+      <p>VERSION: 20131127.5</p>
     </html>
   </row>
 </dashboard>

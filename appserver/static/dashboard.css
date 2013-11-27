@@ -53,12 +53,14 @@
 	color: #000;
 }
 .tableeven {
+        margin: 3px;
 	font-size: medium;
 	font-weight: normal;
 	color: #000;
 	background-color: #EDEDED;
 }
 .tableodd {
+        margin: 3px;
 	font-size: medium;
 	font-weight: normal;
 	color: #000;

@@ -1,5 +1,5 @@
 <form>
-    <label>Generate Context</label>
+    <label>Create User-Defined Context</label>
     <fieldset>
         <html>
             <p style="padding-top: 20px">
@@ -77,7 +77,7 @@ Enter values in each field as necessary to generate the Context
          define master search template; leave time unbounded so that the time input can be used 
       -->
     <searchTemplate>
-| xsGenerateContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$"
+| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$"
     </searchTemplate>
 
     <row>   

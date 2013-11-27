@@ -111,7 +111,7 @@
                                         class="head4">Result: </span>
                                 <span
                                         class="bodytext">A field 'distance' is added to each event with the calculated
-                                        distance.  If this is < 0, there was no way to calculate the distance for that event.</span>
+                                        distance.  If this is less than 0, there was no way to calculate the distance for that event.</span>
                         </p>
                         <p>
                                 <span
