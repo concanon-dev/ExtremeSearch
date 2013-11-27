@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsPerformCorrelation -O2 -Wall obj/$Platform/xsPerformCorrelation.o obj/$Platform/csv.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsPerformCorrelation -O2 -Wall obj/$Platform/xsPerformCorrelation.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib

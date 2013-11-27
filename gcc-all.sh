@@ -30,11 +30,13 @@ $GCC -c saHash.c                         -o obj/$Platform/saHash.o
 $GCC -c saHedge.c                        -o obj/$Platform/saHedge.o
 $GCC -c saInsertUniqueValue.c            -o obj/$Platform/saInsertUniqueValue.o
 $GCC -c saLicenseMain.c                  -o obj/$Platform/saLicenseMain.o
+$GCC -c saLicensing.c                    -o obj/$Platform/saLicensing.o
 $GCC -c saLinearCorrelation.c            -o obj/$Platform/saLinearCorrelation.o
 $GCC -c saLinearRegression.c             -o obj/$Platform/saLinearRegression.o
 $GCC -c saListDir.c                      -o obj/$Platform/saListDir.o
 $GCC -c saMatrixArgs.c                   -o obj/$Platform/saMatrixArgs.o
 $GCC -c saOpenFile.c                     -o obj/$Platform/saOpenFile.o
+$GCC -c saParser.c                       -o obj/$Platform/saParser.o
 $GCC -c saQuadRegression.c               -o obj/$Platform/saQuadRegression.o
 $GCC -c saSignal.c                       -o obj/$Platform/saSignal.o
 $GCC -c saSemanticTerm.c                 -o obj/$Platform/saSemanticTerm.o
@@ -76,6 +78,7 @@ $GCC -c xsprelicense.c                   -o obj/$Platform/xsprelicense.o
 $GCC -c xsprequadregress.c               -o obj/$Platform/xsprequadregress.o
 $GCC -c xspreregress.c                   -o obj/$Platform/xspreregress.o
 $GCC -c xsprespearmancorrelate.c         -o obj/$Platform/xsprespearmancorrelate.o
+$GCC -c xsWhere.c                        -o obj/$Platform/xsWhere.o
 
 if [ "$OSTYPE" = "cygwin" ]; then 
 $GCC -c strsep.c                         -o obj/$Platform/strsep.o

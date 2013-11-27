@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsPerformQuadRegression -O2 -Wall -lm obj/$Platform/xsPerformQuadRegression.o obj/$Platform/saQuadRegression.o obj/$Platform/saOpenFile.o  obj/$Platform/csv.o obj/$Platform/saLicensing.o obj/$Platform/saSignal.o $LicenseLib
+$gcc -o bin/$Platform/xsPerformQuadRegression -O2 -Wall -lm obj/$Platform/xsPerformQuadRegression.o obj/$Platform/saQuadRegression.o obj/$Platform/saOpenFile.o  obj/$Platform/saCSV.o obj/$Platform/saLicensing.o obj/$Platform/saSignal.o $LicenseLib

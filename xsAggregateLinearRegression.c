@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
    int yIndex = -1;
 
    // Get the header
-   numFields = getCSVLine(inbuf, fieldList);
+   numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
        if (!compareField(fieldList[i], "bf"))
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
    while(!feof(stdin))
    {
        int index = -1;
-       numFields = getCSVLine(inbuf, fieldList);
+       numFields = saCSVGetLine(inbuf, fieldList);
        if (!feof(stdin))
        {
            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);

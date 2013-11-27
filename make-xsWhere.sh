@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsAggregateLinearRegression -O2 -Wall -lm obj/$Platform/xsAggregateLinearRegression.o obj/$Platform/saLinearRegression.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsWhere -Wall -O2 -lm obj/$Platform/xsWhere.o obj/$Platform/saHedge.o obj/$Platform/saParser.o obj/$Platform/saSemanticTerm.o obj/$Platform/saContext.o obj/$Platform/saCSV.o  obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saHash.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib
