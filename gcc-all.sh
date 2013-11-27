@@ -63,6 +63,7 @@ $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
 $GCC -c xsDeleteSemanticTerm.c           -o obj/$Platform/xsDeleteSemanticTerm.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
 $GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
+$GCC -c xsDisplayWhere.c                 -o obj/$Platform/xsDisplayWhere.o
 $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o

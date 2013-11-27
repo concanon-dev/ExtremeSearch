@@ -12,9 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "saHash.h"
 #include "saContext.h"
 #include "saExpression.h"
+#include "saHash.h"
 #include "saHedge.h"
 #include "saSplunk.h"
 #include "saToken.h"
@@ -23,7 +23,7 @@
 #define FCIX_AVG "avg"
 #define FCIX_WEIGHTED "weighted"
 
-#define MAXROWSIZE (1024*1024)
+#define MAXROWSIZE (1024*500)
 
 static bool calledXcix = false;
 static bool termSetFound[32];
@@ -45,7 +45,6 @@ static saSynonymTableType synonyms;
 extern int compareField(char *, char []);
 extern bool convertToDouble(char *, double *);
 extern char *extractField(char *);
-extern int parse(char *, char [], saExpressionTypePtrArray);
 extern int saCSVGetLine(char [], char *[]);
 extern FILE *saOpenFile(char *, char *);
 
@@ -56,13 +55,14 @@ extern saHashtableTypePtr saHashCreateDefault();
 extern void *saHashGet(saHashtableTypePtr, char *);
 extern void saHashSet(saHashtableTypePtr, char *, char *);
 
+extern saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
+
 extern saExpressionTypePtrArray generateExpStack(void);
 static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
                                double *);
 extern void walkExpressionStack(saExpressionTypePtrArray, int);    
 
 extern saSemanticTermTypePtr saHedgeApply(int, saSemanticTermTypePtr);
-saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
 extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
@@ -75,7 +75,6 @@ int main(int argc, char* argv[])
     saContextTypePtr termSetPtr;
     bool argError;
     bool foundAnyField;
-    bool useAlfa = false;
     char cixFunction[80];
     char synonymFileName[80];
     float alfacut=0.2;
@@ -98,7 +97,7 @@ int main(int argc, char* argv[])
     synonymFileName[0] = '\0';
     synonyms.numWords = 0;
     strcpy(cixFunction, FCIX_AVG);
-    while ((c = getopt(argc, argv, "a:c:n:p:s:uw:")) != -1) 
+    while ((c = getopt(argc, argv, "a:c:n:p:s:w:")) != -1) 
     {
         switch (c)
         {
@@ -117,9 +116,6 @@ int main(int argc, char* argv[])
             case 's':
                 strcpy(synonymFileName, optarg);
                 break;
-            case 'u':
-                useAlfa = true;
-                break;
             case 'w':
                 strcpy(whereLine, optarg);
                 break;
@@ -130,7 +126,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsWhere-F-103: Usage: xsWhere -a alfacut -c cixFunction -n cixName -p scalar_percent -s synonymsFile -u useAlfa -w whereLine\n");
+        fprintf(stderr, "xsWhere-F-103: Usage: xsrWhere -a alfacut -c cixFunction -n cixName -p scalar_percent -s synonymsFile -u useAlfa -w whereLine\n");
         exit(EXIT_FAILURE);
     }
 
@@ -168,6 +164,7 @@ int main(int argc, char* argv[])
             }
         }
     }
+
     // parse the where line
     saExpressionTypePtrArray expStack = generateExpStack();
     int stackSize = parse(whereLine, tempbuf, expStack);
@@ -214,36 +211,6 @@ int main(int argc, char* argv[])
         }
     }
     
-    // Find the FCIX column, if it already exists
-    i = 0;
-    bool found = false;
-    while(i<numHeaderFields && !found)
-    {
-        if (!compareField(headerList[i], cixName))
-            found = true;
-        else
-            i++;
-    }
-    if (found)
-        cixIndex = i;
-    else
-    {
-        fprintf(stdout, "%s,", cixName);
-        if (useAlfa == true)
-            fputs("useAlfa,", stdout);
-    }
-       
-    // Write out the header fields separated by ","
-    for(i=0; i<numHeaderFields;i++)
-    {
-        if (i)
-        {
-            fputs(",", stdout);
-        }
-        fputs(headerList[i], stdout);
-    }
-    fputs("\n", stdout);
-
     // Initialize the results array and read all of the input 
     double cix_avg;
     bool done = false;
@@ -252,60 +219,35 @@ int main(int argc, char* argv[])
         int zzz = saCSVGetLine(inbuf, fieldList);
         if (!feof(stdin))
         {
-            bool writeRow;
-
             // if any of the fields in the where_line exist in the column list
             //    process the where_line execution stack
             if (foundAnyField == true)
-                writeRow = runExpressionStack(fieldList, numHeaderFields, expStack, stackSize, 
-                                              alfacut, scalar_percent, cixFunction, &cix_avg);
-            else
-                writeRow = true;
-            if (writeRow == true || calledXcix == true)
-            {
-                // write out the values of each field
-                if (cixIndex == -1)
-                {
-                    fprintf(stdout, "%.10f,", cix_avg);
-                    if (calledXcix == true && useAlfa == true)
-                    {
-                        if (cix_avg < alfacut)
-                            fputs("0,", stdout);
-                        else
-                            fputs("1,", stdout);
-                    }
-                }
-                    
-                int i;
-    	        for(i=0; i<numHeaderFields;i++)
-                {
-                    if (i)
-                        fputs(",", stdout);
-                    if (i == cixIndex)
-                    {
-                        fprintf(stdout, "%.10f", cix_avg);
-                        if (calledXcix == true && useAlfa == true) 
-                        {
-                            if (cix_avg < alfacut)
-                                fputs("0,", stdout);
-                            else
-                                fputs("1,", stdout);
-                            i++;
-                        }
-                    }
-                    else
-                        fputs(fieldList[i], stdout);
-                }
-                fputs("\n", stdout);
-            }
+                runExpressionStack(fieldList, numHeaderFields, expStack, stackSize, 
+                                   alfacut, scalar_percent, cixFunction, &cix_avg);
         }
         else
             done = true;
     }
+
+    fprintf(stdout, "set,index,cix\n");
+    saHashentryTypePtr bucket = NULL;
+    for(i=0; i<semanticTermTable->size; i++)
+    {
+        bucket = semanticTermTable->table[i];
+        while(bucket != NULL)
+        {
+            saSemanticTermTypePtr f = (saSemanticTermTypePtr)bucket->value;
+            int k;
+            for(k=0; k<SA_SEMANTICTERM_VECTORSIZE; k++)
+                fprintf(stdout, "%s,%1.5f,%1.10f\n", bucket->key, f->indexVector[k], f->vector[k]);
+            bucket = bucket->next;
+        }
+    }
+
     exit(0);
 }
 
-saSemanticTermTypePtr processHedge(saSemanticTermTypePtr f, saSynonymTableType *synonyms,
+saSemanticTermTypePtr processHedge(saSemanticTermTypePtr f, saSynonymTableType *synonyms, 
                                    char *word)
 {
     char *setArray[32];
@@ -445,7 +387,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 contextName = (char *)expStack[stackIndex-1]->field;
                 sprintf(tempName, "%s_%d", contextName, stackIndex-1);
             }
-
+            
             // Find the fuzzy set in the cache or load it from the file
             semanticTerm = (saSemanticTermTypePtr)saHashGet(semanticTermTable, tempName);
             if (semanticTerm == NULL)
@@ -463,7 +405,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 char *dStr = (char *)expStack[stackIndex]->field;
                 int i=0;
                 bool found = false;
-                while(found == false && i<numHeaderFields)
+                while(!found && i<numHeaderFields)
                 {
                       if (!compareField(headerList[i], dStr))
                       {
@@ -501,7 +443,8 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                                                               domainMax, center);
                         if (semanticTerm == NULL)
                         {
-                            fprintf(stderr, "xsWhere-F-123: can't create context %s\n", dStr);
+                            fprintf(stderr, "xsDisplayWhere-F-123: can't create context %s\n", 
+                                    dStr);
                             exit(0);
                         }
                     }
@@ -533,7 +476,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 while(expStack[++stackIndex]->type != SA_TOKEN_IS)
                     semanticTerm = processHedge(semanticTerm, &synonyms, 
                                                 expStack[stackIndex]->field);
-                ht_set(semanticTermTable, tempName, (void *)semanticTerm);
+                saHashSet(semanticTermTable, tempName, (void *)semanticTerm);
             }
             else
                 while(expStack[stackIndex]->type != SA_TOKEN_IS)

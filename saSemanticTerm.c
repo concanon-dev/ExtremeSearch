@@ -361,3 +361,17 @@ saSemanticTermTypePtr saSemanticTermInit(char *name, double domainMin, double do
     return(p);
 }
 
+
+double saSemanticTermLookup(saSemanticTermTypePtr semanticTermPtr, double value)
+{
+    double bucket_size = (semanticTermPtr->indexVector[SA_SEMANTICTERM_VECTORSIZE-1]
+                            - semanticTermPtr->indexVector[0]) / (float) SA_SEMANTICTERM_VECTORSIZE;
+
+    int vector_index = (int)round((value - semanticTermPtr->indexVector[0]) / bucket_size);
+    if (vector_index > (SA_SEMANTICTERM_VECTORSIZE - 1))
+        vector_index = SA_SEMANTICTERM_VECTORSIZE - 1;
+    else if (vector_index < 0)
+        vector_index = 0;
+    return(semanticTermPtr->vector[vector_index]);
+}
+
