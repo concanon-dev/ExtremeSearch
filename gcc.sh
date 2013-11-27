@@ -11,4 +11,4 @@ else
 fi
 
 F=`echo $1 | sed -e 's/\.c//g'`
-$GCC -c ${F}.c  -o obj/$Platform/${1}.o
+$GCC -c ${F}.c  -o obj/$Platform/${F}.o

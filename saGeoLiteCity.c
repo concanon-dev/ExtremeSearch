@@ -134,7 +134,7 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
             if (convertToDouble(fieldList[lonIndex], &(p->lon)) == false)
                 p->lon = SA_CONSTANTS_BADLATLON;
             sprintf(tempName, "%s|%s|%s", p->country, p->region, p->city);
-            ht_set(cityTable, tempName, (void *)p);
+            saHashSet(cityTable, tempName, (void *)p);
             if (!strcmp(p->country, "US") || !strcmp(p->country, "PR") 
                 || !strcmp(p->country, "VI"))
             {

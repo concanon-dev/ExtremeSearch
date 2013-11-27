@@ -533,7 +533,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 while(expStack[++stackIndex]->type != SA_TOKEN_IS)
                     semanticTerm = processHedge(semanticTerm, &synonyms, 
                                                 expStack[stackIndex]->field);
-                ht_set(semanticTermTable, tempName, (void *)semanticTerm);
+                saHashSet(semanticTermTable, tempName, (void *)semanticTerm);
             }
             else
                 while(expStack[stackIndex]->type != SA_TOKEN_IS)

@@ -1,6 +1,40 @@
-/*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
- Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
-*/
+make-xsAggregateAutoRegression.sh
+make-xsAggregateCorrelation.sh
+make-xsAggregateLinearRegression.sh
+make-xsAggregateQuadRegression.sh
+make-xsAggregateSpearmanCorrelation.sh
+make-xsApplyAutoRegression.sh
+make-xsApplyAutoRegressionFromFile.sh
+make-xsApplyLinearRegression.sh
+make-xsApplyLinearRegressionFromFile.sh
+make-xsApplyQuadRegression.sh
+make-xsApplyQuadRegressionFromFile.sh
+make-xsCloneContext.sh
+make-xsCloneSemanticTerm.sh
+make-xsCreateContext.sh
+make-xsDeleteContext.sh
+make-xsDeleteSemanticTerm.sh
+make-xsDiscoverTrend.sh
+make-xsDisplayContext.sh
+make-xsDisplaySemanticTerm.sh
+make-xsDisplayWhere.sh
+make-xsFindMembership.sh
+make-xsGetDistance.sh
+make-xsGetWhereCix.sh
+make-xsLicense.sh
+make-xsListContexts.sh
+make-xsOverlayContext.sh
+make-xsPerformAutoRegression.sh
+make-xsPerformCorrelation.sh
+make-xsPerformLinearRegression.sh
+make-xsPerformQuadRegression.sh
+make-xsPerformSpearmanCorrelation.sh
+make-xsWhere.sh
+make-xspreautoregress.sh
+make-xsprecorrelate.sh
+make-xspredict.sh
+make-xsprelicense.sh
+make-xsprequadregress.sh
+make-xspreregress.sh
+make-xsprespearmancorrelate.sh
+make-xsrepredict.sh

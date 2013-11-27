@@ -332,3 +332,19 @@ void saContextDisplay(saContextTypePtr contextPtr)
     saContextDisplayWithHeader(contextPtr, contextPtr->name);
 }
 
+
+void saContextLookup(saContextTypePtr contextPtr, double value, double *results)
+{
+    double bucket_size = (contextPtr->domainMax - contextPtr->domainMin) 
+                          / (float) SA_SEMANTICTERM_VECTORSIZE;
+    int vector_index = (int)round((value - contextPtr->domainMin) / bucket_size);
+    if (vector_index > (SA_SEMANTICTERM_VECTORSIZE - 1))
+        vector_index = SA_SEMANTICTERM_VECTORSIZE - 1;
+    else if (vector_index < 0)
+        vector_index = 0;
+
+    int k;
+    for(k=0; k<contextPtr->numSemanticTerms; k++)
+        results[k] = contextPtr->semanticTerms[k]->vector[vector_index];
+}
+

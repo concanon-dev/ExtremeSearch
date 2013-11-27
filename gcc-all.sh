@@ -61,17 +61,22 @@ $GCC -c xsCloneSemanticTerm.c            -o obj/$Platform/xsCloneSemanticTerm.o
 $GCC -c xsCreateContext.c                -o obj/$Platform/xsCreateContext.o
 $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
 $GCC -c xsDeleteSemanticTerm.c           -o obj/$Platform/xsDeleteSemanticTerm.o
+$GCC -c xsDiscoverTrend.c                -o obj/$Platform/xsDiscoverTrend.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
 $GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
 $GCC -c xsDisplayWhere.c                 -o obj/$Platform/xsDisplayWhere.o
+$GCC -c xsFindMembership.c               -o obj/$Platform/xsFindMembership.o
 $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
+$GCC -c xsOverlayContext.c               -o obj/$Platform/xsOverlayContext.o
 $GCC -c xsPerformAutoRegression.c        -o obj/$Platform/xsPerformAutoRegression.o
 $GCC -c xsPerformCorrelation.c           -o obj/$Platform/xsPerformCorrelation.o
 $GCC -c xsPerformLinearRegression.c      -o obj/$Platform/xsPerformLinearRegression.o
 $GCC -c xsPerformQuadRegression.c        -o obj/$Platform/xsPerformQuadRegression.o
 $GCC -c xsPerformSpearmanCorrelation.c   -o obj/$Platform/xsPerformSpearmanCorrelation.o
+# $GCC -c xsUpdateContext.c                -o obj/$Platform/xsUpdateContext.o
+$GCC -c xsWhere.c                        -o obj/$Platform/xsWhere.o
 $GCC -c xspreautoregress.c               -o obj/$Platform/xspreautoregress.o
 $GCC -c xsprecorrelate.c                 -o obj/$Platform/xsprecorrelate.o
 $GCC -c xspredict.c                      -o obj/$Platform/xspredict.o
@@ -79,7 +84,7 @@ $GCC -c xsprelicense.c                   -o obj/$Platform/xsprelicense.o
 $GCC -c xsprequadregress.c               -o obj/$Platform/xsprequadregress.o
 $GCC -c xspreregress.c                   -o obj/$Platform/xspreregress.o
 $GCC -c xsprespearmancorrelate.c         -o obj/$Platform/xsprespearmancorrelate.o
-$GCC -c xsWhere.c                        -o obj/$Platform/xsWhere.o
+$GCC -c xsrepredict.c                    -o obj/$Platform/xsrepredict.o
 
 if [ "$OSTYPE" = "cygwin" ]; then 
 $GCC -c strsep.c                         -o obj/$Platform/strsep.o

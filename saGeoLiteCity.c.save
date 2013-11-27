@@ -1,0 +1,100 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "hash.h"
+#include "saGeoLiteCity.h"
+#include "xconstants.h"
+
+extern int compareField(char *, char []);
+extern int getCSVLine(char [], char *[]);
+
+extern hashtable_t *ht_createDefault();
+extern void ht_set(hashtable_t *, char *, char *);
+
+bool saGeoLiteCityCreateTable(hashtable_t **cityTable, hashtable_t **zipcodeTable)
+{
+    *cityTable = ht_createDefault();
+    *zipcodeTable = ht_createDefault();
+    if (*cityTable != NULL && *zipcodeTable != NULL)
+        return(true);
+    return(false);
+}
+
+bool saGeoLiteCityLoadTable(char *geoLiteCityFile, hashtable_t **cityTable, 
+                            hashtable_t **zipcodeTable)
+{
+    char *fieldList[32];
+    char headerbuf[2048];
+    char *headerList[32];
+    char inbuf[2048];
+    char tempName[1024];
+    int cityIndex, countryIndex, latIndex, lonIndex, regionIndex, zipcodeIndex = -1;
+    int zipInt;
+    int i;
+
+    FILE *f = fopen(geoLiteCityFile, "r");
+    if (f == NULL)
+        return(false);
+
+    if (saGeoLiteCityCreateTable(cityTable, zipcodeTable) == false)
+        return(false);
+
+    int numHeaderFields;
+    bool isComment = true;
+    while(isComment == true)
+    {
+        headerbuf[0] = '\0';
+        numHeaderFields = fgetCSVLine(f, headerbuf, headerList);
+        if (headerbuf[0] == '#' || headerbuf[0] == '\0')
+            isComment = true;
+        else
+            isComment = false;
+    }
+    for(i=0; i<numHeaderFields; i++)
+    {
+        if (!compareField(headerList[i], "city"))
+            cityIndex = i;
+        else if (!compareField(headerList[i], "country"))
+            countryIndex = i;
+        else if (!compareField(headerList[i], "latitude"))
+            latIndex = i;
+        else if (!compareField(headerList[i], "longitude"))
+            lonIndex = i;
+        else if (!compareField(headerList[i], "region"))
+            regionIndex = i;
+        else if (!compareField(headerList[i], "postalCode"))
+            zipcodeIndex = i;
+    }
+    if (cityIndex == -1 || countryIndex == -1 || latIndex == -1 || lonIndex == -1
+        || regionIndex == -1 || zipcodeIndex == -1)
+    {
+        fclose(f);
+        return(false);
+    }
+
+    bool done = false;
+    while(!done)
+    {
+        int zzz = fgetCSVLine(f, inbuf, fieldList);
+        if (!feof(f))
+        {
+            saGeoLiteCityTypePtr p = (saGeoLiteCityTypePtr)malloc(sizeof(saGeoLiteCityType));
+            strcpy(p->city, fieldList[cityIndex]);
+            strcpy(p->country, fieldList[cityIndex]);
+            strcpy(p->region, fieldList[regionIndex]);
+            strcpy(p->zipcode, fieldList[zipcodeIndex]);
+            if (convertToDouble(fieldList[latIndex], &(p->lat)) == false)
+                p->lat = BADLATLON;
+            if (convertToDouble(fieldList[lonIndex], &(p->lon)) == false)
+                p->lon = BADLATLON;
+            sprintf(tempName, "%s|%s|%s", p->country, p->region, p->city);
+            ht_set(*cityTable, tempName, (void *)p);
+            ht_set(*zipcodeTable, p->zipcode, (void *)p);
+        }
+        else
+            done = true;
+    }
+    fclose(f);
+    return(true);
+}

@@ -36,12 +36,13 @@ else
   cp LimeLM/Linux/x64/libTurboActivate.so bin/$Platform
 fi
 
-./make-fix-intersplunk.sh
-./make-xsAggregateAutoRegression.sh*
-./make-xsAggregateCorrelation.sh*
-./make-xsAggregateLinearRegression.sh*
-./make-xsAggregateQuadRegression.sh*
-./make-xsAggregateSpearmanCorrelation.sh*
+cp LimeLM/TurboActivate.dat bin/$Platform
+
+./make-xsAggregateAutoRegression.sh
+./make-xsAggregateCorrelation.sh
+./make-xsAggregateLinearRegression.sh
+./make-xsAggregateQuadRegression.sh
+./make-xsAggregateSpearmanCorrelation.sh
 ./make-xsApplyAutoRegression.sh
 ./make-xsApplyAutoRegressionFromFile.sh
 ./make-xsApplyLinearRegression.sh
@@ -52,15 +53,24 @@ fi
 ./make-xsCloneSemanticTerm.sh
 ./make-xsCreateContext.sh
 ./make-xsDeleteContext.sh
+./make-xsDeleteSemanticTerm.sh
+./make-xsDiscoverTrend.sh
 ./make-xsDisplayContext.sh
 ./make-xsDisplaySemanticTerm.sh
+./make-xsDisplayWhere.sh
+./make-xsFindMembership.sh
+./make-xsGetDistance.sh
+./make-xsGetWhereCix.sh
 ./make-xsLicense.sh
 ./make-xsListContexts.sh
+./make-xsOverlayContext.sh
 ./make-xsPerformAutoRegression.sh
 ./make-xsPerformCorrelation.sh
 ./make-xsPerformLinearRegression.sh
 ./make-xsPerformQuadRegression.sh
 ./make-xsPerformSpearmanCorrelation.sh
+# ./make-xsUpdateContext.sh
+./make-xsWhere.sh
 ./make-xspreautoregress.sh
 ./make-xsprecorrelate.sh
 ./make-xspredict.sh
@@ -68,5 +78,4 @@ fi
 ./make-xsprequadregress.sh
 ./make-xspreregress.sh
 ./make-xsprespearmancorrelate.sh
-
-cp LimeLM/TurboActivate.dat bin/$Platform
+./make-xsrepredict.sh
