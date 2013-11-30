@@ -9,6 +9,7 @@
 
 #include "saSemanticTerm.h"
 
+#define SA_CONTEXT_NOTES_SINGLE_TERM "single term"
 #define SA_CONTEXT_TIMESTAMP_SEPARATOR "::"
 #define SA_CONTEXT_TYPE_AVERAGE_CENTERED "average_centered"
 #define SA_CONTEXT_TYPE_DOMAIN "domain"

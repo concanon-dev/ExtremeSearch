@@ -59,6 +59,7 @@ $GCC -c xsApplyQuadRegressionFromFile.c  -o obj/$Platform/xsApplyQuadRegressionF
 $GCC -c xsCloneContext.c                 -o obj/$Platform/xsCloneContext.o
 $GCC -c xsCloneSemanticTerm.c            -o obj/$Platform/xsCloneSemanticTerm.o
 $GCC -c xsCreateContext.c                -o obj/$Platform/xsCreateContext.o
+$GCC -c xsCreateSemanticTerm.c           -o obj/$Platform/xsCreateSemanticTerm.o
 $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
 $GCC -c xsDeleteSemanticTerm.c           -o obj/$Platform/xsDeleteSemanticTerm.o
 $GCC -c xsDiscoverTrend.c                -o obj/$Platform/xsDiscoverTrend.o

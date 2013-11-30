@@ -4,56 +4,41 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
+#include <math.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
-extern double saStatisticsAvg(double[], int, int, int *);
-extern double saStatisticsSdev(double[], int, int, int *);
+extern bool saStatisticsAvg(double[], int, int, double *);
+extern bool saStatisticsSdev(double[], int, int, double *);
 
-//
-static char sStrBuff[256];
-//
-
-int saLinearCorrelation(double X[], double Y[], int startIndex, int termCnt, double *R)
+bool saLinearCorrelation(double X[], double Y[], int startIndex, int termCnt, double *R)
 {
-    double XAvg,
-            YAvg,
-            XStd,
-            YStd,
-            XAgg,
-            YAgg,
-            XYProd;
+    double XAgg;
+    double XAvg;
+    double XStd;
+    double XYProd;
+    double YAgg;
+    double YAvg;
+    double YStd;
     int i;
-    int ipStatus;
 
-    XAvg = saStatisticsAvg(X, startIndex, termCnt, &ipStatus);
-    YAvg = saStatisticsAvg(Y, startIndex, termCnt, &ipStatus);
-    XStd = saStatisticsSdev(X, startIndex, termCnt, &ipStatus);
-    YStd = saStatisticsSdev(Y, startIndex, termCnt, &ipStatus);
-    if (ipStatus != 0)
-        return(ipStatus);
-    //
-    //---------------------------------------------------------------
-    //--We now check for a zero or very very small standard deviaiton
-    //--which can often result from highly skewed distributions. If
-    //--the stddev is zero we cannot divide, thus, we cannot compute
-    //--the correlation coefficient. We now set the R to zero, indicate
-    //--the condition with a negative status code, and return.
-    //---------------------------------------------------------------
-    //
-    if (fabs(XStd) < .001 || fabs(YStd) < .001) 
+    if (saStatisticsAvg(X, startIndex, termCnt, &XAvg) == false)
+        return(false);
+    if (saStatisticsAvg(Y, startIndex, termCnt, &YAvg) == false)
+        return(false);
+    if (saStatisticsSdev(X, startIndex, termCnt, &XStd) == false)
+        return(false);
+    if (saStatisticsSdev(Y, startIndex, termCnt, &YStd) == false)
+        return(false);
+
+    if (fabs(XStd) < 0.001 || fabs(YStd) < 0.001) 
     {
         *R = 0;
-        return(-1);
+        return(false);
     }
-    //
-    //----------------------------------------------------------------
-    //--Now we actually compute the directional "cloud" that describes
-    //--the correlation between X and Y. We return the value as "R"
-    //----------------------------------------------------------------
-    //
+
     XAgg = 0;
     YAgg = 0;
     XYProd = 0;
@@ -64,5 +49,5 @@ int saLinearCorrelation(double X[], double Y[], int startIndex, int termCnt, dou
         XYProd = XYProd + (XAgg * YAgg);
     }
     *R = XYProd / (double) termCnt;
-    return(0);
+    return(true);
 }

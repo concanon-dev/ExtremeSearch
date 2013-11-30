@@ -52,6 +52,7 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsCloneContext.sh
 ./make-xsCloneSemanticTerm.sh
 ./make-xsCreateContext.sh
+./make-xsCreateSemanticTerm.sh
 ./make-xsDeleteContext.sh
 ./make-xsDeleteSemanticTerm.sh
 ./make-xsDiscoverTrend.sh

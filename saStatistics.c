@@ -10,379 +10,299 @@
 #include <stdio.h>
 #include <string.h>
 
-//
 #define BUCKETMAX   127
 #define KM_TO_MILES (1.609344)
+#define MAX 3e10
+#define MIN -3e10
 #define R (6372.8)
 #define TO_RAD (3.1415926536 / 180)
-//
-//--------------------------------------------------------
-//
-void saStatisticsGenerateIntervals(double, double, double, int, double[], double[], int*);
-int saStatisticsGetInterval(double, double[], double[], int, int*);
-void saStatisticsDataSort(double[], int, int, int*);
 
-double saStatisticsAvg(double data[], int startIndex, int numData, int *status)
+static void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
+static void saStatisticsGetInterval(double, double[], double[], int, int *);
+static void saStatisticsDataSort(double[], int, int);
+
+bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
 {
     double sum = 0;
     int i;
 
-    *status = 0;
-    if (numData < 1) 
-    {
-        *status = 1;
-        return ((double) 0);
-    }
-    for (i = startIndex; i < numData; i++) 
+    if (count <= 0) 
+        return(false);
+
+    for (i = startIndex; i < count; i++) 
          sum += data[i];
-    return (sum / ((double) numData));
+
+    *avg = sum / (double)count;
+    return(true);
 }
 
-double saStatisticsMin(double data[], int startIndex, int numData, int *status) 
+bool saStatisticsMin(double data[], int startIndex, int count, double *min) 
 {
     int i;
-    double minVal = 3e10;
+    *min = MAX;
 
-    *status = 0;
-    if (numData < 1) 
-    {
-        *status = 1;
-        return ((double) 0);
-    }
-    for (i=startIndex; i<numData; i++)
-        if (data[i] < minVal) 
-            minVal = data[i];
-    return (minVal);
+    if (count <= 0)
+        return (false);
+
+    for (i=startIndex; i<count; i++)
+        if (data[i] < *min) 
+            *min = data[i];
+
+    return (true);
 }
 
-double saStatisticsMax(double data[], int startIndex, int numData, int *status) 
+bool saStatisticsMax(double data[], int startIndex, int count, double *max) 
 {
     int i;
-    double maxVal = -3e10;
+    *max = MIN;
 
-    *status = 0;
-    if (numData < 1) 
-    {
-        *status = 1;
-        return ((double) 0);
-    }
-    for (i=0; i<numData; i++)
-        if (data[i] > maxVal) 
-            maxVal = data[i];
-    return (maxVal);
+    if (count <= 0)
+        return(false);
+
+    for (i=0; i<count; i++)
+        if (data[i] > *max) 
+            *max = data[i];
+
+    return(true);
 }
 
-double saStatisticsMean(double data[], int startIndex, int numData, double *minRange, 
-                        double *maxRange, int *status)
-/*
- Compute the Mean (Average) of the data vector. We also return    
- the minimum and the maximum values in the array (thus the Range).
-*/
+bool saStatisticsMean(double data[], int startIndex, int count, double *minRange, 
+                      double *maxRange, double *mean)
 {
-    int i;
-    double maxVal = -3e10;
-    double minVal = 3e10;
+    double max = MIN;
+    double min = MAX;
     double sum = 0;
+    int i;
 
-    *status = 0;
-    if (numData < 1) 
-    {
-        *status = 1;
-        return ((double) 0);
-    }
-    for (i=startIndex; i<numData; i++) 
+    if (count <= 0)
+        return(false);
+
+    for (i=startIndex; i<count; i++) 
     {
         sum += data[i];
-        if (data[i] > maxVal) 
-            maxVal = data[i];
-        if (data[i] < minVal) 
-            minVal = data[i];
+        if (data[i] > max) 
+            max = data[i];
+        if (data[i] < min) 
+            min = data[i];
     }
-    *minRange = minVal;
-    *maxRange = maxVal;
-    return (sum / (double) numData);
+    *minRange = min;
+    *maxRange = max;
+    *mean = (sum / (double) count);
+    return(true);
 }
 
-double saStatisticsRange(double data[], int startIndex, int numData, double *dpMinRng, double *dpMaxRng,
-                         int *ipStatus)
-/*
- We compute the range of the data elements in the data vector.   
- This function also returns the minimum and maximum range. While 
- the information is also returned by the Mean statistics, we have
- this routine to extract just the range and the lower and uppers.
-*/
+bool saStatisticsRange(double data[], int startIndex, int count, double *minRange, 
+                       double *maxRange, double *range)
 {
+    double max = MIN;
+    double min = MAX;
     int i;
-    double dMinVal,
-            dMaxVal;
 
-    dMinVal = 3e10;
-    dMaxVal = -3e10;
+    if (count <=0)
+        return(false);
 
-    *ipStatus = 0;
-    if (numData < 1)
+    for (i=startIndex; i < count; i++) 
     {
-        *ipStatus = 1;
-        return ((double) 0);
+        if (data[i] > max)
+            max = data[i];
+        if (data[i] < min) 
+            min = data[i];
     }
-    for (i=startIndex; i < numData; i++) 
-    {
-        if (data[i] > dMaxVal)
-            dMaxVal = data[i];
-        if (data[i] < dMinVal) 
-            dMinVal = data[i];
-    }
-    *dpMinRng = dMinVal;
-    *dpMaxRng = dMaxVal;
-    return (dMaxVal - dMinVal);
+    *minRange = min;
+    *maxRange = max;
+    *range = max - min;
+    return(true);
 }
 
-double saStatisticsVar(double data[], int startIndex, int numData, int *ipStatus)
-/*
- This function computes the variance of the data vector. The      
- variance is the square the of the distance from the mean to each
- data point. A variance is the basic part of standard deviation. 
-*/
+bool saStatisticsVar(double data[], int startIndex, int count, double *var)
 {
+    double mean;
+    double sum = 0.0;
     int i;
-    double dMean, dVSum;
 
-    *ipStatus = 0;
-    dMean = saStatisticsAvg(data, startIndex, numData, ipStatus);
-    if (*ipStatus > 0) 
-        return ((double) 0);
-    dVSum = 0;
-    for (i=startIndex; i<numData; i++)
-        dVSum += pow((data[i] - dMean), 2);
-    return (dVSum / (double) numData);
+    if (saStatisticsAvg(data, startIndex, count, &mean) == false)
+        return(false);
+
+    for (i=startIndex; i<count; i++)
+        sum += pow((data[i] - mean), 2);
+    *var = sum / (double) count;
+    return(true);
 }
 
-double saStatisticsSdev(double data[], int startIndex, int numData, int *ipStatus)
-/* Computes the standard deviation of the data vector */
+bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
 {
-    double dVar;
+    double var;
 
-    dVar = saStatisticsVar(data, startIndex, numData, ipStatus);
-    return (sqrt(dVar));
+    if (saStatisticsVar(data, startIndex, count, &var) == false)
+        return(false);
+
+    *sdev = sqrt(var);
+    return (true);
 }
 
-double saStatisticsSkew(double data[], int startIndex, int numData, int *ipStatus) 
+bool saStatisticsSkew(double data[], int startIndex, int count, double *skew) 
 {
+    double avg;
+    double diff;
+    double sdev;
+    double sum = 0.0;
     int i;
-    double dAvgVal,
-            dDiff,
-            dStdDev,
-            dTotVal,
-            dSkew;
 
-    *ipStatus = 0;
-    if (numData < 1) 
+    if (count <= 0) 
+        return(false);
+
+    if (saStatisticsAvg(data, startIndex, count, &avg) == false)
+        return(false);
+    if (saStatisticsSdev(data, startIndex, count, &sdev) == false)
+        return(false);
+    if (sdev == 0.0) 
+        return(false);
+
+    for (i=startIndex; i<count; i++) 
     {
-        *ipStatus = 1;
-        return ((double) 0);
+        diff = (data[i] - avg) / sdev;
+        sum += (diff * diff * diff);
     }
-    dAvgVal = saStatisticsAvg(data, startIndex, numData, ipStatus);
-    if (*ipStatus > 0) 
-        return ((double) 0);
-    dStdDev = saStatisticsSdev(data, startIndex, numData, ipStatus);
-    if (*ipStatus > 0) 
-        return ((double) 0);
-    if (dStdDev == 0) 
-        return ((double) 0);
-    //
-    dTotVal = 0;
-    for (i=startIndex; i<numData; i++) 
-    {
-        dDiff = (data[i] - dAvgVal) / dStdDev;
-        dTotVal += (dDiff * dDiff * dDiff);
-    }
-    dSkew = (dTotVal / (double) numData);
-    return (dSkew);
+    *skew = sum / (double)count;
+    return(true);
 }
 
-double saStatisticsMedian(double data[], int startIndex, int numData, int *ipMedSize, int *ipStatus)
-/*
- Finds the Median value of the data array. We also look left and   
- right to see if the median is siting on a plateau. If so, we then 
- return the width of the plateau.                                 
-*/
+bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSize, double *median)
 {
-    double dMedian;
-    int i,
-            iMidpt,
-            iMedWidth;
+    int midPoint;
 
-    *ipStatus = 0;
-    if (numData < 1) 
+    if (count <= 0)
+        return(false);
+    *medianSize = 1;
+    if (count == 1)
     {
-        *ipStatus = 1;
-        return ((double) 0);
+        *median = data[startIndex];
+        return(true);
     }
-    if (numData < 2)
-        return (data[startIndex]);
-    saStatisticsDataSort(data, startIndex, numData, ipStatus);
-    if (fmod(numData, 2) == 0) 
+    saStatisticsDataSort(data, startIndex, count);
+
+    if (fmod(count, 2) == 0) 
     {
-        iMidpt = startIndex + (numData / 2);
-        dMedian = (data[iMidpt] + data[iMidpt + 1]) / 2;
-    } else 
+        midPoint = startIndex + (count / 2);
+        *median = (data[midPoint] + data[midPoint + 1]) / 2;
+    } 
+    else 
     {
-        iMidpt = startIndex + (numData / 2);
-        dMedian = data[iMidpt];
+        midPoint = startIndex + (count / 2);
+        *median = data[midPoint];
     }
-    iMedWidth = 1;
     //
     //---------------------------------------------------
     //--Now examine the values to the left and right
     //---------------------------------------------------
     //
-    for (i = iMidpt + 1; i <numData; i++) 
+    int i;
+    for (i=midPoint+1; i<count; i++) 
     {
-        if (data[i] == dMedian) 
-            iMedWidth++;
+        if (data[i] == *median) 
+            *medianSize += 1;
         else 
             break;
     }
-    for (i = iMidpt - 1; i >= numData; i--) 
+    for (i=midPoint-1; i>=count; i--) 
     {
-        if (data[i] == dMedian) 
-            iMedWidth++;
+        if (data[i] == *median) 
+            *medianSize += 1;
         else 
             break;
     }
-    *ipMedSize = iMedWidth;
-    return (dMedian);
+    return(true);
 }
 
-void saStatisticsDataSort(double data[], int startIndex, int numData, int *ipStatus)
-/* BubbleSort */
+void saStatisticsDataSort(double data[], int startIndex, int count)
 {
+    bool isSorted;
+    double temp;
     int i, j;
-    double dTempData;
-    bool bSorted;
 
-    if (numData < 2) return;
-    for (j=startIndex; j<numData; j++) 
-    {
-        bSorted = true;
-        for (i=startIndex; i<numData - 1; i++) 
+    if (count > 1)
+        for (j=startIndex; j<count; j++) 
         {
-            if (data[i] > data[i + 1]) 
+            isSorted = true;
+            for (i=startIndex; i<count - 1; i++) 
             {
-                dTempData = data[i + 1];
-                data[i + 1] = data[i];
-                data[i] = dTempData;
-                bSorted = false;
+                if (data[i] > data[i + 1]) 
+                {
+                    temp = data[i + 1];
+                    data[i + 1] = data[i];
+                    data[i] = temp;
+                    isSorted = false;
+                }
             }
+            if (isSorted) 
+                return;
         }
-        if (bSorted) 
-            return;
-    }
-    return;
 }
 
-void saStatisticsFreq(double data[], //--Data Space data vector
-        int startIndex, // Index in data to start analysis
-        int numData, //--Number of Data elements
-        int iFreq[], //--The Frequency Tally Vector
-        int iBucketNum, //--Number of Buckets
-        double dBucMin[], //--Interval's Minimum threshold
-        double dBucMax[], //--Interval's Maximum threshold
-        int *ipStatus) //--Status Pointer
-/*
- Generate a frequency histogram of the data. We indicate the       
- number of buckets (intervals) across the range. The data is then 
- clustered into the buckets so that we can see how the elements  
- are distributed in the vector.                                 
-*/
+bool saStatisticsFreq(double data[], int startIndex, int count, int frequency[], int bucketCount,
+                      double bucketMin[], double bucketMax[])
 {
-    int i, iBNo;
-    double dPartSize,
-            dRange,
-            dpMinRng,
-            dpMaxRng;
+    double maxRange;
+    double minRange;
+    double partitionSize;
+    double range;
+    int i;
+    int index;
 
-    *ipStatus = 0;
-    if (numData < 2) 
+    if (count <= 1)
+        return(false);
+    if (bucketCount > BUCKETMAX) 
+        return(false);
+
+    for (i=0; i<bucketCount; i++)
+         frequency[i] = 0;
+    if (saStatisticsRange(data, startIndex, count, &minRange, &maxRange, &range) == false)
+        return(false);
+
+    partitionSize = range / (double)bucketCount;
+    for (i=0; i<bucketCount; i++) 
     {
-        *ipStatus = 1;
-        return;
+        bucketMin[i] = (double) 0.0;
+        bucketMax[i] = (double) 0.0;
     }
-    if (iBucketNum > BUCKETMAX) 
+    saStatisticsGenerateIntervals(minRange, maxRange, partitionSize, bucketCount, bucketMin, 
+                                  bucketMax);
+    for (i=startIndex; i<count; i++) 
     {
-        *ipStatus = 1;
-        return;
+        saStatisticsGetInterval(data[i], bucketMin, bucketMax, bucketCount, &index);
+        frequency[index]++;
     }
-    //
-    for (i = 0; i < iBucketNum; i++) iFreq[i] = 0;
-    dRange = saStatisticsRange(data, startIndex, numData, &dpMinRng, &dpMaxRng, ipStatus);
-    //
-    dPartSize = (dRange / (double) iBucketNum);
-    //
-    for (i = 0; i < iBucketNum; i++) 
-    {
-        dBucMin[i] = (double) 0;
-        dBucMax[i] = (double) 0;
-    }
-    saStatisticsGenerateIntervals(dpMinRng, dpMaxRng, dPartSize, iBucketNum, dBucMin, 
-                        dBucMax, ipStatus);
-    if (*ipStatus != 0) 
-        return;
-    //
-    for (i=startIndex; i<numData; i++) 
-    {
-        iBNo = saStatisticsGetInterval(data[i], dBucMin, dBucMax, iBucketNum, ipStatus);
-        iFreq[iBNo]++;
-    }
-    return;
+    return(true);
 }
 
-void saStatisticsGenerateIntervals(
-        double dpMinRng, //--Minimum Range
-        double dpMaxRng, //--Maximum Range
-        double dPartSize, //--Size of each Bucket
-        int iBucketNum, //--Number of Bucket
-        double dBucMin[], //--Minimal Intervals
-        double dBucMax[], //--Maximal Intervals
-        int *ipStatus) //--Status Pointer
-/*
- Given the required number of buckets, this routine partitions     
- the data into a set of lower and upper boundary sets. we start 
- with the minimum value and construct sets of intervals equal to
- the number required by the parameter specificatios (iBuckNum).
-*/
+void saStatisticsGenerateIntervals(double minRange, double maxRange, double partitionSize,
+                                   int bucketCount, double bucketMin[], double bucketMax[])
 {
-    int iBNo;
-    double dThisMax,
-            dThisMin;
+    double tempMax;
 
-    *ipStatus = 0;
-    iBNo = 0;
-    dThisMin = floor(dpMinRng);
-    //
-    for (iBNo = 0; iBNo < iBucketNum; iBNo++) 
+    int i;
+    double tempMin = floor(minRange);
+    for (i=0; i<bucketCount; i++) 
     {
-        dBucMin[iBNo] = dThisMin; //--Set lower bound to Minimum
-        dThisMax = dThisMin + dPartSize; //--Max equals min plus partition size
-        dBucMax[iBNo] = dThisMax; //--Set upper bound to Maximum
-        dThisMin = dThisMax; //--Make next lower equal this maximum
+        bucketMin[i] = tempMin;
+        tempMax = tempMin + partitionSize;
+        bucketMax[i] = tempMax;
+        tempMin = tempMax;
     }
 }
 
-int saStatisticsGetInterval(double dDataPt, double dBucMin[], double dBucMax[], 
-                            int iBucNum, int *ipStatus)
-/*
- Given a value form the data space, we decide where it belongs in 
- the set of bucket intervals.                                    
-*/
+void saStatisticsGetInterval(double data, double minBucket[], double maxBucket[], 
+                            int bucketCount, int *interval)
 {
     int i;
 
-    *ipStatus = 0;
-    for (i = 0; i < iBucNum; i++)
-        if ((dDataPt >= dBucMin[i]) && (dDataPt < dBucMax[i])) 
-            return (i);
-    return (iBucNum - 1);
+    for(i=0; i<bucketCount; i++)
+        if ((data >= minBucket[i]) && (data < maxBucket[i])) 
+        {
+            *interval = i;
+            return;
+        }
+    *interval = bucketCount - 1;
 }
 
 double saStatisticsHaversineDistance(double lat1, double lon1, double lat2, double lon2)
