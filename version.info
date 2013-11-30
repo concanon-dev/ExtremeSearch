@@ -4,3 +4,4 @@ Version:        4.0.0b
 
 Release Notes: 
     Restructured context files
+    Added xsCreateSemanticTerm command
