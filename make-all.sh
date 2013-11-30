@@ -72,6 +72,7 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsPerformSpearmanCorrelation.sh
 # ./make-xsUpdateContext.sh
 ./make-xsWhere.sh
+./make-xsconvert.sh
 ./make-xspreautoregress.sh
 ./make-xsprecorrelate.sh
 ./make-xspredict.sh

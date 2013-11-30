@@ -4,4 +4,5 @@ Version:        4.0.0b
 
 Release Notes: 
     Restructured context files
+    Added xsconvert command to convert old context files to new context files
     Added xsCreateSemanticTerm command

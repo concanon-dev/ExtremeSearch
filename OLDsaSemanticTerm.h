@@ -2,8 +2,8 @@
 //--(c)2012-2013 Scianta Analytics LLC
 //-----------------------------------------------------------------
 //
-#ifndef __saFuzzyDescriptorBlock
-#define __saFuzzyDescriptorBlock
+#ifndef __OLDsa
+#define __OLDsa
 
 #define MAXFUZZYPARAMETERS 16
 #define MAXFUZZYSTRLEN 256

@@ -78,6 +78,7 @@ $GCC -c xsPerformQuadRegression.c        -o obj/$Platform/xsPerformQuadRegressio
 $GCC -c xsPerformSpearmanCorrelation.c   -o obj/$Platform/xsPerformSpearmanCorrelation.o
 # $GCC -c xsUpdateContext.c                -o obj/$Platform/xsUpdateContext.o
 $GCC -c xsWhere.c                        -o obj/$Platform/xsWhere.o
+$GCC -c xsconvert.c                      -o obj/$Platform/xsconvert.o
 $GCC -c xspreautoregress.c               -o obj/$Platform/xspreautoregress.o
 $GCC -c xsprecorrelate.c                 -o obj/$Platform/xsprecorrelate.o
 $GCC -c xspredict.c                      -o obj/$Platform/xspredict.o
