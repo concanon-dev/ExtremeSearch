@@ -7,15 +7,12 @@
 if [ "$OSTYPE" = "cygwin" ]; then 
   gcc='x86_64-w64-mingw32-gcc -D _UNICODE'
   Platform='Win/x64'
-  LicenseLib=LimeLM/Win/x64/TurboActivate.lib 
 elif [[ $OSTYPE == darwin1? ]]; then
   gcc=gcc
   Platform='Mac'
-  LicenseLib='-Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate'
 else
   gcc=gcc
   Platform='Linux/x64'
-  LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsconvert -Wall obj/$Platform/xsconvert.o obj/$Platform/saContext.o  obj/$Platform/OLDsaLoadContext.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o python/xsconvert -Wall obj/$Platform/xsconvert.o obj/$Platform/saContext.o  obj/$Platform/OLDsaLoadContext.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o 

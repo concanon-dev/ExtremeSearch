@@ -174,6 +174,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     saSplunkContextSave(cPtr, fileScope, iPtr->app, iPtr->user);
+
     saContextDisplay(cPtr);
     exit(0);
 }

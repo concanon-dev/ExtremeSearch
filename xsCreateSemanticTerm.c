@@ -19,7 +19,8 @@ static double stdDev(double, double);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *,
                                       char *);
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern void saContextRecreateSemanticTerms(saContextTypePtr, double, double);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
 extern void saContextCreateSemanticTerm(saContextTypePtr, char *, char *, double, double);
 
@@ -86,14 +87,13 @@ int main(int argc, char* argv[])
                 "xsCreateSemanticTerm-F-103: Usage: xsCreateSemanticTerm -c contextName -m min -n name -p shape -s scope -x max");
         exit(EXIT_FAILURE);
     }
-  
+
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
         fprintf(stderr, "xsCreateSemanticTerm-F-105: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
-
     if (saSplunkReadInfoPathFile(p) == false)
     {
         fprintf(stderr, "xsCreateSemanticTerm-F-107: Can't read search results file %s\n",
@@ -101,10 +101,17 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    saContextTypePtr cPtr = saSplunkContextLoad(contextName, scope, p->app, p->user);
+    saContextTypePtr cPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
     if (cPtr == NULL)
+    {
         cPtr = saContextInit(contextName, min, max, (double)0.0, (double)0.0, 0, 1,
                              SA_CONTEXT_TYPE_DOMAIN, SA_CONTEXT_NOTES_SINGLE_TERM);
+    }
+
+    // if the new semantic term changes the domain (lower min or higher max)
+    //    recalculate all of the semantic terms over the new domain
+    if (cPtr->domainMin > min || cPtr->domainMax < max)
+        saContextRecreateSemanticTerms(cPtr, min, max);
     saContextCreateSemanticTerm(cPtr, termName, shapeStr, min, max);
     if (saSplunkContextSave(cPtr, scope, p->app, p->user) == false)
     {

@@ -24,8 +24,7 @@ extern saSemanticTermTypePtr saSemanticTermCreateLinearDecrease(char *, double, 
 extern saSemanticTermTypePtr saSemanticTermCreateLinearIncrease(char *, double, double, double,
                                                                 double);
 extern saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
-extern saSemanticTermTypePtr saSemanticTermCreateTrapezoid(char *, double, double, double, double,
-                                                           double);
+extern saSemanticTermTypePtr saSemanticTermCreateTrapezoid(char *, double, double, double, double);
 extern saSemanticTermTypePtr saSemanticTermCreateTriangle(char *, double, double, double, double,
                                                           double);
 
@@ -64,32 +63,33 @@ void saContextCreateSemanticTerm(saContextTypePtr cPtr, char *termName, char *sh
                                  double max)
 {
     int i = cPtr->numSemanticTerms++;
-    
+
     if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_CURVEDECREASE))
         cPtr->semanticTerms[i] = saSemanticTermCreateCurveDecrease(termName, cPtr->domainMin, 
                                                                    cPtr->domainMax, min, max,
-                                                                   (max-min)/2);
+                                                                   (max+min)/2);
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_LINEARDECREASE))
         cPtr->semanticTerms[i] = saSemanticTermCreateLinearDecrease(termName, cPtr->domainMin, 
                                                                     cPtr->domainMax, min, max);
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_CURVEINCREASE))
         cPtr->semanticTerms[i] = saSemanticTermCreateCurveIncrease(termName, cPtr->domainMin,
                                                                    cPtr->domainMax, min, max, 
-                                                                   (max-min)/2);
+                                                                   (max+min)/2);
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_LINEARINCREASE))
         cPtr->semanticTerms[i] = saSemanticTermCreateLinearIncrease(termName, cPtr->domainMin, 
                                                                     cPtr->domainMax, min, max); 
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
         cPtr->semanticTerms[i] = saSemanticTermCreatePI(termName, cPtr->domainMin, cPtr->domainMax, 
-                                                        min, max, (max-min)/2);
+                                                        min, max, (max+min)/2);
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRAPEZOID))
         cPtr->semanticTerms[i] = saSemanticTermCreateTrapezoid(termName, cPtr->domainMin, 
-                                                               cPtr->domainMax, min, max,
-                                                               (max-min)/2);
+                                                               cPtr->domainMax, min, max);
     else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRIANGLE))
         cPtr->semanticTerms[i] = saSemanticTermCreateTriangle(termName, cPtr->domainMin, 
                                                               cPtr->domainMax, min, max,
-                                                              (max-min)/2);
+                                                              (max+min)/2);
+    else
+        fprintf(stderr, "No Such shape: %s\n", shape);
 }
 
 saContextTypePtr saContextCreateSemanticTerms(char *name, double domainMin, double domainMax, 
@@ -100,7 +100,37 @@ saContextTypePtr saContextCreateSemanticTerms(char *name, double domainMin, doub
     // create the context
     saContextTypePtr p = saContextInit(name, domainMin, domainMax, avg, sdev, count, 
                                        numTerms, SA_CONTEXT_TYPE_DOMAIN, notes);
-    
+    if (numTerms == 1)
+    {
+        double min = domainMin;
+        double center = (domainMin + domainMax) / 2;
+        double max = domainMax;
+        if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_CURVEINCREASE))
+            p->semanticTerms[0] = saSemanticTermCreateCurveIncrease(terms[0], domainMin, 
+                                                                    domainMax, min, max, 
+                                                                    center);
+        else if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_LINEARINCREASE))
+            p->semanticTerms[0] = saSemanticTermCreateLinearIncrease(terms[0], domainMin, 
+                                                                     domainMax, min, max); 
+        else if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_CURVEDECREASE))
+            p->semanticTerms[0] = saSemanticTermCreateCurveDecrease(terms[0], domainMin, 
+                                                                    domainMax, min, max,
+                                                                    center);
+        else if (!strcmp(endShape, SA_SEMANTICTERM_SHAPE_LINEARDECREASE))
+            p->semanticTerms[0] = saSemanticTermCreateLinearDecrease(terms[0], domainMin, 
+                                                                     domainMax, min, max);
+        else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_PI))
+            p->semanticTerms[0] = saSemanticTermCreatePI(terms[0], domainMin, domainMax, 
+                                                         min, max, center);
+        else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRAPEZOID))
+            p->semanticTerms[0] = saSemanticTermCreateTrapezoid(terms[0], domainMin, domainMax, 
+                                                                min, max);
+        else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRIANGLE))
+            p->semanticTerms[0] = saSemanticTermCreateTriangle(terms[0], domainMin, domainMax, 
+                                                               min, max, center);
+        return(p);
+    }
+
     int i = 0;
     while(i < numTerms)
     {
@@ -134,7 +164,7 @@ saContextTypePtr saContextCreateSemanticTerms(char *name, double domainMin, doub
                                                              min, max, center);
             else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRAPEZOID))
                 p->semanticTerms[i] = saSemanticTermCreateTrapezoid(terms[i], domainMin, domainMax, 
-                                                             min, max, center);
+                                                             min, max);
             else if (!strcmp(shape, SA_SEMANTICTERM_SHAPE_TRIANGLE))
                 p->semanticTerms[i] = saSemanticTermCreateTriangle(terms[i], domainMin, domainMax, 
                                                              min, max, center);
@@ -142,5 +172,48 @@ saContextTypePtr saContextCreateSemanticTerms(char *name, double domainMin, doub
         i++;
     }
     return(p);
+}
+
+void saContextRecreateSemanticTerms(saContextTypePtr cPtr, double min, double max)
+{
+    if (cPtr->domainMin > min)
+        cPtr->domainMin = min;
+    if (cPtr->domainMax < max)
+        cPtr->domainMax = max;
+
+    int i = 0;
+    while(i<cPtr->numSemanticTerms)
+    {
+        saSemanticTermTypePtr p = cPtr->semanticTerms[i];
+        if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_CURVEDECREASE))
+            cPtr->semanticTerms[i] = saSemanticTermCreateCurveDecrease(p->name, cPtr->domainMin, 
+                                                                      cPtr->domainMax, p->points[0],
+                                                                      p->points[2], p->points[1]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_LINEARDECREASE))
+            cPtr->semanticTerms[i] = saSemanticTermCreateLinearDecrease(p->name, cPtr->domainMin, 
+                                                                      cPtr->domainMax, p->points[0],
+                                                                      p->points[1]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_CURVEINCREASE))
+            cPtr->semanticTerms[i] = saSemanticTermCreateCurveIncrease(p->name, cPtr->domainMin,
+                                                                      cPtr->domainMax, p->points[0],
+                                                                      p->points[2], p->points[1]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_LINEARINCREASE))
+            cPtr->semanticTerms[i] = saSemanticTermCreateLinearIncrease(p->name, cPtr->domainMin, 
+                                                                      cPtr->domainMax, p->points[0],
+                                                                      p->points[1]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_PI))
+            cPtr->semanticTerms[i] = saSemanticTermCreatePI(p->name, cPtr->domainMin,
+                                                            cPtr->domainMax, p->points[0], 
+                                                            p->points[4], p->points[2]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_TRAPEZOID))
+            cPtr->semanticTerms[i] = saSemanticTermCreateTrapezoid(p->name, cPtr->domainMin, 
+                                                                   cPtr->domainMax, p->points[0], 
+                                                                   p->points[3]);
+        else if (!strcmp(p->shape, SA_SEMANTICTERM_SHAPE_TRIANGLE))
+            cPtr->semanticTerms[i] = saSemanticTermCreateTriangle(p->name, cPtr->domainMin, 
+                                                                   cPtr->domainMax, p->points[0], 
+                                                                   p->points[2], p->points[1]);
+        i++;
+    }
 }
 

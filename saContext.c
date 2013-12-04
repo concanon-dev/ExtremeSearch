@@ -111,6 +111,11 @@ saContextTypePtr saContextLoad(FILE *infile)
                 contextPtr->notes = malloc(sizeof(char)*(strlen(value)+1));
                 strcpy(contextPtr->notes, value);
             }
+            else if (!strcmp(attribute, "format"))
+            {
+                contextPtr->format = malloc(sizeof(char)*(strlen(value)+1));
+                strcpy(contextPtr->format, value);
+            }
         }
     }
     free(line);
@@ -154,6 +159,11 @@ saContextTypePtr saContextLoad(FILE *infile)
                 {
                     p->shape = malloc(strlen(value)+1);
                     strcpy(p->shape, value);
+                }
+                else if (!strcmp(attribute, "format"))
+                {
+                    p->format = malloc(sizeof(char)*(strlen(value)+1));
+                    strcpy(p->format, value);
                 }
                 else if (!strncmp(attribute, "truth", 5))
                 {
@@ -250,9 +260,9 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
     time_t ct = getTimestamp(timeStr);
     if (contextPtr->numSemanticTerms == 0)
         return(false);
-    
-    fprintf(outfile, "%s %s record=header version=%d context=%s", timeStr, 
-            SA_CONTEXT_TIMESTAMP_SEPARATOR, (int)ct, contextPtr->name);
+
+    fprintf(outfile, "%s %s format=%s record=header version=%d context=%s", timeStr, 
+            SA_CONTEXT_TIMESTAMP_SEPARATOR, SA_CONTEXT_FORMAT, (int)ct, contextPtr->name);
     fprintf(outfile, " count=%d", contextPtr->count);
     fprintf(outfile, " domainMin=%.10f", contextPtr->domainMin);
     fprintf(outfile, " domainMax=%.10f", contextPtr->domainMax);
@@ -267,8 +277,8 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
     for(i=0; i< contextPtr->numSemanticTerms; i++)
     {
         saSemanticTermTypePtr p = contextPtr->semanticTerms[i];
-        fprintf(outfile, "%s %s record=set version=%d context=%s", timeStr, 
-                SA_CONTEXT_TIMESTAMP_SEPARATOR, (int)ct, contextPtr->name);
+        fprintf(outfile, "%s %s format=%s record=set version=%d context=%s", timeStr, 
+                SA_CONTEXT_TIMESTAMP_SEPARATOR, SA_CONTEXT_FORMAT, (int)ct, contextPtr->name);
         fprintf(outfile, " name=%s", p->name);
         fprintf(outfile, " shape=%s", p->shape);
         fprintf(outfile, " domainMin=%.4f", p->domainMin);
@@ -278,9 +288,9 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
         j=0;
         while(j < p->numPoints)
 	      fprintf(outfile, " point%d=%.10f", j, p->points[j++]);
-        
         for(j=0; j<SA_SEMANTICTERM_VECTORSIZE; j++)
             fprintf(outfile, " truth%d=%1.10f:%.10f", j, p->indexVector[j], p->vector[j]);
+        
         fprintf(outfile, "\n");
         fflush(outfile);
     }

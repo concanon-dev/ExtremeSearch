@@ -18,6 +18,11 @@ int main(int argc, char *argv[])
     }
 
     FILE *f = fopen(argv[1], "r");
+    if (f == NULL)
+    {
+        fprintf(stderr, "Can't open file %s\n", argv[1]);
+        exit(1);
+    }
     OLDsaContextPtr oldP = saFuzzyLoadContext(f);
     fclose(f);
 
@@ -87,6 +92,11 @@ int main(int argc, char *argv[])
             newP->points[j] = oldPP->parameters[j];
     }
     FILE *o = fopen(argv[2], "w");
+    if (o == NULL)
+    {
+        fprintf(stderr, "can't open new file: %s\n", argv[2]);
+        exit(1);
+    }
     if (saContextSave(o, p) == false)
         fprintf(stderr, "couldn't open file %s\n", argv[2]);
     fclose(o);

@@ -46,47 +46,53 @@ bool saSplunkContextDelete(char *name, int scope, char *app, char *user)
     return(false);
 }
 
-saContextTypePtr saSplunkContextFind(char *name, char *app, char *user)
+saContextTypePtr saSplunkContextFind(char *name, char *app, char *user, int *scope)
 {
     saContextTypePtr contextPtr = NULL;
     char path[1024];
 
+    *scope = SA_SPLUNK_SCOPE_PRIVATE;
     sprintf(path, "../../../users/%s/%s/contexts/%s.context", user, app, name);
     if (access(path, F_OK) == -1)
     {
+        *scope = SA_SPLUNK_SCOPE_APP;
         sprintf(path, "../../%s/contexts/%s.context", app, name);
         if (access(path, F_OK) == -1)
         {
-            sprintf(path, "../contexts/%s.context", name);
+            *scope = SA_SPLUNK_SCOPE_GLOBAL;
+            sprintf(path, "../../xtreme/contexts/%s.context", name);
             if (access(path, F_OK) == -1)
                 return(NULL);
         }
     }
     FILE *f = fopen(path, "r");
     if (f == NULL)
+    {
+        *scope = SA_SPLUNK_SCOPE_NONE;
         return(NULL);
+    }
     contextPtr = saContextLoad(f);
     fclose(f);
 
     return(contextPtr);    
 }
 
-saContextTypePtr saSplunkContextLoad(char *name, int scope, char *app, char *user)
+saContextTypePtr saSplunkContextLoad(char *name, int *scope, char *app, char *user)
 {
     char file[1024];
     char path[1024];
     saContextTypePtr contextPtr = NULL;
 
-    if (scope == SA_SPLUNK_SCOPE_NONE)
-        return(saSplunkContextFind(name, app, user));
+    if (*scope == SA_SPLUNK_SCOPE_NONE)
+        return(saSplunkContextFind(name, app, user, scope));
     else
     {
-        if (scope == SA_SPLUNK_SCOPE_GLOBAL)
+        if (*scope == SA_SPLUNK_SCOPE_GLOBAL)
         {
             app = NULL;
             user = NULL;
         }
-        else if (scope == SA_SPLUNK_SCOPE_APP)
+        else if (*scope == SA_SPLUNK_SCOPE_APP)
             user = NULL;
 
         if (user != NULL)

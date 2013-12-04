@@ -18,7 +18,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    contextPtr = saSplunkContextLoad(contextName, scope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsDeleteSemanticTerm-F-113: Can't open context: %s\n", contextName);

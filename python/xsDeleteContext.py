@@ -10,12 +10,13 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     context=''    
+    inKeyword=''
     scope=''
     try:
 
         if len(sys.argv) > 1:
             for arg in sys.argv[1:]:
-                if arg.lower() == 'in'
+                if arg.lower() == 'in':
                     inKeyword = 'in'
                 elif inKeyword == 'in':
                     scope=arg

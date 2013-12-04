@@ -1,8 +1,23 @@
 Scianta Analytics Extreme Search for Splunk
 
-Version:        4.0.0b
+Version:        4.0.0e
 
 Release Notes: 
+    Cloned/Modified/renamed contexts that are "found" via private/app/global heirarchy are now
+    put back in the same location automatically by default
+    Added auto-rescaling of terms in context when new term is added
+    Renamed Create UD script
     Restructured context files
     Added xsconvert command to convert old context files to new context files
     Added xsCreateSemanticTerm command
+
+To convert context files from pre 4.0 to 4.0+, run the "xsconvert" command.  This 
+command resides in $SPLUNK_HOME/etc/apps/xtreme/bin.  This program must be run from 
+the command line as follows:
+
+$SPLUNK_HOME/etc/apps/xtreme/bin/xsconvert <oldContext> <newContext>
+
+The names of the contexts may be the same.
+
+This command should be run in each contexts directory found in $SPLUNK_HOME on each Search Head, unless they are pooled.
+

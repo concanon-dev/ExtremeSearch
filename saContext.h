@@ -9,7 +9,10 @@
 
 #include "saSemanticTerm.h"
 
+#define SA_CONTEXT_DEFAULT_ALFACUT 0.2
+#define SA_CONTEXT_FORMAT "v2.0"
 #define SA_CONTEXT_NOTES_SINGLE_TERM "single term"
+#define SA_CONTEXT_SCALAR_PERCENT 0.05
 #define SA_CONTEXT_TIMESTAMP_SEPARATOR "::"
 #define SA_CONTEXT_TYPE_AVERAGE_CENTERED "average_centered"
 #define SA_CONTEXT_TYPE_DOMAIN "domain"
@@ -21,6 +24,7 @@ typedef struct saContextStruct
     int count;
     double domainMax;
     double domainMin;
+    char *format;
     char *name;
     char *notes;
     double sdev;

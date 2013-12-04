@@ -20,6 +20,7 @@ if [ ! -d obj/$Platform ]; then
 fi
 
 $GCC -c fix-intersplunk.c                -o obj/$Platform/fix-intersplunk.o
+$GCC -c OLDsaLoadContext.c               -o obj/$Platform/OLDsaLoadContext.o
 $GCC -c saAutoRegression.c               -o obj/$Platform/saAutoRegression.o
 $GCC -c saContext.c                      -o obj/$Platform/saContext.o
 $GCC -c saContextCreate.c                -o obj/$Platform/saContextCreate.o

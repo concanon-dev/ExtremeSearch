@@ -66,7 +66,7 @@ extern saSemanticTermTypePtr saHedgeApply(int, saSemanticTermTypePtr);
 extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -452,7 +452,8 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 }
                 else
                 {
-                    t = saSplunkContextLoad(contextName, SA_SPLUNK_SCOPE_NONE, p->app, p->user);
+                    int scope = SA_SPLUNK_SCOPE_NONE;
+                    t = saSplunkContextLoad(contextName, &scope, p->app, p->user);
                     if (t == NULL)
                     {
                         fprintf(stderr, "xsWhere-F-111: can't open context %s\n", contextName);

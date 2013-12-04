@@ -18,7 +18,6 @@
         <collection
             label="Semantic Terms">
             <view name="create_semantic_term" />
-            <view name="generate_semantic_term" />
         </collection>
     </collection>
 

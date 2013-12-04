@@ -8,8 +8,8 @@
 //--(c)2012-2013 Scianta Analytics LLC
 //-----------------------------------------------------------------
 //
-#ifndef __saFuzzyDescriptorBlock
-#define __saFuzzyDescriptorBlock
+#ifndef __saSemanticTerm__
+#define __saSemanticTerm__
 
 // List the types of shapes for semantic terms
 #define SA_SEMANTICTERM_SHAPE_CURVE "curve"
@@ -31,6 +31,7 @@
 
 typedef struct saSemanticTermStruct
 {
+    char *format;
     char *name;
     char *shape; 
     double domainMin, domainMax;

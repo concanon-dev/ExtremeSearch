@@ -26,7 +26,7 @@ extern saSemanticTermTypePtr saHedgeApply(int, saSemanticTermTypePtr);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -166,7 +166,7 @@ int main(int argc, char* argv[])
         else
             cName = setArray[numSemanticTerms-1];
 
-        contextPtr = saSplunkContextLoad(cName, scope, p->app, p->user);
+        contextPtr = saSplunkContextLoad(cName, &scope, p->app, p->user);
         if (contextPtr == NULL)
         {
             fprintf(stderr, "xsDisplaySemanticTerm-F-111: can't open context %s\n", cName);

@@ -43,7 +43,7 @@ static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
 extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -292,8 +292,8 @@ int main(int argc, char* argv[])
         //     write out the results (example):
         //     _time,ArrDelay,low,-0.5
         char *cName = findElementInList(Y[i], yList, contextList, numContexts);
-        saContextTypePtr contextPtr = saSplunkContextLoad(cName, SA_SPLUNK_SCOPE_NONE, p->app, 
-                                                          p->user);
+        int scope = SA_SPLUNK_SCOPE_NONE;
+        saContextTypePtr contextPtr = saSplunkContextLoad(cName, &scope, p->app, p->user);
         if (contextPtr == NULL)
         {
             fprintf(stderr, "xsDiscoverTrend-F-111: can't open context %s\n", cName);

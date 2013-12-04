@@ -27,8 +27,10 @@ Enter values in each field as necessary to create the Context
             <choice value="pi">PI</choice>
             <choice value="trapezoid">Trapezoid</choice>
             <choice value="triangle">Triangle</choice>
-            <choice value="decrease">Single-only Decrease</choice>
-            <choice value="increase">Single-only Increase</choice>
+            <choice value="curvedecrease">(Single Term Only) Curve Decrease</choice>
+            <choice value="lineardecrease">(Single Term Only) Linear Decrease</choice>
+            <choice value="curveincrease">(Single Term Only) Curve Increase</choice>
+            <choice value="linearincrease">(Single Term Only) Linear Increase</choice>
         </input>
         <input type="dropdown" token="endShape">
             <default>curve</default>

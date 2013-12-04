@@ -66,7 +66,7 @@ saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, dou
 extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
     bool useAlfa = false;
     char cixFunction[80];
     char synonymFileName[80];
-    float alfacut=0.2;
-    float scalar_percent=0.05;
+    float alfacut=SA_CONTEXT_DEFAULT_ALFACUT;
+    float scalar_percent=SA_CONTEXT_SCALAR_PERCENT;
     int c;
     int cixIndex = -1;
     int numFields;
@@ -492,6 +492,9 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                         halfTerm = fabs(scalar_percent * d);
                         domainMin = center - halfTerm;
                         domainMax = center + halfTerm;
+FILE *zzz = fopen("./zzz", "a");
+fprintf(zzz, "d=%10.4f center=%10.4f half=%10.4f dm=%10.4f dx=%10.4f\n", d, center, halfTerm, domainMin, domainMax);
+fclose(zzz);
                     }
                     sprintf(tempName, "%s_%d", dStr, stackIndex);
                     semanticTerm = (saSemanticTermTypePtr)saHashGet(semanticTermTable, tempName);
@@ -509,7 +512,8 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 }
                 else
                 {
-                    t = saSplunkContextLoad(contextName, SA_SPLUNK_SCOPE_NONE, p->app, p->user);
+                    int scope = SA_SPLUNK_SCOPE_NONE;
+                    t = saSplunkContextLoad(contextName, &scope, p->app, p->user);
                     if (t == NULL)
                     {
                         fprintf(stderr, "xsWhere-F-111: can't open context %s\n", contextName);

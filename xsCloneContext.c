@@ -18,7 +18,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    contextPtr = saSplunkContextLoad(oldName, oldScope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(oldName, &oldScope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsCloneContext-F-107: Can't load context: %s\n", oldName);

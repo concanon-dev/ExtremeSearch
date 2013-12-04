@@ -43,10 +43,6 @@ saSemanticTermTypePtr saSemanticTermCreateCurveDecrease(char *name, double domai
     if (termMin >= termMax || termMax <= termMin)
         return(NULL);
 
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
-        return(NULL);
-
     // make sure curve is legal
     if (termMin >= inflectionPoint)
         return(NULL);
@@ -85,10 +81,6 @@ saSemanticTermTypePtr saSemanticTermCreateCurveIncrease(char *name, double domai
 {
     // make sure term is not inverted
     if (termMin >= termMax || termMax <= termMin)
-        return(NULL);
-
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
         return(NULL);
 
     // make sure curve is legal
@@ -131,10 +123,6 @@ saSemanticTermTypePtr saSemanticTermCreateLinearDecrease(char *name, double doma
     if (termMin >= termMax)
         return(NULL);
 
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
-        return(NULL);
-
     double domainSize = domainMax - domainMin;
     double termSize = termMax - termMin;
 
@@ -167,10 +155,6 @@ saSemanticTermTypePtr saSemanticTermCreateLinearIncrease(char *name, double doma
 {
     // make sure term is not inverted
     if (termMin >= termMax)
-        return(NULL);
-
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
         return(NULL);
 
     double domainSize = domainMax - domainMin;
@@ -206,10 +190,6 @@ saSemanticTermTypePtr saSemanticTermCreatePI(char *name, double domainMin, doubl
     if (termMin >= termMax || termMax <= termMin)
         return(NULL);
 
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
-        return(NULL);
-
     // make sure center is between min and max
     if (center <= termMin || center >= termMax)
         return(NULL);
@@ -231,7 +211,7 @@ saSemanticTermTypePtr saSemanticTermCreatePI(char *name, double domainMin, doubl
     p->points[2] = center;
     p->points[3] = rightInflection;
     p->points[4] = termMax;
-    
+
     int i;
     for(i=0;i<SA_SEMANTICTERM_VECTORSIZE;i++)
     {
@@ -252,20 +232,12 @@ saSemanticTermTypePtr saSemanticTermCreatePI(char *name, double domainMin, doubl
 }
 
 saSemanticTermTypePtr saSemanticTermCreateTrapezoid(char *name, double domainMin, double domainMax,
-                                             double termMin, double termMax, double center)
+                                             double termMin, double termMax)
 {
     int i;
 
     // make sure term is not inverted
     if (termMin >= termMax || termMax <= termMin)
-        return(NULL);
-
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
-        return(NULL);
-
-    // make sure center is between min and max
-    if (center <= termMin || center >= termMax)
         return(NULL);
 
     double domainSize = domainMax - domainMin;
@@ -305,10 +277,6 @@ saSemanticTermTypePtr saSemanticTermCreateTriangle(char *name, double domainMin,
 
     // make sure term is not inverted
     if (termMin >= termMax || termMax <= termMin)
-        return(NULL);
-
-    // make sure term fits inside context
-    if (termMin < domainMin || termMax > domainMax)
         return(NULL);
 
     // make sure center is between min and max
@@ -357,7 +325,7 @@ saSemanticTermTypePtr saSemanticTermInit(char *name, double domainMin, double do
     int i;
     for(i=0; i<SA_SEMANTICTERM_VECTORSIZE; i++)
         p->indexVector[i] = domainMin 
-                            + (i * ((domainMax - domainMin + 1) / SA_SEMANTICTERM_VECTORSIZE));
+                            + (i * ((domainMax - domainMin) / SA_SEMANTICTERM_VECTORSIZE));
     return(p);
 }
 
