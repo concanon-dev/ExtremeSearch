@@ -20,7 +20,6 @@ if [ ! -d obj/$Platform ]; then
 fi
 
 $GCC -c fix-intersplunk.c                -o obj/$Platform/fix-intersplunk.o
-$GCC -c OLDsaLoadContext.c               -o obj/$Platform/OLDsaLoadContext.o
 $GCC -c saAutoRegression.c               -o obj/$Platform/saAutoRegression.o
 $GCC -c saContext.c                      -o obj/$Platform/saContext.o
 $GCC -c saContextCreate.c                -o obj/$Platform/saContextCreate.o
@@ -71,6 +70,7 @@ $GCC -c xsFindMembership.c               -o obj/$Platform/xsFindMembership.o
 $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
+$GCC -c xsListSemanticTerms.c            -o obj/$Platform/xsListSemanticTerms.o
 $GCC -c xsOverlayContext.c               -o obj/$Platform/xsOverlayContext.o
 $GCC -c xsPerformAutoRegression.c        -o obj/$Platform/xsPerformAutoRegression.o
 $GCC -c xsPerformCorrelation.c           -o obj/$Platform/xsPerformCorrelation.o
@@ -79,7 +79,6 @@ $GCC -c xsPerformQuadRegression.c        -o obj/$Platform/xsPerformQuadRegressio
 $GCC -c xsPerformSpearmanCorrelation.c   -o obj/$Platform/xsPerformSpearmanCorrelation.o
 # $GCC -c xsUpdateContext.c                -o obj/$Platform/xsUpdateContext.o
 $GCC -c xsWhere.c                        -o obj/$Platform/xsWhere.o
-$GCC -c xsconvert.c                      -o obj/$Platform/xsconvert.o
 $GCC -c xspreautoregress.c               -o obj/$Platform/xspreautoregress.o
 $GCC -c xsprecorrelate.c                 -o obj/$Platform/xsprecorrelate.o
 $GCC -c xspredict.c                      -o obj/$Platform/xspredict.o

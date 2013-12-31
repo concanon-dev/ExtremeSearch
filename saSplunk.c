@@ -254,12 +254,10 @@ saSplunkInfoPtr saSplunkLoadInfo(char *infoPath)
 int main(int argc, char *argv[])
 {
     saSplunkInfoPtr p = saSplunkLoadHeader();
-    fprintf(stderr, "info=%s\n", p->infoPath);
     if (saSplunkReadInfoPathFile(p) == false)
     {
         fprintf(stderr, "FALSE\n");
         exit(0);
     }
-    fprintf(stderr, "a=%s u=%s\n", p->app, p->user);
 }
 */

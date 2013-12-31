@@ -7,6 +7,7 @@
 #include <execinfo.h>
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -16,8 +17,28 @@ static char programName[256];
 void dumpStack()
 {
      void* callstack[128];
+     char errFile[512];
      int i, frames = backtrace(callstack, 128);
-     backtrace_symbols_fd(callstack, frames, 2);
+
+     char *splunk_home = getenv("SPLUNK_HOME");
+     pid_t pid = getpid();
+     sprintf(errFile, "%s/var/log/xtreme/", splunk_home);
+
+#ifdef _UNICODE
+     mkdir(errFile);
+#else
+     mkdir(errFile, 0755);
+#endif
+
+     sprintf(errFile, "%s/var/log/xtreme/crash_%d.log", splunk_home, pid);
+     FILE *f = fopen(errFile, "w");
+     if (f != NULL)
+     {
+         backtrace_symbols_fd(callstack, frames, fileno(f));
+         fclose(f);
+     }
+     else
+         backtrace_symbols_fd(callstack, frames, 2);
 }
 
 void sighandler(int signum)

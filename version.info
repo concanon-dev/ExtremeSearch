@@ -1,8 +1,9 @@
 Scianta Analytics Extreme Search for Splunk
 
-Version:        4.0.0e
+Version:        4.0.0g2
 
 Release Notes: 
+    Modified xsDisplaySemanticTerm to show hedges entered by user instead of base hedges
     Cloned/Modified/renamed contexts that are "found" via private/app/global heirarchy are now
     put back in the same location automatically by default
     Added auto-rescaling of terms in context when new term is added

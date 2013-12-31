@@ -257,7 +257,7 @@ saSemanticTermTypePtr saSemanticTermCreateTrapezoid(char *name, double domainMin
     for(i=0;i<SA_SEMANTICTERM_VECTORSIZE;i++)
     {
         double bucketSize = domainMin + (float)i/(SA_SEMANTICTERM_VECTORSIZE) * domainSize;
-        if (bucketSize > termMin)
+        if (bucketSize >= termMin && bucketSize <= termMax)
         {
         if (bucketSize < (termMin + trapSize))
             p->vector[i]=(float)((bucketSize - termMin)/trapSize);
@@ -298,7 +298,7 @@ saSemanticTermTypePtr saSemanticTermCreateTriangle(char *name, double domainMin,
     for(i=0;i<SA_SEMANTICTERM_VECTORSIZE;i++)
     {
         double bucketSize = domainMin + (float)i/(SA_SEMANTICTERM_VECTORSIZE) * domainSize;
-        if (bucketSize > termMin)
+        if (bucketSize >= termMin && bucketSize <= termMax)
         {
             if (bucketSize < center)
                 p->vector[i]=(float)((bucketSize - termMin)/(termSize/2));
@@ -308,7 +308,7 @@ saSemanticTermTypePtr saSemanticTermCreateTriangle(char *name, double domainMin,
                 p->vector[i]=(float)(1 - (bucketSize - center)/(termSize/2));
         }
     }
-    return(0);
+    return(p);
 }
 
 

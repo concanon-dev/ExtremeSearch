@@ -278,6 +278,15 @@
           <td>List the contexts in private, app or global.</td>
         </tr>
         <tr
+          class="tableeven">
+          <td>
+            <a
+              href="xsListContexts">xsListSemanticTerms</a>
+          </td>
+          <td>Conceptual Search</td>
+          <td>List the semantic terms from a context in private, app or global.</td>
+        </tr>
+        <tr
           class="tableodd">
           <td>
             <a

@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsDisplaySemanticTerm-F-103: Usage: xsContext -f contextFileName");
+        fprintf(stderr, "xsDisplaySemanticTerm-F-103: Usage: xsDisplaySemanticTerm -c context -l setString -p scope -s synonyms ");
         exit(EXIT_FAILURE);
     }
 
@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
     
     if (strlen(setString) == 0)
     {
-        fprintf(stderr, "xsDisplayContext-F-113: No semantic term specified\n");
+        fprintf(stderr, "xsDisplaySemanticTerm-F-113: No semantic term specified\n");
         exit(0);
     }
     int numSets = 0;
@@ -209,7 +209,7 @@ int main(int argc, char* argv[])
                 if (s != NULL)
                     strcat(hedgeStr, " ");
             }
-            setArray[i] = hedgeStr; 
+            // setArray[i] = hedgeStr; 
             int j;
             for(j=numHedges-1; j>=0; j--)
             {

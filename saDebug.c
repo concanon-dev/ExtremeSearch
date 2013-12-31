@@ -109,16 +109,12 @@ void saDebugCloseFile(int whichFile)
 
 saDebugEnd()
 {
-fprintf(stderr, "1\n");
     if (debug_dataFile != NULL)
         fclose(debug_dataFile);
-fprintf(stderr, "2\n");
     if (debug_logFile != NULL)
         fclose(debug_logFile);
-fprintf(stderr, "3\n");
     if (debug_outputFile != NULL)
         fclose(debug_outputFile);
-fprintf(stderr, "4\n");
 }
 
 FILE *saDebugGetFile(int whichFile)

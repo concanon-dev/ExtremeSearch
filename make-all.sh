@@ -64,6 +64,7 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsGetWhereCix.sh
 ./make-xsLicense.sh
 ./make-xsListContexts.sh
+./make-xsListSemanticTerms.sh
 ./make-xsOverlayContext.sh
 ./make-xsPerformAutoRegression.sh
 ./make-xsPerformCorrelation.sh
@@ -72,7 +73,6 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsPerformSpearmanCorrelation.sh
 # ./make-xsUpdateContext.sh
 ./make-xsWhere.sh
-./make-xsconvert.sh
 ./make-xspreautoregress.sh
 ./make-xsprecorrelate.sh
 ./make-xspredict.sh

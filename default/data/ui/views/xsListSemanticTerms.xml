@@ -31,7 +31,7 @@
                                 <span
                                         class="head4">Command: </span>
                                 <span
-                                        class="cmd">xsListContexts</span>
+                                        class="cmd">xsListSemanticTerms</span>
                         </p>
                         <p>
                                 <span
@@ -43,30 +43,38 @@
                                 <span
                                         class="head4">Description: </span>
                                 <span
-                                        class="bodytext">List the contexts in a scope (private, app or global)</span>
+                                        class="bodytext">List the semantic terms from a context in a scope (private, app or global)</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsListContexts [scope]</span>
+                                        class="bodytext">xsListSemanticTerms FROM context [IN scope]</span>
                         </p>
                         <p>
                                 <br />
                                 <span
                                         class="head4">Example: </span>
                                 <span
-                                        class="code">| xsListContexts global</span>
+                                        class="code">| xsListSemanticTerms FROM Height IN global</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">List the contexts in the global name space</span>
+                                        class="explanation">List the semantic terms from the context Height in the global name space</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Parameters: </span>
                                 <span
-                                        class="bodytext">scope</span>
+                                        class="bodytext">context, scope</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">context</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">The name of the context that contains the semantic terms</span>
                         </p>
                         <p>
                                 <span
@@ -80,7 +88,7 @@
                                 <span
                                         class="head4">Result: </span>
                                 <span
-                                        class="bodytext">The list of contexts in a specific scope.</span>
+                                        class="bodytext">The list of semantic terms from the context in a specific scope.</span>
                         </p>
                         <p>
                                 <span
@@ -93,7 +101,7 @@
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20131231.2</p>
+                        <p><br />Version 20131231.1</p>
 
                 </html>
         </row>
