@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -10,50 +10,61 @@
 #include <stdlib.h>
 #include "saAutoRegression.h"
 
-double *autoRegression(double *inputseries, int length, int degree, int method)
+/*
+   Gaussian elimination solver
+   Author: Rainer Hegger Last modified: Aug 14th, 1998
+   Modified (for personal style and context) by Paul Bourke
+*/
+int SolveLE(double **mat, double *vec, unsigned int n)
 {
-    int i, t;
+    int i,j,k,maxi;
+    double vswap,*mswap,*hvec,max,h,pivot,q;
 
-    double *coef = (double *)malloc((degree+1)*sizeof(double *));
-    double *g = (double *)malloc((degree+2)*sizeof(double));
-    double *h = (double *)malloc((degree+1)*sizeof(double));
-    double *pef = (double *)malloc((length+1)*sizeof(double));
-    double *per = (double *)malloc((length+1)*sizeof(double));
-    double *w = (double *)malloc(length*sizeof(double));
-    double **ar = (double **)malloc((degree+1)*sizeof(double *));
-    for(i=0; i<degree+1; i++)
+    for(i=0; i<n-1; i++)
     {
-        ar[i] = (double *)malloc((degree+1)*sizeof(double));
-        coef[i] = 0.0;
+        max = fabs(mat[i][i]);
+        maxi = i;
+        for(j=i+1; j<n; j++)
+        {
+            if ((h = fabs(mat[j][i])) > max) 
+            {
+               max = h;
+               maxi = j;
+            }
+        }
+        if (maxi != i)
+        {
+           mswap     = mat[i];
+           mat[i]    = mat[maxi];
+           mat[maxi] = mswap;
+           vswap     = vec[i];
+           vec[i]    = vec[maxi];
+           vec[maxi] = vswap;
+        }
+ 
+        hvec = mat[i];
+        pivot = hvec[i];
+        if (fabs(pivot) == 0.0) 
+            return(1);
+
+        for(j=i+1; j<n; j++)
+        {
+            q = - mat[j][i] / pivot;
+            mat[j][i] = 0.0;
+            for(k=i+1; k<n; k++)
+                mat[j][k] += q * hvec[k];
+            vec[j] += (q * vec[i]);
+        }
     }
-
-    /* Determine and subtract the mean from the input series */
-    double mean = 0.0;
-    for(t=0; t<length; t++)
-        mean += inputseries[t];
-    mean /= (double)length;
-    for(t=0; t<length; t++)
-        w[t] = inputseries[t] - mean;
-
-    /* Perform the appropriate AR calculation */
-    if (method == SA_AUTOREGRESSION_MAXENTROPY)
+    vec[n-1] /= mat[n-1][n-1];
+    for(i=n-2; i>=0; i--) 
     {
-        int errCode = ARMaxEntropy(w,length,degree,ar,per,pef,h,g);
-        if (errCode != 0)
-            return(NULL);
-
-        for(i=1; i<=degree; i++)
-            coef[i-1] = -ar[degree][i];
-
-    } else if (method == SA_AUTOREGRESSION_LEASTSQUARES) 
-    {
-        int errCode = ARLeastSquare(w,length,degree,coef); 
-        if (errCode != 0)
-            return(NULL);
-    } else
-        return(NULL);
-
-    return(coef);
+        hvec = mat[i];
+        for(j=n-1; j>i; j--)
+            vec[i] -= (hvec[j] * vec[j]);
+        vec[i] /= hvec[i];
+    }
+    return(0);
 }
 
 int ARMaxEntropy(double *inputseries, int length, int degree, double **ar, double *per,
@@ -143,63 +154,52 @@ int ARLeastSquare(double *inputseries, int length, int degree, double *coefficie
     return(SolveLE(mat,coefficients,degree));
 }
 
-/*
-   Gaussian elimination solver
-   Author: Rainer Hegger Last modified: Aug 14th, 1998
-   Modified (for personal style and context) by Paul Bourke
-*/
-int SolveLE(double **mat, double *vec, unsigned int n)
+
+double *autoRegression(double *inputseries, int length, int degree, int method)
 {
-    int i,j,k,maxi;
-    double vswap,*mswap,*hvec,max,h,pivot,q;
+    int i, t;
 
-    for(i=0; i<n-1; i++)
+    double *coef = (double *)malloc((degree+1)*sizeof(double *));
+    double *g = (double *)malloc((degree+2)*sizeof(double));
+    double *h = (double *)malloc((degree+1)*sizeof(double));
+    double *pef = (double *)malloc((length+1)*sizeof(double));
+    double *per = (double *)malloc((length+1)*sizeof(double));
+    double *w = (double *)malloc(length*sizeof(double));
+    double **ar = (double **)malloc((degree+1)*sizeof(double *));
+    for(i=0; i<degree+1; i++)
     {
-        max = fabs(mat[i][i]);
-        maxi = i;
-        for(j=i+1; j<n; j++)
-        {
-            if ((h = fabs(mat[j][i])) > max) 
-            {
-               max = h;
-               maxi = j;
-            }
-        }
-        if (maxi != i)
-        {
-           mswap     = mat[i];
-           mat[i]    = mat[maxi];
-           mat[maxi] = mswap;
-           vswap     = vec[i];
-           vec[i]    = vec[maxi];
-           vec[maxi] = vswap;
-        }
- 
-        hvec = mat[i];
-        pivot = hvec[i];
-        if (fabs(pivot) == 0.0) 
-            return(1);
+        ar[i] = (double *)malloc((degree+1)*sizeof(double));
+        coef[i] = 0.0;
+    }
 
-        for(j=i+1; j<n; j++)
-        {
-            q = - mat[j][i] / pivot;
-            mat[j][i] = 0.0;
-            for(k=i+1; k<n; k++)
-                mat[j][k] += q * hvec[k];
-            vec[j] += (q * vec[i]);
-        }
-    }
-    vec[n-1] /= mat[n-1][n-1];
-    for(i=n-2; i>=0; i--) 
+    /* Determine and subtract the mean from the input series */
+    double mean = 0.0;
+    for(t=0; t<length; t++)
+        mean += inputseries[t];
+    mean /= (double)length;
+    for(t=0; t<length; t++)
+        w[t] = inputseries[t] - mean;
+
+    /* Perform the appropriate AR calculation */
+    if (method == SA_AUTOREGRESSION_MAXENTROPY)
     {
-        hvec = mat[i];
-        for(j=n-1; j>i; j--)
-            vec[i] -= (hvec[j] * vec[j]);
-        vec[i] /= hvec[i];
-    }
-    return(0);
+        int errCode = ARMaxEntropy(w,length,degree,ar,per,pef,h,g);
+        if (errCode != 0)
+            return(NULL);
+
+        for(i=1; i<=degree; i++)
+            coef[i-1] = -ar[degree][i];
+
+    } else if (method == SA_AUTOREGRESSION_LEASTSQUARES) 
+    {
+        int errCode = ARLeastSquare(w,length,degree,coef); 
+        if (errCode != 0)
+            return(NULL);
+    } else
+        return(NULL);
+
+    return(coef);
 }
-
 
 
 

@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -287,7 +287,10 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
         fprintf(outfile, " numpoints=%d", p->numPoints);
         j=0;
         while(j < p->numPoints)
-	      fprintf(outfile, " point%d=%.10f", j, p->points[j++]);
+        {
+	      fprintf(outfile, " point%d=%.10f", j, p->points[j]);
+              j++;
+        }
         for(j=0; j<SA_SEMANTICTERM_VECTORSIZE; j++)
             fprintf(outfile, " truth%d=%1.10f:%.10f", j, p->indexVector[j], p->vector[j]);
         

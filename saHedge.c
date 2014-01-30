@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -8,15 +8,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "saCSV.h"
 #include "saHedge.h"
 #include "saSemanticTerm.h"
 
 static char *fieldList[256];
 static char headerBuf[1024];
 
-extern int compareField(char *, char []);
-
-extern saSemanticTermCopy(saSemanticTermTypePtr, saSemanticTermTypePtr);
+extern void saSemanticTermCopy(saSemanticTermTypePtr, saSemanticTermTypePtr);
 
 saSemanticTermTypePtr saHedgeApply(int hedge, saSemanticTermTypePtr semanticTerm)
 {
@@ -285,9 +285,9 @@ bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
 
     for(i=0; i<numFields; i++)
     {
-        if (!compareField(fieldList[i], "hedge"))
+        if (!saCSVCompareField(fieldList[i], "hedge"))
             hedgeIndex = i;
-        else if (!compareField(fieldList[i], "word"))
+        else if (!saCSVCompareField(fieldList[i], "word"))
             wordIndex = i;
     }
 

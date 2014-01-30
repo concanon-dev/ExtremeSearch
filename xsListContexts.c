@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include "saLicensing.h"
 #include "saSplunk.h"
 
 extern char *optarg;
 extern int optind, optopt;
 
-extern saListDir(char *, char *, bool, FILE *, char *);
+extern void saListDir(char *, char *, bool, FILE *, char *);
+extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 

@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -12,13 +12,16 @@
 #include <string.h>
 #include <unistd.h>
 #include "saContext.h"
+#include "saLicensing.h"
 #include "saSemanticTerm.h"
+#include "saSignal.h"
 #include "saSplunk.h"
 
 static double stdDev(double, double);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *,
                                       char *);
+extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern void saContextRecreateSemanticTerms(saContextTypePtr, double, double);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
@@ -26,6 +29,7 @@ extern void saContextCreateSemanticTerm(saContextTypePtr, char *, char *, double
 
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 extern char *optarg;
 extern int optind, optopt;

@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -11,13 +11,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "saCSV.h"
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
 static char inbuf[MAXSTRING*1000];
 static char *fieldList[MAXROWSIZE*4];
 
-extern writeHeader;
+extern int doMain(int, char *[]);
+extern bool writeHeader;
 
 int main(int argc, char* argv[]) 
 {
@@ -36,6 +38,6 @@ int main(int argc, char* argv[])
        }
    }
    writeHeader = false;
-   doMain(argc, argv, false);
+   doMain(argc, argv);
 }
 

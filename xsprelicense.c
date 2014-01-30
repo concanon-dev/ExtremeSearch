@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -10,6 +10,7 @@
 #include "saLicensing.h"
 #include "saSignal.h"
 
+extern int doMain(int, char *[]);
 extern bool writeHeader;
 
 int main(int argc, char* argv[]) 

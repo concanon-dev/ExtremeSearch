@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -13,6 +13,8 @@
 #include <string.h>
 #include <unistd.h>
 #include "saContext.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 #include "saSplunk.h"
 
 extern char *optarg;
@@ -20,6 +22,7 @@ extern int optind, optopt;
 
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 

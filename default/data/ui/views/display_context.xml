@@ -1,56 +1,30 @@
-<form>
+<form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
     <label>Display Context</label>
-    <fieldset>
-        <html>
-            <p style="padding-top: 20px">
-Choose the Context you wish to display
-            </p>
-        </html>
-        <!-- 
-             For each field, create a text box; 
-             Upon first load, the box will be populated with '*'; 
-             If user leaves the box empty, then search will use '*'; 
-             All tokens will be followed by a *
-          -->
+    <fieldset autoRun="true" submitButton="false">
         <input type="radio" token="scope">
             <label>Select Context Scope</label>
             <default>Private</default>
-            <choice value="1">Private</choice>
-            <choice value="2">App</choice>
-            <choice value="3">Global</choice>
+            <choice value="private">Private</choice>
+            <choice value="app">App</choice>
+            <choice value="global">Global</choice>
         </input>
-        <input type="dropdown" token="context">
+        <input type="dropdown" token="context" searchWhenChanged="true">
             <label>Context Name</label>
             <populatingSearch fieldForValue="context" fieldForLabel="context">
-        <![CDATA[ | xsListContexts $scope$]]>
-            </populatingSearch> 
+                | xsListContexts $scope$
+            </populatingSearch>
         </input>
     </fieldset>
 
-    <!-- 
-         define master search template; leave time unbounded so that the time input can be used 
-      -->
-    <searchTemplate>
-| xsDisplayContext $context$ in $scope$
-    </searchTemplate>
-
-    <row>   
-        <!-- 
-             show results as a table 
-          -->
-        <chart>
-            <title>Context</title>
-            <option name="charting.chart">column</option>
-            <option name="axisTitleX.text">buckets</option>
-            <option name="axisTitleY.text">CIX</option>
-            <option name="charting.axisLabelsX.majorTickVisibility">show</option>
-            <option name="charting.axisLabelsX.majorLabelVisibility">show</option>
-        </chart>
+    <row>
+        <html>
+            <h2>Membership</h2>
+            <div id="chart1" />
+        </html>
     </row>
     <row>
-        <table>
-            <option name="showPager">true</option>
-            <option name="count">20</option>
-        </table>      
+        <table id="table1">
+            <searchString>| xsDisplayContext $context$ IN $scope$</searchString>
+        </table>
     </row>
 </form>

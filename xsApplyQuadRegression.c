@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -13,7 +13,9 @@
 #include <string.h>
 #include <unistd.h>
 #include "saConstants.h"
-
+#include "saCSV.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -22,8 +24,6 @@ static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 static char *aList[SA_CONSTANTS_MAXAXIS];
 static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
-
-extern int saCSVGetLine(char [], char *[]);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    int numXAxis = parseFieldList(xList, fieldX);
+    int numXAxis = saCSVParseFieldList(xList, fieldX);
 
     // Parse the first (header) line of input
     numFields = saCSVGetLine(inbuf, fieldList);
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
     bool found = false;
     while(i<numFields && !found)
     {
-        if (!compareField(fieldList[i], SA_CONSTANTS_PREDICTION_COLUMN))
+        if (!saCSVCompareField(fieldList[i], SA_CONSTANTS_PREDICTION_COLUMN))
             found = true;
         else
             i++;
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
     found = false;
     while(!found && fieldIndex < numFields)
     {
-        if (!compareField(fieldList[fieldIndex], xList[0]))
+        if (!saCSVCompareField(fieldList[fieldIndex], xList[0]))
             found = true;
         else
             fieldIndex++;

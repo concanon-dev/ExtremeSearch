@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "saCSV.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
@@ -88,21 +91,21 @@ int main(int argc, char* argv[])
    numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
-       if (!compareField(fieldList[i], "bf"))
+       if (!saCSVCompareField(fieldList[i], "bf"))
            byFIndex = i;
-       else if (!compareField(fieldList[i], "bv"))
+       else if (!saCSVCompareField(fieldList[i], "bv"))
            byVIndex = i;
-       else if (!compareField(fieldList[i], "coef0"))
+       else if (!saCSVCompareField(fieldList[i], "coef0"))
            coef0Index = i;
-       else if (!compareField(fieldList[i], "coef1"))
+       else if (!saCSVCompareField(fieldList[i], "coef1"))
            coef1Index = i;
-       else if (!compareField(fieldList[i], "coef2"))
+       else if (!saCSVCompareField(fieldList[i], "coef2"))
            coef2Index = i;
-       else if (!compareField(fieldList[i], "numRows"))
+       else if (!saCSVCompareField(fieldList[i], "numRows"))
            numRowsIndex = i;
-       else if (!compareField(fieldList[i], "x"))
+       else if (!saCSVCompareField(fieldList[i], "x"))
             xIndex = i;
-       else if (!compareField(fieldList[i], "y"))
+       else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
 // ADD CODE TO CHECK FOR MISSING HEADER

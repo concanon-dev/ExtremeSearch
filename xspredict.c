@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -12,6 +12,9 @@
 #include <string.h>
 #include <unistd.h>
 #include "saConstants.h"
+#include "saCSV.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXNUMCOLS];
 static char tempbuf[SA_CONSTANTS_MAXNUMCOLS];
@@ -31,6 +34,8 @@ static char *Y[SA_CONSTANTS_MAXNUMCOLS];
 
 static char *indexString[SA_CONSTANTS_MAXNUMCOLS];
 static int numIndexes = 0;
+
+int getIndex(int, int, int, int);
 
 void printLine(char *[], int);
 char *getField(char *);
@@ -88,25 +93,25 @@ int main(int argc, char* argv[])
    numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
-       if (!compareField(fieldList[i], "bf"))
+       if (!saCSVCompareField(fieldList[i], "bf"))
            byFIndex = i;
-       else if (!compareField(fieldList[i], "bv"))
+       else if (!saCSVCompareField(fieldList[i], "bv"))
            byVIndex = i;
-       else if (!compareField(fieldList[i], "slope"))
+       else if (!saCSVCompareField(fieldList[i], "slope"))
            aIndex = i;
-       else if (!compareField(fieldList[i], "intercept"))
+       else if (!saCSVCompareField(fieldList[i], "intercept"))
            bIndex = i;
-       else if (!compareField(fieldList[i], "errA"))
+       else if (!saCSVCompareField(fieldList[i], "errA"))
            errAIndex = i;
-       else if (!compareField(fieldList[i], "errB"))
+       else if (!saCSVCompareField(fieldList[i], "errB"))
            errBIndex = i;
-       else if (!compareField(fieldList[i], "numRows"))
+       else if (!saCSVCompareField(fieldList[i], "numRows"))
            numRowsIndex = i;
-       else if (!compareField(fieldList[i], "R"))
+       else if (!saCSVCompareField(fieldList[i], "R"))
            r2Index = i;
-       else if (!compareField(fieldList[i], "x"))
+       else if (!saCSVCompareField(fieldList[i], "x"))
             xIndex = i;
-       else if (!compareField(fieldList[i], "y"))
+       else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
 

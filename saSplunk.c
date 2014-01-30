@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "saContext.h"
+#include "saCSV.h"
 #include "saSplunk.h"
 
 #define MAXROWSIZE 1024*500
@@ -219,9 +220,9 @@ bool saSplunkReadInfoPathFile(saSplunkInfoPtr p)
     int i;
     for(i=0; i<numHeaderFields; i++)
     {
-        if (!compareField(fields[i], "_ppc.user"))
+        if (!saCSVCompareField(fields[i], "_ppc.user"))
             userIndex = i;
-        else if (!compareField(fields[i], "_ppc.app"))
+        else if (!saCSVCompareField(fields[i], "_ppc.app"))
             appIndex = i;
     }
     if (userIndex == -1 || appIndex == -1)

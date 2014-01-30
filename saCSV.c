@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -14,11 +14,6 @@
 #define FIRST_CHAR 0
 #define NORMAL_FIELD 1
 #define QUOTED_FIELD 2
-
-int saCSVGetLine(char inbuf[], char *fields[])
-{
-    return(saCSVFGetLine(stdin, inbuf, fields));
-}
 
 int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
 {
@@ -116,9 +111,9 @@ int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
     return(numFields);
 }
 
-int saCSVGetHeaderLine(char inbuf[], char *fields[])
+int saCSVGetLine(char inbuf[], char *fields[])
 {
-    return(saCSVFGetHeaderLine(stdin, inbuf, fields));
+    return(saCSVFGetLine(stdin, inbuf, fields));
 }
 
 int saCSVFGetHeaderLine(FILE *f, char inbuf[], char *fields[])
@@ -158,7 +153,12 @@ int saCSVFGetHeaderLine(FILE *f, char inbuf[], char *fields[])
     return(numFields);
 }
 
-int compareField(char *quotedStr, char str[])
+int saCSVGetHeaderLine(char inbuf[], char *fields[])
+{
+    return(saCSVFGetHeaderLine(stdin, inbuf, fields));
+}
+
+int saCSVCompareField(char *quotedStr, char str[])
 {
     if (*quotedStr != '"')
         return(strcmp(quotedStr, str));
@@ -170,7 +170,7 @@ int compareField(char *quotedStr, char str[])
     return(strcmp(temp, str));
 }
 
-bool convertToDouble(char *s, double *d)
+bool saCSVConvertToDouble(char *s, double *d)
 {
     char *endptr;
 
@@ -180,7 +180,7 @@ bool convertToDouble(char *s, double *d)
     return(true);
 }
 
-char *extractField(char *quotedStr)
+char *saCSVExtractField(char *quotedStr)
 {
     if (*quotedStr != '"')
         return(quotedStr);
@@ -192,7 +192,7 @@ char *extractField(char *quotedStr)
     return(newStr);
 }
 
-int parseFieldList(char *fieldList[], char *fields)
+int saCSVParseFieldList(char *fieldList[], char *fields)
 {
     int count = 0;
     fieldList[count++] = fields;

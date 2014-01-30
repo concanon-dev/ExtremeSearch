@@ -1,8 +1,10 @@
 Scianta Analytics Extreme Search for Splunk
 
-Version:        4.0.0g2
+Version:        4.0.0h
 
 Release Notes: 
+    New usage of D3 charts in certain dashboards
+    Modified xsWhere "IN" clause to automatically build context name by appending the field name to the value of "IN" field
     Modified xsDisplaySemanticTerm to show hedges entered by user instead of base hedges
     Cloned/Modified/renamed contexts that are "found" via private/app/global heirarchy are now
     put back in the same location automatically by default

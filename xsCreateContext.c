@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -12,6 +12,8 @@
 #include <string.h>
 #include <unistd.h>
 #include "saContext.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 #include "saSplunk.h"
 
 static double stdDev(double, double);
@@ -20,7 +22,7 @@ extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char 
                                                    char *, int, char *);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *);
-
+extern void saContextDisplay(saContextTypePtr);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
 
 extern char *optarg;
@@ -166,7 +168,7 @@ int main(int argc, char* argv[])
                 contextType);
         exit(EXIT_FAILURE);
     }
-
+/*
     saSplunkInfoPtr iPtr = saSplunkLoadInfo(infoFile);
     if (iPtr == NULL)
     {
@@ -174,7 +176,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     saSplunkContextSave(cPtr, fileScope, iPtr->app, iPtr->user);
-
+*/
     saContextDisplay(cPtr);
     exit(0);
 }

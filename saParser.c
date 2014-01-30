@@ -1,9 +1,10 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
+#include <ctype.h>
 #include <libgen.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -40,9 +41,9 @@ void tokenize(char *, saTokenTypePtr [], int *, char *);
 // Expression Management functions
 int buildExpressionStack(saExpressionTypePtr, saExpressionTypePtrArray, int);
 saExpressionTypePtrArray generateExpStack(void);
-int parse(char *, char [], saExpressionTypePtrArray);
+int saParserParse(char *, char [], saExpressionTypePtrArray);
 saExpressionTypePtr parseExpression(int);
-void walkExpressionStack(saExpressionTypePtrArray, int);
+void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);
 
 // Global Token Variables
 static saTokenTypePtr global_tokenStack[MAXCHARS];
@@ -83,11 +84,11 @@ int main(int argc, char* argv[])
     }
     int expCount;
     saExpressionTypePtrArray expStack = generateExpStack();
-    walkExpressionStack(expStack, parse(where_line, errMsg, expStack));
+    walkExpressionStack(stderr, expStack, parse(where_line, errMsg, expStack));
 }
 #endif
 
-int parse(char *where_line, char errMsg[], saExpressionTypePtrArray expStack)
+int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expStack)
 {
     int i;
 
@@ -189,12 +190,12 @@ int buildExpressionStack(saExpressionTypePtr expTree, saExpressionTypePtrArray e
     return(counter);
 }
 
-void walkExpressionStack(saExpressionTypePtrArray expStack, int stackIndex)
+void walkExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackIndex)
 {
-    fprintf(stderr, "count=%d\n", stackIndex);
+    fprintf(f, "count=%d\n", stackIndex);
     int i;
     for(i=0; i<stackIndex; i++)
-        fprintf(stderr, "stack[%d]=%s type=%d\n", i, expStack[i]->field, expStack[i]->type);
+        fprintf(f, "stack[%d]=%s type=%d\n", i, expStack[i]->field, expStack[i]->type);
 
     return;
 }

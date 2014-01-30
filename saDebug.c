@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "saCSV.h"
 #define __DEBUG_C true
 #include "saDebug.h"
 
@@ -107,7 +108,7 @@ void saDebugCloseFile(int whichFile)
     return;
 }
 
-saDebugEnd()
+void saDebugEnd()
 {
     if (debug_dataFile != NULL)
         fclose(debug_dataFile);

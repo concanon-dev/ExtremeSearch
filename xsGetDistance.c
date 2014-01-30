@@ -4,9 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "saConstants.h"
+#include "saCSV.h"
 #include "saGeoLiteCity.h"
 #include "saHash.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 
 static void lookupByCityRegionCountry(char *, char *, char *, double []);
 static void lookupByZipCode(char *, double *);
@@ -14,10 +18,6 @@ static void lookupByZipCode(char *, double *);
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char *headerList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
-
-extern bool convertToDouble(char *, double *);
-extern char *extractField(char *);
-extern int saCSVGetLine(char [], char *[]);
 
 extern bool saGeoLiteCityLoadTable(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByCountryRegionCity(char *);
@@ -111,13 +111,13 @@ int main(int argc, char *argv[])
     {
         int j, k;
         for(j=0; j<numFromFields; j++)
-            if (!compareField(headerList[i], fromFields[j]))
+            if (!saCSVCompareField(headerList[i], fromFields[j]))
             {
                 fromFieldIndex[j] = i;
                 foundFrom++;
             }
         for(k=0; k<numToFields;k++)
-            if (!compareField(headerList[i], toFields[k]))
+            if (!saCSVCompareField(headerList[i], toFields[k]))
             {
                 toFieldIndex[k] = i;
                 foundTo++;
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     bool found = false;
     while(i<numHeaderFields && !found)
     {
-        if (!compareField(headerList[i], distanceField))
+        if (!saCSVCompareField(headerList[i], distanceField))
             found = true;
         else
             i++;
@@ -171,19 +171,19 @@ int main(int argc, char *argv[])
             double distance = -1;
             latLon1[0] = latLon1[1] = latLon2[0] = latLon2[1] = SA_CONSTANTS_BADLATLON;
             if (numFromFields == 1)
-                lookupByZipCode(extractField(fieldList[fromFieldIndex[0]]), latLon1);
+                lookupByZipCode(saCSVExtractField(fieldList[fromFieldIndex[0]]), latLon1);
             else if (numFromFields == 3)
             {
-                lookupByCityRegionCountry(extractField(fieldList[fromFieldIndex[0]]),
-                                         extractField(fieldList[fromFieldIndex[1]]),
-                                         extractField(fieldList[fromFieldIndex[2]]),
+                lookupByCityRegionCountry(saCSVExtractField(fieldList[fromFieldIndex[0]]),
+                                         saCSVExtractField(fieldList[fromFieldIndex[1]]),
+                                         saCSVExtractField(fieldList[fromFieldIndex[2]]),
                                          latLon1);
             }
             else
             {
-                char *f1 = extractField(fieldList[fromFieldIndex[0]]);
-                char *f2 = extractField(fieldList[fromFieldIndex[1]]);
-                if (!convertToDouble(f1, &(latLon1[0])) || !convertToDouble(f2, &(latLon1[1])))
+                char *f1 = saCSVExtractField(fieldList[fromFieldIndex[0]]);
+                char *f2 = saCSVExtractField(fieldList[fromFieldIndex[1]]);
+                if (!saCSVConvertToDouble(f1, &(latLon1[0])) || !saCSVConvertToDouble(f2, &(latLon1[1])))
                 {
                     if (isLatLon1 == false)
                         lookupByCityRegionCountry(f1, f2, "US", latLon1);
@@ -195,19 +195,19 @@ int main(int argc, char *argv[])
             }
 
             if (numToFields == 1)
-                lookupByZipCode(extractField(fieldList[toFieldIndex[0]]), latLon2);
+                lookupByZipCode(saCSVExtractField(fieldList[toFieldIndex[0]]), latLon2);
             else if (numToFields == 3)
             {
-                lookupByCityRegionCountry(extractField(fieldList[toFieldIndex[0]]),
-                                         extractField(fieldList[toFieldIndex[1]]),
-                                         extractField(fieldList[toFieldIndex[2]]),
+                lookupByCityRegionCountry(saCSVExtractField(fieldList[toFieldIndex[0]]),
+                                         saCSVExtractField(fieldList[toFieldIndex[1]]),
+                                         saCSVExtractField(fieldList[toFieldIndex[2]]),
                                          latLon2);
             }
             else
             {
-                char *f1 = extractField(fieldList[toFieldIndex[0]]);
-                char *f2 = extractField(fieldList[toFieldIndex[1]]);
-                if (!convertToDouble(f1, &latLon2[0]) || !convertToDouble(f2, &latLon2[0]))
+                char *f1 = saCSVExtractField(fieldList[toFieldIndex[0]]);
+                char *f2 = saCSVExtractField(fieldList[toFieldIndex[1]]);
+                if (!saCSVConvertToDouble(f1, &latLon2[0]) || !saCSVConvertToDouble(f2, &latLon2[0]))
                 {
                     if (isLatLon2 == false)
                         lookupByCityRegionCountry(f1, f2, "US", latLon2);

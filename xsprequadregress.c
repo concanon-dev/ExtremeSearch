@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -11,8 +11,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "saQuadRegression.h"
 #include "saConstants.h"
+#include "saCSV.h"
+#include "saLicensing.h"
+#include "saQuadRegression.h"
+#include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -42,7 +45,7 @@ static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
-extern int parseFieldList(char *[], char *);
+extern int saCSVParseFieldList(char *[], char *);
 
 extern dataRecordTypePtr initDataRecord(int, double *, double *, double *);
 extern int quadRegression(dataRecordTypePtr, int, int, int);
@@ -104,9 +107,9 @@ int main(int argc, char* argv[])
 
     int numBAxis = -1;
     if (hasByClause)
-        numBAxis = parseFieldList(bList, fieldB);
-    int numXAxis = parseFieldList(xList, fieldX);
-    int numYAxis = parseFieldList(yList, fieldY);
+        numBAxis = saCSVParseFieldList(bList, fieldB);
+    int numXAxis = saCSVParseFieldList(xList, fieldX);
+    int numYAxis = saCSVParseFieldList(yList, fieldY);
     if (numXAxis != numYAxis)
     {
         fprintf(stderr, 
@@ -153,18 +156,18 @@ int main(int argc, char* argv[])
         while(j<numFields && (foundX == false || foundY == false || foundB == false))
         {
               if (hasByClause)
-                  if (!compareField(fieldList[j], bList[i]))
+                  if (!saCSVCompareField(fieldList[j], bList[i]))
                   {
                       bFieldIndex[i] = j;
                       foundB = true;
                   }
 
-              if (!compareField(fieldList[j], xList[i]))
+              if (!saCSVCompareField(fieldList[j], xList[i]))
               {
                   xFieldIndex[i] = j;
                   foundX = true;
               }
-              if (!compareField(fieldList[j], yList[i]))
+              if (!saCSVCompareField(fieldList[j], yList[i]))
               {
                   yFieldIndex[i] = j;
                   foundY = true;

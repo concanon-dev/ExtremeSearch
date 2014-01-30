@@ -136,6 +136,7 @@ int quadRegression(dataRecordTypePtr p, int length, int offset, int periods)
     }
     return(predicted);
 */
+    return(0);
 }
 
 double rateOfChange(dataRecordTypePtr p, int length, int offset, int periods, int *errCode) 

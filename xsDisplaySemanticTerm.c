@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include "saContext.h"
 #include "saHedge.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 #include "saSplunk.h"
 #include "saUtils.h"
 
@@ -27,6 +29,7 @@ extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 

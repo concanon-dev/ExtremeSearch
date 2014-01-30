@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -46,7 +46,7 @@ HRESULT AddProductKey(TCHAR *pProductKey)
 
     if (pProductKey == NULL) {
         fprintf(stderr, "xsprelicense-F-101: Error no Product Key specified.\n");
-        return;
+        return(TA_FAIL);
     }
 
     hr = CheckAndSavePKey(pProductKey, TA_SYSTEM);

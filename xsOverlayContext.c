@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -14,6 +14,9 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saContext.h"
+#include "saCSV.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 
 static char headerbuf[SA_CONSTANTS_MAXSTRING];
 static char inbuf[SA_CONSTANTS_MAXSTRING];
@@ -21,7 +24,6 @@ static char inbuf[SA_CONSTANTS_MAXSTRING];
 extern char *optarg;
 extern int optind, optopt;
 
-extern int compareField(char *, char []);
 extern void saContextDisplayWithHeader(saContextTypePtr, char *);
 extern saContextTypePtr saContextLoad(FILE *);
 extern FILE *saOpenFile(char *, char *);
@@ -88,9 +90,9 @@ int main(int argc, char* argv[])
     int countIndex = -1;
     int keyIndex = -1;
     for(i=0; i<numHeaderFields; i++)
-        if (!compareField(headerList[i], countName))
+        if (!saCSVCompareField(headerList[i], countName))
             countIndex = i;
-        else if (!compareField(headerList[i], keyName))
+        else if (!saCSVCompareField(headerList[i], keyName))
             keyIndex = i;
     if (countIndex == -1)
     {

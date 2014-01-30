@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -12,10 +12,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "saHash.h"
 #include "saContext.h"
+#include "saCSV.h"
 #include "saExpression.h"
+#include "saHash.h"
 #include "saHedge.h"
+#include "saLicensing.h"
+#include "saSignal.h"
 #include "saSplunk.h"
 #include "saToken.h"
 
@@ -42,11 +45,7 @@ static saSplunkInfoPtr p = NULL;
 
 static saSynonymTableType synonyms;
 
-extern int compareField(char *, char []);
-extern bool convertToDouble(char *, double *);
-extern char *extractField(char *);
-extern int parse(char *, char [], saExpressionTypePtrArray);
-extern int saCSVGetLine(char [], char *[]);
+extern int saParserParse(char *, char [], saExpressionTypePtrArray);
 extern FILE *saOpenFile(char *, char *);
 
 extern char *optarg;
@@ -59,7 +58,7 @@ extern void saHashSet(saHashtableTypePtr, char *, char *);
 extern saExpressionTypePtrArray generateExpStack(void);
 static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
                                double *);
-extern void walkExpressionStack(saExpressionTypePtrArray, int);    
+extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
 
 extern saSemanticTermTypePtr saHedgeApply(int, saSemanticTermTypePtr);
 saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
@@ -170,7 +169,7 @@ int main(int argc, char* argv[])
     }
     // parse the where line
     saExpressionTypePtrArray expStack = generateExpStack();
-    int stackSize = parse(whereLine, tempbuf, expStack);
+    int stackSize = saParserParse(whereLine, tempbuf, expStack);
     if (stackSize < 0)
     {
         fprintf(stderr, "xsWhere-F-105: parse error: %s\n", tempbuf);
@@ -191,7 +190,7 @@ int main(int argc, char* argv[])
             bool done = false;
             while(done == false)
             {
-                if (!compareField(headerList[k], expStack[i]->field))
+                if (!saCSVCompareField(headerList[k], expStack[i]->field))
                 {
                     expStack[i]->intvalue = k;
                     done = true;
@@ -219,7 +218,7 @@ int main(int argc, char* argv[])
     bool found = false;
     while(i<numHeaderFields && !found)
     {
-        if (!compareField(headerList[i], cixName))
+        if (!saCSVCompareField(headerList[i], cixName))
             found = true;
         else
             i++;
@@ -232,7 +231,12 @@ int main(int argc, char* argv[])
         if (useAlfa == true)
             fputs("useAlfa,", stdout);
     }
-       
+
+    // print out the stack to a file
+    // FILE *qqqq = fopen("./zzz.txt", "a");
+    // walkExpressionStack(qqqq, expStack, stackSize);
+    // fclose(qqqq);
+
     // Write out the header fields separated by ","
     for(i=0; i<numHeaderFields;i++)
     {
@@ -375,7 +379,8 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
 {
     bool matches = false;
     bool results[stackSize];
-    char tempName[256];
+    char longName[512];
+    char tempName[1024];
     double cix_sum = 0;
 
     results[0] = false;
@@ -430,13 +435,19 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 bool found = false;
                 while(!found && i<numHeaderFields)
                 {
-                      if (!compareField(headerList[i], contextName))
+                      if (!saCSVCompareField(headerList[i], contextName))
                       {
-                          contextName = extractField(fieldList[i]);
+                          contextName = saCSVExtractField(fieldList[i]);
                           found = true;
                       }
                       else
                           i++;
+                }
+                if (found)
+                {
+                    strcpy(longName, contextName);
+                    strcat(longName, expStack[stackIndex-3]->field);
+                    contextName = longName;
                 }
                 sprintf(tempName, "%s_%d", contextName, stackIndex);
             }
@@ -465,7 +476,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 bool found = false;
                 while(found == false && i<numHeaderFields)
                 {
-                      if (!compareField(headerList[i], dStr))
+                      if (!saCSVCompareField(headerList[i], dStr))
                       {
                           dStr = fieldList[i];
                           found = true;
@@ -474,7 +485,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                           i++;
                 }
                 double d;
-                if (convertToDouble(dStr, &d) == true)
+                if (saCSVConvertToDouble(dStr, &d) == true)
                 {
                     int status;
                     double center, domainMin, domainMax, halfTerm;
@@ -492,9 +503,6 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                         halfTerm = fabs(scalar_percent * d);
                         domainMin = center - halfTerm;
                         domainMax = center + halfTerm;
-FILE *zzz = fopen("./zzz", "a");
-fprintf(zzz, "d=%10.4f center=%10.4f half=%10.4f dm=%10.4f dx=%10.4f\n", d, center, halfTerm, domainMin, domainMax);
-fclose(zzz);
                     }
                     sprintf(tempName, "%s_%d", dStr, stackIndex);
                     semanticTerm = (saSemanticTermTypePtr)saHashGet(semanticTermTable, tempName);

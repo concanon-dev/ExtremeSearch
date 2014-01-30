@@ -1,11 +1,11 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
 //-----------------------------------------------------------------
-//--(c)2012-2013 Scianta Analytics LLC
+//--(c)2012-2014 Scianta Analytics LLC
 //-----------------------------------------------------------------
 //
 #ifndef __saSemanticTerm__

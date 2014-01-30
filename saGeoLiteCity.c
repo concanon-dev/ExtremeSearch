@@ -3,14 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "saConstants.h"
+#include "saCSV.h"
 #include "saGeoLiteCity.h"
 #include "saHash.h"
 
-extern int compareField(char *, char []);
-extern int saCSVGetLine(char [], char *[]);
-
 extern saHashtableTypePtr saHashCreate(int size);
 extern void *saHashGet(saHashtableTypePtr, char *);
+extern void saHashSet(saHashtableTypePtr, char *, char *);
 
 static saHashtableTypePtr cityTable;
 static saGeoLiteCityTypePtr zipcodes[100000];
@@ -98,17 +97,17 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     }
     for(i=0; i<numHeaderFields; i++)
     {
-        if (!compareField(headerList[i], "city"))
+        if (!saCSVCompareField(headerList[i], "city"))
             cityIndex = i;
-        else if (!compareField(headerList[i], "country"))
+        else if (!saCSVCompareField(headerList[i], "country"))
             countryIndex = i;
-        else if (!compareField(headerList[i], "latitude"))
+        else if (!saCSVCompareField(headerList[i], "latitude"))
             latIndex = i;
-        else if (!compareField(headerList[i], "longitude"))
+        else if (!saCSVCompareField(headerList[i], "longitude"))
             lonIndex = i;
-        else if (!compareField(headerList[i], "region"))
+        else if (!saCSVCompareField(headerList[i], "region"))
             regionIndex = i;
-        else if (!compareField(headerList[i], "postalCode"))
+        else if (!saCSVCompareField(headerList[i], "postalCode"))
             zipcodeIndex = i;
     }
     if (cityIndex == -1 || countryIndex == -1 || latIndex == -1 || lonIndex == -1
@@ -129,9 +128,9 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
             strcpy(p->country, fieldList[countryIndex]);
             strcpy(p->region, fieldList[regionIndex]);
             strcpy(p->zipcode, fieldList[zipcodeIndex]);
-            if (convertToDouble(fieldList[latIndex], &(p->lat)) == false)
+            if (saCSVConvertToDouble(fieldList[latIndex], &(p->lat)) == false)
                 p->lat = SA_CONSTANTS_BADLATLON;
-            if (convertToDouble(fieldList[lonIndex], &(p->lon)) == false)
+            if (saCSVConvertToDouble(fieldList[lonIndex], &(p->lon)) == false)
                 p->lon = SA_CONSTANTS_BADLATLON;
             sprintf(tempName, "%s|%s|%s", p->country, p->region, p->city);
             saHashSet(cityTable, tempName, (void *)p);
