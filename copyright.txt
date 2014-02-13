@@ -1,6 +1,7 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
+ This software contains proprietary trade and business secrets. 
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
-*/
+ reproduction, distribution or use of this software is illegal.
+ Violators will be prosecuted.
+ */
