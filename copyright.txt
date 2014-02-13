@@ -3,5 +3,5 @@
  This software contains proprietary trade and business secrets. 
  Reproduction or unauthorized use is prohibited. Unauthorized
  reproduction, distribution or use of this software is illegal.
- Violators will be prosecuted.
+ Violators will be prosecuted to the fullest extent of the law.
  */
