@@ -1,9 +1,9 @@
-<form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
-    <label>Create Context</label>
+<form>
+    <label>Create User-Defined Context</label>
     <fieldset>
         <html>
             <p style="padding-top: 20px">
-Enter values in each field as necessary to create the Context
+Enter values in each field as necessary to generate the Context
             </p>
         </html>
         <input type="text" token="name">
@@ -38,15 +38,30 @@ Enter values in each field as necessary to create the Context
             <choice value="curve">Curve</choice>
             <choice value="linear">Linear</choice>
         </input>
-        <input type="text" token="presearch">
-            <default></default>
-            <label>Data Search</label>
-            <seed></seed>
+        <input type="text" token="min">
+            <default>0</default>
+            <label>Min Value</label>
+            <seed>0</seed>
         </input>
-        <input type="text" token="datafield">
-            <default></default>
-            <label>Field Name</label>
-            <seed></seed>
+        <input type="text" token="max">
+            <default>0</default>
+            <label>Max Value</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="count">
+            <default>0</default>
+            <label>Number of values</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="avg">
+            <default>0</default>
+            <label>Average</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="stdev">
+            <default>0</default>
+            <label>Std. Deviation</label>
+            <seed>0</seed>
         </input>
         <input type="text" token="notes">
             <label>Notes</label>
@@ -63,20 +78,25 @@ Enter values in each field as necessary to create the Context
     <!-- 
          define master search template; leave time unbounded so that the time input can be used 
       -->
-
-    <row>
-        <html>
-            <h2>Membership</h2>
-            <div id="chart1" />
-        </html>
-    </row>
+    <searchTemplate>
+| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$"
+    </searchTemplate>
 
     <row>   
-
-        <table id="table1">
-    <searchString>
-$presearch$ | stats avg($datafield$) as avg count($datafield$) as count max($datafield$) as max min($datafield$) as min stdev($datafield$) as stdev | xsCreateContext name=$name$ terms="$terms$" type=$type$ shape="$shape$" endshape="$endShape$" notes="$notes$" scope="$scope$"
-    </searchString>
-        </table>
+        <!-- 
+             show results as a table 
+          -->
+        <chart>
+            <title>Context</title>
+            <option name="charting.chart">column</option>
+            <option name="axisTitleX.text">buckets</option>
+            <option name="axisTitleY.text">CIX</option>
+        </chart>
+    </row>
+    <row>
+        <table>
+            <option name="showPager">true</option>
+            <option name="count">20</option>
+        </table>      
     </row>
 </form>
