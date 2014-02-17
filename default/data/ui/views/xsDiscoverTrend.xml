@@ -69,7 +69,7 @@
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsDiscoverTrend (y_field)+ [OVER
+                                        class="bodytext">xsDiscoverTrend (y_field [IN Context])+ [OVER
                                         (x_field)+] [BY field]</span>
                         </p>
                         <p>
@@ -89,7 +89,15 @@
                                 <span
                                         class="head4">Parameters: </span>
                                 <span
-                                        class="bodytext">field, x_field, y_field</span>
+                                        class="bodytext">context, field, x_field, y_field</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">Context (name of the Context to apply trend for this field)</span>
+                        </p
+                        ><p>
+                                <span
+                                        class="para">field (field name to split BY)</span>
                         </p>
                         <p>
                                 <span
