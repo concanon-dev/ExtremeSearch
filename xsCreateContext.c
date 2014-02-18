@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
                 contextType);
         exit(EXIT_FAILURE);
     }
-/*
+
     saSplunkInfoPtr iPtr = saSplunkLoadInfo(infoFile);
     if (iPtr == NULL)
     {
@@ -176,7 +176,6 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     saSplunkContextSave(cPtr, fileScope, iPtr->app, iPtr->user);
-*/
     saContextDisplay(cPtr);
     exit(0);
 }
