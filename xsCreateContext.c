@@ -23,6 +23,7 @@ extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char 
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *);
 extern void saContextDisplay(saContextTypePtr);
+extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
 
 extern char *optarg;
