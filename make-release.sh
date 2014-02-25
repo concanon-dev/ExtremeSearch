@@ -61,6 +61,7 @@ if [ "$2" != "hybrid" ]; then
   cp -r lookups/* release/xtreme/lookups/
   cp -r metadata/* release/xtreme/metadata/
   cp python/* release/xtreme/bin/
+  cp contexts/* release/xtreme/contexts
 fi
 
 # Create tar files
