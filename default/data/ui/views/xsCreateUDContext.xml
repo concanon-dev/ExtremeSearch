@@ -141,7 +141,7 @@
                                         input using stats min(field).</span>. </p>
                         <p>
                                 <span
-                                        class="para">name (term set name)</span>
+                                        class="para">name (Context name)</span>
                         </p>
                         <p>
                                 <span
@@ -201,7 +201,7 @@
                                         class="bodytext">The context created by xsGenerateContext is
                                         displayed in table or chart format. See <a
                                                 href="xsDisplayContext">xsDisplayContext</a> for
-                                        details about display of the created term set. <br />See <a
+                                        details about display of the created Context. <br />See <a
                                                 href="xsCreateContext">xsCreateContext</a> for
                                         details about creating a Context using a 'streaming' command
                                         instead of a 'generating' command. </span>

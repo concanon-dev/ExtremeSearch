@@ -73,7 +73,7 @@
                         </p>
                         <p>
                                 <span
-                                        class="explanation">Displays the term sets minimal and short
+                                        class="explanation">Displays the Contexts minimal and short
                                         from the context AirTime</span>
                         </p>
                         <p>
@@ -86,7 +86,7 @@
                         <p>
                                 <span
                                         class="explanation">Displays the Term Set minimal from the 
-                                        context MyAirTime and the term set short from the context AirTime.</span>
+                                        context MyAirTime and the Context short from the context AirTime.</span>
                         </p>
                         <p>
                                 <span
@@ -126,7 +126,7 @@
                                         is evaluated as follows: First, determine if this is the
                                         name of a field. If so, then use the contents of that field
                                         in each event as the name of the context, else use the value
-                                        of the context as the name of the term set.<br />If the
+                                        of the context as the name of the Context.<br />If the
                                         contextField is not specified, the query uses a context of
                                         the same name as the field. A hedge can be one or more of
                                         the following: above, after, before, below, close extremely,

@@ -1,0 +1,49 @@
+#
+# (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+# Reproduction or unauthorized use is prohibited. Unauthorized
+# use is illegal. Violators will be prosecuted. This software 
+# contains proprietary trade and business secrets.            
+#
+import sys, subprocess, os, platform, time
+import splunk.Intersplunk as si
+
+if __name__ == '__main__':
+
+    try:
+
+        context=''
+        field=''
+        scope=''
+        inKeyword=''
+        in2Keyword=''
+        if len(sys.argv) >1:
+            for arg in sys.argv[1:]:
+                if arg.lower() == "in":
+                    if inKeyword == "in":
+                        in2Keyword = "in"
+                    else:
+                        inKeyword="in"
+                elif in2Keyword == 'in':
+                    scope = arg
+                elif inKeyword == 'in':
+                    context = arg
+                else: 
+                    field = arg
+        else:
+            raise Exception("xsFindBestSemanticTerm-F-001: Usage: xsFindBestSemanticTerm field [IN context [IN scope]]");
+
+        if len(context) < 1:
+            context = field
+
+        binary = platform.system() + "/" + platform.architecture()[0] + "/xsFindBestSemanticTerm"
+        if scope == '':
+            subprocess.call([binary, '-c', context, '-f', field ])
+        else:
+            subprocess.call([binary, '-c', context, '-f', field, '-s', scope])
+
+        if platform.system() == 'Windows':
+            sys.stdout.flush()
+            time.sleep(0.5)
+
+    except Exception, e:
+        si.generateErrorResults(e)

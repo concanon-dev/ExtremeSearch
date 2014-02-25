@@ -88,12 +88,12 @@ int main(int argc, char *argv[])
 
     char *f = fromFieldList;
     numFromFields = 0;
-    while ((fromFields[numFromFields] = strsep(&f, ",")) != NULL)
+    while ((fromFields[numFromFields] = (char *)strsep(&f, ",")) != NULL)
             numFromFields++;
 
     char *t = toFieldList;
     numToFields = 0;
-    while ((toFields[numToFields] = strsep(&t, ",")) != NULL)
+    while ((toFields[numToFields] = (char *)strsep(&t, ",")) != NULL)
             numToFields++;
 
     if (saGeoLiteCityLoadTable(geoLiteCityFile) == false)

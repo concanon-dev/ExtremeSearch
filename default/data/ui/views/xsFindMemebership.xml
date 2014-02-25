@@ -56,7 +56,7 @@
                                         class="bodytext">For each event, lookup the value of a field
                                         and return the membership values of each semantic term. A
                                         column will be added to the event stream for each semantic
-                                        term in the term set.</span>
+                                        term in the context.</span>
                         </p>
                         <p>
                                 <span

@@ -235,6 +235,17 @@
           class="tableeven">
           <td>
             <a
+              href="xsFindBestSemanticTerm">xsFindBestSemanticTerm</a>
+          </td>
+          <td>Conceptual Search</td>
+          <td>Returns the name of the semantic term that best fits (highest compatability) the field,
+              as well as the associated compatibility index (CIX).
+          </td>
+        </tr>
+        <tr
+          class="tableodd">
+          <td>
+            <a
               href="xsFindMemebership">xsFindMemebership</a>
           </td>
           <td>Conceptual Search</td>
@@ -242,7 +253,7 @@
             the data value given a membership value in a specified semantic term.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsGetDistance">xsGetDistance</a>
@@ -251,7 +262,7 @@
           <td>Determine the distance (in miles) between two locations</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsGetWhereCIX">xsGetWhereCIX</a>
@@ -260,7 +271,7 @@
           <td>Generates the compatibility index (cix) of a conceptual query.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsLicense">xsLicense</a>
@@ -269,7 +280,7 @@
           <td>Installs, updates and activates a product license key.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsListContexts">xsListContexts</a>

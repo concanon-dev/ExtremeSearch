@@ -51,7 +51,6 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsApplyQuadRegressionFromFile.sh
 ./make-xsCloneContext.sh
 ./make-xsCloneSemanticTerm.sh
-./make-xsconvert.sh
 ./make-xsCreateContext.sh
 ./make-xsCreateSemanticTerm.sh
 ./make-xsDeleteContext.sh
@@ -60,7 +59,9 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsDisplayContext.sh
 ./make-xsDisplaySemanticTerm.sh
 ./make-xsDisplayWhere.sh
+./make-xsFindBestSemanticTerm.sh
 ./make-xsFindMembership.sh
+./make-xsGetCompatibility.sh
 ./make-xsGetDistance.sh
 ./make-xsGetWhereCix.sh
 ./make-xsLicense.sh

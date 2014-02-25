@@ -19,6 +19,7 @@ if [ ! -d obj/$Platform ]; then
   mkdir -p obj/$Platform
 fi
 
+$GCC -c OLDsaLoadContext.c               -o obj/$Platform/OLDsaLoadContext.o
 $GCC -c fix-intersplunk.c                -o obj/$Platform/fix-intersplunk.o
 $GCC -c saAutoRegression.c               -o obj/$Platform/saAutoRegression.o
 $GCC -c saContext.c                      -o obj/$Platform/saContext.o
@@ -67,7 +68,9 @@ $GCC -c xsDiscoverTrend.c                -o obj/$Platform/xsDiscoverTrend.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
 $GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
 $GCC -c xsDisplayWhere.c                 -o obj/$Platform/xsDisplayWhere.o
+$GCC -c xsFindBestSemanticTerm.c         -o obj/$Platform/xsFindBestSemanticTerm.o
 $GCC -c xsFindMembership.c               -o obj/$Platform/xsFindMembership.o
+$GCC -c xsGetCompatibility.c             -o obj/$Platform/xsGetCompatibility.o
 $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
