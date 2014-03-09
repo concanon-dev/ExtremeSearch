@@ -1,5 +1,5 @@
 <form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
-    <label>Display Context</label>
+    <label>Display Semantic Term</label>
     <fieldset autoRun="true" submitButton="false">
         <input type="radio" token="scope">
             <label>Select Context Scope</label>
@@ -14,6 +14,12 @@
                 | xsListContexts $scope$
             </populatingSearch>
         </input>
+        <input type="dropdown" token="semanticTerm" searchWhenChanged="true">
+            <label>Semantic Term</label>
+            <populatingSearch fieldForValue="SemanticTerm" fieldForLabel="SemanticTerm">
+                | xsListSemanticTerms FROM $context$ IN  $scope$
+            </populatingSearch>
+        </input> 
     </fieldset>
 
     <row>
@@ -26,7 +32,7 @@
     </row>
     <row>
         <table id="table1">
-            <searchString>| xsDisplayContext $context$ IN $scope$</searchString>
+            <searchString>| xsDisplaySemanticTerm $semanticTerm$ FROM $context$ IN $scope$</searchString>
         </table>
     </row>
 </form>

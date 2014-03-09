@@ -10,6 +10,7 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     avg = ''
+    context_type = "domain"
     count = ''
     end_shape = 'curve'
     max = ''
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     settings = {} 
     shape = 'pi'
     stdev = ''
-    context_type = "domain"
+    uom = ''
 
     try:
         if len(sys.argv) >1:
@@ -60,6 +61,9 @@ if __name__ == '__main__':
                 elif arg.lower().startswith("type="):
                     eqsign = arg.find('=')
                     context_type = arg[eqsign+1:len(arg)]
+                elif arg.lower().startswith("uom="):
+                    eqsign = arg.find('=')
+                    uom = arg[eqsign+1:len(arg)]
                 else:
                     errString = "xsCreateContext-F-003: Invalid argument: " + arg
                     raise Exception(errString) 
@@ -96,7 +100,7 @@ if __name__ == '__main__':
 
         info_file = settings['infoPath']
         binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
-        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-x', max, '-z', context_type ])
+        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

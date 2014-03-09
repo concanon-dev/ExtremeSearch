@@ -58,13 +58,13 @@ int main(int argc, char* argv[])
                 strcpy(scopeString, optarg);
                 break;
             case '?':
-                fprintf(stderr, "xsListSemanticTerms-F-101: Unrecognised option: -%c\n", optopt);
+                fprintf(stderr, "xsListUOM-F-101: Unrecognised option: -%c\n", optopt);
                 argError = true;
         }
     }
     if (argError)
     {
-        fprintf(stderr, "xsListSemanticTerms-F-103: Usage: xsListSemanticTerms -c context -p scope");
+        fprintf(stderr, "xsListUOM-F-103: Usage: xsListUOM -c context -p scope");
         exit(EXIT_FAILURE);
     }
 
@@ -72,13 +72,13 @@ int main(int argc, char* argv[])
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsListSemanticTerms-F-123: can't get header\n");
+        fprintf(stderr, "xsListUOM-F-123: can't get header\n");
         exit(0);
     }
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsListSemanticTerms-F-125: Can't read search results file %s\n",
+        fprintf(stderr, "xsListUOM-F-125: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -87,13 +87,10 @@ int main(int argc, char* argv[])
     contextPtr = saSplunkContextLoad(contextString, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
-        fprintf(stderr, "xsListSemanticTerms-F-111: can't open context %s\n", contextString);
+        fprintf(stderr, "xsListUOM-F-111: can't open context %s\n", contextString);
         exit(0);
     }
-    fputs("\"SemanticTerm\"\n", stdout);
-    for(i=0; i<contextPtr->numSemanticTerms; i++)
-    {
-          fprintf(stdout, "\"%s\"\n", contextPtr->semanticTerms[i]->name);
-    }
+    fputs("\"UOM\"\n", stdout);
+    fprintf(stdout, "\"%s\"\n", contextPtr->uom);
     exit(0);
 }

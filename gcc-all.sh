@@ -75,6 +75,7 @@ $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
 $GCC -c xsListSemanticTerms.c            -o obj/$Platform/xsListSemanticTerms.o
+$GCC -c xsListUOM.c                      -o obj/$Platform/xsListUOM.o
 $GCC -c xsOverlayContext.c               -o obj/$Platform/xsOverlayContext.o
 $GCC -c xsPerformAutoRegression.c        -o obj/$Platform/xsPerformAutoRegression.o
 $GCC -c xsPerformCorrelation.c           -o obj/$Platform/xsPerformCorrelation.o

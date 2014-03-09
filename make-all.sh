@@ -67,6 +67,7 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsLicense.sh
 ./make-xsListContexts.sh
 ./make-xsListSemanticTerms.sh
+./make-xsListUOM.sh
 ./make-xsOverlayContext.sh
 ./make-xsPerformAutoRegression.sh
 ./make-xsPerformCorrelation.sh

@@ -11,10 +11,10 @@
 #include "saContext.h"
 
 saContextTypePtr saContextCreateSemanticTerms(char *, double, double, double, double, double, 
-                                              double, char *[], int, char *, char *, char *);
+                                              double, char *[], int, char *, char *, char *, char *);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, 
-                                      char *);
+                                      char *, char *);
 extern saSemanticTermTypePtr saSemanticTermCreateCurveDecrease(char *, double, double, double,
                                                                double, double);
 extern saSemanticTermTypePtr saSemanticTermCreateCurveIncrease(char *, double, double, double, 
@@ -31,7 +31,7 @@ extern saSemanticTermTypePtr saSemanticTermCreateTriangle(char *, double, double
 
 saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev, char *terms[],
                                             int numTerms, char *shape, char *endShape, int count,
-                                            char *notes) 
+                                            char *notes, char *uom) 
 {
     if (numTerms > SA_CONTEXT_MAXTERMS)
         return(NULL);
@@ -43,12 +43,12 @@ saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev,
     double halfTerm = (SA_SEMANTICTERM_DEFAULT_SDEV_SIZE * sdev) / 2;
 
     return(saContextCreateSemanticTerms(name, domainMin, domainMax, avg, sdev, count, halfTerm,
-                                        terms, numTerms, shape, endShape, notes));
+                                        terms, numTerms, shape, endShape, notes, uom));
 }
 
 saContextTypePtr saContextCreateDomain(char *name, double domainMin, double domainMax, 
                                        char *terms[], int numTerms, char *shape, char *endShape,
-                                       int count, char *notes) 
+                                       int count, char *notes, char *uom) 
 {
     if (numTerms > SA_CONTEXT_MAXTERMS)
         return(NULL);
@@ -56,7 +56,7 @@ saContextTypePtr saContextCreateDomain(char *name, double domainMin, double doma
     // calculate the necessary sizes
     double halfTerm = (domainMax - domainMin) / (numTerms + 1);
     return(saContextCreateSemanticTerms(name, domainMin, domainMax, (float)0.0, (float)0.0,
-                                        count, halfTerm, terms, numTerms, shape, endShape, notes));
+                                        count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
 }
 
 void saContextCreateSemanticTerm(saContextTypePtr cPtr, char *termName, char *shape, double min, 
@@ -95,11 +95,11 @@ void saContextCreateSemanticTerm(saContextTypePtr cPtr, char *termName, char *sh
 saContextTypePtr saContextCreateSemanticTerms(char *name, double domainMin, double domainMax, 
                                               double avg, double sdev, double count,
                                               double halfTerm, char *terms[], int numTerms,
-                                              char *shape, char *endShape, char *notes)
+                                              char *shape, char *endShape, char *notes, char *uom)
 {
     // create the context
     saContextTypePtr p = saContextInit(name, domainMin, domainMax, avg, sdev, count, 
-                                       numTerms, SA_CONTEXT_TYPE_DOMAIN, notes);
+                                       numTerms, SA_CONTEXT_TYPE_DOMAIN, notes, uom);
     if (numTerms == 1)
     {
         double min = domainMin;

@@ -15,26 +15,16 @@
 #include "saConstants.h"
 #include "saContext.h"
 #include "saCSV.h"
-#include "saHash.h"
 #include "saLicensing.h"
 #include "saSignal.h"
 #include "saSplunk.h"
 
 #define BESTCIX "BestCIX"
 #define BESTTERM "BestSemanticTerm"
-#define UOM "UOM"
 
-static saHashtableTypePtr contextTable;
-
-static char headerbuf[SA_CONSTANTS_MAXROWSIZE];
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
-static char *headerList[SA_CONSTANTS_MAXROWSIZE / 32];
-
-extern saHashtableTypePtr saHashCreateDefault();
-extern void *saHashGet(saHashtableTypePtr, char *);
-extern void saHashSet(saHashtableTypePtr, char *, char *);
 
 extern void saContextLookup(saContextTypePtr, double, double *);;;;
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
@@ -54,7 +44,7 @@ int main(int argc, char* argv[])
     char contextName[128];
     char fieldName[128];
     int c;
-    int numHeaderFields;
+    int numFields;
     int numSemanticTerms;
     int scope = saSplunkGetScope(NULL);
 
@@ -103,24 +93,32 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    contextPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
+    if (contextPtr == NULL)
+    {
+        fprintf(stderr, "xsFindBestSemanticTerm-F-107: Can't load context: %s\n", contextName);
+        exit(EXIT_FAILURE);
+    }
+
     // Parse the first (header) line of input
-    numHeaderFields = saCSVGetLine(headerbuf, headerList);
+    numFields = saCSVGetLine(inbuf, fieldList);
+    numSemanticTerms = contextPtr->numSemanticTerms;
 
     // Write out the header fields separated by ","
     int i;
-    for(i=0; i<numHeaderFields;i++)
+    for(i=0; i<numFields;i++)
     {
         if (i)
         {
             fputs(",", stdout);
         }
-        fputs(headerList[i], stdout);
+        fputs(fieldList[i], stdout);
     }
 
-    sprintf(tempbuf, "\"%s\"", UOM);
-    if (strcmp(headerList[numHeaderFields-1], tempbuf))
+    sprintf(tempbuf, "\"%s\"", BESTCIX);
+    if (strcmp(fieldList[numFields-1], tempbuf))
     {
-        fprintf(stdout, ",\"%s\",\"%s\",\"%s\"", BESTTERM, BESTCIX, UOM);
+        fprintf(stdout, ",\"%s\",\"%s\"", BESTTERM, BESTCIX);
         wroteContextHeaders = true;
     }
     fputs("\n", stdout);
@@ -128,75 +126,29 @@ int main(int argc, char* argv[])
     // find the column we wish to lookup in the context
     int fieldIndex = 0;
     bool found = false;
-    while(!found && fieldIndex < numHeaderFields)
+    while(!found && fieldIndex < numFields)
     {
-        if (!saCSVCompareField(headerList[fieldIndex], fieldName))
+        if (!saCSVCompareField(fieldList[fieldIndex], fieldName))
             found = true;
         else
             fieldIndex++;
     }
 
     // if the headers are already written, only write out the passed in fields
-    int fieldsToWrite = numHeaderFields;
+    int fieldsToWrite = numFields;
     if (wroteContextHeaders == false)
-        fieldsToWrite = numHeaderFields - 3;
-
-    contextTable = saHashCreateDefault();
+        fieldsToWrite = numFields - 2;
 
     // Initialize the results array and read all of the input 
+    double results[contextPtr->numSemanticTerms];
     bool done = false;
-    char realContextName[1024];
-    double results[64];
     float bestMatchValue;
     int bestMatch;
-    strcpy(realContextName, contextName);
     while(!done)
     {
         saCSVGetLine(inbuf, fieldList);
         if (!feof(stdin))
         {
-            // Find the context in the cache or load it from the file
-            contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);
-            if (contextPtr == NULL)
-            {
-                contextPtr = saSplunkContextLoad(realContextName, &scope, p->app, p->user);
-                if (contextPtr == NULL)
-                {
-                    int q;
-                    found = false;
-                    q = 0;
-
-                    while(found == false && q < numHeaderFields)
-                    {
-                        if (!saCSVCompareField(headerList[q], contextName))
-                        {
-                            sprintf(realContextName, "%s%s", saCSVExtractField(fieldList[q]), headerList[fieldIndex]);
-                            found = true;
-                        }
-                        else
-                            q++;
-                    }
-                    if (found == false)
-                    {
-                        fprintf(stderr, "xsFindBestSemanticTerm-F-109: Can't find field for context: %s\n", contextName);
-                        exit(EXIT_FAILURE);
-                    }
-                    contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);
-                    if (contextPtr == NULL)
-                    {
-                        contextPtr = saSplunkContextLoad(realContextName, &scope, p->app, p->user);
-                        if (contextPtr == NULL)
-                        {
-                            fprintf(stderr, "xsFindBestSemanticTerm-F-107: Can't load context: %s\n", contextName);
-                            exit(EXIT_FAILURE);
-                        }
-                    }
-                }
-                saHashSet(contextTable, realContextName, (void *)contextPtr);
-            }
-                
-            numSemanticTerms = contextPtr->numSemanticTerms;
-
             // If the column that we are extracting exists, 
             //    extract the value, look it up in each fuzzy set
             if (found)
@@ -233,10 +185,9 @@ int main(int argc, char* argv[])
             }
 
             if (found)
-                fprintf(stdout, ",\"%s\",%.10f,\"%s\"", contextPtr->semanticTerms[bestMatch]->name, results[bestMatch],
-                        contextPtr->uom);
+                fprintf(stdout, ",%s,%.10f", contextPtr->semanticTerms[bestMatch]->name, results[bestMatch]);
             else
-                fputs(",\"\",0.00,\"\"", stdout);
+                fputs(",\"\",0.00", stdout);
             fputs("\n", stdout);
         }
         else

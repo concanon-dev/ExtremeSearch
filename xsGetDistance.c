@@ -25,6 +25,8 @@ extern saGeoLiteCityTypePtr saGeoLiteCityGetByZipcode(char *);
 
 extern double saStatisticsHaversineDistance(double, double, double, double);
 
+extern char *strsep(char **, const char *);
+
 extern char *optarg;
 extern int optind, optopt;
 

@@ -29,6 +29,7 @@ typedef struct saContextStruct
     char *notes;
     double sdev;
     char *type;
+    char *uom;
     int numSemanticTerms;
     saSemanticTermTypePtr semanticTerms[SA_CONTEXT_MAXTERMS];
 } saContextType;

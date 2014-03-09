@@ -19,9 +19,9 @@
 static double stdDev(double, double);
 
 extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char *[], int, char *,
-                                                   char *, int, char *);
+                                                   char *, int, char *, char *);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
-                                              char *, int, char *);
+                                              char *, int, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
     char notes[1024];
     char shapeStr[256];
     char *termsList = NULL;
+    char uom[256];
     double avg = 0.0;
     double max = 0.0;
     double min = 0.0;
@@ -66,7 +67,8 @@ int main(int argc, char* argv[])
     strcpy(endShapeStr, SA_SEMANTICTERM_SHAPE_CURVE);
     strcpy(shapeStr, SA_SEMANTICTERM_SHAPE_PI); 
     infoFile[0] = '\0';
-    while ((c = getopt(argc, argv, "a:c:d:e:f:i:m:n:o:p:t:w:x:z:")) != -1) 
+    uom[0] = '\0';
+    while ((c = getopt(argc, argv, "a:c:d:e:f:i:m:n:o:p:t:u:w:x:z:")) != -1) 
     {
         switch (c)
         {
@@ -107,6 +109,9 @@ int main(int argc, char* argv[])
             case 't':
                 termsList = malloc(strlen(optarg)+1);
                 strcpy(termsList, optarg);
+                break;
+            case 'u':
+                strcpy(uom, optarg);
                 break;
             case 'w':
                 width = atof(optarg);
@@ -159,10 +164,10 @@ int main(int argc, char* argv[])
     // Go out and create the context based on type
     if (!strcmp(contextType, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
         cPtr = saContextCreateAvgCentered(name, avg, sdev, semanticTermNames, numSemanticTerms,
-                                          shapeStr, endShapeStr, count, notes);
+                                          shapeStr, endShapeStr, count, notes, uom);
     else if (!strcmp(contextType, SA_CONTEXT_TYPE_DOMAIN))
         cPtr = saContextCreateDomain(name, min, max, semanticTermNames, numSemanticTerms, shapeStr,
-                                     endShapeStr, count, notes);
+                                     endShapeStr, count, notes, uom);
     if (cPtr == NULL)
     {
         fprintf(stderr, "xsCreateContext-F-111: Failed to create a context of type %s\n",

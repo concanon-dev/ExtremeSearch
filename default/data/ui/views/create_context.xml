@@ -48,6 +48,10 @@ Enter values in each field as necessary to create the Context
             <label>Field Name</label>
             <seed></seed>
         </input>
+        <input type="text" token="uom">
+            <default></default>
+            <label>Unit of Measure</label>
+        </input>
         <input type="text" token="notes">
             <label>Notes</label>
             <default>None</default>
@@ -75,7 +79,7 @@ Enter values in each field as necessary to create the Context
 
         <table id="table1">
     <searchString>
-$presearch$ | stats avg($datafield$) as avg count($datafield$) as count max($datafield$) as max min($datafield$) as min stdev($datafield$) as stdev | xsCreateContext name=$name$ terms="$terms$" type=$type$ shape="$shape$" endshape="$endShape$" notes="$notes$" scope="$scope$"
+$presearch$ | stats avg($datafield$) as avg count($datafield$) as count max($datafield$) as max min($datafield$) as min stdev($datafield$) as stdev | xsCreateContext name=$name$ terms="$terms$" type=$type$ shape="$shape$" endshape="$endShape$" notes="$notes$" scope="$scope$" uom="$uom$"
     </searchString>
         </table>
     </row>

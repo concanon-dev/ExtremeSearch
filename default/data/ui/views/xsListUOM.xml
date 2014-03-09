@@ -1,32 +1,22 @@
 <dashboard>
-        <label>xsFindMemebership</label>
+        <label>xsListContexts</label>
         <row>
                 <html>
-                        <a
-                                href="xtreme_overview">
-                                <img
-                                        alt="Return to Overview"
+                        <a href="xtreme_overview">
+                                <img alt="Return to Overview"
                                         src="/static/app/xtreme/images/overview_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
-                        <a
-                                href="command_reference">
-                                <img
-                                        alt="Jump to Command Reference"
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="command_reference">
+                                <img alt="Jump to Command Reference"
                                         src="/static/app/xtreme/images/commandreference_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
-                        <a
-                                href="http://www.sciantaanalytics.com/?q=documentation"
-                                target="_blank">
-                                <img
-                                        alt="Support Site"
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
+                                <img alt="Support Site"
                                         src="/static/app/xtreme/images/doc_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
+                        <img  src="/static/app/xtreme/images/space.png" />
                         <a
                                 href="http://www.sciantaanalytics.com/?q=support_pages"
                                 target="_blank">
@@ -41,7 +31,7 @@
                                 <span
                                         class="head4">Command: </span>
                                 <span
-                                        class="cmd">xsFindBestSemanticTerm</span>
+                                        class="cmd">xsListUOM</span>
                         </p>
                         <p>
                                 <span
@@ -53,55 +43,38 @@
                                 <span
                                         class="head4">Description: </span>
                                 <span
-                                        class="bodytext">For each event, lookup the value of a field
-                                        and return the most relevant (highest compatible) semantic term 
-                                        in a context as well as the compatibility index (CIX).
-                                        The field "BestSemanticTerm" will contain the semantic term.
-                                        The field "BestCIX" will contain the associated compatibility index.
-                                        </span>
+                                        class="bodytext">List the Unit of Measurement (UOM) from a context in a scope (private, app or global)</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsFindBestSemanticTerm field [IN context [in scope]]</span>
+                                        class="bodytext">xsListUOM FROM context [IN scope]</span>
                         </p>
                         <p>
                                 <br />
                                 <span
                                         class="head4">Example: </span>
                                 <span
-                                        class="code">xsFindBestSemanticTerm Height in MyHeight</span>
+                                        class="code">| xsListUOM FROM Height IN global</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">In each event, determines the most compatible semantic 
-                                        term with the value of Height in the context MyHeight.
-                                        </span>
+                                        class="explanation">List the Unit of Measurement from the context Height in the global name space</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Parameters: </span>
                                 <span
-                                        class="bodytext">Context, Field, Scope</span>
+                                        class="bodytext">context, scope</span>
                         </p>
                         <p>
                                 <span
-                                        class="para">field</span>
+                                        class="para">context</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">The field in each event to look up in
-                                        the Context.</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="para">Context</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="explanation">If specified, use this as the Context
-                                        instead of 'field'</span>
+                                        class="explanation">The name of the context that contains the semantic terms</span>
                         </p>
                         <p>
                                 <span
@@ -109,16 +82,13 @@
                         </p>
                         <p>
                                 <span
-                                        class="explanation">If specified, this is the scope of 
-                                        the context.</span>
+                                        class="explanation">The level containing the contexts to list (private, app, global)</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Result: </span>
                                 <span
-                                        class="bodytext">Each event has the fields BestSemanticTerm, containing
-                                        the most compatible semantic term, and BestCIX, the compatibility index.
-                                        </span>
+                                        class="bodytext">The Unit of Measurement from the context in a specific scope.</span>
                         </p>
                         <p>
                                 <span
@@ -131,7 +101,7 @@
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20140225.1</p>
+                        <p><br />Version 20140308.1</p>
 
                 </html>
         </row>

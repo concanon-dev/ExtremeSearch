@@ -292,13 +292,22 @@
           class="tableeven">
           <td>
             <a
-              href="xsListContexts">xsListSemanticTerms</a>
+              href="xsListSemanticTerms">xsListSemanticTerms</a>
           </td>
           <td>Conceptual Search</td>
           <td>List the semantic terms from a context in private, app or global.</td>
         </tr>
-        <tr
+       <tr
           class="tableodd">
+          <td>
+            <a
+              href="xsListUOM">xsListUOM</a>
+          </td>
+          <td>Conceptual Search</td>
+          <td>List the Unit of Measurement (UOM) from a context in private, app or global.</td>
+        </tr>
+        <tr
+          class="tableeven">
           <td>
             <a
               href="xsOverlayContext">xsOverlayContext</a>
@@ -307,7 +316,7 @@
           <td>Overlays multiple contexts on a chart or in a table</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsPerformAutoRegression">xsPerformAutoRegression</a>
@@ -319,7 +328,7 @@
             generated for each stream.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsPerformCorrelation">xsPerformCorrelation</a>
@@ -328,7 +337,7 @@
           <td>Performs correlation of a data stream or compatibility index stream.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsPerformLinearRegression">xsPerformLinearRegression</a>
@@ -338,7 +347,7 @@
             pair of data streams, the following function is generated: y=slope*x+intercept</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsPerformNonLinearRegression">xsPerformNonLinearRegression</a>
@@ -349,7 +358,7 @@
             y=coef0*x^2+coef1*x+coef2.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsPerformSpearmanCorrelation">xsPerformSpearmanCorrelation</a>
@@ -358,7 +367,7 @@
           <td>Performs Spearman correlation of a data stream or compatibility index stream.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsPredict">xsPredict</a>
@@ -367,7 +376,7 @@
           <td>Predicts the future values of a time-series data stream.</td>
         </tr>
         <tr
-          class="tableeven">
+          class="tableodd">
           <td>
             <a
               href="xsRenameContext">xsRenameContext</a>
@@ -376,7 +385,7 @@
           <td>Renames a Context.</td>
         </tr>
         <tr
-          class="tableodd">
+          class="tableeven">
           <td>
             <a
               href="xsWhere">xsWhere</a>
@@ -401,7 +410,7 @@
         </a>
       </p>
       <br />
-      <p>VERSION: 20131127.5</p>
+      <p>VERSION: 20140308.6</p>
     </html>
   </row>
 </dashboard>

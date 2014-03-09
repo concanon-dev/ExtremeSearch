@@ -27,9 +27,9 @@ if __name__ == '__main__':
                     scope = arg
                     inKeyword = ''
         else:
-            raise Exception("xsListSemanticTerms-F-001: Usage: xsListSemanticTerms FROM context [IN scope]")
+            raise Exception("xsListUOM-F-001: Usage: xsListUOM FROM context [IN scope]")
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsListSemanticTerms"
+        binary = platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
         subprocess.call([binary, '-c', context, '-p', scope ])
 
         if platform.system() == 'Windows':

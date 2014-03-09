@@ -8,6 +8,7 @@ if [ "$OSTYPE" = "cygwin" ]; then
   gcc='x86_64-w64-mingw32-gcc -D _UNICODE'
   Platform='Win/x64'
   LicenseLib=LimeLM/Win/x64/TurboActivate.lib 
+  WinObjs=obj/$Platform/strsep.o
 elif [[ $OSTYPE == darwin1? ]]; then
   gcc=gcc
   Platform='Mac'
@@ -18,4 +19,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsFindBestSemanticTerm -Wall -O2 -lm obj/$Platform/xsFindBestSemanticTerm.o obj/$Platform/saContext.o obj/$Platform/saHash.o obj/$Platform/saOpenFile.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsListUOM -Wall obj/$Platform/xsListUOM.o obj/$Platform/saContext.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o obj/$Platform/saLicensing.o $LicenseLib $WinObjs

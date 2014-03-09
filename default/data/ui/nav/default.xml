@@ -18,7 +18,9 @@
         <collection
             label="Semantic Terms">
             <view name="create_semantic_term" />
+            <view name="display_semantic_term" />
             <view name="find_best_semantic_term" />
+            <view name="find_best_semantic_term_streaming" />
         </collection>
     </collection>
 

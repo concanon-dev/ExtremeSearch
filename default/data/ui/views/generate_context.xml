@@ -67,6 +67,10 @@ Enter values in each field as necessary to generate the Context
             <label>Notes</label>
             <default>None</default>
         </input>
+        <input type="text" token="uom">
+            <label>Unit of Measure</label>
+            <default></default>
+        </input>
         <input type="radio" token="scope">
             <label>Select Context Scope</label>
             <choice value="1">Private</choice>
@@ -88,7 +92,7 @@ Enter values in each field as necessary to generate the Context
     <row>
         <table id="table1">
     <searchString>
-| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$"
+| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$" uom="$uom$"
     </searchString>
         </table>      
     </row>

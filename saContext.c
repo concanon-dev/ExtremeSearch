@@ -23,7 +23,7 @@ char *trim(char *);
 time_t getTimestamp(char *);
 
 saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, 
-                               double sdev, int count, int numTerms, char *type, char *notes)
+                               double sdev, int count, int numTerms, char *type, char *notes, char *uom)
 {
     saContextTypePtr p = (saContextTypePtr)malloc(sizeof(saContextType));
     if (p == NULL)
@@ -40,6 +40,7 @@ saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, d
     strcpy(p->type, type);
     p->notes = malloc(strlen(notes)+1);
     strcpy(p->notes, notes);
+    p->uom = uom; 
     int i;
     for(i=0; i<SA_CONTEXT_MAXTERMS; i++)
         p->semanticTerms[i] = NULL;
@@ -63,6 +64,7 @@ saContextTypePtr saContextLoad(FILE *infile)
   */   
     contextPtr = malloc(sizeof(saContextType));
     memset(contextPtr, 0, sizeof(saContextType));
+    contextPtr->uom = "";
     char *line = getLine(infile);
     cursor = line;
     cursor = eatTimestamp(&cursor);
@@ -115,6 +117,11 @@ saContextTypePtr saContextLoad(FILE *infile)
             {
                 contextPtr->format = malloc(sizeof(char)*(strlen(value)+1));
                 strcpy(contextPtr->format, value);
+            }
+            else if (!strcmp(attribute, "uom"))
+            {
+                contextPtr->uom = malloc(sizeof(char)*(strlen(value)+1));
+                strcpy(contextPtr->uom, value);
             }
         }
     }
@@ -271,6 +278,7 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
     fprintf(outfile, " type=%s", contextPtr->type);
     fprintf(outfile, " numSemanticTerms=%d", contextPtr->numSemanticTerms);
     fprintf(outfile, " notes=\"%s\"", contextPtr->notes);
+    fprintf(outfile, " uom=\"%s\"", contextPtr->uom);
     fprintf(outfile, "\n");
 
     int i, j;
