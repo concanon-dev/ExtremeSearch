@@ -110,16 +110,16 @@ int main(int argc, char* argv[])
     keyRow = malloc(sizeof(double)*SA_CONSTANTS_MAXNUMROWS);
 
     fprintf(stdout, "%s,%s,", keyName, countName);
-    for(i=0; i<termSetPtr->numSemanticTerms; i++)
-        fprintf(stdout, ",%s", termSetPtr->semanticTerms[i]->name);
+    for(i=0; i<termSetPtr->numConcepts; i++)
+        fprintf(stdout, ",%s", termSetPtr->concepts[i]->name);
     fputs("\n", stdout);
 
     int j;
-    for(i=0; i<SA_SEMANTICTERM_VECTORSIZE; i++)
+    for(i=0; i<SA_CONCEPT_VECTORSIZE; i++)
     {
-        fprintf(stdout, "%1.5f,", termSetPtr->semanticTerms[0]->indexVector[i]);
-        for(j=0; j<termSetPtr->numSemanticTerms; j++)
-            fprintf(stdout, ",%1.10f", termSetPtr->semanticTerms[j]->vector[i]);
+        fprintf(stdout, "%1.5f,", termSetPtr->concepts[0]->indexVector[i]);
+        for(j=0; j<termSetPtr->numConcepts; j++)
+            fprintf(stdout, ",%1.10f", termSetPtr->concepts[j]->vector[i]);
         fputs("\n", stdout);
     }
 
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
     for(i=0; i<numRows; i++)
     {
         fprintf(stdout, "%.6f,%.6f", keyRow[i], (countRow[i] - minCount) / (maxCount - minCount));
-        for(j=0; j<termSetPtr->numSemanticTerms; j++)
+        for(j=0; j<termSetPtr->numConcepts; j++)
             fputs(",", stdout);
         fputs("\n", stdout);
     }

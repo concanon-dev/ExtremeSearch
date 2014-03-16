@@ -42,7 +42,7 @@
       </p>
       <p>
         <span
-          class="head2">Concepts and Semantic Terms</span>
+          class="head2">Concepts and Contexts</span>
       </p>
       <p>As humans, we tend to think conceptually. A concept can be characterized by a semantic term
         that represents it. Terms such as Tall, Short, Long, Early, Late, Fast, and Slow are
@@ -149,7 +149,7 @@
         engine can quickly model baseline behavior without the need for more conventional
         parameteric machine learning.</p>
       <p><em>So this is pretty interesting. What does it get us?</em></p>
-      <p><strong>Semantic Terms</strong> and collections of them which we call
+      <p><strong>Concepts</strong> and collections of them which we call
           <strong>Contexts</strong> are critical components in concept-based cognitive computing.
         They facilitate the ability to gain deep insight from your data by asking
           <em>qualitative</em>, rather than <em>quantitative</em> questions, and to ask those
@@ -163,23 +163,22 @@
         we say <strong>tall</strong>, the set of values that have membership in that
           <strong>concept</strong> should make linguistic sense. In the same way that someone would
         be confused if you called Karrem Abdul Jabar <strong>short</strong> and Napolean
-          <strong>tall</strong>, they can be confused if we define semantic terms in Extreme Search
+          <strong>tall</strong>, they can be confused if we define concepts in Extreme Search
         that don't make linguistic sense. It is also important that all <strong>terms</strong>
         defined in a <strong>context</strong> be conceptually coherent – that they share the same
         "universe of discourse". It would be confusing if one <strong>term</strong> dealt with
           <em>Time</em> and another dealt with <em>Distance</em>.</p>
       <span
         class="head2">Embracing Nuance: Hedges</span>
-      <p><bold>Semantic terms</bold> and <strong>contexts</strong> are the basis of Conceptual
+      <p><bold>Concepts</bold> and <strong>Contexts</strong> are the basis of Conceptual
         Search but they don't, on their own, support a very nuanced view of the world. A true
         Cognitive Computing system, a system designed to "think" like we do, needs to understand
         nuance.</p>
       <p>Scianta Extreme Search for Splunk employs the notion of "hedges" to capture nuanced
-        variation to semantic terms. Hedges are linguistic modifiers, adjectives, that modify the
-        meaning of a semantic term. To learn more about <strong>hedges</strong> and other methods
+        variation to concepts. Hedges are linguistic modifiers, adjectives, that modify the
+        meaning of a concept. To learn more about <strong>hedges</strong> and other methods
         employed by Extreme Search to embrace the nuance ot human thought, click on Learn More.</p>
-      <a
-        href="hedges">
+      <a href="hedges">
         <img
           alt="Learn More"
           src="/static/app/xtreme/images/learn_button.png" />
@@ -187,30 +186,18 @@
       <p><span
           class="head4">Related Extreme Search Commands: </span></p>
       <ul>
-        <li><a
-            href="xsCloneSemanticTerm">xsCloneSemanticTerm</a></li>
-        <li><a
-            href="xsCloneContext">xsCloneContext</a></li>
-        <li><a
-            href="xsCreateContext">xsCreateContext</a></li>
-        <li><a
-            href="xsDeleteContext">xsDeleteContext</a></li>
-        <li><a
-            href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a></li>
-        <li><a
-            href="xsDisplayContext">xsDisplayContext</a></li>
-        <li><a
-            href="xsFindMemebership">xsFindMemebership</a></li>
-        <li><a
-            href="xsGenerateContext">xsGenerateContext</a></li>
-        <li><a
-            href="xsGetWhereCIX">xsGetWhereCIX</a></li>
-        <li><a
-            href="xsRenameContext">xsRenameContext</a></li>
-        <li><a
-            href="xsUpdateContext">xsUpdateContext</a></li>
-        <li><a
-            href="xsWhere">xsWhere</a></li>
+        <li><a href="xsCloneConcept">xsCloneConcept</a></li>
+        <li><a href="xsCloneContext">xsCloneContext</a></li>
+        <li><a href="xsCreateContext">xsCreateContext</a></li>
+        <li><a href="xsDeleteContext">xsDeleteContext</a></li>
+        <li><a href="xsDisplayConcept">xsDisplayConcept</a></li>
+        <li><a href="xsDisplayContext">xsDisplayContext</a></li>
+        <li><a href="xsFindMemebership">xsFindMemebership</a></li>
+        <li><a href="xsGenerateContext">xsGenerateContext</a></li>
+        <li><a href="xsGetWhereCIX">xsGetWhereCIX</a></li>
+        <li><a href="xsRenameContext">xsRenameContext</a></li>
+        <li><a href="xsUpdateContext">xsUpdateContext</a></li>
+        <li><a href="xsWhere">xsWhere</a></li>
       </ul>
       <br />
       <span
@@ -223,21 +210,16 @@
           href="http://www.sciantaanalytics.com/?q=learn"
           target="_blank"> the <strong>Learn</strong> section of the Scianta Analytics web site.</a>
       </p>
-      <p
-        align="center">
-        <span
-          class="head5">Sciante Extreme Search for Splunk is part of the Scianta Analytics Cognitive
+      <p align="center">
+        <span class="head5">Sciante Extreme Search for Splunk is part of the Scianta Analytics Cognitive
           Computing Suite</span>
         <br />
-        <a
-          href="http://www.sciantaanalytics.com/"
+        <a href="http://www.sciantaanalytics.com/"
           target="_blank">
-          <img
-            alt="Scianta Analytics"
-            src="/static/app/xtreme/images/Scianta_Analytics_150.png" />
+          <img alt="Scianta Analytics" src="/static/app/xtreme/images/Scianta_Analytics_150.png" />
         </a>
       </p>
-      <p>VERSION: 20130929.3</p>
+      <p>VERSION: 20140310.4</p>
     </html>
   </row>
 </dashboard>

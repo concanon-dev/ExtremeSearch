@@ -24,7 +24,7 @@ saExpressionTypePtr orExpression(saExpressionTypePtr, saTokenTypePtr);
 
 // Name Tokens
 saExpressionTypePtr fieldExpression(saTokenTypePtr); 
-saExpressionTypePtr semanticTermExpression(saTokenTypePtr);
+saExpressionTypePtr conceptExpression(saTokenTypePtr);
 saExpressionTypePtr contextExpression(saTokenTypePtr);
 saExpressionTypePtr parenExpression(saTokenTypePtr);
 
@@ -145,7 +145,7 @@ saExpressionTypePtr parseExpression(precedence)
     else if (currToken->token_type == SA_TOKEN_FIELD)
         left = fieldExpression(currToken); // nameExpression
     else if (currToken->token_type == SA_TOKEN_FUZZYSET)
-        left = semanticTermExpression(currToken); // nameExpression
+        left = conceptExpression(currToken); // nameExpression
     else if (currToken->token_type == SA_TOKEN_FUZZYTERMSET)
         left = contextExpression(currToken); // nameExpression
     else if (currToken->token_type == SA_TOKEN_NOT)
@@ -456,7 +456,7 @@ saExpressionTypePtr fieldExpression(saTokenTypePtr currToken)
     return(exp);
 }
 
-saExpressionTypePtr semanticTermExpression(saTokenTypePtr currToken) 
+saExpressionTypePtr conceptExpression(saTokenTypePtr currToken) 
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->field = currToken->token;

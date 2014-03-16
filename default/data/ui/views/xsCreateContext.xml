@@ -185,18 +185,18 @@
                         </p>
                         <p>
                                 <span
-                                        class="explanation">double - contains only 2 semantic terms
+                                        class="explanation">double - contains only 2 concepts
                                 </span>
                         </p>
                         <p>
                                 <span
                                         class="explanation">single_decline - contains only 1
-                                        semantic term that declines over the domain </span>
+                                        concept that declines over the domain </span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">single_growth - contains only 1 semantic
-                                        term that grows over the domain </span>
+                                        class="explanation">single_growth - contains only 1 concept
+                                        that grows over the domain </span>
                         </p>
                         <p>
                                 <span

@@ -3,21 +3,13 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
-*/
-/* 
- * File:   xsprelicense.c
- * Author: BillM
- *
- * Utilizes TurboActivate from LimeLM to support licensing
- *
- * Options:
- * /activate:filename - Enter Activation Key to activate the license
- * /createactrequest:filename - Create Activation Request File  for offline activation
- * /setprodkey:ProductKey - adds the product key and attempts to activate online
- *
- * Without any options it will display the current licensing status
- *
- * Created on April 15, 2013
+ 
+   Options:
+   /activate:filename - Enter Activation Key to activate the license
+   /createactrequest:filename - Create Activation Request File  for offline activation
+   /setprodkey:ProductKey - adds the product key and attempts to activate online
+  
+   Without any options it will display the current licensing status
  */
 #include <getopt.h>
 #include <libgen.h>
@@ -44,21 +36,28 @@ HRESULT AddProductKey(TCHAR *pProductKey)
     HRESULT hr;
     char errMsg[320];
 
-    if (pProductKey == NULL) {
+    if (pProductKey == NULL)
+    {
         fprintf(stderr, "xsprelicense-F-101: Error no Product Key specified.\n");
         return(TA_FAIL);
     }
 
     hr = CheckAndSavePKey(pProductKey, TA_SYSTEM);
-
-    // If unable to add the key as an admin, try as user
-    if (hr != TA_OK) {
+    if (hr != TA_OK) 
+    {
+        // If unable to add the key as an admin, try as user
         hr = CheckAndSavePKey(pProductKey, TA_USER);
+        if (hr != TA_OK)
+            return((HRESULT)-1);
     }
 
     // If the license key was added successfully, try to activate it
-    if (hr == TA_OK)
-        hr = Activate();
+    hr = Activate();
+    if (hr != TA_OK)
+    {
+        fprintf(stderr, "xsprelicense-F-105: Can't activate key return_code=%#x\n", hr);
+        return(TA_FAIL);
+    }
 
     return(hr);
 }
@@ -92,6 +91,17 @@ void CreateLicenseRequestFile(TCHAR *pFilename)
     hr = ActivationRequestToFile(pFilename);
 }
 
+HRESULT ReactivateLicense(char *tString)
+{
+    HRESULT hr = Deactivate((char)0);
+    if (hr != TA_OK)
+    {
+        fprintf(stderr, "xsprelicense-F-105: Faile to deactivate the key, return_code=%#x\n", hr);
+        return(hr);
+    }
+    return(AddProductKey(tString));
+}
+
 void trimPipe(TCHAR *str)
 {
     TCHAR *ch;
@@ -116,11 +126,12 @@ int doMain(int argc, char *argv[])
     bool verbose = false;
     GENUINE_OPTIONS opts;
     HRESULT hr = TA_OK;
+    HRESULT setProdKeyHR = TA_OK;
     char hostname[256];
     char productKey[40];
     TCHAR tString[256];
 
-    while ((c = getopt(argc, argv, "ac:f:s:v")) != -1) 
+    while ((c = getopt(argc, argv, "ac:f:r:s:v")) != -1) 
     {
        if (optarg != NULL) {
 #ifdef _WIN32
@@ -154,10 +165,17 @@ int doMain(int argc, char *argv[])
                 ActivateLicense(tString);
                 break;
 
+            // Reactivate License with new Product Key
+            case 'r':
+                trimPipe(tString);
+                hr = ReactivateLicense(tString);
+                break;
+
             // Set Product Key
             case 's':
                 trimPipe(tString);
                 hr = AddProductKey(tString);
+                setProdKeyHR = hr;
                 break;
 
             // Set Verbose Flag - displays more info on LimeLM commands
@@ -230,7 +248,11 @@ int doMain(int argc, char *argv[])
 #endif
 
         if (hr == TA_OK)
+        {
             fprintf(stdout, "%s,%s,valid,%s\n", hostname, productKey, ExpirationDate);
+            if (setProdKeyHR != TA_OK)
+                fprintf(stderr, "xsprelicense-F-103: Current Product Key is valid.  Please use REACTIVATE switch to overwrite key\n");
+        }
         else
             fprintf(stdout, "%s,%s,expired,%s\n", hostname, productKey, ExpirationDate);
     }

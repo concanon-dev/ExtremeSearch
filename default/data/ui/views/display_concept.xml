@@ -1,0 +1,38 @@
+<form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
+    <label>Display Concept</label>
+    <fieldset autoRun="true" submitButton="false">
+        <input type="radio" token="scope">
+            <label>Select Context Scope</label>
+            <default>Private</default>
+            <choice value="private">Private</choice>
+            <choice value="app">App</choice>
+            <choice value="global">Global</choice>
+        </input>
+        <input type="dropdown" token="context" searchWhenChanged="true">
+            <label>Context Name</label>
+            <populatingSearch fieldForValue="context" fieldForLabel="context">
+                | xsListContexts $scope$
+            </populatingSearch>
+        </input>
+        <input type="dropdown" token="concept" searchWhenChanged="true">
+            <label>Concept</label>
+            <populatingSearch fieldForValue="Concept" fieldForLabel="Concept">
+                | xsListConcepts FROM $context$ IN  $scope$
+            </populatingSearch>
+        </input> 
+    </fieldset>
+
+    <row>
+        <html>
+            <h2>Membership</h2>
+<!--            <div id="chart1" /> -->
+<div id="chart1">
+</div>
+        </html>
+    </row>
+    <row>
+        <table id="table1">
+            <searchString>| xsDisplayConcept $concept$ FROM $context$ IN $scope$</searchString>
+        </table>
+    </row>
+</form>

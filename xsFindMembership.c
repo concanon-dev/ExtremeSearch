@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     char fieldName[128];
     int c;
     int numFields;
-    int numSemanticTerms;
+    int numConcepts;
     int scope = saSplunkGetScope(NULL);
 
     if (!isLicensed())
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 
     // Parse the first (header) line of input
     numFields = saCSVGetLine(inbuf, fieldList);
-    numSemanticTerms = contextPtr->numSemanticTerms;
+    numConcepts = contextPtr->numConcepts;
 
     // Write out the header fields separated by ","
     int i;
@@ -114,15 +114,15 @@ int main(int argc, char* argv[])
 
     // if this header does not have the fuzzy sets, then write out all of the termset headers
     sprintf(tempbuf, "\"%s_%s\"", contextPtr->name, 
-            contextPtr->semanticTerms[numSemanticTerms-1]->name);
+            contextPtr->concepts[numConcepts-1]->name);
 
     if (strcmp(fieldList[numFields-1], tempbuf))
     {
         int j;
         // Write out each term set as a new header
-        for(j=0; j<numSemanticTerms; j++)
+        for(j=0; j<numConcepts; j++)
         {
-            fprintf(stdout, ",\"%s_%s\"", contextPtr->name, contextPtr->semanticTerms[j]->name);
+            fprintf(stdout, ",\"%s_%s\"", contextPtr->name, contextPtr->concepts[j]->name);
         }
         wroteContextHeaders = true;
     }
@@ -142,10 +142,10 @@ int main(int argc, char* argv[])
     // if the headers are already written, only write out the passed in fields
     int fieldsToWrite = numFields;
     if (wroteContextHeaders == false)
-        fieldsToWrite = numFields - numSemanticTerms;
+        fieldsToWrite = numFields - numConcepts;
 
     // Initialize the results array and read all of the input 
-    double results[contextPtr->numSemanticTerms];
+    double results[contextPtr->numConcepts];
     bool done = false;
     while(!done)
     {
@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
             }
 
             // Write out the fuzzy set results
-            for(i=0; i<numSemanticTerms; i++)
+            for(i=0; i<numConcepts; i++)
             {
                 if (found)
                 {

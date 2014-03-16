@@ -1,0 +1,65 @@
+<form>
+    <label>Create Concept</label>
+    <fieldset>
+        <html>
+            <p style="padding-top: 20px">
+Enter values in each field as necessary to create the Concept
+            </p>
+        </html>
+       <input type="radio" token="scope">
+            <label>Select Context Scope</label>
+            <default>Private</default>
+            <choice value="1">Private</choice>
+            <choice value="2">App</choice>
+            <choice value="3">Global</choice>
+        </input>
+        <input type="dropdown" token="context">
+            <label>Context Name</label>
+            <populatingSearch fieldForValue="context" fieldForLabel="context">
+        <![CDATA[ | xsListContexts $scope$]]>
+            </populatingSearch>
+        </input>
+        <input type="text" token="conceptName">
+            <default></default>
+            <label>Concept Name</label>
+        </input>
+        <input type="dropdown" token="shape">
+            <default>pi</default>
+            <label>Shape of Concept</label>
+            <choice value="curvedecrease">Curve Decline</choice>
+            <choice value="lineardecrease">Linear Decrease</choice>
+            <choice value="curvegrowth">Curve Growth</choice>
+            <choice value="linearincrease">Linear Increase</choice>
+            <choice value="pi">PI</choice>
+            <choice value="trapezoid">Trapezoid</choice>
+            <choice value="triangle">Triangle</choice>
+        </input>
+        <input type="text" token="min">
+            <default>0</default>
+            <label>Concept Min Value</label>
+        </input>
+        <input type="text" token="max">
+            <default>255</default>
+            <label>Concept Max Value</label>
+        </input>
+    </fieldset>
+    <searchTemplate>
+| xsCreateConcept "$conceptName$" IN "$context$" WITH min="$min$" max="$max$" shape="$shape$" scope="$scope$"
+    </searchTemplate>
+
+    <row>   
+        <!-- 
+             show results as a table 
+          -->
+        <chart>
+            <title>Context</title>
+            <option name="charting.chart">column</option>
+            <option name="axisTitleX.text">buckets</option>
+            <option name="axisTitleY.text">CIX</option>
+        </chart>
+        <table>
+            <option name="showPager">true</option>
+            <option name="count">10</option>
+        </table>      
+    </row>
+</form>

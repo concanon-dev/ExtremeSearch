@@ -19,4 +19,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsDiscoverTrend -O2 -Wall obj/$Platform/xsDiscoverTrend.o obj/$Platform/saCSV.o obj/$Platform/saContext.o obj/$Platform/saSemanticTerm.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib $WinObjs
+$gcc -o bin/$Platform/xsDiscoverTrend -O2 -Wall obj/$Platform/xsDiscoverTrend.o obj/$Platform/saCSV.o obj/$Platform/saContext.o obj/$Platform/saConcept.o obj/$Platform/saContextCreate.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib $WinObjs

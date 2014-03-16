@@ -2,77 +2,53 @@
         <label>xsLicense</label>
         <row>
                 <html>
-                        <a
-                                href="xtreme_overview">
-                                <img
-                                        alt="Return to Overview"
+                        <a href="xtreme_overview">
+                                <img alt="Return to Overview"
                                         src="/static/app/xtreme/images/overview_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
-                        <a
-                                href="command_reference">
-                                <img
-                                        alt="Jump to Command Reference"
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="command_reference">
+                                <img alt="Jump to Command Reference"
                                         src="/static/app/xtreme/images/commandreference_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
-                        <a
-                                href="http://www.sciantaanalytics.com/?q=documentation"
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="http://www.sciantaanalytics.com/?q=documentation"
                                 target="_blank">
-                                <img
-                                        alt="Support Site"
+                                <img alt="Support Site"
                                         src="/static/app/xtreme/images/doc_button.png" />
                         </a>
-                        <img
-                                src="/static/app/xtreme/images/space.png" />
-                        <a
-                                href="http://www.sciantaanalytics.com/?q=support_pages"
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="http://www.sciantaanalytics.com/?q=support_pages"
                                 target="_blank">
-                                <img
-                                        alt="Support Site"
+                                <img alt="Support Site"
                                         src="/static/app/xtreme/images/support_button.png" />
                         </a>
-                        <span
-                                class="insetrt">Scianta Analytics Help</span>
+                        <span class="insetrt">Scianta Analytics Help</span>
                         <p>
                                 <br />
-                                <span
-                                        class="head4">Command: </span>
-                                <span
-                                        class="cmd">xsLicense</span>
+                                <span class="head4">Command: </span>
+                                <span class="cmd">xsLicense</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Category: </span>
-                                <span
-                                        class="bodytext">System</span>
+                                <span class="head4">Category: </span>
+                                <span class="bodytext">System</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Description: </span>
-                                <span
-                                        class="bodytext">Licenses and activates Extreme Search
+                                <span class="head4">Description: </span>
+                                <span class="bodytext">Licenses and activates Extreme Search
                                         software. Displays licensing status.</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Syntax: </span>
-                                <span
-                                        class="bodytext">xslicense [keystring]</span>
+                                <span class="head4">Syntax: </span>
+                                <span class="bodytext">xslicense [[reactivate] keystring]</span>
                         </p>
                         <p>
                                 <br />
-                                <span
-                                        class="head4">Example: </span>
-                                <span
-                                        class="code">| xslicense
-                                        S3Z6-794E-6FUJ-DZ9G-THUP-TXQI-3ELA</span>
+                                <span class="head4">Example: </span>
+                                <span class="code">| xslicense S3Z6-794E-6FUJ-DZ9G-THUP-TXQI-3ELA</span>
                         </p>
                         <p>
-                                <span
-                                        class="explanation">Applies the license key specified in
+                                <span class="explanation">Applies the license key specified in
                                         keystring to Extreme Search for Splunk on a specific Splunk
                                         search head and all associated indexers. Displays license
                                         status for Extreme Search for Splunk on a specific Splunk
@@ -81,10 +57,8 @@
                                         results will be displayed.</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Output: </span>
-                                <span
-                                        class="code"> host                         key              
+                                <span class="head4">Output: </span>
+                                <span class="code"> host                         key              
                                                                                            status  
                                             expiration<br /> 1 splunkOne.local    
                                         S3Z6-794E-6FUJ-DZ9G-THUP-TXQI-3ELA     valid      
@@ -95,8 +69,7 @@
                                          2014-01-07 17:03:38</span>
                         </p>
                         <p>
-                                <span
-                                        class="explanation">Applies the specified license key to
+                                <span class="explanation">Applies the specified license key to
                                         Extreme Search for Splunk on the Splunk search head and all
                                         associated indexers. Displays status for each instance of
                                         Splunk. Two results are displayed for the local server
@@ -104,32 +77,33 @@
                                         valid and will expire at 5:03PM on January 7th, 2014.</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Parameters: </span>
-                                <span
-                                        class="explanation">keystring (optional)</span>
+                                <span class="head4">Parameters: </span>
+                                <span class="explanation">keystring (optional), reactivate (optional)</span>
                         </p>
                         <p>
-                                <span
-                                        class="para">keystring (A valid product key issued by
+                                <span class="para">keystring (A valid product key issued by
                                         Scianta Analytics)</span>
                         </p>
                         <p>
-                                <span
-                                        class="explanation">A 34 character string in the format
+                                <span class="explanation">A 34 character string in the format
                                         XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX as issued by Scianta
                                         Analytics.</span>
                         </p>
-                        <p
-                                class="explanation">Optionally, a 34 character product key string,
+                        <p class="explanation">Optionally, a 34 character product key string,
                                 followed by an underscore and an 8 character datecode, as displayed
                                 in the licensing user's profile on the Scianta Analytics web site.
                                 i.e. XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX_YYYYMDD </p>
                         <p>
-                                <span
-                                        class="head4">Result: </span>
-                                <span
-                                        class="bodytext">Possible status values:<br />
+                                <span class="para">reactivate</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Deactivate the current key and reactivate 
+                                        with the specified key.</span>
+                        </p>
+
+                        <p>
+                                <span class="head4">Result: </span>
+                                <span class="bodytext">Possible status values:<br />
                                         <strong>Valid</strong>: The license key is valid and the
                                         software is activated.<br />
                                         <strong>Expired</strong>: The license key has expired.<br />
@@ -141,22 +115,18 @@
                                         <strong>NULL</strong>: No license key is installed.</span>
                                 <br />
                                 <br />
-                                <span
-                                        class="bodytext">The <strong>expiration</strong> value is a
+                                <span class="bodytext">The <strong>expiration</strong> value is a
                                         date code in the format YYYY-MM-DD HH:MM:SS</span>
                         </p>
                         <p>
-                                <span
-                                        class="head4">Learn more: </span>
-                                <span
-                                        class="bodytext">
-                                        <a
-                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                <span class="head4">Learn more: </span>
+                                <span class="bodytext">
+                                        <a href="http://www.sciantaanalytics.com?q=es_documentation"
                                                 target="_blank">Scianta Analytics Extreme Search for
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br /> Version 20130716.1</p>
+                        <p><br /> Version 20140316.2</p>
 
                 </html>
         </row>

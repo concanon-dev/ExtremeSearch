@@ -37,7 +37,7 @@ static char *headerList[MAXROWSIZE / 31];
 static char inbuf[MAXROWSIZE];
 static char tempbuf[MAXROWSIZE];
 static char whereLine[MAXROWSIZE / 32];
-static saHashtableTypePtr semanticTermTable;
+static saHashtableTypePtr conceptTable;
 static int numHeaderFields = 0;
 static int termSetFieldIndex[MAXROWSIZE / 32];
 
@@ -60,9 +60,9 @@ static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, flo
                                double *);
 extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
 
-extern saSemanticTermTypePtr saHedgeApply(int, saSemanticTermTypePtr);
-saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
-extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
+extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
+saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
+extern double saConceptLookup(saConceptTypePtr, double);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
-    semanticTermTable = saHashCreateDefault();
+    conceptTable = saHashCreateDefault();
 
     /* determine if this is being called as FCIX */
     if (!strcmp(basename(argv[0]), FCIX))
@@ -309,7 +309,7 @@ int main(int argc, char* argv[])
     exit(0);
 }
 
-saSemanticTermTypePtr processHedge(saSemanticTermTypePtr f, saSynonymTableType *synonyms,
+saConceptTypePtr processHedge(saConceptTypePtr f, saSynonymTableType *synonyms,
                                    char *word)
 {
     char *setArray[32];
@@ -406,13 +406,13 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
         }
         else
         {
-            saSemanticTermTypePtr semanticTerm = NULL;
+            saConceptTypePtr concept = NULL;
             char *contextName = NULL;
             saContextTypePtr t = NULL;
             
             //
             // stack looks like this:  
-            //          field, semanticterm, [modifier, ... ] is 
+            //          field, concept, [modifier, ... ] is 
             //
 
             // get the value of the field
@@ -458,16 +458,16 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
             }
 
             // Find the fuzzy set in the cache or load it from the file
-            semanticTerm = (saSemanticTermTypePtr)saHashGet(semanticTermTable, tempName);
-            if (semanticTerm == NULL)
+            concept = (saConceptTypePtr)saHashGet(conceptTable, tempName);
+            if (concept == NULL)
             {
 /*
     if context_name is a field,
        get field value
-       if value is not in semanticTermSet cache
-          build scalar semanticTermSet
+       if value is not in conceptSet cache
+          build scalar conceptSet
     else if context_name is a scalar
-          build scalar semanticTermSet
+          build scalar conceptSet
     else
        try to open the file contexName.context
 */
@@ -505,12 +505,12 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                         domainMax = center + halfTerm;
                     }
                     sprintf(tempName, "%s_%d", dStr, stackIndex);
-                    semanticTerm = (saSemanticTermTypePtr)saHashGet(semanticTermTable, tempName);
-                    if (semanticTerm == NULL)
+                    concept = (saConceptTypePtr)saHashGet(conceptTable, tempName);
+                    if (concept == NULL)
                     {
-                        semanticTerm = saSemanticTermCreatePI(dStr, domainMin, domainMax, domainMin,
+                        concept = saConceptCreatePI(dStr, domainMin, domainMax, domainMin,
                                                               domainMax, center);
-                        if (semanticTerm == NULL)
+                        if (concept == NULL)
                         {
                             fprintf(stderr, "xsWhere-F-123: can't create context %s\n", dStr);
                             exit(0);
@@ -532,28 +532,28 @@ t = saSplunkContextLoad(contextName, &scope, NULL, NULL);
                 
                     // lookup the field in the fuzzy set
                     int m;
-                    for(m=0; m<t->numSemanticTerms; m++)
-                        if (!strcmp(t->semanticTerms[m]->name, expStack[stackIndex]->field))
-                            semanticTerm = t->semanticTerms[m];
+                    for(m=0; m<t->numConcepts; m++)
+                        if (!strcmp(t->concepts[m]->name, expStack[stackIndex]->field))
+                            concept = t->concepts[m];
                 
-                    if (semanticTerm == NULL)
+                    if (concept == NULL)
                     {
                         fprintf(stderr, 
-                               "xsWhere-F-113: semantic term '%s' does not exist in context '%s'\n",
+                               "xsWhere-F-113: concept '%s' does not exist in context '%s'\n",
                                 expStack[stackIndex]->field, contextName);
                         exit(0);
                     }
                 }
                 while(expStack[++stackIndex]->type != SA_TOKEN_IS)
-                    semanticTerm = processHedge(semanticTerm, &synonyms, 
+                    concept = processHedge(concept, &synonyms, 
                                                 expStack[stackIndex]->field);
-                saHashSet(semanticTermTable, tempName, (void *)semanticTerm);
+                saHashSet(conceptTable, tempName, (void *)concept);
             }
             else
                 while(expStack[stackIndex]->type != SA_TOKEN_IS)
                     stackIndex++;
             
-            double cix = saSemanticTermLookup(semanticTerm, fieldValue);
+            double cix = saConceptLookup(concept, fieldValue);
             if (!strcmp(cixFunction, FCIX_WEIGHTED))
             {
                 cix_sum += (cix*(stackSize-stackIndex));

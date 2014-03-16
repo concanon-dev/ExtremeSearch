@@ -10,14 +10,14 @@
 #include <string.h>
 #include "saContext.h"
 
-extern saSemanticTermTypePtr saSemanticTermCreateLinearDecrease(char *, double, double, double, 
+extern saConceptTypePtr saConceptCreateLinearDecrease(char *, double, double, double, 
                                                                 double);
-extern saSemanticTermTypePtr saSemanticTermCreateLinearIncrease(char *, double, double, double, 
+extern saConceptTypePtr saConceptCreateLinearIncrease(char *, double, double, double, 
                                                                 double);
-extern saSemanticTermTypePtr saSemanticTermCreatePI(char *, double, double, double, double, double);
-extern saSemanticTermTypePtr saSemanticTermCreateSDecrease(char *, double, double,
+extern saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
+extern saConceptTypePtr saConceptCreateSDecrease(char *, double, double,
                                                     double, double, double);
-extern saSemanticTermTypePtr saSemanticTermCreateSIncrease(char *, double, double,
+extern saConceptTypePtr saConceptCreateSIncrease(char *, double, double,
                                                     double, double, double);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *, char *,
                                               int, char *);
@@ -41,15 +41,15 @@ int main(int argc, char *argv[])
 fprintf(stderr, "got here\n");
     saContextTypePtr p = saContextCreateDomain("test", dMin, dMax, terms, 3, "PI", "S",
                                                1000, "hello world");
-fprintf(stderr, "numSemanticTerms=%d\n", p->numSemanticTerms);
+fprintf(stderr, "numConcepts=%d\n", p->numConcepts);
     int j;
-    for(j=0; j<p->numSemanticTerms; j++)
+    for(j=0; j<p->numConcepts; j++)
     {
-        saSemanticTermTypePtr pp = p->semanticTerms[j];
+        saConceptTypePtr pp = p->concepts[j];
         for(i=0; i<pp->numPoints; i++)
             fprintf(stderr, "point[%d]=%10.4f\n", i, pp->points[i]);
         fprintf(stderr, "\n");
-        for(i=0; i<SA_SEMANTICTERM_VECTORSIZE; i++)
+        for(i=0; i<SA_CONCEPT_VECTORSIZE; i++)
             fprintf(stderr, "iv[%d]=%10.4f v[%d]=%10.4f\n", i, pp->indexVector[i], i, 
                     pp->vector[i]);
     }

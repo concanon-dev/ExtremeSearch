@@ -1,5 +1,5 @@
 /*
- (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
@@ -20,8 +20,8 @@ typedef struct OLDsaContext
     char *notes;
     double sdev;
     char *type;
-    int numSemanticTerms;
-    OLDsaSemanticTermTypePtr semanticTerms[MAXFUZZYSETS];
+    int numConcepts;
+    OLDsaConceptTypePtr concepts[MAXFUZZYSETS];
 } OLDsaContextType;
 
 typedef OLDsaContextType *OLDsaContextPtr;

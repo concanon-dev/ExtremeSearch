@@ -1,5 +1,5 @@
 #
-# (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+# (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
 # Reproduction or unauthorized use is prohibited. Unauthorized
 # use is illegal. Violators will be prosecuted. This software 
 # contains proprietary trade and business secrets.            
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                     errString = "xsCreateUDContext-F-003: Invalid argument: " + arg
                     raise Exception(errString) 
         else:
-            raise Exception("xsCreateUDContext-F-001: Usage: xsCreateUDContext name=<string> terms=<semantictermlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
+            raise Exception("xsCreateUDContext-F-001: Usage: xsCreateUDContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
 
         if avg == '':
             raise Exception("xsCreateUDContext-F-003: parameter 'avg' not found")

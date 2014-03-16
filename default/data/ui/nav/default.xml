@@ -1,31 +1,27 @@
-<nav
-    search_view="search"
-    color="#0069c2">
+<nav search_view="search" color="#0069c2">
 
-    <view
-        name="xtreme_overview"
-        default="true" />
+    <view name="xtreme_overview" default="true" />
 
-    <collection
-        label="Conceptual Search">
-        <collection
-            label="Contexts">
+    <collection label="Conceptual Search">
+        <collection label="Contexts">
             <view name="create_context" />
             <view name="generate_context" />
             <view name="display_context" />
         </collection>
 
-        <collection
-            label="Semantic Terms">
-            <view name="create_semantic_term" />
-            <view name="display_semantic_term" />
-            <view name="find_best_semantic_term" />
-            <view name="find_best_semantic_term_streaming" />
+        <collection label="Concepts">
+            <view name="create_concept" />
+            <view name="display_concept" />
+            <view name="find_best_concept" />
+            <view name="find_best_concept_streaming" />
         </collection>
     </collection>
 
-    <collection
-        label="Documentation">
+    <collection label="Prediction">
+        <view name="discover_trend" />
+    </collection>
+
+    <collection label="Documentation">
         <view name="xtreme_overview" />
         <view name="command_reference" />
         <view name="concept_intro" />

@@ -17,24 +17,24 @@ Enter values in each field as necessary to generate the Context
             <choice value="domain">Domain</choice>
         </input>
         <input type="text" token="terms">
-            <default>low,med,high</default>
-            <label>Terms</label>
-            <seed>low,med,high</seed>
+            <default>low,medium,high</default>
+            <label>Concepts</label>
+            <seed>low,medium,high</seed>
         </input>
         <input type="dropdown" token="shape">
             <default>pi</default>
-            <label>Shape of Middle Terms</label>
+            <label>Shape of Middle Concepts</label>
             <choice value="pi">PI</choice>
             <choice value="trapezoid">Trapezoid</choice>
             <choice value="triangle">Triangle</choice>
-            <choice value="curvedecrease">(Single Term Only) Curve Decrease</choice>
-            <choice value="lineardecrease">(Single Term Only) Linear Decrease</choice>
-            <choice value="curveincrease">(Single Term Only) Curve Increase</choice>
-            <choice value="linearincrease">(Single Term Only) Linear Increase</choice>
+            <choice value="curvedecrease">(Single Concept Only) Curve Decrease</choice>
+            <choice value="lineardecrease">(Single Concept Only) Linear Decrease</choice>
+            <choice value="curveincrease">(Single Concept Only) Curve Increase</choice>
+            <choice value="linearincrease">(Single Concept Only) Linear Increase</choice>
         </input>
         <input type="dropdown" token="endShape">
             <default>curve</default>
-            <label>Shape of End Terms</label>
+            <label>Shape of End Concepts</label>
             <choice value="curve">Curve</choice>
             <choice value="linear">Linear</choice>
         </input>

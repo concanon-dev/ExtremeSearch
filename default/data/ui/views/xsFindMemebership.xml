@@ -54,9 +54,9 @@
                                         class="head4">Description: </span>
                                 <span
                                         class="bodytext">For each event, lookup the value of a field
-                                        and return the membership values of each semantic term. A
-                                        column will be added to the event stream for each semantic
-                                        term in the context.</span>
+                                        and return the membership values of each concept. A
+                                        column will be added to the event stream for each 
+                                        concept in the context.</span>
                         </p>
                         <p>
                                 <span
@@ -74,7 +74,7 @@
                         <p>
                                 <span
                                         class="explanation">Looks up the field AirTime and adds the
-                                        membership value for each semantic term in the Context
+                                        membership value for each concept in the Context
                                         AirTime as a field in each event.</span>
                         </p>
                         <p>
@@ -115,7 +115,7 @@
                                         class="head4">Result: </span>
                                 <span
                                         class="bodytext">Each event has the membership value of
-                                        'field' added for each semantic term in the specified
+                                        'field' added for each concept in the specified
                                         Context. </span>
                         </p>
                         <p>

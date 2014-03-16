@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     char fieldName[128];
     int c;
     int numFields;
-    int numSemanticTerms;
+    int numConcepts;
     int scope = saSplunkGetScope(NULL);
 
     if (!isLicensed())
@@ -99,10 +99,10 @@ int main(int argc, char* argv[])
 
     // Parse the first (header) line of input
     numFields = saCSVGetLine(inbuf, fieldList);
-    numSemanticTerms = contextPtr->numSemanticTerms;
+    numConcepts = contextPtr->numConcepts;
 
     // Write out the header fields separated by ","
-    fprintf(stdout, "\"%s\",SemanticTerm,CIX\n", fieldName);
+    fprintf(stdout, "\"%s\",Concept,CIX\n", fieldName);
 
     // find the column we wish to lookup in the context
     int fieldIndex = 0;
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
     }
 
     // Initialize the results array and read all of the input 
-    double results[contextPtr->numSemanticTerms];
+    double results[contextPtr->numConcepts];
     bool done = false;
     while(!done)
     {
@@ -141,12 +141,12 @@ int main(int argc, char* argv[])
 
             int i;
             // Write out the context results
-            for(i=0; i<numSemanticTerms; i++)
+            for(i=0; i<numConcepts; i++)
             {
                 if (found)
-                    fprintf(stdout, "\"%s\",\"%s\",%.10f\n", fieldList[fieldIndex], contextPtr->semanticTerms[i]->name, results[i]);
+                    fprintf(stdout, "\"%s\",\"%s\",%.10f\n", fieldList[fieldIndex], contextPtr->concepts[i]->name, results[i]);
                 else
-                    fprintf(stdout, "\"%s\",\"%s\",0.00\n", fieldList[fieldIndex], contextPtr->semanticTerms[i]->name);
+                    fprintf(stdout, "\"%s\",\"%s\",0.00\n", fieldList[fieldIndex], contextPtr->concepts[i]->name);
             }
         }
         else

@@ -1,8 +1,25 @@
 Scianta Analytics Extreme Search for Splunk
 
-Version:        4.0.0h
+Version:        4.1.1
 
 Release Notes: 
+
+4.1.1: 
+    Updated xslicense to support key reactivation
+
+4.1: 
+    Installed NVd3 Charts
+
+4.0.1:
+    Renamed semantic term to Concept
+    Added macros for discover_trend and find_best_semantic_term
+    Added Discover Trend dashboard
+    Added xsFindBestSemanticTerm command
+    Added Find Semantic Term dashboard
+    Added Find Semantic Term via Search dashboard
+    Added "Unit of Measure" (UOM) to contexts
+
+4.0:
     New usage of D3 charts in certain dashboards
     Modified xsWhere "IN" clause to automatically build context name by appending the field name to the value of "IN" field
     Modified xsDisplaySemanticTerm to show hedges entered by user instead of base hedges

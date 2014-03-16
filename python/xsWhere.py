@@ -1,5 +1,5 @@
 #
-# (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+# (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
 # Reproduction or unauthorized use is prohibited. Unauthorized
 # use is illegal. Violators will be prosecuted. This software 
 # contains proprietary trade and business secrets.            
@@ -38,7 +38,7 @@ if __name__ == '__main__':
                 else:
                     where=where+' '+arg
         else:
-            raise Exception("xsWhere-F-001: Usage: xsWhere [alfacut=value] field [IN context] is [modifier, ...] semanticTerm [and, or]"); 
+            raise Exception("xsWhere-F-001: Usage: xsWhere [alfacut=value] field [IN context] is [modifier, ...] concept [and, or]"); 
 
         if where == ' ':
             raise Exception("xsWhere-F-003: No query")

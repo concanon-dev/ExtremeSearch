@@ -7,7 +7,7 @@
 #ifndef __SACONTEXT
 #define	__SACONTEXT
 
-#include "saSemanticTerm.h"
+#include "saConcept.h"
 
 #define SA_CONTEXT_DEFAULT_ALFACUT 0.2
 #define SA_CONTEXT_FORMAT "v2.0"
@@ -30,8 +30,8 @@ typedef struct saContextStruct
     double sdev;
     char *type;
     char *uom;
-    int numSemanticTerms;
-    saSemanticTermTypePtr semanticTerms[SA_CONTEXT_MAXTERMS];
+    int numConcepts;
+    saConceptTypePtr concepts[SA_CONTEXT_MAXTERMS];
 } saContextType;
 
 typedef saContextType *saContextTypePtr;

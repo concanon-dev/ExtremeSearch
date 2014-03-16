@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "OLDsaSemanticTerm.h"
+#include "OLDsaConcept.h"
 #include "OLDsaContext.h"
 #include "saContext.h"
 
@@ -35,13 +35,13 @@ int main(int argc, char *argv[])
     p->notes = oldP->notes;
     p->sdev = oldP->sdev;
     p->type = oldP->type;
-    p->numSemanticTerms = oldP->numSemanticTerms;
+    p->numConcepts = oldP->numConcepts;
     int i;
-    for(i=0; i<oldP->numSemanticTerms; i++)
+    for(i=0; i<oldP->numConcepts; i++)
     {
-        OLDsaSemanticTermTypePtr oldPP = oldP->semanticTerms[i];
-        saSemanticTermTypePtr newP = malloc(sizeof(saSemanticTermType));
-        p->semanticTerms[i] = newP;
+        OLDsaConceptTypePtr oldPP = oldP->concepts[i];
+        saConceptTypePtr newP = malloc(sizeof(saConceptType));
+        p->concepts[i] = newP;
         newP->name = malloc(strlen(oldPP->name)+1);
         strcpy(newP->name, oldPP->name);
         newP->shape = malloc(256);

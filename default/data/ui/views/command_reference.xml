@@ -150,10 +150,10 @@
           class="tableodd">
           <td>
             <a
-              href="xsCloneSemanticTerm">xsCloneSemanticTerm</a>
+              href="xsCloneConcept">xsCloneConcept</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Copies a Semantic Term from one Context to another.</td>
+          <td>Copies a Concept from one Context to another.</td>
         </tr>
         <tr
           class="tableeven">
@@ -162,7 +162,7 @@
               href="xsCreateContext">xsCreateContext</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Creates a context, which contains semantic terms based on a variety of methods of
+          <td>Creates a context, which contains concepts based on a variety of methods of
             mapping qualitative semantics to the data. Note: This is a Splunk 'streaming'
             command.</td>
         </tr>
@@ -173,7 +173,7 @@
               href="xsCreateUDContext">xsCreateUDContext</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Creates a context, which contains semantic terms based on a variety of methods of
+          <td>Creates a context, which contains concepts based on a variety of methods of
             mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
         </tr>
         <tr
@@ -189,10 +189,10 @@
           class="tableodd">
           <td>
             <a
-              href="xsDeleteSemanticTerm">xsDeleteSemanticTerm</a>
+              href="xsDeleteConcept">xsDeleteConcept</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Deletes a Semantic Term from a Context.</td>
+          <td>Deletes a Concept from a Context.</td>
         </tr>
         <tr
           class="tableeven">
@@ -202,7 +202,7 @@
           </td>
           <td>Predictive Analytics</td>
           <td>Takes the lowest and highest x value, applies linear regression to these values, and
-            maps the results to the semantic term represented by the Y field.</td>
+            maps the results to the concept represented by the Y field.</td>
         </tr>
         <tr
           class="tableodd">
@@ -211,16 +211,16 @@
               href="xsDisplayContext">xsDisplayContext</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Displays all of the semantic terms in a context.</td>
+          <td>Displays all of the concepts in a context.</td>
         </tr>
         <tr
           class="tableeven">
           <td>
             <a
-              href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a>
+              href="xsDisplayConcept">xsDisplayConcept</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Displays one or more semantic terms (with hedges).</td>
+          <td>Displays one or more concepts (with hedges).</td>
         </tr>
         <tr
           class="tableodd">
@@ -235,10 +235,10 @@
           class="tableeven">
           <td>
             <a
-              href="xsFindBestSemanticTerm">xsFindBestSemanticTerm</a>
+              href="xsFindBestConcept">xsFindBestConcept</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Returns the name of the semantic term that best fits (highest compatability) the field,
+          <td>Returns the name of the concept that best fits (highest compatability) the field,
               as well as the associated compatibility index (CIX).
           </td>
         </tr>
@@ -249,8 +249,8 @@
               href="xsFindMemebership">xsFindMemebership</a>
           </td>
           <td>Conceptual Search</td>
-          <td>Returns the membership value of a data value in a specified semantic term, or returns
-            the data value given a membership value in a specified semantic term.</td>
+          <td>Returns the membership value of a data value in each concept in a specified context, or returns
+            the data value given a membership value in a specified context.</td>
         </tr>
         <tr
           class="tableeven">
@@ -292,10 +292,10 @@
           class="tableeven">
           <td>
             <a
-              href="xsListSemanticTerms">xsListSemanticTerms</a>
+              href="xsListConcepts">xsListConcepts</a>
           </td>
           <td>Conceptual Search</td>
-          <td>List the semantic terms from a context in private, app or global.</td>
+          <td>List the concepts from a context in private, app or global.</td>
         </tr>
        <tr
           class="tableodd">

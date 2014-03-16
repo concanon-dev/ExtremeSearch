@@ -1,5 +1,14 @@
+#!/bin/bash
+
+if [ "$1" = "" ]; then
+    echo "Enter license type (wyday or expiretime) as first argument"
+    exit 1
+fi
+
+LICENSETYPE="$1"
+
 if [ "$OSTYPE" = "cygwin" ]; then 
-  if [ "$1" = "x86" ]; then
+  if [ "$2" = "x86" ]; then
     GCC='i686-w64-mingw32-gcc.exe -D _UNICODE'
     Platform='Win/x86'
   else
@@ -31,7 +40,7 @@ $GCC -c saHash.c                         -o obj/$Platform/saHash.o
 $GCC -c saHedge.c                        -o obj/$Platform/saHedge.o
 $GCC -c saInsertUniqueValue.c            -o obj/$Platform/saInsertUniqueValue.o
 $GCC -c saLicenseMain.c                  -o obj/$Platform/saLicenseMain.o
-$GCC -c saLicensing.c                    -o obj/$Platform/saLicensing.o
+$GCC -c saLicensing.${LICENSETYPE}.c     -o obj/$Platform/saLicensing.o
 $GCC -c saLinearCorrelation.c            -o obj/$Platform/saLinearCorrelation.o
 $GCC -c saLinearRegression.c             -o obj/$Platform/saLinearRegression.o
 $GCC -c saListDir.c                      -o obj/$Platform/saListDir.o
@@ -40,7 +49,7 @@ $GCC -c saOpenFile.c                     -o obj/$Platform/saOpenFile.o
 $GCC -c saParser.c                       -o obj/$Platform/saParser.o
 $GCC -c saQuadRegression.c               -o obj/$Platform/saQuadRegression.o
 $GCC -c saSignal.c                       -o obj/$Platform/saSignal.o
-$GCC -c saSemanticTerm.c                 -o obj/$Platform/saSemanticTerm.o
+$GCC -c saConcept.c                 -o obj/$Platform/saConcept.o
 $GCC -c saSplunk.c                       -o obj/$Platform/saSplunk.o
 $GCC -c saSpearmanCorrelation.c          -o obj/$Platform/saSpearmanCorrelation.o
 $GCC -c saStatistics.c                   -o obj/$Platform/saStatistics.o
@@ -58,23 +67,23 @@ $GCC -c xsApplyLinearRegressionFromFile.c -o obj/$Platform/xsApplyLinearRegressi
 $GCC -c xsApplyQuadRegression.c          -o obj/$Platform/xsApplyQuadRegression.o
 $GCC -c xsApplyQuadRegressionFromFile.c  -o obj/$Platform/xsApplyQuadRegressionFromFile.o
 $GCC -c xsCloneContext.c                 -o obj/$Platform/xsCloneContext.o
-$GCC -c xsCloneSemanticTerm.c            -o obj/$Platform/xsCloneSemanticTerm.o
+$GCC -c xsCloneConcept.c            -o obj/$Platform/xsCloneConcept.o
 $GCC -c xsconvert.c                      -o obj/$Platform/xsconvert.o
 $GCC -c xsCreateContext.c                -o obj/$Platform/xsCreateContext.o
-$GCC -c xsCreateSemanticTerm.c           -o obj/$Platform/xsCreateSemanticTerm.o
+$GCC -c xsCreateConcept.c           -o obj/$Platform/xsCreateConcept.o
 $GCC -c xsDeleteContext.c                -o obj/$Platform/xsDeleteContext.o
-$GCC -c xsDeleteSemanticTerm.c           -o obj/$Platform/xsDeleteSemanticTerm.o
+$GCC -c xsDeleteConcept.c           -o obj/$Platform/xsDeleteConcept.o
 $GCC -c xsDiscoverTrend.c                -o obj/$Platform/xsDiscoverTrend.o
 $GCC -c xsDisplayContext.c               -o obj/$Platform/xsDisplayContext.o
-$GCC -c xsDisplaySemanticTerm.c          -o obj/$Platform/xsDisplaySemanticTerm.o
+$GCC -c xsDisplayConcept.c          -o obj/$Platform/xsDisplayConcept.o
 $GCC -c xsDisplayWhere.c                 -o obj/$Platform/xsDisplayWhere.o
-$GCC -c xsFindBestSemanticTerm.c         -o obj/$Platform/xsFindBestSemanticTerm.o
+$GCC -c xsFindBestConcept.c         -o obj/$Platform/xsFindBestConcept.o
 $GCC -c xsFindMembership.c               -o obj/$Platform/xsFindMembership.o
 $GCC -c xsGetCompatibility.c             -o obj/$Platform/xsGetCompatibility.o
 $GCC -c xsGetDistance.c                  -o obj/$Platform/xsGetDistance.o
 $GCC -c xsLicense.c                      -o obj/$Platform/xsLicense.o
 $GCC -c xsListContexts.c                 -o obj/$Platform/xsListContexts.o
-$GCC -c xsListSemanticTerms.c            -o obj/$Platform/xsListSemanticTerms.o
+$GCC -c xsListConcepts.c            -o obj/$Platform/xsListConcepts.o
 $GCC -c xsListUOM.c                      -o obj/$Platform/xsListUOM.o
 $GCC -c xsOverlayContext.c               -o obj/$Platform/xsOverlayContext.o
 $GCC -c xsPerformAutoRegression.c        -o obj/$Platform/xsPerformAutoRegression.o
@@ -92,6 +101,20 @@ $GCC -c xsprequadregress.c               -o obj/$Platform/xsprequadregress.o
 $GCC -c xspreregress.c                   -o obj/$Platform/xspreregress.o
 $GCC -c xsprespearmancorrelate.c         -o obj/$Platform/xsprespearmancorrelate.o
 $GCC -c xsrepredict.c                    -o obj/$Platform/xsrepredict.o
+
+#
+# Datagen
+#
+$GCC -c saDice.c                      -o obj/$Platform/saDice.o
+$GCC -c saDoubleField.c               -o obj/$Platform/saDoubleField.o
+$GCC -c saFloatField.c                -o obj/$Platform/saFloatField.o
+$GCC -c saField.c                     -o obj/$Platform/saField.o
+$GCC -c saIntField.c                  -o obj/$Platform/saIntField.o
+$GCC -c saOutput.c                    -o obj/$Platform/saOutput.o
+$GCC -c saProperties.c                -o obj/$Platform/saProperties.o
+$GCC -c saStringField.c               -o obj/$Platform/saStringField.o
+$GCC -c saTimeField.c                 -o obj/$Platform/saTimeField.o
+$GCC -c xsGenerateData.c              -o obj/$Platform/xsGenerateData.o
 
 if [ "$OSTYPE" = "cygwin" ]; then 
 $GCC -c strsep.c                         -o obj/$Platform/strsep.o

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "OLDsaSemanticTerm.h"
+#include "OLDsaConcept.h"
 #include "OLDsaContext.h"
 
 #define MAXBUFSIZE (1024 * 32)
@@ -57,7 +57,7 @@ OLDsaContextPtr saFuzzyLoadContext(FILE *infile)
             }
             else if (!strcmp(attribute, "numsemanticterms"))
             {
-                termSetPtr->numSemanticTerms = atoi(value);
+                termSetPtr->numConcepts = atoi(value);
             }
             else if (!strcmp(attribute, "sdev"))
             {
@@ -82,17 +82,17 @@ OLDsaContextPtr saFuzzyLoadContext(FILE *infile)
         }
     }
     free(line);
-    int numSemanticTerms = 0;
+    int numConcepts = 0;
     done = false;
-    while(numSemanticTerms<termSetPtr->numSemanticTerms && !done)
+    while(numConcepts<termSetPtr->numConcepts && !done)
     {
         line = OLDgetLine(infile);
         if (line != NULL)
         {
             cursor = line;
             cursor = OLDeatTimestamp(&cursor);
-            OLDsaSemanticTermTypePtr f = malloc(sizeof(OLDsaSemanticTermType));
-            memset(f, 0, sizeof(OLDsaSemanticTermType));
+            OLDsaConceptTypePtr f = malloc(sizeof(OLDsaConceptType));
+            memset(f, 0, sizeof(OLDsaConceptType));
             char *termSetName;
             while(*cursor != '\0')
             {
@@ -129,7 +129,7 @@ OLDsaContextPtr saFuzzyLoadContext(FILE *infile)
                     f->vector[idx] = atof(OLDgetValue(&tuple));
                 }
             }
-            termSetPtr->semanticTerms[numSemanticTerms++] = f;
+            termSetPtr->concepts[numConcepts++] = f;
             free(line);
         }
         else

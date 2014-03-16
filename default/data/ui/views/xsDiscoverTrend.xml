@@ -59,11 +59,11 @@
                                         of the y_field is a prerequisite for the command to run.
                                         Trend is calculated as follows: Take the lowest X value and
                                         calculate the Y value, take the the highest X value and
-                                        calcuate the Y value. For each semantic term in the Y
+                                        calcuate the Y value. For each concept in the Y
                                         Context, calculate the CIX for the low and high Y. The trend
-                                        for each semantic term is (hi_Y_CIX - low_Y_CIX) / numRows.
-                                        For each semantic term, the following columns are written:
-                                        x,y,bf,bv,semanticTerm,trend.</span>
+                                        for each concept is (hi_Y_CIX - low_Y_CIX) / numRows.
+                                        For each concept, the following columns are written:
+                                        x,y,bf,bv,concept,trend.</span>
                         </p>
                         <p>
                                 <span
@@ -151,7 +151,7 @@
                                         class="head4">Result: </span>
                                 <span
                                         class="bodytext">The trend (direction) of the discovery for
-                                        each semantic term in the context associated with the
+                                        each concept in the context associated with the
                                         y_field. See <a
                                                 href="xsDisplayContext">xsDisplayContext</a> for
                                         details about display of the context. </span>

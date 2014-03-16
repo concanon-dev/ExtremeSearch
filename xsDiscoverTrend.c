@@ -45,7 +45,7 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern double saSemanticTermLookup(saSemanticTermTypePtr, double);
+extern double saConceptLookup(saConceptTypePtr, double);
 extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -273,7 +273,7 @@ int main(int argc, char* argv[])
         }
     }
     // write out the field headers
-    fprintf(stdout, "x,y,bf,bv,semanticTerm,trend\n");
+    fprintf(stdout, "x,y,bf,bv,concept,trend\n");
  
     // Determine the weighted avg of R
     for(i=0; i<=maxIndex; i++)
@@ -303,16 +303,16 @@ int main(int argc, char* argv[])
             exit(0);
         }
         int j;
-        for(j=0; j<contextPtr->numSemanticTerms; j++)
+        for(j=0; j<contextPtr->numConcepts; j++)
         {
-            double lCix = saSemanticTermLookup(contextPtr->semanticTerms[j], lY);
-            double hCix = saSemanticTermLookup(contextPtr->semanticTerms[j], hY);
+            double lCix = saConceptLookup(contextPtr->concepts[j], lY);
+            double hCix = saConceptLookup(contextPtr->concepts[j], hY);
             //
             // Modified trend to give a much less diluted value
             // double trend = (hCix-lCix)/(float)numRows[i];
             double trend = (hCix-lCix);
             fprintf(stdout, "%s,%s,%s,%s,%s,%.10f\n", X[i], Y[i], byF[i], byV[i], 
-                    contextPtr->semanticTerms[j]->name, trend);
+                    contextPtr->concepts[j]->name, trend);
         }
     }
 }

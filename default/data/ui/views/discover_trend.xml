@@ -1,0 +1,43 @@
+<form script="single_trend.js" stylesheet="single_trend.css">
+  <label>Discover Trend</label>
+  <fieldset>
+    <input type="text" token="presearch">
+       <default></default>
+       <label>Search: </label>
+    </input>
+    <input type="text" token="fieldY">
+       <default></default>
+       <label>Trend Field: </label>
+    </input>
+    <input type="text" token="fieldX">
+       <default>_time</default>
+       <label>OVER Field: </label>
+    </input>
+    <input type="text" token="byFields">
+       <default></default>
+       <label>BY Field(s): </label>
+    </input>
+    <input type="radio" token="scope">
+       <label>Select Context Scope</label>
+       <default>Private</default>
+       <choice value="private">Private</choice>
+       <choice value="app">App</choice>
+       <choice value="global">Global</choice>
+    </input>
+    <input type="dropdown" token="context" searchWhenChanged="true">
+       <label>USING Context</label>
+       <populatingSearch fieldForValue="context" fieldForLabel="context">
+                | xsListContexts $scope$
+       </populatingSearch>
+    </input>
+  </fieldset>
+  <row>
+    <table>
+      <searchString>
+       $presearch$ 
+       | `discover_trend($fieldY$, $fieldX$, $byFields$)`
+       | table results
+      </searchString>
+    </table>
+</row>
+</form>

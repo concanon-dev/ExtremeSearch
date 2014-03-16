@@ -40,13 +40,13 @@ int main(int argc, char* argv[])
     bool setSDev = false;
 
     char endShapeStr[256];
-    char *semanticTermNames[SA_CONTEXT_MAXTERMS];
+    char *conceptNames[SA_CONTEXT_MAXTERMS];
     char contextType[256];
     char infoFile[256];
     char name[256];
     char notes[1024];
     char shapeStr[256];
-    char *termsList = NULL;
+    char *conceptsList = NULL;
     char uom[256];
     double avg = 0.0;
     double max = 0.0;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     int c;
     int count;
     int fileScope = SA_SPLUNK_SCOPE_GLOBAL;
-    int numSemanticTerms = 0;
+    int numConcepts = 0;
 
     if (!isLicensed())
         exit(EXIT_FAILURE);
@@ -64,8 +64,8 @@ int main(int argc, char* argv[])
     initSignalHandler(basename(argv[0]));
     argError = false;
     strcpy(contextType, SA_CONTEXT_TYPE_DOMAIN);
-    strcpy(endShapeStr, SA_SEMANTICTERM_SHAPE_CURVE);
-    strcpy(shapeStr, SA_SEMANTICTERM_SHAPE_PI); 
+    strcpy(endShapeStr, SA_CONCEPT_SHAPE_CURVE);
+    strcpy(shapeStr, SA_CONCEPT_SHAPE_PI); 
     infoFile[0] = '\0';
     uom[0] = '\0';
     while ((c = getopt(argc, argv, "a:c:d:e:f:i:m:n:o:p:t:u:w:x:z:")) != -1) 
@@ -107,8 +107,8 @@ int main(int argc, char* argv[])
                 strcpy(shapeStr, optarg);
                 break;
             case 't':
-                termsList = malloc(strlen(optarg)+1);
-                strcpy(termsList, optarg);
+                conceptsList = malloc(strlen(optarg)+1);
+                strcpy(conceptsList, optarg);
                 break;
             case 'u':
                 strcpy(uom, optarg);
@@ -142,20 +142,27 @@ int main(int argc, char* argv[])
         sdev = stdDev(min, max);
 
     // 
-    if (termsList == NULL)
+    if (conceptsList == NULL)
     {
-        fprintf(stderr, "xsCreateContext-F-117: no semantic terms specified\n");
+        fprintf(stderr, "xsCreateContext-F-117: no concepts specified\n");
         exit(0);
     }
 
-    if (*termsList == '"')
-        termsList++;
-    if (termsList[strlen(termsList)-1] == '"')
-        termsList[strlen(termsList)-1] = '\0';
-    char *s = strtok(termsList, ",");
+    if (*conceptsList == '"')
+        conceptsList++;
+    if (conceptsList[strlen(conceptsList)-1] == '"')
+        conceptsList[strlen(conceptsList)-1] = '\0';
+    char *s = strtok(conceptsList, ",");
     while(s != NULL)
     {
-          semanticTermNames[numSemanticTerms++] = s;
+          while(*s == ' ' && *s != '\0')
+                s++;
+          if (*s == '\0')
+          {
+              fprintf(stderr, "xsCreateContext-F-119: concept can't be blank\n");
+              exit(0);
+          }
+          conceptNames[numConcepts++] = s;
           s = strtok(NULL, ",");
     }
 
@@ -163,10 +170,10 @@ int main(int argc, char* argv[])
 
     // Go out and create the context based on type
     if (!strcmp(contextType, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
-        cPtr = saContextCreateAvgCentered(name, avg, sdev, semanticTermNames, numSemanticTerms,
+        cPtr = saContextCreateAvgCentered(name, avg, sdev, conceptNames, numConcepts,
                                           shapeStr, endShapeStr, count, notes, uom);
     else if (!strcmp(contextType, SA_CONTEXT_TYPE_DOMAIN))
-        cPtr = saContextCreateDomain(name, min, max, semanticTermNames, numSemanticTerms, shapeStr,
+        cPtr = saContextCreateDomain(name, min, max, conceptNames, numConcepts, shapeStr,
                                      endShapeStr, count, notes, uom);
     if (cPtr == NULL)
     {

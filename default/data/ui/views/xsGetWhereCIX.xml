@@ -61,7 +61,7 @@
                                         avg function sums the membership values of eah query and
                                         divides by the count. The weighted function is similar to a
                                         weighted average. The xcix is calculated by putting a higher
-                                        value on memberhip in semantic terms that are closer to the
+                                        value on memberhip in concepts that are closer to the
                                         beginning of the query, and then divides by the weighted
                                         count. Since the xcix is added to each event, other commands
                                         can then be applied to generate more intelligent
@@ -177,7 +177,7 @@
                                 <span
                                         class="explanation">The compatibility query. The query is
                                         structured as follows: field [IN contextField] IS [hedge]*
-                                        semantic_term. The field must be one of the fields in the 
+                                        concept. The field must be one of the fields in the 
                                         event. The contextField is optional. If contextField is 
                                         specified, it is evaluated as follows: First, determine if 
                                         this is the name of a field. If so, then use the contents 

@@ -22,8 +22,14 @@ char *getValue(char **);
 char *trim(char *);
 time_t getTimestamp(char *);
 
+extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char *[], int, char *,
+                                                   char *, int, char *, char *);
+extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
+                                              char *, int, char *, char *);
+
 saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, 
-                               double sdev, int count, int numTerms, char *type, char *notes, char *uom)
+                               double sdev, int count, int numConcepts, char *type, 
+                               char *notes, char *uom)
 {
     saContextTypePtr p = (saContextTypePtr)malloc(sizeof(saContextType));
     if (p == NULL)
@@ -35,7 +41,7 @@ saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, d
     p->avg = avg;
     p->sdev = sdev;
     p->count = count;
-    p->numSemanticTerms = numTerms;
+    p->numConcepts = numConcepts;
     p->type = malloc(strlen(type)+1);
     strcpy(p->type, type);
     p->notes = malloc(strlen(notes)+1);
@@ -43,7 +49,7 @@ saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, d
     p->uom = uom; 
     int i;
     for(i=0; i<SA_CONTEXT_MAXTERMS; i++)
-        p->semanticTerms[i] = NULL;
+        p->concepts[i] = NULL;
     return(p);
 }
 
@@ -90,9 +96,9 @@ saContextTypePtr saContextLoad(FILE *infile)
             {
                 contextPtr->domainMin = (double)atof(value);
             }
-            else if (!strcmp(attribute, "numSemanticTerms"))
+            else if (!strcmp(attribute, "numConcepts") || !strcmp(attribute, "numSemanticTerms"))
             {
-                contextPtr->numSemanticTerms = atoi(value);
+                contextPtr->numConcepts = atoi(value);
             }
             else if (!strcmp(attribute, "sdev"))
             {
@@ -126,17 +132,17 @@ saContextTypePtr saContextLoad(FILE *infile)
         }
     }
     free(line);
-    int numSemanticTerms = 0;
+    int numConcepts = 0;
     done = false;
-    while(numSemanticTerms < contextPtr->numSemanticTerms && !done)
+    while(numConcepts < contextPtr->numConcepts && !done)
     {
         line = getLine(infile);
         if (line != NULL)
         {
             cursor = line;
             cursor = eatTimestamp(&cursor);
-            saSemanticTermTypePtr p = malloc(sizeof(saSemanticTermType));
-            memset(p, 0, sizeof(saSemanticTermType));
+            saConceptTypePtr p = malloc(sizeof(saConceptType));
+            memset(p, 0, sizeof(saConceptType));
             char *termSetName;
             while(*cursor != '\0')
             {
@@ -180,7 +186,7 @@ saContextTypePtr saContextLoad(FILE *infile)
                     p->vector[idx] = atof(getValue(&tuple));
                 }
             }
-            contextPtr->semanticTerms[numSemanticTerms++] = p;
+            contextPtr->concepts[numConcepts++] = p;
             free(line);
         }
         else
@@ -188,6 +194,60 @@ saContextTypePtr saContextLoad(FILE *infile)
     }
     return(contextPtr);
 }
+
+saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *c3Name)
+{
+    int i;
+
+    // confirm that the types of contexts are the same
+    if (strcmp(c1->type, c2->type))
+        return(NULL);
+
+    // To merge two contexts, the concepts must match exactly (number and name)
+    if (c1->numConcepts != c2->numConcepts)
+        return(NULL);
+
+    // make sure the concept names are the same
+    for(i=0; i<c1->numConcepts; i++)
+        if (strcmp(c1->concepts[i]->name, c2->concepts[i]->name))
+            return(NULL);
+
+    // get the weights
+    int c1Count = c1->count != 0 ? c1->count : 1;
+    int c2Count = c2->count != 0 ? c2->count : 1;
+    double c1Weight = c1Count/(c1Count + c2Count);
+    double c2Weight = c2Count/(c1Count + c2Count);
+
+    // adjust the fields by weight
+    double domainMin = c1->domainMin * c1Weight + c2->domainMin * c2Weight;
+    double domainMax = c1->domainMax * c1Weight + c2->domainMax * c2Weight;
+    double avg = c1->avg * c1Weight + c2->avg * c2Weight;
+    double sdev = c1->sdev * c1Weight + c2->sdev * c2Weight;
+
+    // get the names
+    char *conceptNames[SA_CONTEXT_MAXTERMS];
+    for(i=0; i<c1->numConcepts; i++)
+        conceptNames[i] = c1->concepts[i]->name;
+
+    // figure out the right shape(s) to use
+    char *endShapeStr = c1->concepts[0]->shape;
+    char *shapeStr = c1->concepts[0]->shape;
+    if (c1->numConcepts > 2)
+        shapeStr = c1->concepts[1]->shape;
+
+    // Go out and create the context based on type
+    if (!strcmp(c1->type, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
+        return(saContextCreateAvgCentered(c3Name, avg, sdev, conceptNames, c1->numConcepts,
+                                          shapeStr, endShapeStr, c1->count + c2->count,
+                                          c1->notes, c1->uom));
+    else if (!strcmp(c1->type, SA_CONTEXT_TYPE_DOMAIN))
+        return(saContextCreateDomain(c3Name, domainMin, domainMax, conceptNames, 
+                                     c1->numConcepts, shapeStr, endShapeStr, 
+                                     c1->count + c2->count, c1->notes, c1->uom));
+    return(NULL);
+}
+
+
 
 char *eatTimestamp(char **cursor)
 {
@@ -265,7 +325,7 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
 {
     char timeStr[MAXBUFLEN+1];
     time_t ct = getTimestamp(timeStr);
-    if (contextPtr->numSemanticTerms == 0)
+    if (contextPtr->numConcepts == 0)
         return(false);
 
     fprintf(outfile, "%s %s format=%s record=header version=%d context=%s", timeStr, 
@@ -276,15 +336,15 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
     fprintf(outfile, " avg=%.10f", contextPtr->avg);
     fprintf(outfile, " sdev=%.10f", contextPtr->sdev);
     fprintf(outfile, " type=%s", contextPtr->type);
-    fprintf(outfile, " numSemanticTerms=%d", contextPtr->numSemanticTerms);
+    fprintf(outfile, " numConcepts=%d", contextPtr->numConcepts);
     fprintf(outfile, " notes=\"%s\"", contextPtr->notes);
     fprintf(outfile, " uom=\"%s\"", contextPtr->uom);
     fprintf(outfile, "\n");
 
     int i, j;
-    for(i=0; i< contextPtr->numSemanticTerms; i++)
+    for(i=0; i< contextPtr->numConcepts; i++)
     {
-        saSemanticTermTypePtr p = contextPtr->semanticTerms[i];
+        saConceptTypePtr p = contextPtr->concepts[i];
         fprintf(outfile, "%s %s format=%s record=set version=%d context=%s", timeStr, 
                 SA_CONTEXT_TIMESTAMP_SEPARATOR, SA_CONTEXT_FORMAT, (int)ct, contextPtr->name);
         fprintf(outfile, " name=%s", p->name);
@@ -299,7 +359,7 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
 	      fprintf(outfile, " point%d=%.10f", j, p->points[j]);
               j++;
         }
-        for(j=0; j<SA_SEMANTICTERM_VECTORSIZE; j++)
+        for(j=0; j<SA_CONCEPT_VECTORSIZE; j++)
             fprintf(outfile, " truth%d=%1.10f:%.10f", j, p->indexVector[j], p->vector[j]);
         
         fprintf(outfile, "\n");
@@ -334,15 +394,15 @@ void saContextDisplayWithHeader(saContextTypePtr contextPtr, char *name)
     int i, j;
 
     fputs(name, stdout);
-    for(i=0; i<contextPtr->numSemanticTerms; i++)
-        fprintf(stdout, ",%s", contextPtr->semanticTerms[i]->name);
+    for(i=0; i<contextPtr->numConcepts; i++)
+        fprintf(stdout, ",%s", contextPtr->concepts[i]->name);
     fputs("\n", stdout);
 
-    for(i=0; i<SA_SEMANTICTERM_VECTORSIZE; i++)
+    for(i=0; i<SA_CONCEPT_VECTORSIZE; i++)
     {
-        fprintf(stdout, "%1.5f", contextPtr->semanticTerms[0]->indexVector[i]);
-        for(j=0; j<contextPtr->numSemanticTerms; j++)
-            fprintf(stdout, ",%1.10f", contextPtr->semanticTerms[j]->vector[i]);
+        fprintf(stdout, "%1.5f", contextPtr->concepts[0]->indexVector[i]);
+        for(j=0; j<contextPtr->numConcepts; j++)
+            fprintf(stdout, ",%1.10f", contextPtr->concepts[j]->vector[i]);
         fputs("\n", stdout);
     }
     return;
@@ -357,15 +417,15 @@ void saContextDisplay(saContextTypePtr contextPtr)
 void saContextLookup(saContextTypePtr contextPtr, double value, double *results)
 {
     double bucket_size = (contextPtr->domainMax - contextPtr->domainMin) 
-                          / (float) SA_SEMANTICTERM_VECTORSIZE;
+                          / (float) SA_CONCEPT_VECTORSIZE;
     int vector_index = (int)round((value - contextPtr->domainMin) / bucket_size);
-    if (vector_index > (SA_SEMANTICTERM_VECTORSIZE - 1))
-        vector_index = SA_SEMANTICTERM_VECTORSIZE - 1;
+    if (vector_index > (SA_CONCEPT_VECTORSIZE - 1))
+        vector_index = SA_CONCEPT_VECTORSIZE - 1;
     else if (vector_index < 0)
         vector_index = 0;
 
     int k;
-    for(k=0; k<contextPtr->numSemanticTerms; k++)
-        results[k] = contextPtr->semanticTerms[k]->vector[vector_index];
+    for(k=0; k<contextPtr->numConcepts; k++)
+        results[k] = contextPtr->concepts[k]->vector[vector_index];
 }
 

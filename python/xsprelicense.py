@@ -1,5 +1,5 @@
 #
-# (c) 2012-2013 Scianta Analytics LLC   All Rights Reserved.  
+# (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
 # Reproduction or unauthorized use is prohibited. Unauthorized
 # use is illegal. Violators will be prosecuted. This software 
 # contains proprietary trade and business secrets.            
@@ -11,19 +11,24 @@ if __name__ == '__main__':
 
     try:
         key=''
-
+        reactivate=''
         if len(sys.argv) >1:
             for arg in sys.argv[1:]:
                 if arg.lower().startswith("key="):
                     eqsign = arg.find('=')
                     key = arg[eqsign+1:len(arg)]
+                if arg.lower().startswith("reactivate="):
+                    eqsign = arg.find('=')
+                    reactivate = arg[eqsign+1:len(arg)]
 
         binary = platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
 
-        if key == '':
-            subprocess.call([binary])
-        else:
+        if key != '' and reactivate != '':
+            subprocess.call([binary, '-r', key])
+        elif key != '' and reactivate == '':
             subprocess.call([binary, '-s', key])
+        else:
+            subprocess.call([binary])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

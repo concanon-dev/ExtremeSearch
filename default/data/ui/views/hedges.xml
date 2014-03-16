@@ -40,13 +40,13 @@
         <span
           class="head2">Embracing Nuance: Hedges</span>
       </p>
-      <p><strong>Semantic terms</strong> and <strong>contexts</strong> are the basis of Conceptual
+      <p><strong>Concepts</strong> and <strong>contexts</strong> are the basis of Conceptual
         Search but they don't, on their own, support a very nuanced view of the world. A true
         Cognitive Computing system, a system designed to "think" like we do, needs to understand
         nuance.</p>
       <p>Scianta Extreme Search for Splunk employs the notion of "hedges" to capture nuanced
-        variation to semantic terms. Hedges are linguistic modifiers, adjectives, that modify the
-        meaning of a semantic term. Currently, Extreme Search for Splunk supports the following
+        variation to concepts. Hedges are linguistic modifiers, adjectives, that modify the
+        meaning of a concept. Currently, Extreme Search for Splunk supports the following
         linguistic <strong>hedges</strong>:</p>
       <ul>
         <li>about</li>
@@ -66,7 +66,7 @@
       <p>Hedges allow us to look for people who are "very tall" or network segments where network
         latency is "extremely long" or performance that is "not typical". Just like in natural
         language a <strong>hedge</strong> acts as an adjective to alter the meaning of a
-          <strong>term</strong>. Remember that our semantic terms are characterized mathematically
+          <strong>term</strong>. Remember that our concepts are characterized mathematically
         by a membership function. Hedges act to change the shape of a term's membership function in
         a way that is appropriate to the linguistic meaning of the hedge.</p>
       <p>Figure 1 illustrates a <strong>context</strong> pertaining to a common demonstration data
@@ -85,7 +85,7 @@
           src="/static/app/xtreme/images/arrdelay_800.png" /><br /> Figure 1 </p>
       <p>The <strong>term</strong>
         <em>Ontime</em> is isolated in Figure 2. We'll use <em>Ontime</em> to illustrate the effect
-        of various <strong>hedges</strong> on a target <strong>semantic term</strong>.</p>
+        of various <strong>hedges</strong> on a target <strong>concept</strong>.</p>
       <p
         align="center">
         <img
@@ -139,7 +139,7 @@
         modified by any number of adjectives. For example, you might decide that the latest reality
         TV show is "not very watchable". Both <em>Not</em> and <em>Very</em> are
           <strong>hedges</strong> to the term <em>Watchable</em>. Scianta Extreme Search supports an
-        unlimited number of <strong>hedges</strong> applied to a <strong>semantic term</strong>.</p>
+        unlimited number of <strong>hedges</strong> applied to a <strong>concept</strong>.</p>
       <p
         align="center">
         <img
@@ -208,7 +208,7 @@
       <ul>
         <li>
           <a
-            href="xsCloneSemanticTerm">xsCloneSemanticTerm</a>
+            href="xsCloneConcept">xsCloneConcept</a>
         </li>
         <li>
           <a
@@ -224,7 +224,7 @@
         </li>
         <li>
           <a
-            href="xsDisplaySemanticTerm">xsDisplaySemanticTerm</a>
+            href="xsDisplayConcept">xsDisplayConcept</a>
         </li>
         <li>
           <a

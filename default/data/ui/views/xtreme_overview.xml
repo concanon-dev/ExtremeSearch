@@ -3,28 +3,20 @@
   <label>Overview</label>
   <row>
     <html>
-      <img
-        src="/static/app/xtreme/images/ess_400.png" />
+      <img src="/static/app/xtreme/images/ess_400.png" />
       <p>
-        <a
-          href="command_reference">
-          <img
-            alt="Jump to Command Reference"
+        <a href="command_reference">
+          <img alt="Jump to Command Reference"
             src="/static/app/xtreme/images/commandreference_button.png" />
         </a>
-        <img
-          src="/static/app/xtreme/images/space.png" />
-        <a
-          href="http://www.sciantaanalytics.com/?q=documentation"
+        <img src="/static/app/xtreme/images/space.png" />
+        <a href="http://www.sciantaanalytics.com/?q=documentation"
           target="_blank">
-          <img
-            alt="Support Site"
+          <img alt="Support Site"
             src="/static/app/xtreme/images/doc_button.png" />
         </a>
-        <img
-          src="/static/app/xtreme/images/space.png" />
-        <a
-          href="http://www.sciantaanalytics.com/?q=support_pages"
+        <img src="/static/app/xtreme/images/space.png" />
+        <a href="http://www.sciantaanalytics.com/?q=support_pages"
           target="_blank">
           <img
             alt="Support Site"
@@ -32,8 +24,7 @@
         </a>
       </p>
       <p>
-        <span
-          class="head2">Introduction</span>
+        <span class="head2">Introduction</span>
       </p>
       <p>Extreme Search is unique. Most Splunk apps are designed as separate apps or add-ons,
         working externally to Splunk to deliver solutions in a variety of vertical problem spaces.
@@ -56,8 +47,7 @@
         Splunk environment, you'll want to make sure you install the correct binaries for each
         OS.</p>
       <p>
-        <span
-          class="head4">What is Extreme Search for Splunk Enterprise?</span>
+        <span class="head4">What is Extreme Search for Splunk Enterprise?</span>
       </p>
       <p> Scianta's <strong>Extreme Search Engine</strong> is an integrated collection of powerful
         cognitive-computing-based analytics functions engineered for speed and transportability. The
@@ -72,20 +62,18 @@
         designed to "think" the way you think and to "understand" concept-based queries written in
         natural language.</p>
       <p>
-        <span
-          class="head4">Converse with your data™</span>
+        <span class="head4">Converse with your data™</span>
       </p>
       <p> Splunk is arguably the world's most powerful Big Data engine. <strong>Extreme Search for
           Splunk Enterprise</strong> transforms Splunk into the world's most powerful
         human-centered, cognitive computing platform for Big Data. Extreme Search understands
-        concepts and semantic terms in the same way you understand them. This allows you to converse
+        concepts in the same way you understand them. This allows you to converse
         with your data the same way you converse with your co-workers, using powerful qualitative
         concepts in place of arcane quantitative parameters. </p>
       <p>Why is this important? Because it allows regular users to gain deep insight from their data
         simply by asking questions.</p>
       <p>
-        <span
-          class="head2">Command Categories</span>
+        <span class="head2">Command Categories</span>
       </p>
       <p>Extreme Search commands can be divided into three operational categories:</p>
       <ul>
@@ -110,7 +98,7 @@
       <p>To understand Extreme Search concept based search, it is useful to understand some
         terminology used in the product and its documentation:</p>
       <ul>
-        <li><strong>Concept: </strong>An idea represented by a <strong>semantic term</strong>. In
+        <li><strong>Concept: </strong>An idea represented by a <strong>concept</strong>. In
           Extreme Search, these terms are usually user defined as part of a <strong>Context .
             </strong><em>Tall, Short, Fast and Slow are </em><strong>Terms</strong> used to describe
             <strong>Concepts</strong>.</li>
@@ -120,7 +108,7 @@
           <em>Tall</em> and <em>Short</em>. <em>Speed</em> might be a <strong>Context</strong>
           comprised of the <strong>Terms</strong>
           <em>Fast</em> and <em>Slow</em></li>
-        <li><strong>Semantic Term</strong> or <strong>Term: </strong>A linguistic representation of
+        <li><strong>Concept</strong> or <strong>Term: </strong>A linguistic representation of
           a <strong>Concept</strong>. In the underlying cognitive computing engine that drives
           Extreme Search for Splunk, each <strong>Term</strong> is characterized by a <strong>Fuzzy
             Set</strong>. </li>
@@ -210,20 +198,16 @@
         <span
           class="head5">
           <li>
-            <a
-              href="create_context">Contexts: Create Context</a>
+            <a href="create_context">Contexts: Create Context</a>
           </li>
           <li>
-            <a
-              href="generate_context">Contexts: Generate Context</a>
+            <a href="generate_context">Contexts: Create User-defined Context</a>
           </li>
           <li>
-            <a
-              href="display_context">Contexts: Display Context</a>
+            <a href="display_context">Contexts: Display Context</a>
           </li>
           <li>
-            <a
-              href="generate_semantic_term">Contexts: Generate Semantic Term</a>
+            <a href="create_concept">Contexts: Create Concept</a>
           </li>
         </span>
       </ul>

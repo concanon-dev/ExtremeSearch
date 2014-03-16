@@ -4,7 +4,9 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
+#ifndef _UNICODE
 #include <execinfo.h>
+#endif
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,6 +19,7 @@ static char programName[256];
 
 void dumpStack()
 {
+#ifndef _UNICODE
      void* callstack[128];
      char errFile[512];
      int i, frames = backtrace(callstack, 128);
@@ -25,11 +28,7 @@ void dumpStack()
      pid_t pid = getpid();
      sprintf(errFile, "%s/var/log/xtreme/", splunk_home);
 
-#ifdef _UNICODE
-     mkdir(errFile);
-#else
      mkdir(errFile, 0755);
-#endif
 
      sprintf(errFile, "%s/var/log/xtreme/crash_%d.log", splunk_home, pid);
      FILE *f = fopen(errFile, "w");
@@ -40,6 +39,7 @@ void dumpStack()
      }
      else
          backtrace_symbols_fd(callstack, frames, 2);
+#endif
 }
 
 void sighandler(int signum)
