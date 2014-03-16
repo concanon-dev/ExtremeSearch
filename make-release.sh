@@ -72,13 +72,14 @@ cp -r datagen/* release/xtreme/datagen
 if [ "$2" == "wyday" ]; then
     LTYPE="p"
 fi
-if [ "$2" == "expiretime ]; then
+if [ "$2" == "expiretime" ]; then
     LTYPE="s"
 fi
 
 # copy the right png file for the overall UI
 cp pngfiles/ess_400_${LTYPE}.png release/xtreme/appserver/static/images/ess_400.png
 
+cd release
 if [ "$OSTYPE" = "cygwin" ]; then 
   tar -cvzf ess_win_$1_${LTYPE}.tgz xtreme/*
 elif [[ $OSTYPE == darwin1? ]]; then

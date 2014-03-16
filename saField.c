@@ -15,6 +15,7 @@
 #include "saProperties.h"
 #include "saStringField.h"
 #include "saTimeField.h"
+#include "saUtils.h"
 
 extern saDicePtr saDiceCreate(char *, char *);
 

@@ -91,7 +91,7 @@ void CreateLicenseRequestFile(TCHAR *pFilename)
     hr = ActivationRequestToFile(pFilename);
 }
 
-HRESULT ReactivateLicense(char *tString)
+HRESULT ReactivateLicense(TCHAR *tString)
 {
     HRESULT hr = Deactivate((char)0);
     if (hr != TA_OK)

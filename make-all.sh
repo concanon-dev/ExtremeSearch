@@ -61,7 +61,9 @@ cp LimeLM/TurboActivate.dat bin/$Platform
 ./make-xsDisplayWhere.sh
 ./make-xsFindBestConcept.sh
 ./make-xsFindMembership.sh
+if [ "$OSTYPE" != "cygwin" ]; then
 ./make-xsGenerateData.sh
+fi
 ./make-xsGetCompatibility.sh
 ./make-xsGetDistance.sh
 ./make-xsGetWhereCix.sh

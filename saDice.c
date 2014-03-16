@@ -9,6 +9,7 @@
 #include <string.h>
 #include <time.h>
 #include "saDice.h"
+#include "saUtils.h"
 
 saDicePtr saDiceCreate(char *countAndSides, char *weights)
 {
