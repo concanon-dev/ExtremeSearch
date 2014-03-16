@@ -4,12 +4,16 @@
 # use is illegal. Violators will be prosecuted. This software 
 # contains proprietary trade and business secrets.            
 #
-if [ -z $1 || -z $2 ]; then
-  echo Usage: make-release x_y_z wyday|expiretime, where x_y_z is the current version and wyday|expiretime is the license_scheme
+if [ "$1" == "" ]; then
+  echo "Usage: make-release x_y_z wyday|expiretime, where x_y_z is the current version and wyday|expiretime is the license_scheme"
   echo Example: make-release 3_0_0
   exit
 fi
 
+if [ "$2" == "" ]; then
+  echo "Missing argument for LICENSE TYPE.  You must specify wyday or expiretime."
+  exit
+fi
 
 if [ "$OSTYPE" = "cygwin" ]; then 
   SourceDir='Win/x64'
@@ -64,12 +68,23 @@ cp python/* release/xtreme/bin/
 cp contexts/* release/xtreme/contexts
 cp -r datagen/* release/xtreme/datagen
 
+# Set the LTYPE for public consumption
+if [ "$2" == "wyday" ]; then
+    LTYPE="p"
+fi
+if [ "$2" == "expiretime ]; then
+    LTYPE="s"
+fi
+
+# copy the right png file for the overall UI
+cp pngfiles/ess_400_${LTYPE}.png release/xtreme/appserver/static/images/ess_400.png
+
 if [ "$OSTYPE" = "cygwin" ]; then 
-  tar -cvzf ess_win_$1_$2.tgz xtreme/*
+  tar -cvzf ess_win_$1_${LTYPE}.tgz xtreme/*
 elif [[ $OSTYPE == darwin1? ]]; then
   ln -s 64bit xtreme/bin/Darwin/32bit
-  tar -cvzf ess_mac_$1_$2.tgz xtreme/*
+  tar -cvzf ess_mac_$1_${LTYPE}.tgz xtreme/*
 else
-  tar -cvzf ess_linux_$1_$2.tgz xtreme/*
+  tar -cvzf ess_linux_$1_${LTYPE}.tgz xtreme/*
 fi
 
