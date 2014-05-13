@@ -1,0 +1,99 @@
+<form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
+    <label>Update User-Defined Context</label>
+    <fieldset>
+        <html>
+            <p style="padding-top: 20px">
+Enter values in each field as necessary to update the Context
+            </p>
+        </html>
+        <input type="text" token="name">
+            <default></default>
+            <label>Context Name</label>
+        </input>
+        <input type="dropdown" token="type">
+            <default>domain</default>
+            <label>Context Type</label>
+            <choice value="average_centered">Average Centered</choice>
+            <choice value="domain">Domain</choice>
+        </input>
+        <input type="text" token="terms">
+            <default>low,medium,high</default>
+            <label>Concepts</label>
+            <seed>low,medium,high</seed>
+        </input>
+        <input type="dropdown" token="shape">
+            <default>pi</default>
+            <label>Shape of Middle Concepts</label>
+            <choice value="pi">PI</choice>
+            <choice value="trapezoid">Trapezoid</choice>
+            <choice value="triangle">Triangle</choice>
+            <choice value="curvedecrease">(Single Concept Only) Curve Decrease</choice>
+            <choice value="lineardecrease">(Single Concept Only) Linear Decrease</choice>
+            <choice value="curveincrease">(Single Concept Only) Curve Increase</choice>
+            <choice value="linearincrease">(Single Concept Only) Linear Increase</choice>
+        </input>
+        <input type="dropdown" token="endShape">
+            <default>curve</default>
+            <label>Shape of End Concepts</label>
+            <choice value="curve">Curve</choice>
+            <choice value="linear">Linear</choice>
+        </input>
+        <input type="text" token="min">
+            <default>0</default>
+            <label>Min Value</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="max">
+            <default>0</default>
+            <label>Max Value</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="count">
+            <default>0</default>
+            <label>Number of values</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="avg">
+            <default>0</default>
+            <label>Average</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="stdev">
+            <default>0</default>
+            <label>Std. Deviation</label>
+            <seed>0</seed>
+        </input>
+        <input type="text" token="notes">
+            <label>Notes</label>
+            <default>None</default>
+        </input>
+        <input type="text" token="uom">
+            <label>Unit of Measure</label>
+            <default></default>
+        </input>
+        <input type="radio" token="scope">
+            <label>Select Context Scope</label>
+            <choice value="1">Private</choice>
+            <choice value="2">App</choice>
+            <choice value="3">Global</choice>
+        </input>
+    </fieldset>
+
+    <!-- 
+         define master search template; leave time unbounded so that the time input can be used 
+      -->
+    <row>
+        <html>
+            <h2>Membership</h2>
+            <div id="chart1" />
+        </html>
+    </row>
+
+    <row>
+        <table id="table1">
+    <searchString>
+| xsUpdateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$" uom="$uom$"
+    </searchString>
+        </table>      
+    </row>
+</form>

@@ -38,6 +38,7 @@
        | `discover_trend($fieldY$, $fieldX$, $byFields$)`
        | table results
       </searchString>
+      <option name="count">100</option>
     </table>
 </row>
 </form>

@@ -4,6 +4,7 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -159,7 +160,14 @@ int saSplunkGetScope(char *scopeStr)
         return(SA_SPLUNK_SCOPE_NONE);
     else if (scopeStr[0] == '\0')
         return(SA_SPLUNK_SCOPE_NONE);
-    else if (!strcmp(scopeStr, "none") || !strcmp(scopeStr, "0"))
+
+    char *s = scopeStr;
+    while(*s != '\0')
+    {
+          *s = (char)tolower(*s);
+          s++;
+    }
+    if (!strcmp(scopeStr, "none") || !strcmp(scopeStr, "0"))
         return(SA_SPLUNK_SCOPE_NONE);
     else if (!strcmp(scopeStr, "private") || !strcmp(scopeStr, "1"))
         return(SA_SPLUNK_SCOPE_PRIVATE);

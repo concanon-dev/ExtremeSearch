@@ -78,9 +78,6 @@ void saContextCreateConcept(saContextTypePtr cPtr, char *termName, char *shape, 
     else if (!strcmp(shape, SA_CONCEPT_SHAPE_LINEARINCREASE))
         cPtr->concepts[i] = saConceptCreateLinearIncrease(termName, cPtr->domainMin, 
                                                                     cPtr->domainMax, min, max); 
-    else if (!strcmp(shape, SA_CONCEPT_SHAPE_PI))
-        cPtr->concepts[i] = saConceptCreatePI(termName, cPtr->domainMin, cPtr->domainMax, 
-                                                        min, max, (max+min)/2);
     else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRAPEZOID))
         cPtr->concepts[i] = saConceptCreateTrapezoid(termName, cPtr->domainMin, 
                                                                cPtr->domainMax, min, max);
@@ -89,7 +86,9 @@ void saContextCreateConcept(saContextTypePtr cPtr, char *termName, char *shape, 
                                                               cPtr->domainMax, min, max,
                                                               (max+min)/2);
     else
-        fprintf(stderr, "No Such shape: %s\n", shape);
+        // edault to SA_CONCEPT_SHAPE_PI
+        cPtr->concepts[i] = saConceptCreatePI(termName, cPtr->domainMin, cPtr->domainMax,
+                                                        min, max, (max+min)/2);
 }
 
 saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double domainMax, 
@@ -100,6 +99,7 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
     // create the context
     saContextTypePtr p = saContextInit(name, domainMin, domainMax, avg, sdev, count, 
                                        numTerms, SA_CONTEXT_TYPE_DOMAIN, notes, uom);
+
     if (numTerms == 1)
     {
         double min = domainMin;
@@ -119,15 +119,17 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_LINEARDECREASE))
             p->concepts[0] = saConceptCreateLinearDecrease(terms[0], domainMin, 
                                                                      domainMax, min, max);
-        else if (!strcmp(shape, SA_CONCEPT_SHAPE_PI))
-            p->concepts[0] = saConceptCreatePI(terms[0], domainMin, domainMax, 
-                                                         min, max, center);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRAPEZOID))
             p->concepts[0] = saConceptCreateTrapezoid(terms[0], domainMin, domainMax, 
                                                                 min, max);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRIANGLE))
             p->concepts[0] = saConceptCreateTriangle(terms[0], domainMin, domainMax, 
                                                                min, max, center);
+        else
+            // default to SA_CONCEPT_SHAPE_PI
+            p->concepts[0] = saConceptCreatePI(terms[0], domainMin, domainMax,
+                                                         min, max, center);
+
         return(p);
     }
 
@@ -139,34 +141,37 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
         double max = domainMin + (halfTerm * (i + 2));
         if (i == numTerms - 1)
         {
-            if (!strcmp(endShape, SA_CONCEPT_SHAPE_CURVE))
-                p->concepts[i] = saConceptCreateCurveIncrease(terms[i], domainMin, 
-                                                                        domainMax, min, max, 
-                                                                        center);
-            else if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
+            if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
                 p->concepts[i] = saConceptCreateLinearIncrease(terms[i], domainMin, 
                                                                          domainMax, min, max); 
+            else
+                // default to SA_CONCEPT_SHAPE_CURVE
+                p->concepts[i] = saConceptCreateCurveIncrease(terms[i], domainMin,
+                                                                        domainMax, min, max,
+                                                                        center);
         }
         else if (i == 0)
         {
-            if (!strcmp(endShape, SA_CONCEPT_SHAPE_CURVE))
-                p->concepts[i] = saConceptCreateCurveDecrease(terms[i], domainMin, 
-                                                                        domainMax, min, max,
-                                                                        center);
-            else if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
+            if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
                 p->concepts[i] = saConceptCreateLinearDecrease(terms[i], domainMin, 
                                                                          domainMax, min, max);
+            else
+                // default to SA_CONCEPT_SHAPE_CURVE
+                p->concepts[i] = saConceptCreateCurveDecrease(terms[i], domainMin,
+                                                                        domainMax, min, max,
+                                                                        center);
         }
         else
         {
-            if (!strcmp(shape, SA_CONCEPT_SHAPE_PI))
-                p->concepts[i] = saConceptCreatePI(terms[i], domainMin, domainMax, 
-                                                             min, max, center);
-            else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRAPEZOID))
+            if (!strcmp(shape, SA_CONCEPT_SHAPE_TRAPEZOID))
                 p->concepts[i] = saConceptCreateTrapezoid(terms[i], domainMin, domainMax, 
                                                              min, max);
             else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRIANGLE))
                 p->concepts[i] = saConceptCreateTriangle(terms[i], domainMin, domainMax, 
+                                                             min, max, center);
+            else 
+                // default to SA_CONCEPT_SHAPE_PI
+                p->concepts[i] = saConceptCreatePI(terms[i], domainMin, domainMax,
                                                              min, max, center);
         }
         i++;
@@ -201,10 +206,6 @@ void saContextRecreateConcepts(saContextTypePtr cPtr, double min, double max)
             cPtr->concepts[i] = saConceptCreateLinearIncrease(p->name, cPtr->domainMin, 
                                                                       cPtr->domainMax, p->points[0],
                                                                       p->points[1]);
-        else if (!strcmp(p->shape, SA_CONCEPT_SHAPE_PI))
-            cPtr->concepts[i] = saConceptCreatePI(p->name, cPtr->domainMin,
-                                                            cPtr->domainMax, p->points[0], 
-                                                            p->points[4], p->points[2]);
         else if (!strcmp(p->shape, SA_CONCEPT_SHAPE_TRAPEZOID))
             cPtr->concepts[i] = saConceptCreateTrapezoid(p->name, cPtr->domainMin, 
                                                                    cPtr->domainMax, p->points[0], 
@@ -213,6 +214,11 @@ void saContextRecreateConcepts(saContextTypePtr cPtr, double min, double max)
             cPtr->concepts[i] = saConceptCreateTriangle(p->name, cPtr->domainMin, 
                                                                    cPtr->domainMax, p->points[0], 
                                                                    p->points[2], p->points[1]);
+        else
+            // default to SA_CONCEPT_SHAPE_PI
+            cPtr->concepts[i] = saConceptCreatePI(p->name, cPtr->domainMin,
+                                                            cPtr->domainMax, p->points[0],
+                                                            p->points[4], p->points[2]);
         i++;
     }
 }

@@ -1,6 +1,6 @@
 
 #ifndef __satoken
-#define __fsatoken
+#define __satoken
 
 #define MAXMODIFIERS 16
 

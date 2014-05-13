@@ -23,7 +23,10 @@ extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char 
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
+extern saContextTypePtr saContextMerge(saContextTypePtr, saContextTypePtr, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
 extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
 
 extern char *optarg;
@@ -31,6 +34,8 @@ extern int optind, optopt;
 
 int main(int argc, char* argv[]) 
 {
+    saContextTypePtr cPtr = NULL;
+    saContextTypePtr origCPtr = NULL;
     bool argError;
     bool readInput = false;
     bool setAvg = false;
@@ -38,6 +43,7 @@ int main(int argc, char* argv[])
     bool setMax = false;
     bool setMin = false;
     bool setSDev = false;
+    bool update = false;
 
     char endShapeStr[256];
     char *conceptNames[SA_CONTEXT_MAXTERMS];
@@ -48,11 +54,13 @@ int main(int argc, char* argv[])
     char shapeStr[256];
     char *conceptsList = NULL;
     char uom[256];
+
     double avg = 0.0;
     double max = 0.0;
     double min = 0.0;
     double sdev = 0.0;
     double width = 2.0;
+
     int c;
     int count;
     int fileScope = SA_SPLUNK_SCOPE_GLOBAL;
@@ -68,10 +76,13 @@ int main(int argc, char* argv[])
     strcpy(shapeStr, SA_CONCEPT_SHAPE_PI); 
     infoFile[0] = '\0';
     uom[0] = '\0';
-    while ((c = getopt(argc, argv, "a:c:d:e:f:i:m:n:o:p:t:u:w:x:z:")) != -1) 
+    while ((c = getopt(argc, argv, "Ua:c:d:e:f:i:m:n:o:p:t:u:w:x:z:")) != -1) 
     {
         switch (c)
         {
+            case 'U':
+                update = true;
+                break;
             case 'a':
                 avg = atof(optarg);
                 setAvg = true;
@@ -88,7 +99,7 @@ int main(int argc, char* argv[])
                 strcpy(endShapeStr, optarg);
                 break;
             case 'f':
-                fileScope = atoi(optarg);
+                fileScope = saSplunkGetScope(optarg);
                 break;
             case 'i':
                 strcpy(infoFile, optarg);
@@ -131,17 +142,34 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xsCreateContext-F-103: Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-m min] [-p shape] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" ");
+                "xsCreateContext-F-103: Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-p shape] [-t conceptlist] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" ");
         exit(EXIT_FAILURE);
     }
-  
+
+    // get scope (app, user) 
+    saSplunkInfoPtr iPtr = saSplunkLoadInfo(infoFile);
+    if (iPtr == NULL)
+    {
+        fprintf(stderr, "xsCreateContext-F-115: Can't open info file %s\n", infoFile);
+        exit(EXIT_FAILURE);
+    }
+
+    // if update flag is set, try to load original context
+    if (update == true) 
+    {
+        if ((origCPtr = saSplunkContextLoad(name, &fileScope, iPtr->app, iPtr->user)) == NULL)
+        {
+            fprintf(stderr, "xsCreateContext-F-121: Can't load context %s\n", name);
+            exit(EXIT_FAILURE);
+        }
+    }
+
     if (!setAvg)
         avg = (min + max) / (double)2.0;
 
     if (!setSDev)
         sdev = stdDev(min, max);
 
-    // 
     if (conceptsList == NULL)
     {
         fprintf(stderr, "xsCreateContext-F-117: no concepts specified\n");
@@ -166,8 +194,6 @@ int main(int argc, char* argv[])
           s = strtok(NULL, ",");
     }
 
-    saContextTypePtr cPtr = NULL;
-
     // Go out and create the context based on type
     if (!strcmp(contextType, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
         cPtr = saContextCreateAvgCentered(name, avg, sdev, conceptNames, numConcepts,
@@ -182,11 +208,13 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    saSplunkInfoPtr iPtr = saSplunkLoadInfo(infoFile);
-    if (iPtr == NULL)
+    if (update == true)
     {
-        fprintf(stderr, "xsCreateContext-F-115: Can't open info file %s\n", infoFile);
-        exit(EXIT_FAILURE);
+        if ((cPtr = saContextMerge(origCPtr, cPtr, origCPtr->name)) == NULL)
+        {
+            fprintf(stderr, "xsCreateContext-F-123: Failed to merge contexts\n");
+            exit(EXIT_FAILURE);
+        }
     }
     saSplunkContextSave(cPtr, fileScope, iPtr->app, iPtr->user);
     saContextDisplay(cPtr);

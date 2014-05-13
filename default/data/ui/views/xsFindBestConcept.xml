@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsFindMemebership</label>
+        <label>xsFindBestConcept</label>
         <row>
                 <html>
                         <a
@@ -131,7 +131,7 @@
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20140225.1</p>
+                        <p><br />Version 20140321.2</p>
 
                 </html>
         </row>

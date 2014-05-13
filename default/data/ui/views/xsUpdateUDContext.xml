@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsCreateContext</label>
+        <label>xsUpdateUDContext</label>
         <row>
                 <html>
                         <a href="xtreme_overview">
@@ -25,7 +25,7 @@
                         <p>
                                 <br />
                                 <span class="head4">Command: </span>
-                                <span class="cmd">xsCreateContext</span>
+                                <span class="cmd">xsUpdateUDContext</span>
                         </p>
                         <p>
                                 <span class="head4">Category: </span>
@@ -33,18 +33,18 @@
                         </p>
                         <p>
                                 <span class="head4">Description: </span>
-                                <span class="bodytext">Creates a Context with specified
-                                        parameters. The context is a 'Data Driven' context.
+                                <span class="bodytext">Updates a Context with specified
+                                        parameters. The context is a 'User Defined' context.
                                         If the type is 'average_centered', the fields avg, count,
                                         and stdev must be passed in as parameters.  If the type
                                         is 'domain', the fields count, max and min must be passed in
-                                        as parameters. See <a href="xsCreateUDContext">xsCreateUDContext</a> 
-                                        for details about creating a User Defined Context
-                                        instead of data from a search. </span>
+                                        as parameters. See <a href="xsCreateContext">xsCreateContext</a> 
+                                        for details about creating a Context using data from a search
+                                        instead of 'User Defined' data. </span>
                         </p>
                         <p>
                                 <span class="head4">Syntax: </span>
-                                <span class="bodytext">xsCreateContext name=string
+                                <span class="bodytext">xsUpdateUDContext name=string
                                         terms=&quot;string(,string)*&quot;
                                         count=int
                                         [endshape=(curve|linear)]
@@ -58,24 +58,24 @@
                         <p>
                                 <br />
                                 <span class="head4">Example: </span>
-                                <span class="code">xsCreateContext name=ArrDelay
+                                <span class="code">xsUpdateUDContext name=ArrDelay
                                         terms=&quot;early,ontime,late&quot; type=average_centered
-                                        uom=minutes</span>
+                                        avg=0 count=10000 stdev=30 uom=minutes</span>
                         </p>
                         <p>
-                                <span class="explanation">Creates an Average-centered Context,
-                                        centered at 0, with 3 terms (early, ontime, late) with
-                                        count, avg and stdev passed in the search stream, using
+                                <span class="explanation">Updates an Average-centered Context,
+                                        centered at 0, with 3 terms (early, ontime, late) using
                                         minutes as the unit of measure (UOM).</span>
                         </p>
                         <p>
                                 <span class="head4">Example: </span>
-                                <span class="code">| xsCreateContext name=AirTime type=domain
-                                        terms=&quot;minimal,short,medium,long,extended&quot;  uom=minutes</span>
+                                <span class="code">| xsUpdateUDContext name=AirTime type=domain
+                                        terms=&quot;minimal,short,medium,long,extended&quot; min=60 max=1400
+                                        count=1000 uom=minutes</span>
                         </p>
                         <p>
-                                <span class="explanation">Creates an Domain Context with the min/max
-                                        and count passed in the search stream, the unit of measure is minutes.</span>
+                                <span class="explanation">Updates an Domain Context with the min/max
+                                        and count specified, the unit of measure is minutes.</span>
                         </p>
                         <p>
                                 <span class="head4">Parameters: </span>
@@ -86,17 +86,13 @@
                                 <span class="para">avg</span>
                         </p>
                         <p>
-                                <span class="explanation">The average value of the field. This
-                                        parameter can be passed as part of the command or via search
-                                        input using stats avg(field).</span>.
+                                <span class="explanation">The average value of the field.</span>.
                         </p>
                         <p>
                                 <span class="para">count</span>
                         </p>
                         <p>
-                                <span class="explanation">The number of fields. This parameter can
-                                        be passed as part of the command or via search input using
-                                        stats count(field).</span>. 
+                                <span class="explanation">The number of fields.</span>. 
                         </p>
                         <p>
                                 <span class="para">endshape</span>
@@ -109,23 +105,20 @@
                                 <span class="para">max</span>
                         </p>
                         <p>
-                                <span class="explanation">The maximum value of the field. This
-                                        parameter can be passed as part of the command or via search
-                                        input using stats max(field).</span>. 
+                                <span class="explanation">The maximum value of the field.</span>. 
                         </p>
                         <p>
                                 <span class="para">min</span>
                         </p>
                         <p>
-                                <span class="explanation">The minimum value of the field. This
-                                        parameter can be passed as part of the command or via search
-                                        input using stats min(field).</span>. </p>
+                                <span class="explanation">The minimum value of the field.</span>. 
+                        </p>
                         <p>
                                 <span class="para">name (Context name)</span>
                         </p>
                         <p>
                                 <span class="explanation">A legal string which specifies the name
-                                        by which the created Context will be known.</span>
+                                        of the Context to update.</span>
                         </p>
                         <p>
                                 <span class="para">notes</span>
@@ -138,8 +131,8 @@
                                 <span class="para">scope</span>
                         </p>
                         <p>
-                                <span class="explanation">Where to save the context (private, app, global).  
-                                        This defaults to global</span>. 
+                                <span class="explanation">>Where to find the context (private, app, global)
+                                        to update.  This defaults to global</span>. 
                         </p> 
                         <p>
                                 <span class="para">shape</span>
@@ -161,8 +154,8 @@
                         </p>
                         <p>
                                 <span class="explanation">The standard deviation of the field
-                                        values. This parameter can be passed as part of the command
-                                        or via search input using stats stdev(field).</span>. </p>
+                                        values.</span>.
+                        </p>
                         <p>
                                 <span class="para">type (context type)</span>
                         </p>
@@ -177,13 +170,13 @@
                         </p>
                         <p>
                                 <span class="head4">Result: </span>
-                                <span class="bodytext">The context created by xsCrateContext is
+                                <span class="bodytext">The context updated by xsUpdateUDContext is
                                         displayed in table or chart format. 
                                         See <a href="xsDisplayContext">xsDisplayContext</a> for
                                         details about display of the created Context. <br />
-                                        See <a href="xsCreateUDContext">xsCreateUDContext</a> for
-                                        details about creating a Context using a 'generating' command
-                                        instead of a 'streaming' command. </span>
+                                        See <a href="xsUpdateContext">xsUpdateContext</a> for
+                                        details about updating a Context using a 'streaming' command
+                                        instead of a 'generating' command. </span>
                         </p>
                         <p>
                                 <span class="head4">Learn more: </span>

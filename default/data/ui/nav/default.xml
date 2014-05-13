@@ -5,8 +5,10 @@
     <collection label="Conceptual Search">
         <collection label="Contexts">
             <view name="create_context" />
-            <view name="generate_context" />
+            <view name="create_ud_context" />
             <view name="display_context" />
+            <view name="update_context" />
+            <view name="update_ud_context" />
         </collection>
 
         <collection label="Concepts">

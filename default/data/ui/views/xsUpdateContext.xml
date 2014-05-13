@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsCreateContext</label>
+        <label>xsUpdateContext</label>
         <row>
                 <html>
                         <a href="xtreme_overview">
@@ -25,7 +25,7 @@
                         <p>
                                 <br />
                                 <span class="head4">Command: </span>
-                                <span class="cmd">xsCreateContext</span>
+                                <span class="cmd">xsUpdateContext</span>
                         </p>
                         <p>
                                 <span class="head4">Category: </span>
@@ -33,18 +33,18 @@
                         </p>
                         <p>
                                 <span class="head4">Description: </span>
-                                <span class="bodytext">Creates a Context with specified
+                                <span class="bodytext">Updates a Context with specified
                                         parameters. The context is a 'Data Driven' context.
                                         If the type is 'average_centered', the fields avg, count,
                                         and stdev must be passed in as parameters.  If the type
                                         is 'domain', the fields count, max and min must be passed in
-                                        as parameters. See <a href="xsCreateUDContext">xsCreateUDContext</a> 
+                                        as parameters. See <a href="xsUpdateContext">xsCreateUDContext</a> 
                                         for details about creating a User Defined Context
                                         instead of data from a search. </span>
                         </p>
                         <p>
                                 <span class="head4">Syntax: </span>
-                                <span class="bodytext">xsCreateContext name=string
+                                <span class="bodytext">xsUpdateContext name=string
                                         terms=&quot;string(,string)*&quot;
                                         count=int
                                         [endshape=(curve|linear)]
@@ -58,23 +58,23 @@
                         <p>
                                 <br />
                                 <span class="head4">Example: </span>
-                                <span class="code">xsCreateContext name=ArrDelay
+                                <span class="code">xsUpdateContext name=ArrDelay
                                         terms=&quot;early,ontime,late&quot; type=average_centered
                                         uom=minutes</span>
                         </p>
                         <p>
-                                <span class="explanation">Creates an Average-centered Context,
+                                <span class="explanation">Updates an Average-centered Context,
                                         centered at 0, with 3 terms (early, ontime, late) with
                                         count, avg and stdev passed in the search stream, using
                                         minutes as the unit of measure (UOM).</span>
                         </p>
                         <p>
                                 <span class="head4">Example: </span>
-                                <span class="code">| xsCreateContext name=AirTime type=domain
+                                <span class="code">| xsUpdateContext name=AirTime type=domain
                                         terms=&quot;minimal,short,medium,long,extended&quot;  uom=minutes</span>
                         </p>
                         <p>
-                                <span class="explanation">Creates an Domain Context with the min/max
+                                <span class="explanation">Updates an Domain Context with the min/max
                                         and count passed in the search stream, the unit of measure is minutes.</span>
                         </p>
                         <p>
@@ -125,7 +125,7 @@
                         </p>
                         <p>
                                 <span class="explanation">A legal string which specifies the name
-                                        by which the created Context will be known.</span>
+                                        of the Context to update.</span>
                         </p>
                         <p>
                                 <span class="para">notes</span>
@@ -138,8 +138,8 @@
                                 <span class="para">scope</span>
                         </p>
                         <p>
-                                <span class="explanation">Where to save the context (private, app, global).  
-                                        This defaults to global</span>. 
+                                <span class="explanation">Where to find the context (private, app, global)
+                                        to update.  This defaults to global.</span>. 
                         </p> 
                         <p>
                                 <span class="para">shape</span>
@@ -177,12 +177,12 @@
                         </p>
                         <p>
                                 <span class="head4">Result: </span>
-                                <span class="bodytext">The context created by xsCrateContext is
+                                <span class="bodytext">The context updated by xsUpdateContext is
                                         displayed in table or chart format. 
                                         See <a href="xsDisplayContext">xsDisplayContext</a> for
                                         details about display of the created Context. <br />
-                                        See <a href="xsCreateUDContext">xsCreateUDContext</a> for
-                                        details about creating a Context using a 'generating' command
+                                        See <a href="xsUpdateUDContext">xsUpdateUDContext</a> for
+                                        details about updating a Context using a 'generating' command
                                         instead of a 'streaming' command. </span>
                         </p>
                         <p>

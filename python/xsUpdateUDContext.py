@@ -10,18 +10,17 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     avg = ''
-    context_type = "domain"
     count = ''
+    context_type = "domain"
     end_shape = 'curve'
     max = ''
     min = ''
     notes = ''
     scope = '3'
-    settings = {} 
+    settings = {}
     shape = 'pi'
     stdev = ''
     uom = ''
-
     try:
         if len(sys.argv) >1:
             for arg in sys.argv[1:]:
@@ -52,12 +51,12 @@ if __name__ == '__main__':
                 elif arg.lower().startswith("shape="):
                     eqsign = arg.find('=')
                     shape = arg[eqsign+1:len(arg)]
-                elif arg.lower().startswith("stdev="):
-                    eqsign = arg.find('=')
-                    stdev = arg[eqsign+1:len(arg)]
                 elif arg.lower().startswith("terms="):
                     eqsign = arg.find('=')
                     term_list = arg[eqsign+1:len(arg)]
+                elif arg.lower().startswith("stdev="):
+                    eqsign = arg.find('=')
+                    stdev = arg[eqsign+1:len(arg)]
                 elif arg.lower().startswith("type="):
                     eqsign = arg.find('=')
                     context_type = arg[eqsign+1:len(arg)]
@@ -65,46 +64,34 @@ if __name__ == '__main__':
                     eqsign = arg.find('=')
                     uom = arg[eqsign+1:len(arg)]
                 else:
-                    errString = "xsCreateContext-F-003: Invalid argument: " + arg
+                    errString = "xsUpdateUDContext-F-003: Invalid argument: " + arg
                     raise Exception(errString) 
         else:
-            raise Exception("xsCreateContext-F-001: Usage: xsCreateContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
-
-# old version        results = si.readResults(None, None, False)
-        results = si.readResults(None, settings, True)
-        for res in results:
-            if 'avg' in res:
-                avg = res['avg']
-            if 'count' in res:
-                count = res['count']
-            if 'max' in res:
-                max = res['max']
-            if 'min' in res:
-                min = res['min']
-            if 'stdev' in res:
-                stdev = res['stdev']
+            raise Exception("xsUpdateUDContext-F-001: Usage: xsUpdateUDContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
 
         if context_type.lower() == 'domain':
             if max == '':
-                raise Exception("xsCreateContext-F-007: parameter 'max' not found")
+                raise Exception("xsUpdateUDContext-F-007: parameter 'max' not found")
             if min == '':
-                raise Exception("xsCreateContext-F-009: parameter 'min' not found")
+                raise Exception("xsUpdateUDContext-F-009: parameter 'min' not found")
 
         if context_type.lower() == 'average_centered':
             if avg == '':
-                raise Exception("xsCreateContext-F-003: parameter 'avg' not found")
+                raise Exception("xsUpdateUDContext-F-003: parameter 'avg' not found")
             if stdev == '':
-                raise Exception("xsCreateContext-F-011: parameter 'stdev' not found")
+                raise Exception("xsUpdateUDContext-F-011: parameter 'stdev' not found")
 
         if count == '':
-            raise Exception("xsCreateContext-F-005: parameter 'count' not found")
+            raise Exception("xsUpdateUDContext-F-005: parameter 'count' not found")
 
         if notes == '':
             notes = 'none'
+        
+        results = si.readResults(None, settings, True)
 
         info_file = settings['infoPath']
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
-        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
+        binary = platform.system() + "/" + platform.architecture()[0] + "/xsUpdateUDContext"
+        subprocess.call([binary, '-U', '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

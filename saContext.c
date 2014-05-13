@@ -215,35 +215,46 @@ saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *
     // get the weights
     int c1Count = c1->count != 0 ? c1->count : 1;
     int c2Count = c2->count != 0 ? c2->count : 1;
-    double c1Weight = c1Count/(c1Count + c2Count);
-    double c2Weight = c2Count/(c1Count + c2Count);
-
-    // adjust the fields by weight
-    double domainMin = c1->domainMin * c1Weight + c2->domainMin * c2Weight;
-    double domainMax = c1->domainMax * c1Weight + c2->domainMax * c2Weight;
-    double avg = c1->avg * c1Weight + c2->avg * c2Weight;
-    double sdev = c1->sdev * c1Weight + c2->sdev * c2Weight;
+    double c1Weight = (double)c1Count/(double)(c1Count + c2Count);
+    double c2Weight = (double)c2Count/(double)(c1Count + c2Count);
 
     // get the names
     char *conceptNames[SA_CONTEXT_MAXTERMS];
     for(i=0; i<c1->numConcepts; i++)
-        conceptNames[i] = c1->concepts[i]->name;
+    {
+        conceptNames[i] = (char *)malloc(strlen(c1->concepts[i]->name)+1);
+        strcpy(conceptNames[i], c1->concepts[i]->name);
+    }
 
-    // figure out the right shape(s) to use
-    char *endShapeStr = c1->concepts[0]->shape;
+    // check the number of concepts and assign shapes/endshapes based on that number
     char *shapeStr = c1->concepts[0]->shape;
+    char *endShapeStr = c1->concepts[0]->shape;
+    if (!strncmp(endShapeStr, "linear", 6))
+        endShapeStr = SA_CONCEPT_SHAPE_LINEAR;
+    else
+        endShapeStr = SA_CONCEPT_SHAPE_CURVE;
     if (c1->numConcepts > 2)
         shapeStr = c1->concepts[1]->shape;
 
     // Go out and create the context based on type
     if (!strcmp(c1->type, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
+    {
+        // adjust the fields by weight
+        double avg = c1->avg * c1Weight + c2->avg * c2Weight;
+        double sdev = c1->sdev * c1Weight + c2->sdev * c2Weight;
         return(saContextCreateAvgCentered(c3Name, avg, sdev, conceptNames, c1->numConcepts,
                                           shapeStr, endShapeStr, c1->count + c2->count,
                                           c1->notes, c1->uom));
+    }
     else if (!strcmp(c1->type, SA_CONTEXT_TYPE_DOMAIN))
+    {
+        // adjust the fields by weight
+        double domainMin = c1->domainMin * c1Weight + c2->domainMin * c2Weight;
+        double domainMax = c1->domainMax * c1Weight + c2->domainMax * c2Weight;
         return(saContextCreateDomain(c3Name, domainMin, domainMax, conceptNames, 
                                      c1->numConcepts, shapeStr, endShapeStr, 
                                      c1->count + c2->count, c1->notes, c1->uom));
+    }
     return(NULL);
 }
 

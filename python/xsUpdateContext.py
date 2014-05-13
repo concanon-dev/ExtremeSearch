@@ -65,10 +65,10 @@ if __name__ == '__main__':
                     eqsign = arg.find('=')
                     uom = arg[eqsign+1:len(arg)]
                 else:
-                    errString = "xsCreateContext-F-003: Invalid argument: " + arg
+                    errString = "xsUpdateContext-F-003: Invalid argument: " + arg
                     raise Exception(errString) 
         else:
-            raise Exception("xsCreateContext-F-001: Usage: xsCreateContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
+            raise Exception("xsUpdateContext-F-001: Usage: xsUpdateContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
 
 # old version        results = si.readResults(None, None, False)
         results = si.readResults(None, settings, True)
@@ -86,25 +86,25 @@ if __name__ == '__main__':
 
         if context_type.lower() == 'domain':
             if max == '':
-                raise Exception("xsCreateContext-F-007: parameter 'max' not found")
+                raise Exception("xsUpdateContext-F-007: parameter 'max' not found")
             if min == '':
-                raise Exception("xsCreateContext-F-009: parameter 'min' not found")
+                raise Exception("xsUpdateContext-F-009: parameter 'min' not found")
 
         if context_type.lower() == 'average_centered':
             if avg == '':
-                raise Exception("xsCreateContext-F-003: parameter 'avg' not found")
+                raise Exception("xsUpdateContext-F-003: parameter 'avg' not found")
             if stdev == '':
-                raise Exception("xsCreateContext-F-011: parameter 'stdev' not found")
+                raise Exception("xsUpdateContext-F-011: parameter 'stdev' not found")
 
         if count == '':
-            raise Exception("xsCreateContext-F-005: parameter 'count' not found")
+            raise Exception("xsUpdateContext-F-005: parameter 'count' not found")
 
         if notes == '':
             notes = 'none'
 
         info_file = settings['infoPath']
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
-        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
+        binary = platform.system() + "/" + platform.architecture()[0] + "/xsUpdateContext"
+        subprocess.call([binary, '-U', '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

@@ -1,0 +1,197 @@
+<dashboard>
+        <label>xsUpdateUDContext</label>
+        <row>
+                <html>
+                        <a href="xtreme_overview">
+                                <img alt="Return to Overview"
+                                        src="/static/app/xtreme/images/overview_button.png" />
+                        </a>
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="command_reference">
+                                <img alt="Jump to Command Reference"
+                                        src="/static/app/xtreme/images/commandreference_button.png" />
+                        </a>
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
+                                <img alt="Support Site"
+                                        src="/static/app/xtreme/images/doc_button.png" />
+                        </a>
+                        <img src="/static/app/xtreme/images/space.png" />
+                        <a href="http://www.sciantaanalytics.com/?q=support_pages" target="_blank">
+                                <img alt="Support Site"
+                                        src="/static/app/xtreme/images/support_button.png" />
+                        </a>
+                        <span class="insetrt">Scianta Analytics Help</span>
+                        <p>
+                                <br />
+                                <span class="head4">Command: </span>
+                                <span class="cmd">xsUpdateUDContext</span>
+                        </p>
+                        <p>
+                                <span class="head4">Category: </span>
+                                <span class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span class="head4">Description: </span>
+                                <span class="bodytext">Updates a Context with specified
+                                    parameters by merging these values with the existing context. 
+                                    The contexts are merged by weighted aggregation 
+                                    (count of events drives the weight of each context).
+                                    The context is a 'User Defined' context.
+                                    The fields avg, count, min, max, stdev must be passed in
+                                    as a parameter. See <a href="xsUpdateContext">xsUpdateContext</a>
+                                    for details about updating a Context using data from a search
+                                    instead of 'User Defined' data. </span>
+                        </p>
+                        <p>
+                                <span class="head4">Syntax: </span>
+                                <span class="bodytext">xsUpdateUDContext name=string
+                                     terms=&quot;string(,string)*&quot;
+                                    [type=(average_centered|domain|double|single_decline|single_growth)]
+                                    avg=double count=int max=double min=double
+                                    stdev=double</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span class="head4">Example: </span>
+                                <span class="code">xsUpdateUDContext name=ArrDelay
+                                    terms=&quot;early,ontime,late&quot; type=average_centered
+                                    avg=0 count=1000 max=180 min=-180 stdev=30</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Updates an Average-Centered Context
+                                    with 3 terms (early, ontime, late) and
+                                    avg/count/min/max/stdev as defined.</span>
+                        </p>
+                        <p>
+                                <span class="head4">Example: </span>
+                                <span class="code">| xsUpdatesUDContext name=AirTime
+                                    terms=&quot;minimal,short,medium,long,extended&quot; count=1000 
+                                    avg=109 stdev=115</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Updates an Average-centered Context 
+                                    by creating a new context and merging the results via 
+                                    weighted aggregation into the existing context. </span>
+                        </p>
+                        <p>
+                                <span class="head4">Parameters: </span>
+                                <span
+                                        class="bodytext"> avg, count, max, min, name, stdev, terms,
+                                        type</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">avg</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The average value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats avg(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">count</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The number of fields. This parameter can
+                                        be passed as part of the command or via search input using
+                                        stats count(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">max</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The maximum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats max(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">min</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The minimum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats min(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">name (Context name)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">A legal string which specifies the name
+                                        by which the created Context will be known.</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="para">terms (array of term names)</span>
+                        </p>
+                        <p><span
+                                        class="explanation">A comma delimited set of legal strings
+                                        which define the names of the terms within the
+                                        Context</span>. </p>
+                        <p>
+                                <span
+                                        class="para">stdev</span>
+                        </p>
+                        <p><span
+                                        class="explanation">The standard deviation of the field
+                                        values. This parameter can be passed as part of the command
+                                        or via search input using stats stdev(field).</span>. </p>
+                        <p>
+                                <span
+                                        class="para">type (context type)</span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">average_centered' - centers the context
+                                        on the average and uses std dev. to scale term sizes </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">domain - the default, centers the set on
+                                        (max-min)/2 and scales the context to cover the whole domain
+                                </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">double - contains only 2 concepts
+                                </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">single_decline - contains only 1
+                                        concept that declines over the domain </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="explanation">single_growth - contains only 1 
+                                        concept that grows over the domain </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Result: </span>
+                                <span
+                                        class="bodytext">The context created by xsGenerateContext is
+                                        displayed in table or chart format. See <a
+                                                href="xsDisplayContext">xsDisplayContext</a> for
+                                        details about display of the created Context. <br />See <a
+                                                href="xsCreateContext">xsCreateContext</a> for
+                                        details about creating a Context using a 'streaming' command
+                                        instead of a 'generating' command. </span>
+                        </p>
+                        <p>
+                                <span
+                                        class="head4">Learn more: </span>
+                                <span
+                                        class="bodytext">
+                                        <a
+                                                href="http://www.sciantaanalytics.com?q=es_documentation"
+                                                target="_blank">Scianta Analytics Extreme Search for
+                                                Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20130908.3</p>
+
+                </html>
+        </row>
+</dashboard>

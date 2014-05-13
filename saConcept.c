@@ -76,8 +76,8 @@ saConceptTypePtr saConceptCreateCurveDecrease(char *name, double domainMin,
  }
 
 saConceptTypePtr saConceptCreateCurveIncrease(char *name, double domainMin, 
-                                                        double domainMax, double termMin, 
-                                                        double termMax, double inflectionPoint)
+                                              double domainMax, double termMin, 
+                                              double termMax, double inflectionPoint)
 {
     // make sure term is not inverted
     if (termMin >= termMax || termMax <= termMin)
