@@ -90,7 +90,7 @@ if __name__ == '__main__':
         results = si.readResults(None, settings, True)
 
         info_file = settings['infoPath']
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsUpdateUDContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" + platform.system() + "/" + platform.architecture()[0] + "/xsUpdateUDContext"
         subprocess.call([binary, '-U', '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':

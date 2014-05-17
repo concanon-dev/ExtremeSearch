@@ -68,7 +68,7 @@ if __name__ == '__main__':
             preop += " y=\"%s\" " % y
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xspredict"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xspredict"
         subprocess.call([binary, '-p', p])
 
         if platform.system() == 'Windows':

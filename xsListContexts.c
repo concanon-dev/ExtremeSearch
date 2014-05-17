@@ -9,10 +9,11 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern void saListDir(char *, char *, bool, FILE *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern void saSplunkGetContextPath(char *, int, char *, char *);
+extern void saListDir(char *, char *, bool, FILE *, char *);
 
 int main(int argc, char *argv[])
 {
@@ -58,12 +59,6 @@ int main(int argc, char *argv[])
     }
 
     char path[1024];
-    if (scope == SA_SPLUNK_SCOPE_PRIVATE)
-        sprintf(path, "../../../users/%s/%s/contexts", p->user, p->app);
-    else if (scope == SA_SPLUNK_SCOPE_APP)
-        sprintf(path, "../../%s/contexts", p->app);
-    else
-        strcpy(path, "../contexts");
-
+    saSplunkGetContextPath(path, scope, p->app, p->user);
     saListDir(path, ".context", true, stdout, "context");
 }

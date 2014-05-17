@@ -29,7 +29,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsListConcepts-F-001: Usage: xsListConcepts FROM context [IN scope]")
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsListConcepts"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListConcepts"
         subprocess.call([binary, '-c', context, '-p', scope ])
 
         if platform.system() == 'Windows':

@@ -33,7 +33,7 @@ if __name__ == '__main__':
         raise Exception("xsrepredict-F-003: Missing predict parameter (p=)")
 
     try:
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsrepredict"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsrepredict"
         subprocess.call([binary, '-p', p])
 
         if platform.system() == 'Windows':

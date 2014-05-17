@@ -21,7 +21,7 @@ if __name__ == '__main__':
                     eqsign = arg.find('=')
                     reactivate = arg[eqsign+1:len(arg)]
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
 
         if key != '' and reactivate != '':
             subprocess.call([binary, '-r', key])

@@ -50,7 +50,7 @@ if __name__ == '__main__':
         if f != '':
             f = "../lookups/" + f + ".csv"
 
-            binary = platform.system() + "/" + platform.architecture()[0] + "/xsApplyAutoRegressionFromFile"
+            binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsApplyAutoRegressionFromFile"
             subprocess.call([binary, '-f', f])
 
         else:
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 raise Exception("xsApplyAutoRegression-F-009: Missing X parameter");
 
             if rType == "Quad":
-                binary = platform.system() + "/" + platform.architecture()[0] + "/xsApplyAutoRegression"
+                binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsApplyAutoRegression"
                 subprocess.call([binary, '-0', coef0, '-1', coef1, '-2', coef2, '-x', xList])
 
         if platform.system() == 'Windows':

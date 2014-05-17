@@ -36,7 +36,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsCloneContext-F-001: Usage: xsCloneContext oldContext [IN scope] TO newContext [IN scope]");
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCloneContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneContext"
         subprocess.call([binary, '-N', newScope, '-O', oldScope, '-n', new, '-o', old])
 
         if platform.system() == 'Windows':

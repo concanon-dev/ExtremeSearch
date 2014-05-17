@@ -35,7 +35,7 @@ if __name__ == '__main__':
         if len(context) < 1:
             context = field
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsFindBestConcept"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsFindBestConcept"
         if scope == '':
             subprocess.call([binary, '-c', context, '-f', field ])
         else:

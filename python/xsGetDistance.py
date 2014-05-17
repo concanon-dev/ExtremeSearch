@@ -38,7 +38,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsGetDistance-F-001: Usage: FROM (lat long | zipcode | city region [country] TO (lat long | zipcode | city region [country])");
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsGetDistance"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsGetDistance"
         subprocess.call([binary, '-f', fromField, '-t', toField ])
 
         if platform.system() == 'Windows':

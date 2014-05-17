@@ -36,7 +36,7 @@ if __name__ == '__main__':
         if term == '' or context == '':
             raise Exception("xsDeleteConcept-F-001: Usage: xsDeleteConcept concept FROM context [IN scope]");
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsDeleteConcept"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDeleteConcept"
         subprocess.call([binary, '-c', context, '-s', scope, '-t', term])
 
         if platform.system() == 'Windows':

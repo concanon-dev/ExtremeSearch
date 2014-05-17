@@ -45,7 +45,7 @@ if __name__ == '__main__':
         if f != '':
             f = "../lookups/" + f + ".csv"
 
-            binary = platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegressionFromFile'
+            binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegressionFromFile'
             subprocess.call([binary, '-f', f])
 
         else:
@@ -58,7 +58,7 @@ if __name__ == '__main__':
             if len(xList) < 1:
                 raise Exception("xsApplyLinearRegression-F-007: Missing X parameter");
 
-            binary = platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegression'
+            binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegression'
             subprocess.call([binary, '-a', a, '-b', b, '-x', xList])
 
         if platform.system() == 'Windows':

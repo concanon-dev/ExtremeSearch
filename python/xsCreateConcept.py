@@ -55,7 +55,7 @@ if __name__ == '__main__':
         if min == '':
             raise Exception("xsCreateConcept-F-009: parameter 'min' not found")
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateConcept"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateConcept"
         subprocess.call([binary, '-c', contextName, '-m', min, '-n', termName, '-p', shape, '-s', scope, '-x', max ])
 
         if platform.system() == 'Windows':

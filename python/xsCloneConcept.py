@@ -48,7 +48,7 @@ if __name__ == '__main__':
         if newSet == '' or newContext == '' or oldSet == '' or oldContext == '':
             raise Exception("xsCloneConcept-F-001: Usage: xsCloneConcept oldConcept IN oldContext TO newConcept IN newContext");
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCloneConcept"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneConcept"
         subprocess.call([binary, '-N', newScope, '-O', oldScope, '-n', newContext, '-o', oldContext, '-s', concept])
 
         if platform.system() == 'Windows':

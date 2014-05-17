@@ -29,7 +29,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsListUOM-F-001: Usage: xsListUOM FROM context [IN scope]")
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
         subprocess.call([binary, '-c', context, '-p', scope ])
 
         if platform.system() == 'Windows':

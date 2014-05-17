@@ -31,7 +31,7 @@ if __name__ == '__main__':
         if len(x) < 1:
             raise Exception("xspreautoregress-F-003: Missing x parameter")
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xspreautoregress"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xspreautoregress"
         if b != '':
             subprocess.call([binary, '-b', b, '-i', '-m', u, '-x', x ])
         else:

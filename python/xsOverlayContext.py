@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         filePath = "../contexts/" + name + ".context"
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsOverlayContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsOverlayContext"
         subprocess.call([binary, '-c', count, '-f', filePath, '-k', key])
 
         if platform.system() == 'Windows':

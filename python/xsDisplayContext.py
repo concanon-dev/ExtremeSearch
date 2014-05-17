@@ -18,7 +18,7 @@ if __name__ == '__main__':
             scope = sys.argv[3]
             scope = scope.lower()
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsDisplayContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayContext"
         subprocess.call([binary, '-n', name, '-s', scope])
 
         if platform.system() == 'Windows':

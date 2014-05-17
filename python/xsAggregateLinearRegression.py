@@ -22,7 +22,7 @@ if __name__ == '__main__':
         raise Exception("xsAggregateLinearRegression-F-001: Usage: xsAggregateLinearRegression [OUTPUT filename]")
 
     try:
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsAggregateLinearRegression"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateLinearRegression"
         if outfile == '':
             subprocess.call([binary])
         else:

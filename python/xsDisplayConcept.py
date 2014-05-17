@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
         synonyms = "../lookups/" + synonyms
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsDisplayConcept"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayConcept"
         subprocess.call([binary, '-c', context, '-l',  setString, '-p', scope, '-s', synonyms ])
 
         if platform.system() == 'Windows':

@@ -10,7 +10,7 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     avg = ''
-    count = '0'
+    count = ''
     context_type = "domain"
     end_shape = 'curve'
     max = ''
@@ -69,17 +69,16 @@ if __name__ == '__main__':
         else:
             raise Exception("xsCreateUDContext-F-001: Usage: xsCreateUDContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
 
-        if context_type.lower() == 'domain':
-            if max == '':
-                raise Exception("xsCreateUDContext-F-007: parameter 'max' not found")
-            if min == '':
-                raise Exception("xsCreateUDContext-F-009: parameter 'min' not found")
-
-        if context_type.lower() == 'average_centered':
-            if avg == '':
-                raise Exception("xsCreateUDContext-F-003: parameter 'avg' not found")
-            if stdev == '':
-                raise Exception("xsCreateUDContext-F-011: parameter 'stdev' not found")
+        if avg == '':
+            raise Exception("xsCreateUDContext-F-003: parameter 'avg' not found")
+        if count == '':
+            raise Exception("xsCreateUDContext-F-005: parameter 'count' not found")
+        if max == '':
+            raise Exception("xsCreateUDContext-F-007: parameter 'max' not found")
+        if min == '':
+            raise Exception("xsCreateUDContext-F-009: parameter 'min' not found")
+        if stdev == '':
+            raise Exception("xsCreateUDContext-F-011: parameter 'stdev' not found")
 
         if notes == '':
             notes = 'none'
@@ -87,7 +86,7 @@ if __name__ == '__main__':
         results = si.readResults(None, settings, True)
 
         info_file = settings['infoPath']
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
         subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':

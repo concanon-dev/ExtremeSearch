@@ -70,7 +70,7 @@ if __name__ == '__main__':
                 preop += " b=\"%s\" " % by
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsPerformAutoRegression"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformAutoRegression"
         if outfile == '':
             subprocess.call([binary])
         else:

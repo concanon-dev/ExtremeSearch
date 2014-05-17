@@ -84,26 +84,24 @@ if __name__ == '__main__':
             if 'stdev' in res:
                 stdev = res['stdev']
 
-        if context_type.lower() == 'domain':
-            if max == '':
-                raise Exception("xsCreateContext-F-007: parameter 'max' not found")
-            if min == '':
-                raise Exception("xsCreateContext-F-009: parameter 'min' not found")
-
-        if context_type.lower() == 'average_centered':
-            if avg == '':
-                raise Exception("xsCreateContext-F-003: parameter 'avg' not found")
-            if stdev == '':
-                raise Exception("xsCreateContext-F-011: parameter 'stdev' not found")
-
+        if avg == '':
+            raise Exception("xsCreateContext-F-003: parameter 'avg' not found")
         if count == '':
             raise Exception("xsCreateContext-F-005: parameter 'count' not found")
+        if max == '':
+            raise Exception("xsCreateContext-F-007: parameter 'max' not found")
+        if min == '':
+            raise Exception("xsCreateContext-F-009: parameter 'min' not found")
+        if stdev == '':
+            raise Exception("xsCreateContext-F-011: parameter 'stdev' not found")
 
         if notes == '':
             notes = 'none'
 
         info_file = settings['infoPath']
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
+        print info_file
+        print set_name
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
         subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':

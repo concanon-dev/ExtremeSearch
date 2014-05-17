@@ -51,7 +51,7 @@ if __name__ == '__main__':
             f = "../lookups/" + f + ".csv"
             if rType == "Quad":
 
-                binary = platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'
+                binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'
                 subprocess.call([binary, '-f', f])
 
         else:
@@ -68,7 +68,7 @@ if __name__ == '__main__':
                 raise Exception("xsApplyNonLinearRegression-F-007: Missing X parameter");
 
             if rType == "Quad":
-                binary = platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegression'
+                binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegression'
                 subprocess.call([binary, '-0', coef0, '-1', coef1, '-2', coef2, '-x', xList])
 
         if platform.system() == 'Windows':

@@ -22,7 +22,7 @@ if __name__ == '__main__':
         raise Exception("xsAggregateCorrelation-F-001: Usage: xsAggregateCorrelation [OUTPUT filename]")
 
     try:
-        binary = platform.system() + "/" + platform.architecture()[0] + "/xsAggregateCorrelation"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateCorrelation"
         if outfile == '':
             subprocess.call([binary])
         else:
