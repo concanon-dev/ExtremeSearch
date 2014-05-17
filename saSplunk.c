@@ -74,7 +74,7 @@ saContextTypePtr saSplunkContextFind(char *name, char *app, char *user, int *sco
         {
             *scope = SA_SPLUNK_SCOPE_GLOBAL;
             char *xtremePath = "/etc/apps/xtreme";
-            sprintf(path, "%s%s/contexts/%s.context", splunkHome, name);
+            sprintf(path, "%s%s/contexts/%s.context", splunkHome, xtremePath, name);
             if (access(path, F_OK) == -1)
             {
                 return(NULL);
