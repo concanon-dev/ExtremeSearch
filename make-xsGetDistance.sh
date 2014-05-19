@@ -19,4 +19,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsGetDistance -O2 -Wall -lm obj/$Platform/xsGetDistance.o obj/$Platform/saGeoLiteCity.o obj/$Platform/saStatistics.o obj/$Platform/saCSV.o obj/$Platform/saHash.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib $WinObjs
+$gcc -o bin/$Platform/xsGetDistance -O2 -Wall -lm obj/$Platform/xsGetDistance.o obj/$Platform/saGeoLiteCity.o obj/$Platform/saStatistics.o obj/$Platform/saCSV.o obj/$Platform/saHash.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o $LicenseLib $WinObjs -lm

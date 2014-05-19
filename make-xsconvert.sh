@@ -15,4 +15,4 @@ else
   Platform='Linux/x64'
 fi
 
-$gcc -o python/xsconvert -Wall -O2 -lm obj/$Platform/xsconvert.o obj/$Platform/saContext.o obj/$Platform/saContextCreate.o obj/$Platform/saConcept.o  obj/$Platform/OLDsaLoadContext.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o 
+$gcc -o python/xsconvert -Wall -O2 -lm obj/$Platform/xsconvert.o obj/$Platform/saContext.o obj/$Platform/saContextCreate.o obj/$Platform/saConcept.o  obj/$Platform/OLDsaLoadContext.o obj/$Platform/saOpenFile.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o  -lm

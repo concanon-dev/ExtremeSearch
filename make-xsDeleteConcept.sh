@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsDeleteConcept -Wall obj/$Platform/xsDeleteConcept.o obj/$Platform/saContext.o obj/$Platform/saContextCreate.o obj/$Platform/saConcept.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsDeleteConcept -Wall obj/$Platform/xsDeleteConcept.o obj/$Platform/saContext.o obj/$Platform/saContextCreate.o obj/$Platform/saConcept.o obj/$Platform/saSplunk.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saLicensing.o $LicenseLib -lm

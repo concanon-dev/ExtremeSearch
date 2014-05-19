@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsDisplayWhere -Wall -O2 -lm obj/$Platform/xsDisplayWhere.o obj/$Platform/saHedge.o obj/$Platform/saParser.o obj/$Platform/saConcept.o obj/$Platform/saContextCreate.o obj/$Platform/saContext.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saHash.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib
+$gcc -o bin/$Platform/xsDisplayWhere -Wall -O2 -lm obj/$Platform/xsDisplayWhere.o obj/$Platform/saHedge.o obj/$Platform/saParser.o obj/$Platform/saConcept.o obj/$Platform/saContextCreate.o obj/$Platform/saContext.o obj/$Platform/saCSV.o obj/$Platform/saSignal.o obj/$Platform/saOpenFile.o obj/$Platform/saHash.o obj/$Platform/saSplunk.o obj/$Platform/saLicensing.o $LicenseLib -lm

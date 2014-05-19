@@ -18,4 +18,4 @@ else
   LicenseLib='-Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate'
 fi
 
-$gcc -o bin/$Platform/xsGenerateData -Wall obj/$Platform/xsGenerateData.o obj/$Platform/saDice.o obj/$Platform/saCSV.o obj/$Platform/saDoubleField.o obj/$Platform/saFloatField.o obj/$Platform/saField.o obj/$Platform/saIntField.o obj/$Platform/saOutput.o obj/$Platform/saProperties.o obj/$Platform/saStringField.o obj/$Platform/saTimeField.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o  $LicenseLib
+$gcc -o bin/$Platform/xsGenerateData -Wall obj/$Platform/xsGenerateData.o obj/$Platform/saDice.o obj/$Platform/saCSV.o obj/$Platform/saDoubleField.o obj/$Platform/saFloatField.o obj/$Platform/saField.o obj/$Platform/saIntField.o obj/$Platform/saOutput.o obj/$Platform/saProperties.o obj/$Platform/saStringField.o obj/$Platform/saTimeField.o obj/$Platform/saSignal.o obj/$Platform/saLicensing.o  $LicenseLib -lm
