@@ -11,22 +11,17 @@
 #include "saContext.h"
 
 saContextTypePtr saContextCreateConcepts(char *, double, double, double, double, double, 
-                                              double, char *[], int, char *, char *, char *, char *);
+                                         double, char *[], int, char *, char *, char *, char *);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, 
                                       char *, char *);
-extern saConceptTypePtr saConceptCreateCurveDecrease(char *, double, double, double,
-                                                               double, double);
-extern saConceptTypePtr saConceptCreateCurveIncrease(char *, double, double, double, 
-                                                               double, double);
-extern saConceptTypePtr saConceptCreateLinearDecrease(char *, double, double, double,
-                                                                double);
-extern saConceptTypePtr saConceptCreateLinearIncrease(char *, double, double, double,
-                                                                double);
+extern saConceptTypePtr saConceptCreateCurveDecrease(char *, double, double, double, double, double);
+extern saConceptTypePtr saConceptCreateCurveIncrease(char *, double, double, double, double, double);
+extern saConceptTypePtr saConceptCreateLinearDecrease(char *, double, double, double, double);
+extern saConceptTypePtr saConceptCreateLinearIncrease(char *, double, double, double, double);
 extern saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
 extern saConceptTypePtr saConceptCreateTrapezoid(char *, double, double, double, double);
-extern saConceptTypePtr saConceptCreateTriangle(char *, double, double, double, double,
-                                                          double);
+extern saConceptTypePtr saConceptCreateTriangle(char *, double, double, double, double, double);
 
 
 saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev, char *terms[],
@@ -43,7 +38,7 @@ saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev,
     double halfTerm = (SA_CONCEPT_DEFAULT_SDEV_SIZE * sdev) / 2;
 
     return(saContextCreateConcepts(name, domainMin, domainMax, avg, sdev, count, halfTerm,
-                                        terms, numTerms, shape, endShape, notes, uom));
+                                   terms, numTerms, shape, endShape, notes, uom));
 }
 
 saContextTypePtr saContextCreateDomain(char *name, double domainMin, double domainMax, 
@@ -56,11 +51,11 @@ saContextTypePtr saContextCreateDomain(char *name, double domainMin, double doma
     // calculate the necessary sizes
     double halfTerm = (domainMax - domainMin) / (numTerms + 1);
     return(saContextCreateConcepts(name, domainMin, domainMax, (float)0.0, (float)0.0,
-                                        count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
+                                   count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
 }
 
 void saContextCreateConcept(saContextTypePtr cPtr, char *termName, char *shape, double min, 
-                                 double max)
+                            double max)
 {
     int i = cPtr->numConcepts++;
 
@@ -88,13 +83,13 @@ void saContextCreateConcept(saContextTypePtr cPtr, char *termName, char *shape, 
     else
         // edault to SA_CONCEPT_SHAPE_PI
         cPtr->concepts[i] = saConceptCreatePI(termName, cPtr->domainMin, cPtr->domainMax,
-                                                        min, max, (max+min)/2);
+                                              min, max, (max+min)/2);
 }
 
 saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double domainMax, 
-                                              double avg, double sdev, double count,
-                                              double halfTerm, char *terms[], int numTerms,
-                                              char *shape, char *endShape, char *notes, char *uom)
+                                         double avg, double sdev, double count,
+                                         double halfTerm, char *terms[], int numTerms,
+                                         char *shape, char *endShape, char *notes, char *uom)
 {
     // create the context
     saContextTypePtr p = saContextInit(name, domainMin, domainMax, avg, sdev, count, 
@@ -106,30 +101,44 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
         double center = (domainMin + domainMax) / 2;
         double max = domainMax;
         if (!strcmp(shape, SA_CONCEPT_SHAPE_CURVEINCREASE))
-            p->concepts[0] = saConceptCreateCurveIncrease(terms[0], domainMin, 
-                                                                    domainMax, min, max, 
-                                                                    center);
+            p->concepts[0] = saConceptCreateCurveIncrease(terms[0], domainMin, domainMax, min, max, 
+                                                          center);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_LINEARINCREASE))
-            p->concepts[0] = saConceptCreateLinearIncrease(terms[0], domainMin, 
-                                                                     domainMax, min, max); 
+            p->concepts[0] = saConceptCreateLinearIncrease(terms[0], domainMin, domainMax, min, max); 
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_CURVEDECREASE))
-            p->concepts[0] = saConceptCreateCurveDecrease(terms[0], domainMin, 
-                                                                    domainMax, min, max,
-                                                                    center);
+            p->concepts[0] = saConceptCreateCurveDecrease(terms[0], domainMin, domainMax, min, max,
+                                                          center);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_LINEARDECREASE))
-            p->concepts[0] = saConceptCreateLinearDecrease(terms[0], domainMin, 
-                                                                     domainMax, min, max);
+            p->concepts[0] = saConceptCreateLinearDecrease(terms[0], domainMin, domainMax, min, max);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRAPEZOID))
-            p->concepts[0] = saConceptCreateTrapezoid(terms[0], domainMin, domainMax, 
-                                                                min, max);
+            p->concepts[0] = saConceptCreateTrapezoid(terms[0], domainMin, domainMax, min, max);
         else if (!strcmp(shape, SA_CONCEPT_SHAPE_TRIANGLE))
-            p->concepts[0] = saConceptCreateTriangle(terms[0], domainMin, domainMax, 
-                                                               min, max, center);
+            p->concepts[0] = saConceptCreateTriangle(terms[0], domainMin, domainMax, min, max, center);
         else
             // default to SA_CONCEPT_SHAPE_PI
-            p->concepts[0] = saConceptCreatePI(terms[0], domainMin, domainMax,
-                                                         min, max, center);
+            p->concepts[0] = saConceptCreatePI(terms[0], domainMin, domainMax, min, max, center);
 
+        return(p);
+    }
+
+    if (numTerms == 2)
+    {
+        double center = (domainMin + domainMax) / 2;
+        if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
+        {
+            p->concepts[0] = saConceptCreateLinearDecrease(terms[0], domainMin, domainMax, 
+                                                           domainMin, domainMax);
+            p->concepts[1] = saConceptCreateLinearIncrease(terms[1], domainMin, domainMax, 
+                                                           domainMin, domainMax);
+        }
+        else
+        {
+            // default to SA_CONCEPT_SHAPE_CURVE
+            p->concepts[0] = saConceptCreateCurveDecrease(terms[0], domainMin, domainMax, 
+                                                          domainMin, domainMax, center);
+            p->concepts[1] = saConceptCreateCurveIncrease(terms[1], domainMin, domainMax,
+                                                          domainMin, domainMax, center);
+        }
         return(p);
     }
 
@@ -142,24 +151,22 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
         if (i == numTerms - 1)
         {
             if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
-                p->concepts[i] = saConceptCreateLinearIncrease(terms[i], domainMin, 
-                                                                         domainMax, min, max); 
+                p->concepts[i] = saConceptCreateLinearIncrease(terms[i], domainMin, domainMax,
+                                                               min, max-halfTerm); 
             else
                 // default to SA_CONCEPT_SHAPE_CURVE
-                p->concepts[i] = saConceptCreateCurveIncrease(terms[i], domainMin,
-                                                                        domainMax, min, max,
-                                                                        center);
+                p->concepts[i] = saConceptCreateCurveIncrease(terms[i], domainMin, domainMax, 
+                                                              min, max-halfTerm, center-halfTerm/2);
         }
         else if (i == 0)
         {
             if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
-                p->concepts[i] = saConceptCreateLinearDecrease(terms[i], domainMin, 
-                                                                         domainMax, min, max);
+                p->concepts[i] = saConceptCreateLinearDecrease(terms[i], domainMin, domainMax,
+                                                               min+halfTerm, max);
             else
                 // default to SA_CONCEPT_SHAPE_CURVE
-                p->concepts[i] = saConceptCreateCurveDecrease(terms[i], domainMin,
-                                                                        domainMax, min, max,
-                                                                        center);
+                p->concepts[i] = saConceptCreateCurveDecrease(terms[i], domainMin, domainMax, 
+                                                              min+halfTerm, max, center+halfTerm/2);
         }
         else
         {
