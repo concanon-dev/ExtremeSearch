@@ -6,7 +6,7 @@
 #
 # Makefile for Extreme Search
 #
-OSTYPE := $(shell uname -o)
+OSTYPE := $(shell uname)
 PROCESSOR := $(shell uname -m)
 VERSION := `echo ${version} | sed -e 's/_/./g'`
 
@@ -16,25 +16,25 @@ ltype.wyday := p
 LTYPE := ${ltype.${license}}
 
 platform.Cygwin := Win/x64
-platform.darwin := Mac
+platform.Darwin := Mac
 platform.linux  := Linux/x64
 platform.GNU/Linux  := Linux/x64
 PLATFORM := ${platform.${OSTYPE}}
 
 releaseplatform.Cygwin := Windows
-releaseplatform.darwin := Darwin
+releaseplatform.Darwin := Darwin
 releaseplatform.linux  := Linux
 releaseplatform.GNU/Linux  := Linux
 RELEASEPLATFORM := ${releaseplatform.${OSTYPE}}
 
 objdir.Cygwin := obj/Win/x64
-objdir.darwin := obj/Mac
+objdir.Darwin := obj/Mac
 objdir.linux  := obj/Linux/x64
 objdir.GNU/Linux  := obj/Linux/x64
 OBJDIR := ${objdir.${OSTYPE}}
 
 bindir.Cygwin := bin/Win/x64
-bindir.darwin := bin/Mac
+bindir.Darwin := bin/Mac
 bindir.linux  := bin/Linux/x64
 bindir.GNU/Linux  := bin/Linux/x64
 BINDIR := ${bindir.${OSTYPE}}
@@ -43,33 +43,33 @@ BINDIR := ${bindir.${OSTYPE}}
 RELEASEDIR := release/xtreme
 
 compresscmd.Cygwin := cd release; tar -cvzf ess_win_${version}_${LTYPE}.tgz xtreme/*
-compresscmd.darwin := cd release; ln -s 64bit xtreme/bin/Darwin/32bit; tar -cvzf ess_mac_${version}_${LTYPE}.tgz xtreme/*
+compresscmd.Darwin := cd release; ln -s 64bit xtreme/bin/Darwin/32bit; tar -cvzf ess_mac_${version}_${LTYPE}.tgz xtreme/*
 compresscmd.linux  := cd release; tar -cvzf ess_linux_${version}_${LTYPE}.tgz xtreme/*
 compresscmd.GNU/Linux  := cd release; tar -cvzf ess_linux_${version}_${LTYPE}.tgz xtreme/*
 COMPRESSCMD := ${compresscmd.${OSTYPE}}
 
 #gcc.Cygwin := x86_64-w64-mingw32-gcc -D _UNICODE
 gcc.Cygwin := $(PROCESSOR)-w64-mingw32-gcc -D _UNICODE
-gcc.darwin :=gcc -g
+gcc.Darwin :=gcc -g
 gcc.linux := gcc -g
 gcc.GNU/Linux := gcc -g
 GCC := ${gcc.${OSTYPE}}
 
 
 licenselib.Cygwin := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
-licenselib.darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
+licenselib.Darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
 licenselib.linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
 licenselib.GNU/Linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
 LICENSELIB := ${licenselib.${OSTYPE}}
 
 licensefile.Cygwin := LimeLM/Win/x64/TurboActivate.dll
-licensefile.darwin := LimeLM/Mac/TurboActivate.dll
+licensefile.Darwin := LimeLM/Mac/TurboActivate.dll
 licensefile.linux := LimeLM/Linux/x64/TurboActivate.dll
 licensefile.GNU/Linux := LimeLM/Linux/x64/TurboActivate.dll
 LICENSEFILE := ${licensefile.${OSTYPE}}
 
 winobjs.Cygwin := obj/${PLATFORM}/strsep.o
-winobjs.darwin := 
+winobjs.Darwin := 
 winobjs.linux := 
 winobjs.GNU/Linux := 
 WINOBJS := ${winobjs.${OSTYPE}}
