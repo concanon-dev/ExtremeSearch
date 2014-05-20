@@ -17,6 +17,7 @@
 
 #define MAXROWSIZE 1024*500
 
+extern char *saCSVExtractField(char *);
 extern saContextTypePtr saContextLoad(FILE *);
 extern int saContextSave(FILE *, saContextTypePtr);
 extern FILE *saOpenFile(char *, char *);
@@ -240,12 +241,11 @@ bool saSplunkReadInfoPathFile(saSplunkInfoPtr p)
         fclose(f);
         return(false);
     }
-    if (strlen(fields[appIndex]) == 0 || strlen(fields[userIndex]) == 0)
-        return(false);
-
-    strcpy(p->app, fields[appIndex]);
-    strcpy(p->user, fields[userIndex]);
     fclose(f);
+    strcpy(p->app, saCSVExtractField(fields[appIndex]));
+    strcpy(p->user, saCSVExtractField(fields[userIndex]));
+    if (strlen(p->app) == 0 || strlen(p->user) == 0)
+        return(false);
     return(true);
 }
 
