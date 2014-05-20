@@ -47,8 +47,6 @@ compresscmd.darwin := cd release; ln -s 64bit xtreme/bin/Darwin/32bit; tar -cvzf
 compresscmd.linux  := cd release; tar -cvzf ess_linux_${version}_${LTYPE}.tgz xtreme/*
 COMPRESSCMD := ${compresscmd.${OSTYPE}}
 
-
-
 #gcc.Cygwin := x86_64-w64-mingw32-gcc -D _UNICODE
 gcc.Cygwin := $(PROCESSOR)-w64-mingw32-gcc -D _UNICODE
 gcc.darwin :=gcc -g
@@ -60,98 +58,20 @@ GCC := ${gcc.${OSTYPE}}
 licenselib.Cygwin := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
 licenselib.darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
 licenselib.linux := -Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate 
+licenselib.GNU/Linux := -Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate 
 LICENSELIB := ${licenselib.${OSTYPE}}
 
 licensefile.Cygwin := LimeLM/Win/x64/TurboActivate.dll
 licensefile.darwin := LimeLM/Mac/TurboActivate.dll
 licensefile.linux := LimeLM/Linux/x64/TurboActivate.dll
+licensefile.GNU/Linux := LimeLM/Linux/x64/TurboActivate.dll
 LICENSEFILE := ${licensefile.${OSTYPE}}
 
-# TODO -from make-all.sh
-#
-# if [ "$OSTYPE" = "cygwin" ]; then 
-#  if [ "$1" = "x86" ]; then
-#    Platform='Win/x86'
-#    LicenseFile='LimeLM/Win/x86/TurboActivate.dll'
-#  else
-#    Platform='Win/x64'
-#    LicenseFile='LimeLM/Win/x64/TurboActivate.dll'
-#  fi
-#elif [[ $OSTYPE == darwin1? ]]; then
-#  Platform='Mac'
-#  LicenseFile='LimeLM/Mac/libTurboActivate.dylib'
-#else
-#  Platform='Linux/x64'
-#  LicenseFile='LimeLM/Linux/x64/libTurboActivate.so'
-#fi
-#
-#if [ ! -d bin/$Platform ]; then
-#  mkdir -p bin/$Platform
-#fi
-#
-#cp $LicenseFile bin/$Platform
-#
-#if [ "$OSTYPE" = "cygwin" ]; then 
-#  if [ "$1" = "x86" ]; then
-#    Platform='Win/x86'
-#    cp LimeLM/Win/x86/TurboActivate.dll bin/$Platform
-#  else
-#    Platform='Win/x64'
-#    cp LimeLM/Win/x64/TurboActivate.dll bin/$Platform
-#  fi
-#elif [[ $OSTYPE == darwin1? ]]; then
-#  Platform='Mac'
-#  cp LimeLM/Mac/libTurboActivate.dylib bin/$Platform
-#else
-#  Platform='Linux/x64'
-#  cp LimeLM/Linux/x64/libTurboActivate.so bin/$Platform
-#fi
-#
-#cp LimeLM/TurboActivate.dat bin/$Platform
-#
-# Only Build xsGenerateData on cygwin
-
-#
-# TODO - from gcc-all
-# if [ "$1" = "" ]; then
-#    echo "Enter license type (wyday or expiretime) as first argument"
-#    exit 1
-#fi
-#
-#LICENSETYPE="$1"
-#
-#if [ "$OSTYPE" = "cygwin" ]; then 
-#  if [ "$2" = "x86" ]; then
-#    GCC='i686-w64-mingw32-gcc.exe -D _UNICODE'
-#    Platform='Win/x86'
-#  else
-#    GCC='x86_64-w64-mingw32-gcc -D _UNICODE'
-#    Platform='Win/x64'
-#  fi
-#  echo "GCC="$GCC
-#elif [[ $OSTYPE == darwin1? ]]; then
-#  GCC="gcc -g"
-#  Platform='Mac'
-#else
-#  GCC="gcc -g"
-#  Platform='Linux/x64'
-#fi
-#
-#if [ ! -d obj/$Platform ]; then
-#  mkdir -p obj/$Platform
-#fi
-#
-#
-#if [ "$OSTYPE" = "cygwin" ]; then 
-#$GCC -c strsep.c                         -o obj/$Platform/strsep.o
-#fi
-#
-#
-#
-
-#cgwin
-PLATFORM = Win/x64
-WINOBJS=obj/$(PLATFORM)/strsep.o
+winobjs.Cygwin := obj/${PLATFORM}/strsep.o
+winobjs.darwin := 
+winobjs.linux := 
+winobjs.GNU/Linux := 
+WINOBJS := ${winobjs.${OSTYPE}}
 
 
 CFLAGS=-O2 -Wall
