@@ -18,21 +18,25 @@ LTYPE := ${ltype.${license}}
 platform.Cygwin := Win/x64
 platform.darwin := Mac
 platform.linux  := Linux/x64
+platform.GNU/Linux  := Linux/x64
 PLATFORM := ${platform.${OSTYPE}}
 
 releaseplatform.Cygwin := Windows
 releaseplatform.darwin := Darwin
 releaseplatform.linux  := Linux
+releaseplatform.GNU/Linux  := Linux
 RELEASEPLATFORM := ${releaseplatform.${OSTYPE}}
 
 objdir.Cygwin := obj/Win/x64
 objdir.darwin := obj/Mac
 objdir.linux  := obj/Linux/x64
+objdir.GNU/Linux  := obj/Linux/x64
 OBJDIR := ${objdir.${OSTYPE}}
 
 bindir.Cygwin := bin/Win/x64
 bindir.darwin := bin/Mac
 bindir.linux  := bin/Linux/x64
+bindir.GNU/Linux  := bin/Linux/x64
 BINDIR := ${bindir.${OSTYPE}}
 
 
@@ -49,6 +53,7 @@ COMPRESSCMD := ${compresscmd.${OSTYPE}}
 gcc.Cygwin := $(PROCESSOR)-w64-mingw32-gcc -D _UNICODE
 gcc.darwin :=gcc -g
 gcc.linux := gcc -g
+gcc.GNU/Linux := gcc -g
 GCC := ${gcc.${OSTYPE}}
 
 
