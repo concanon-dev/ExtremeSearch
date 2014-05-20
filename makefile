@@ -57,8 +57,8 @@ GCC := ${gcc.${OSTYPE}}
 
 licenselib.Cygwin := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
 licenselib.darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
-licenselib.linux := -Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate 
-licenselib.GNU/Linux := -Wl,-R,$ORIGIN -LLimeLM/Linux/x64 -lTurboActivate 
+licenselib.linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
+licenselib.GNU/Linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
 LICENSELIB := ${licenselib.${OSTYPE}}
 
 licensefile.Cygwin := LimeLM/Win/x64/TurboActivate.dll
