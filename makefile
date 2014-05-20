@@ -45,6 +45,7 @@ RELEASEDIR := release/xtreme
 compresscmd.Cygwin := cd release; tar -cvzf ess_win_${version}_${LTYPE}.tgz xtreme/*
 compresscmd.darwin := cd release; ln -s 64bit xtreme/bin/Darwin/32bit; tar -cvzf ess_mac_${version}_${LTYPE}.tgz xtreme/*
 compresscmd.linux  := cd release; tar -cvzf ess_linux_${version}_${LTYPE}.tgz xtreme/*
+compresscmd.GNU/Linux  := cd release; tar -cvzf ess_linux_${version}_${LTYPE}.tgz xtreme/*
 COMPRESSCMD := ${compresscmd.${OSTYPE}}
 
 #gcc.Cygwin := x86_64-w64-mingw32-gcc -D _UNICODE
@@ -385,7 +386,7 @@ xsrelease: all
 		$(shell cp contexts/* $(RELEASEDIR)/contexts) \
 		$(shell cp -r datagen/* $(RELEASEDIR)/datagen) \
 		$(shell cp pngfiles/ess_400_$(LTYPE).png release/xtreme/appserver/static/images/ess_400.png) \
-		$(COMPRESSCMD); \
+		$(COMPRESSCMD) ; \
 	fi
 
 clean:
