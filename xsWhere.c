@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsWhere-F-127: Can't read search results file %s\n",
+        fprintf(stderr, "xsWhere-F-127: Error when reading search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
