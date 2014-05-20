@@ -50,14 +50,13 @@ void sighandler(int signum)
         strcpy(signalName, "Segmentation Violation");
     fprintf(stderr, "%s-F-000: Received signal (%d) %s\n", programName, signum, signalName);
     dumpStack();
-    signal(signum, SIG_DFL);
-
 
 #ifdef _WIN32
     exit(signum);
-#else
-    kill(getpid(), signum);
 #endif
+
+    signal(signum, SIG_DFL);
+    kill(getpid(), signum);
 }
 
 void setProgramName(char *str)

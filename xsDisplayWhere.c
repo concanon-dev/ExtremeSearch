@@ -175,8 +175,9 @@ int main(int argc, char* argv[])
     }
     // Parse the first (header) line of input
     foundAnyField = false;
-    numHeaderFields = saCSVGetLine(headerbuf, headerList);
-
+    if ((numHeaderFields = saCSVGetLine(headerbuf, headerList)) == 0)
+        exit(0);
+    
     int i;
     // walk the stack to load the fuzzy sets
     for(i=0; i<stackSize; i++)

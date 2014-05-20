@@ -104,7 +104,8 @@ int main(int argc, char* argv[])
     }
 
     // Parse the first (header) line of input
-    numHeaderFields = saCSVGetLine(headerbuf, headerList);
+    if ((numHeaderFields = saCSVGetLine(headerbuf, headerList)) == 0)
+       exit(0);
 
     // Write out the header fields separated by ","
     int i;

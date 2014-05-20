@@ -86,6 +86,9 @@ int main(int argc, char* argv[])
     fclose(f);
 
     int numHeaderFields = saCSVGetLine(headerbuf, headerList);
+    if (!numHeaderFields)
+        exit(0);
+
     int i;
     int countIndex = -1;
     int keyIndex = -1;

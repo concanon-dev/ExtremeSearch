@@ -106,6 +106,9 @@ int main(int argc, char *argv[])
 
     // Get Header line
     int numHeaderFields = saCSVGetLine(inbuf, headerList);
+    if (!numHeaderFields)
+        exit(0);
+
     int i;
     int foundFrom = 0;
     int foundTo = 0;
