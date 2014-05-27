@@ -73,6 +73,9 @@ if __name__ == '__main__':
         synonyms = "../lookups/" + synonyms
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayConcept"
+        if not os.path.isfile(binary):
+            raise Exception("xsDisplayConcept-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-c', context, '-l',  setString, '-p', scope, '-s', synonyms ])
 
         if platform.system() == 'Windows':

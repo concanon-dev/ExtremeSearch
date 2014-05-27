@@ -22,6 +22,9 @@ if __name__ == '__main__':
             raise Exception("xsGenerateData-F-001: Usage: xsGenerateData FROM props-file")
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsGenerateData"
+        if not os.path.isfile(binary):
+            raise Exception("xsGenerateData-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-p', props ])
 
         if platform.system() == 'Windows':

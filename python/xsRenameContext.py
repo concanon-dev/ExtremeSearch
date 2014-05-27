@@ -33,7 +33,10 @@ if __name__ == '__main__':
         else:
             raise Exception("xsRenameContext-F-007: No such Context exists: " + src);
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayContext"
+        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsRenameContext"
+        if not os.path.isfile(binary):
+            raise Exception("xsRenameContext-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-f', dest])
 
         if platform.system() == 'Windows':

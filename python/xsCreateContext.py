@@ -70,7 +70,6 @@ if __name__ == '__main__':
         else:
             raise Exception("xsCreateContext-F-001: Usage: xsCreateContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
 
-# old version        results = si.readResults(None, None, False)
         results = si.readResults(None, settings, True)
         for res in results:
             if 'avg' in res:
@@ -99,9 +98,10 @@ if __name__ == '__main__':
             notes = 'none'
 
         info_file = settings['infoPath']
-        print info_file
-        print set_name
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
+        if not os.path.isfile(binary):
+            raise Exception("xsCreateContext-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':

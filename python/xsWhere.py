@@ -46,6 +46,9 @@ if __name__ == '__main__':
         synonyms = "../lookups/" + synonyms
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsWhere" 
+        if not os.path.isfile(binary):
+            raise Exception("xsWhere-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-a', alfacut, '-c', cixtype, '-n', cixname, '-p', scalar, '-s', synonyms, '-w', where])
 
         if platform.system() == 'Windows':

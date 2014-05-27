@@ -22,6 +22,9 @@ if __name__ == '__main__':
                     reactivate = arg[eqsign+1:len(arg)]
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
+        if not os.path.isfile(binary):
+            raise Exception("xsprelicense-F-000: Can't find binary file " + binary)
+
 
         if key != '' and reactivate != '':
             subprocess.call([binary, '-r', key])

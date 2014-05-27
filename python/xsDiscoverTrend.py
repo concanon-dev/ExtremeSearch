@@ -94,6 +94,9 @@ if __name__ == '__main__':
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDiscoverTrend"
+        if not os.path.isfile(binary):
+            raise Exception("xsDiscoverTrend-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-c', c, '-y', y])
 
         if platform.system() == 'Windows':

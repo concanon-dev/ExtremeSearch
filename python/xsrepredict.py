@@ -34,6 +34,9 @@ if __name__ == '__main__':
 
     try:
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsrepredict"
+        if not os.path.isfile(binary):
+            raise Exception("xsrepredict-F-000: Can't find binary file " + binary)
+
         subprocess.call([binary, '-p', p])
 
         if platform.system() == 'Windows':

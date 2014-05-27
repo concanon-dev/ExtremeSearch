@@ -62,7 +62,6 @@ if __name__ == '__main__':
         if isgetinfo:
             reqsop = True
             if rType == "Quad":
-#                preop = "xsprequadregress "
                 preop = "xspreautoregress u=maxentropy "
             preop += " x=\"%s\" " % x
             if yCount > 0:
@@ -76,8 +75,10 @@ if __name__ == '__main__':
                 preop += " b=\"%s\" " % by
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-#        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformQuadRegression"
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformAutoRegression"
+        if not os.path.isfile(binary):
+            raise Exception("xsPerformNonLinearRegression-F-000: Can't find binary file " + binary)
+
         if outfile == '':
             if rType == "Quad":
                 subprocess.call([binary])
