@@ -215,7 +215,7 @@ xsrepredict: $(OBJECTS)
 #
 TestParser.tab.o: TestParser.tab.c TestParser.tab.h lex.yy.c
 	$(GCC) -c  TestParser.tab.c -o $(OBJDIR)/TestParser.tab.o
-lex.yy.o: Testparser.tab.c TestParser.tab.h lex.yy.c
+lex.yy.o: 
 	$(GCC) -c  lex.yy.c -o $(OBJDIR)/lex.yy.o
 OLDsaLoadContext.o:
 	$(GCC) -c OLDsaLoadContext.c -o $(OBJDIR)/$@
