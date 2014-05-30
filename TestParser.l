@@ -22,7 +22,7 @@ void setStringSource(char *line);
 [a-zA-Z]+    { yylval.sval = strdup(yytext); return (TOKEN_FIELD); }
 
 %%
-yywrap() {
+int yywrap() {
 }
 void setStringSource(char *line) {
   yy_scan_string(line);
