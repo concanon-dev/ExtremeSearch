@@ -83,7 +83,7 @@ saDicePtr saDiceCreate(char *countAndSides, char *weights)
 
 void saDiceInit()
 {
-    srandom(time(NULL));
+    srand(time(NULL));
 }
 
 long saDiceRoll(saDicePtr p)
@@ -97,7 +97,7 @@ long saDiceRoll(saDicePtr p)
         int diceCount;
         for(diceCount = 0; diceCount<p->countList[i]; diceCount++)
         {
-            long percentRoll = random() % SADICE_PRECISION;
+            long percentRoll = rand() % SADICE_PRECISION;
 
             j = 0;
             k = -1;
@@ -107,7 +107,7 @@ long saDiceRoll(saDicePtr p)
                 else
                     j++;
             int numSides = p->sidesList[i] / p->numWeights[i];
-            roll = (random() % numSides) + 1;
+            roll = (rand() % numSides) + 1;
 
             //fprintf(stderr, "die roll=%ld\n", roll + (k * numSides));
 

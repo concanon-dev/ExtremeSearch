@@ -18,7 +18,7 @@ float saFloatFieldGetValue(saFloatFieldPtr p)
     {
         p->value = (float)saDiceRoll(p->dice);
         int a = (int)(powf(10, p->decimal));
-        int r = random() % a;
+        int r = rand() % a;
         p->value = p->value + (float)r / (float)a;
     }
     return(p->value);

@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <math.h>
 #include "saExpression.h"
 #include "saToken.h"
 
@@ -37,6 +39,7 @@ saTokenTypePtr getNextToken(int);
 saTokenTypePtr lookAtNextToken();
 bool reclassify(saTokenTypePtr [], int, char *);
 void tokenize(char *, saTokenTypePtr [], int *, char *);
+void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
 // Expression Management functions
 int buildExpressionStack(saExpressionTypePtr, saExpressionTypePtrArray, int);
@@ -293,6 +296,19 @@ void tokenize(char *line, saTokenTypePtr tokenStack[], int *tokenCount, char *er
     errmsg[0] = '\0';
     *tokenCount = -1;
     bool done = false;
+
+    bool doTest = true;
+
+    //struct timeval start_time, end_time, diff_time;
+    //FILE *jjjj = fopen("./perf.txt", "a");
+    //fprintf(jjjj, "where: %s\n", line);
+    //gettimeofday(&start_time, NULL);
+
+    if (doTest) {
+        tokenizer(line, tokenStack, tokenCount, errmsg);
+    }
+    else {
+
     while(done == false)
     { 
           buffer[0] = '\0';
@@ -390,7 +406,33 @@ void tokenize(char *line, saTokenTypePtr tokenStack[], int *tokenCount, char *er
     tokenStack[localCount]->token_type = SA_TOKEN_EOF;
     tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
     *tokenCount = localCount+1;
+    }
+
+    //gettimeofday(&end_time, NULL);
+    //diff_time.tv_sec = end_time.tv_sec - start_time.tv_sec;
+    //diff_time.tv_usec = end_time.tv_usec - start_time.tv_usec;
+    //fprintf(jjjj, "%ld.%ld\n", diff_time.tv_sec, diff_time.tv_usec);
+    //fclose(jjjj);
+
     return;
+}
+int timeval_subtract(struct timeval *result, struct timeval *t2, struct timeval *t1)
+{
+    long int diff = (t2->tv_usec + 1000000 * t2->tv_sec) - (t1->tv_usec + 1000000 * t1->tv_sec);
+    result->tv_sec = diff / 1000000;
+    result->tv_usec = diff % 1000000;
+
+    return (diff<0);
+}
+void timeval_print(FILE *f, struct timeval *tv)
+{
+    char buffer[30];
+    time_t curtime;
+
+    fprintf(f,"%ld.%06ld", tv->tv_sec, tv->tv_usec);
+    curtime = tv->tv_sec;
+    strftime(buffer, 30, "%m-%d-%Y  %T", localtime(&curtime));
+    fprintf(f, " = %s.%06ld\n", buffer, tv->tv_usec);
 }
 
 

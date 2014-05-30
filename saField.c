@@ -538,7 +538,7 @@ int saFieldVarianceLong(long increment, float variance)
     if (variance == (float)0.0)
         return(0);
 
-    float r = (float)(random() % 100) / 100.0;
+    float r = (float)(rand() % 100) / 100.0;
 
     if (r > variance)
         return(0);

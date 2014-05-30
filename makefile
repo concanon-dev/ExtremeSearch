@@ -104,10 +104,12 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 CFLAGS=-O2 -Wall
 LDFLAGS=-lm
-SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLicenseMain.c saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsLicense.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprelicense.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c saDice.c saDoubleField.c saFloatField.c saField.c saIntField.c saOutput.c saProperties.c saStringField.c saTimeField.c xsGenerateData.c strsep.c
+SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLicenseMain.c saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsLicense.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprelicense.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c saDice.c saDoubleField.c saFloatField.c saField.c saIntField.c saOutput.c saProperties.c saStringField.c saTimeField.c xsGenerateData.c strsep.c TestParser.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGenerateData xsGetCompatibility xsGetDistance xsGetWhereCix xsLicense xsListContexts xsListConcepts xsListUOM xsOverlayContext xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsWhere xspreautoregress xsprecorrelate xspredict xsprelicense xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
+
+
 
 all: $(EXECUTABLES)
 
@@ -155,7 +157,7 @@ xsDisplayContext: $(OBJECTS)
 xsDisplayConcept: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsDisplayConcept.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saHedge.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(WINOBJS) $(LDFLAGS)
 xsDisplayWhere: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsDisplayWhere.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsDisplayWhere.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/TestParser.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xsFindBestConcept: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsFindBestConcept.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsFindMembership: $(OBJECTS)
@@ -168,7 +170,7 @@ xsGetCompatibility: $(OBJECTS)
 xsGetDistance: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsGetDistance.o $(OBJDIR)/saGeoLiteCity.o $(OBJDIR)/saStatistics.o  $(OBJDIR)/saHash.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(WINOBJS) $(LDFLAGS)
 xsGetWhereCix: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/TestParser.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xsLicense: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsLicense.o $(OBJDIR)/saLicenseMain.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsListContexts: $(OBJECTS)
@@ -190,7 +192,7 @@ xsPerformQuadRegression: $(OBJECTS)
 xsPerformSpearmanCorrelation: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsPerformSpearmanCorrelation.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsWhere: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saHedge.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o  $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saHedge.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o  $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o  $(OBJDIR)/TestParser.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xspreautoregress: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspreautoregress.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsprecorrelate: $(OBJECTS)
@@ -211,6 +213,10 @@ xsrepredict: $(OBJECTS)
 #
 # Individual C files
 #
+TestParser.tab.o: TestParser.tab.c TestParser.tab.h lex.yy.c
+	$(GCC) -c  TestParser.tab.c -o $(OBJDIR)/TestParser.tab.o
+lex.yy.o: Testparser.tab.c TestParser.tab.h lex.yy.c
+	$(GCC) -c  lex.yy.c -o $(OBJDIR)/lex.yy.o
 OLDsaLoadContext.o:
 	$(GCC) -c OLDsaLoadContext.c -o $(OBJDIR)/$@
 fix-intersplunk.o:
@@ -380,6 +386,12 @@ saTimeField.o:
 xsGenerateData.o:
 	$(GCC) -c xsGenerateData.c -o $(OBJDIR)/$@
 
+TestParser.tab.c TestParser.tab.h: TestParser.y
+	bison -d TestParser.y
+
+lex.yy.c: TestParser.l TestParser.tab.h
+	flex TestParser.l
+
 xsrelease: all
 	@if [ "$(version)" == "" ]; then \
 		echo "Usage: make xsrelease version=x_y_z license=license_scheme, where x_y_z is the current version and wyday|expiretime is the license_scheme (optional, default to expiretime)"; \
@@ -420,3 +432,6 @@ clean:
 	rm -rf $(OBJDIR)/*.o
 	rm -rf $(BINDIR)/*.o
 	rm -rf $(RELEASEDIR)
+	rm -f TestParser.tab.c
+	rm -f TestParser.tab.h
+	rm -f lex.yy.c

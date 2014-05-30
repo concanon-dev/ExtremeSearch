@@ -40,7 +40,7 @@ char *saStringFieldGetValue(saStringFieldPtr p)
     FILE *f = fopen(p->file, "r");
     if (f == NULL)
         return("");
-    int whichRow = (random() % p->fileSize) + 1;
+    int whichRow = (rand() % p->fileSize) + 1;
     int rowCount = 0;
     bool done = false;
     while (done == false)
