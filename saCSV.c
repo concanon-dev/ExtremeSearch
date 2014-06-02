@@ -52,6 +52,15 @@ int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
                   inbuf[i] ='\0';
                   done = 1;
               }
+              else if (inbuf[i] == '\\')
+              {
+                  char c = fgetc(f);
+                  if (!feof(f))
+                  {
+                      inbuf[i] = c;
+                      state = NORMAL_FIELD;
+                  }
+              }
               else 
                   state = NORMAL_FIELD;
               i++;
@@ -75,6 +84,13 @@ int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
               {
                   inbuf[i] = '\0';
                   done = 1;
+              }
+              else if (inbuf[i] == '\\')
+              {
+                  char c = fgetc(f);
+                  if (!feof(f))
+                      inbuf[i] = c;
+                  i++;
               }
               else
                   i++;
@@ -104,6 +120,13 @@ int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
                       i++;
                   }
               } 
+              else if (inbuf[i] == '\\')
+              {
+                  char c = fgetc(f);
+                  if (!feof(f))
+                      inbuf[i] = c;
+                  i++;
+              }
               else
                   i++;
           }

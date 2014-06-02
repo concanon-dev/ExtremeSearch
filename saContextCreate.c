@@ -32,10 +32,12 @@ saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev,
         return(NULL);
 
     // calculate the necessary sizes
-    double domainSize = sdev * (numTerms + 1);
+    double domainSize = sdev * SA_CONCEPT_DEFAULT_SDEV_SIZE;
+    double halfTerm = domainSize / 2;
+    if (numTerms >= 3)
+        domainSize = halfTerm * (numTerms - 1);
     double domainMin = avg - (domainSize / 2); 
     double domainMax = avg + (domainSize / 2); 
-    double halfTerm = (SA_CONCEPT_DEFAULT_SDEV_SIZE * sdev) / 2;
 
     return(saContextCreateConcepts(name, domainMin, domainMax, avg, sdev, count, halfTerm,
                                    terms, numTerms, shape, endShape, notes, uom));
@@ -49,7 +51,9 @@ saContextTypePtr saContextCreateDomain(char *name, double domainMin, double doma
         return(NULL);
 
     // calculate the necessary sizes
-    double halfTerm = (domainMax - domainMin) / (numTerms + 1);
+    double halfTerm = 0;
+    if (numTerms >= 2)
+        halfTerm = ((domainMax - domainMin) / (numTerms - 1));
     return(saContextCreateConcepts(name, domainMin, domainMax, (float)0.0, (float)0.0,
                                    count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
 }
@@ -145,28 +149,28 @@ saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double do
     int i = 0;
     while(i < numTerms)
     {
-        double min = domainMin + (halfTerm * i);
-        double center = domainMin + (halfTerm * (i + 1));
-        double max = domainMin + (halfTerm * (i + 2));
+        double min = domainMin + (halfTerm * (i-1));
+        double center = domainMin + (halfTerm * i);
+        double max = domainMin + (halfTerm * (i + 1));
         if (i == numTerms - 1)
         {
             if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
                 p->concepts[i] = saConceptCreateLinearIncrease(terms[i], domainMin, domainMax,
-                                                               min, max-halfTerm); 
+                                                               min, center); 
             else
                 // default to SA_CONCEPT_SHAPE_CURVE
                 p->concepts[i] = saConceptCreateCurveIncrease(terms[i], domainMin, domainMax, 
-                                                              min, max-halfTerm, center-halfTerm/2);
+                                                              min, center, min+halfTerm/2);
         }
         else if (i == 0)
         {
             if (!strcmp(endShape, SA_CONCEPT_SHAPE_LINEAR))
                 p->concepts[i] = saConceptCreateLinearDecrease(terms[i], domainMin, domainMax,
-                                                               min+halfTerm, max);
+                                                               center, max);
             else
                 // default to SA_CONCEPT_SHAPE_CURVE
                 p->concepts[i] = saConceptCreateCurveDecrease(terms[i], domainMin, domainMax, 
-                                                              min+halfTerm, max, center+halfTerm/2);
+                                                              center, max, center+halfTerm/2);
         }
         else
         {
