@@ -1,18 +1,60 @@
 []
 access = read : [ * ], write : [ admin ]
 export = system
+
 [views]
 access = read : [ * ], write : [ admin ]
 export = none
 
+[views/command_reference]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/create_concept]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
 [views/create_context]
 access = read : [ * ], write : [ admin ]
 export = system
-
+ 
+[views/create_ud_context]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/discover_trend]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/display_concept]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
 [views/display_context]
 access = read : [ * ], write : [ admin ]
 export = system
-
-[views/generate_context]
+ 
+[views/find_best_concept]
 access = read : [ * ], write : [ admin ]
 export = system
+ 
+[views/find_best_concept_streaming]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/hedges]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/update_context]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/update_ud_context]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
+[views/xtreme_overview]
+access = read : [ * ], write : [ admin ]
+export = system
+ 
