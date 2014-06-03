@@ -1,6 +1,6 @@
 %{
 #include "saToken.h"
-#include "TestParser.tab.h"
+#include "saTokenize.tab.h"
 int line_num = 1;
 void setStringSource(char *line);
 %}
