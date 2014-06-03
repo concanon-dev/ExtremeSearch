@@ -38,7 +38,6 @@ saExpressionTypePtr notOperatorExpression(saTokenTypePtr);
 // Token Management functions
 saTokenTypePtr getNextToken(int);
 saTokenTypePtr lookAtNextToken();
-//bool reclassify(saTokenTypePtr [], int, char *);
 bool reclassify();
 void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
@@ -96,16 +95,12 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
 {
     int i;
 
-    // parse where line into tokens
+    // parse where line into tokens, validate grammer
     tokenizer(where_line, global_tokenStack, &global_tokenCount, errMsg);
     if (global_tokenCount == -1)
     {
-        //fprintf(stderr, "tokenize failure: %s\n", errMsg);
         return(-1);
     }
-    // Reset the token type if necessary
-    //if (!reclassify(global_tokenStack, global_tokenCount, errMsg))
-    //   return(-1);
 
     // Build the expression tree
     return(buildExpressionStack(parseExpression(0), expStack, 0));
@@ -205,94 +200,6 @@ void walkExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackIn
 
     return;
 }
-/*
-bool reclassify(saTokenTypePtr tokenStack[], int tokenCount, char *errMsg)
-{
-    int i;
-
-    // replace might/must/should be with is "hedge"
-    for(i=0; i<tokenCount-1; i++)
-    {
-        if (!strcmp(tokenStack[i]->token, "might") && !strcmp(tokenStack[i+1]->token, "be"))
-        {
-            tokenStack[i]->token = "is";
-            tokenStack[i]->token_type = SA_TOKEN_IS;
-            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
-
-            tokenStack[i+1]->token = "slightly";
-            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
-            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
-        }
-        else if (!strcmp(tokenStack[i]->token, "must") && !strcmp(tokenStack[i+1]->token, "be"))
-        {
-            tokenStack[i]->token = "is";
-            tokenStack[i]->token_type = SA_TOKEN_IS;
-            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
-
-            tokenStack[i+1]->token = "extremely";
-            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
-            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
-        }
-        else if (!strcmp(tokenStack[i]->token, "should") && !strcmp(tokenStack[i+1]->token, "be"))
-        {
-            tokenStack[i]->token = "is";
-            tokenStack[i]->token_type = SA_TOKEN_IS;
-            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
-
-            tokenStack[i+1]->token = "very";
-            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
-            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
-        }
-    }
-
-    bool foundIS = false;
-    // find all the MODIFIERS (hedges) and Term Sets
-    for(i=0; i<tokenCount; i++)
-    {
-        if (tokenStack[i]->token_type == SA_TOKEN_IS)
-        {
-            foundIS = true;
-            int j = i+1;
-            bool done = false;
-            while(done == false)
-            {
-                  if (j == tokenCount)
-                      done = true;
-                  else if (tokenStack[j]->token_type == SA_TOKEN_FIELD)
-                  {
-                      tokenStack[j]->token_type = SA_TOKEN_MODIFIER;
-                      tokenStack[j++]->token_precedence = SA_PRECEDENCE_PREFIX;
-                  }
-                  else if (tokenStack[j]->token_type == SA_TOKEN_NOT)
-                      j++;
-                  else
-                      done = true;
-            }
-            if (tokenStack[j-1]->token_type == SA_TOKEN_MODIFIER)
-            {
-               tokenStack[j-1]->token_type = SA_TOKEN_FUZZYSET;
-               tokenStack[j-1]->token_precedence = SA_PRECEDENCE_FIELD;
-            }
-        }
-        else if (tokenStack[i]->token_type == SA_TOKEN_IN)
-        {
-            tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
-            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
-        }
-        else if (tokenStack[i]->token_type == SA_TOKEN_BY)
-        {
-            tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
-            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
-        }
-    }
-    if (foundIS == false)
-    {
-        strcpy(errMsg, "Missing IS operator");
-        return(false);
-    }
-    return(true);
-}
-*/
 
 saExpressionTypePtr andExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
 {
