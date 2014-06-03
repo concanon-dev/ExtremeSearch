@@ -21,6 +21,7 @@
 // Infix Tokens
 saExpressionTypePtr andExpression(saExpressionTypePtr, saTokenTypePtr);
 saExpressionTypePtr inExpression(saExpressionTypePtr, saTokenTypePtr);
+saExpressionTypePtr byExpression(saExpressionTypePtr, saTokenTypePtr);
 saExpressionTypePtr isExpression(saExpressionTypePtr, saTokenTypePtr);
 saExpressionTypePtr orExpression(saExpressionTypePtr, saTokenTypePtr);
 
@@ -37,7 +38,8 @@ saExpressionTypePtr notOperatorExpression(saTokenTypePtr);
 // Token Management functions
 saTokenTypePtr getNextToken(int);
 saTokenTypePtr lookAtNextToken();
-bool reclassify(saTokenTypePtr [], int, char *);
+//bool reclassify(saTokenTypePtr [], int, char *);
+bool reclassify();
 void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
 // Expression Management functions
@@ -98,12 +100,12 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
     tokenizer(where_line, global_tokenStack, &global_tokenCount, errMsg);
     if (global_tokenCount == -1)
     {
-        fprintf(stderr, "tokenize failure: %s\n", errMsg);
+        //fprintf(stderr, "tokenize failure: %s\n", errMsg);
         return(-1);
     }
     // Reset the token type if necessary
-    if (!reclassify(global_tokenStack, global_tokenCount, errMsg))
-       return(-1);
+    //if (!reclassify(global_tokenStack, global_tokenCount, errMsg))
+    //   return(-1);
 
     // Build the expression tree
     return(buildExpressionStack(parseExpression(0), expStack, 0));
@@ -167,6 +169,8 @@ saExpressionTypePtr parseExpression(precedence)
 
         if (currToken->token_type == SA_TOKEN_IN)
             left = inExpression(left, currToken);  // binaryOperator
+        else if (currToken->token_type == SA_TOKEN_BY)
+            left = byExpression(left, currToken);  // binaryOperator
         else if (currToken->token_type == SA_TOKEN_IS)
             left = isExpression(left, currToken);  // binaryOperator
         else if (currToken->token_type == SA_TOKEN_AND)
@@ -201,7 +205,7 @@ void walkExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackIn
 
     return;
 }
-
+/*
 bool reclassify(saTokenTypePtr tokenStack[], int tokenCount, char *errMsg)
 {
     int i;
@@ -275,6 +279,11 @@ bool reclassify(saTokenTypePtr tokenStack[], int tokenCount, char *errMsg)
             tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
             tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
         }
+        else if (tokenStack[i]->token_type == SA_TOKEN_BY)
+        {
+            tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
     }
     if (foundIS == false)
     {
@@ -283,6 +292,7 @@ bool reclassify(saTokenTypePtr tokenStack[], int tokenCount, char *errMsg)
     }
     return(true);
 }
+*/
 
 saExpressionTypePtr andExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
 {
@@ -315,6 +325,17 @@ saExpressionTypePtr inExpression(saExpressionTypePtr left, saTokenTypePtr currTo
     exp->right = right;
     exp->type = SA_TOKEN_IN;
     exp->field = "in";
+    return(exp);
+}
+
+saExpressionTypePtr byExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
+{
+    saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
+    exp->left = left;
+    saExpressionTypePtr right = parseExpression(SA_PRECEDENCE_BY);
+    exp->right = right;
+    exp->type = SA_TOKEN_BY;
+    exp->field = "by";
     return(exp);
 }
 

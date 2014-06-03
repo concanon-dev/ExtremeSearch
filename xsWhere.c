@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
     int stackSize = saParserParse(whereLine, tempbuf, expStack);
     if (stackSize < 0)
     {
-        fprintf(stderr, "xsWhere-F-105: parse error: %s\n", tempbuf);
+        fprintf(stderr, "xsWhere-F-105: grammer: %s\n", tempbuf);
         exit(EXIT_FAILURE);
     }
     // Parse the first (header) line of input

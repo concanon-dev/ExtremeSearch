@@ -1,11 +1,13 @@
 %{
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include "saToken.h"
 
 // stuff from flex that bison needs to know about:
 extern int line_num;
+extern int col_num;
 extern int yylex();
 extern FILE *yyin;
 extern void setStringSource(char * line);
@@ -15,8 +17,9 @@ void yyerror(const char *s);
 char parse_error_msg[MAXCHARS];
 void addToken(char *tk, int tk_type, int tk_precedence);
 void tokenizer(char *line, saTokenTypePtr *stack, int *tokenCount, char *error_msg);
+void reclassify();
 saTokenTypePtr *tokenStack;
-int localCount = 0;
+int tokenCount = 0;
 
 %}
 
@@ -27,16 +30,17 @@ int localCount = 0;
     char *sval;
 };
 
+%token <sval> TOKEN_COMMA
 %token <sval> TOKEN_RIGHT_PAREN
 %token <sval> TOKEN_LEFT_PAREN
 %token <sval> TOKEN_AND
 %token <sval> TOKEN_OR
 %token <sval> TOKEN_NOT
 %token <sval> TOKEN_IN
+%token <sval> TOKEN_BY
 %token <sval> TOKEN_IS
 %token <sval> TOKEN_FIELD
-%token <sval> TOKEN_BY /* support this ? */
-%type <sval> container is_modifiers is_concept in_clause in_field field or and is in right_paren left_paren
+%type <sval> container is_modifiers is_concept by_clause in_clause in_field field or and is in by right_paren left_paren comma
 
 %%
 container:
@@ -54,11 +58,17 @@ is_modifiers:
 
 is_concept:
     in_clause is
+    | in_clause by_clause is
+    ;
+by_clause:
+    by_clause comma field
+    | by field
     ;
 
 in_clause:
     in_field
     | field
+    ;
 
 in_field:
     field in field
@@ -74,6 +84,12 @@ field:
     {
         addToken($1, SA_TOKEN_NOT, SA_PRECEDENCE_PREFIX);
         addToken($2, SA_TOKEN_FIELD, SA_PRECEDENCE_FIELD);
+    }
+    ;
+by:
+    TOKEN_BY
+    {
+        addToken($1, SA_TOKEN_BY, SA_PRECEDENCE_BY);
     }
     ;
 in:
@@ -113,22 +129,28 @@ right_paren:
         addToken($1, SA_TOKEN_RIGHT_PAREN, SA_PRECEDENCE_FIELD);
     }
     ;
+
+comma:
+    TOKEN_COMMA
+    {
+    }
+    ;
 %%
 
 void addToken(char *tk, int tk_type, int tk_precedence) {
-    tokenStack[localCount] = malloc(sizeof(saTokenType));
-    tokenStack[localCount]->token = tk;
-    tokenStack[localCount]->token_type = tk_type;
-    tokenStack[localCount]->token_precedence = tk_precedence;
-    localCount++;
+    tokenStack[tokenCount] = malloc(sizeof(saTokenType));
+    tokenStack[tokenCount]->token = tk;
+    tokenStack[tokenCount]->token_type = tk_type;
+    tokenStack[tokenCount]->token_precedence = tk_precedence;
+    tokenCount++;
 }
 
 void walkStack()
 {
     printf("\nStack:\n");
-    printf("count=%d\n", localCount);
+    printf("count=%d\n", tokenCount);
     int i;
-    for(i=0; i<localCount; i++)
+    for(i=0; i<tokenCount; i++)
         printf("stack[%d]=%s type=%d\n", i, tokenStack[i]->token, tokenStack[i]->token_type);
 }
 
@@ -141,16 +163,14 @@ int main(void) {
     saTokenTypePtr stack[MAXCHARS];
     char error_msg[MAXCHARS];
     tokenizer(str, stack, &count, error_msg);
-    if (error_msg) {
+    reclassify();
+    if (strlen(error_msg > 0)) {
         printf("error: %s", error_msg);
-    }
-    else {
-        printf("token count = %d", count);
     }
 }
 #endif
 
-void tokenizer(char *line, saTokenTypePtr *stack, int *tokenCount, char *error_msg) {
+void tokenizer(char *line, saTokenTypePtr *stack, int *inCount, char *error_msg) {
     parse_error_msg[0] = '\0';
     tokenStack = stack;
     setStringSource(line);
@@ -158,19 +178,99 @@ void tokenizer(char *line, saTokenTypePtr *stack, int *tokenCount, char *error_m
 
     if (parse_error_msg[0] != '\0') {
         strcpy(error_msg,parse_error_msg);
+        *inCount = -1;
     }
     else {
-        tokenStack[localCount] = malloc(sizeof(saTokenType));
-        tokenStack[localCount]->token = "";
-        tokenStack[localCount]->token_type = SA_TOKEN_EOF;
-        tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
-        localCount++;
-        *tokenCount = localCount;
+        tokenStack[tokenCount] = malloc(sizeof(saTokenType));
+        tokenStack[tokenCount]->token = "";
+        tokenStack[tokenCount]->token_type = SA_TOKEN_EOF;
+        tokenStack[tokenCount]->token_precedence = SA_PRECEDENCE_FIELD;
+        tokenCount++;
+        *inCount = tokenCount;
         //walkStack();
+        reclassify();
     }
-    //return 0;
+}
+
+void reclassify()
+{
+    int i;
+
+    // replace might/must/should be with is "hedge"
+    for(i=0; i<tokenCount-1; i++)
+    {
+        if (!strcmp(tokenStack[i]->token, "might") && !strcmp(tokenStack[i+1]->token, "be"))
+        {
+            tokenStack[i]->token = "is";
+            tokenStack[i]->token_type = SA_TOKEN_IS;
+            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
+
+            tokenStack[i+1]->token = "slightly";
+            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
+        else if (!strcmp(tokenStack[i]->token, "must") && !strcmp(tokenStack[i+1]->token, "be"))
+        {
+            tokenStack[i]->token = "is";
+            tokenStack[i]->token_type = SA_TOKEN_IS;
+            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
+
+            tokenStack[i+1]->token = "extremely";
+            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
+        else if (!strcmp(tokenStack[i]->token, "should") && !strcmp(tokenStack[i+1]->token, "be"))
+        {
+            tokenStack[i]->token = "is";
+            tokenStack[i]->token_type = SA_TOKEN_IS;
+            tokenStack[i]->token_precedence = SA_PRECEDENCE_IS;
+
+            tokenStack[i+1]->token = "very";
+            tokenStack[i+1]->token_type = SA_TOKEN_FIELD;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
+    }
+
+    // find all the MODIFIERS (hedges) and Term Sets
+    for(i=0; i<tokenCount; i++)
+    {
+        if (tokenStack[i]->token_type == SA_TOKEN_IS)
+        {
+            int j = i+1;
+            bool done = false;
+            while(done == false)
+            {
+                  if (j == tokenCount)
+                      done = true;
+                  else if (tokenStack[j]->token_type == SA_TOKEN_FIELD)
+                  {
+                      tokenStack[j]->token_type = SA_TOKEN_MODIFIER;
+                      tokenStack[j++]->token_precedence = SA_PRECEDENCE_PREFIX;
+                  }
+                  else if (tokenStack[j]->token_type == SA_TOKEN_NOT)
+                      j++;
+                  else
+                      done = true;
+            }
+            if (tokenStack[j-1]->token_type == SA_TOKEN_MODIFIER)
+            {
+               tokenStack[j-1]->token_type = SA_TOKEN_FUZZYSET;
+               tokenStack[j-1]->token_precedence = SA_PRECEDENCE_FIELD;
+            }
+        }
+        else if (tokenStack[i]->token_type == SA_TOKEN_IN)
+        {
+            tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
+        else if (tokenStack[i]->token_type == SA_TOKEN_BY)
+        {
+            tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
+            tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
+        }
+    }
 }
 
 void yyerror(const char *s) {
-    sprintf(parse_error_msg, "Parse Error[%d]: %s", line_num, s);
+    sprintf(parse_error_msg, "[%d, %d]: %s", line_num, col_num-2, s);
 }
