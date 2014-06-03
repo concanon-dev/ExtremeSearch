@@ -38,7 +38,6 @@ saExpressionTypePtr notOperatorExpression(saTokenTypePtr);
 saTokenTypePtr getNextToken(int);
 saTokenTypePtr lookAtNextToken();
 bool reclassify(saTokenTypePtr [], int, char *);
-void tokenize(char *, saTokenTypePtr [], int *, char *);
 void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
 // Expression Management functions
@@ -96,7 +95,7 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
     int i;
 
     // parse where line into tokens
-    tokenize(where_line, global_tokenStack, &global_tokenCount, errMsg);
+    tokenizer(where_line, global_tokenStack, &global_tokenCount, errMsg);
     if (global_tokenCount == -1)
     {
         fprintf(stderr, "tokenize failure: %s\n", errMsg);
@@ -283,138 +282,6 @@ bool reclassify(saTokenTypePtr tokenStack[], int tokenCount, char *errMsg)
         return(false);
     }
     return(true);
-}
-
-
-void tokenize(char *line, saTokenTypePtr tokenStack[], int *tokenCount, char *errmsg)
-{
-    char buffer[MAXCHARS];
-    int i;
-    int localCount = 0;
-    int parencount = 0;
-
-    errmsg[0] = '\0';
-    *tokenCount = -1;
-    bool done = false;
-
-    bool doTest = true;
-
-    //struct timeval start_time, end_time, diff_time;
-    //FILE *jjjj = fopen("./perf.txt", "a");
-    //fprintf(jjjj, "where: %s\n", line);
-    //gettimeofday(&start_time, NULL);
-
-    if (doTest) {
-        tokenizer(line, tokenStack, tokenCount, errmsg);
-    }
-    else {
-
-    while(done == false)
-    { 
-          buffer[0] = '\0';
-          i = 0;
-          while(*line == ' ')
-                line++;
-          if (*line == '\0')
-              done = true;
-          if (done == false)
-          {
-              if (*line == '(')
-              {
-                  tokenStack[localCount] = malloc(sizeof(saTokenType));
-                  tokenStack[localCount]->token = "(";
-                  tokenStack[localCount]->token_type = SA_TOKEN_LEFT_PAREN;
-                  tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
-                  localCount++;
-                  parencount++;
-                  line++;
-              }
-              else if (*line == ')')
-              {
-                  tokenStack[localCount] = malloc(sizeof(saTokenType));
-                  tokenStack[localCount]->token = ")";
-                  tokenStack[localCount]->token_type = SA_TOKEN_RIGHT_PAREN;
-                  tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
-                  localCount++;
-                  parencount--;
-                  if (parencount < 0)
-                  {
-                      sprintf(errmsg, "Unbalanced Parenthesis '%s'", line);
-                      return;
-                  }
-                  line++;
-              }
-              else if(!isalnum(*line) && (*line != '-') && (*line != '_') && (*line != '.'))
-              {
-                  sprintf(errmsg, "Illegal Character %c", *line);
-                  return;
-              }
-              else
-              {
-                  while(isalnum(*line) || (*line == '-') || (*line == '_') || (*line == '.'))
-                  {
-                        buffer[i++] = *line;
-                        line++;
-                  }
-                  buffer[i] = '\0';
-                  tokenStack[localCount] = malloc(sizeof(saTokenType));
-                  tokenStack[localCount]->token = (char *)malloc(sizeof(buffer)+1);
-                  strcpy(tokenStack[localCount]->token, buffer);
-                  if (!strcmp(buffer, "and") || !strcmp(buffer, "AND")
-                      || !strcmp(buffer, "but") || !strcmp(buffer, "BUT")
-                      || !strcmp(buffer, "yet") || !strcmp(buffer, "YET"))
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_AND;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_AND;
-                  }
-                  else if (!strcmp(buffer, "or") || !strcmp(buffer, "OR"))
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_OR;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_OR;
-                  }
-                  else if (!strcmp(buffer, "is") || !strcmp(buffer, "IS"))
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_IS;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_IS;
-                  }
-                  else if (!strcmp(buffer, "in") || !strcmp(buffer, "IN"))
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_IN;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_IN;
-                  }
-                  else if (!strcmp(buffer, "not") || !strcmp(buffer, "NOT"))
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_NOT;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_PREFIX;
-                  }
-                  else
-                  {
-                      tokenStack[localCount]->token_type = SA_TOKEN_FIELD;
-                      tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
-                  }
-                  localCount++;
-              }
-         }
-    }
-    if (parencount > 0)
-    {
-        sprintf(errmsg, "Missing ')' %d", parencount);
-        return;
-    }
-    tokenStack[localCount] = malloc(sizeof(saTokenType));
-    tokenStack[localCount]->token = "";
-    tokenStack[localCount]->token_type = SA_TOKEN_EOF;
-    tokenStack[localCount]->token_precedence = SA_PRECEDENCE_FIELD;
-    *tokenCount = localCount+1;
-    }
-
-    //gettimeofday(&end_time, NULL);
-    //diff_time.tv_sec = end_time.tv_sec - start_time.tv_sec;
-    //diff_time.tv_usec = end_time.tv_usec - start_time.tv_usec;
-    //fprintf(jjjj, "%ld.%ld\n", diff_time.tv_sec, diff_time.tv_usec);
-    //fclose(jjjj);
-
-    return;
 }
 
 saExpressionTypePtr andExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 

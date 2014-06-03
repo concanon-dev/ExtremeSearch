@@ -30,6 +30,8 @@ if __name__ == '__main__':
             raise Exception("xsListConcepts-F-001: Usage: xsListConcepts FROM context [IN scope]")
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListConcepts"
+        if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsListConcepts-F-000: Can't find binary file " + binary)
 

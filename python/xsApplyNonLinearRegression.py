@@ -52,6 +52,8 @@ if __name__ == '__main__':
             if rType == "Quad":
 
                 binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'
+                if (platform.system() == 'Windows'):
+                    binary = binary + ".exe"
                 if not os.path.isfile(binary):
                     raise Exception("xsApplyQuadRegression-F-000: Can't find binary file " + binary)
 

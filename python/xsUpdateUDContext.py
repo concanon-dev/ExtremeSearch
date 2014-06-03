@@ -91,6 +91,8 @@ if __name__ == '__main__':
 
         info_file = settings['infoPath']
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" + platform.system() + "/" + platform.architecture()[0] + "/xsUpdateUDContext"
+        if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsUpdateUDContext-F-000: Can't find binary file " + binary)
 

@@ -17,8 +17,8 @@ if __name__ == '__main__':
         scope = sys.argv[1]
         scope = scope.lower()
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListContexts"
-        if not os.path.isfile(binary):
-            raise Exception("xsListContexts-F-000: Can't find binary file " + binary)
+#        if not os.path.isfile(binary):
+#            raise Exception("xsListContexts-F-000: Can't find binary file " + binary)
 
         subprocess.call([binary, '-s', scope])
 

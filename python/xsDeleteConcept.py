@@ -37,6 +37,8 @@ if __name__ == '__main__':
             raise Exception("xsDeleteConcept-F-001: Usage: xsDeleteConcept concept FROM context [IN scope]");
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDeleteConcept"
+        if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsDeleteConcept-F-000: Can't find binary file " + binary)
 

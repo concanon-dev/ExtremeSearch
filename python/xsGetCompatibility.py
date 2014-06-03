@@ -36,6 +36,8 @@ if __name__ == '__main__':
             context = field
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsGetCompatibility"
+        if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsGetCompatibility-F-000: Can't find binary file " + binary)
 

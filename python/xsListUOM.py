@@ -30,6 +30,8 @@ if __name__ == '__main__':
             raise Exception("xsListUOM-F-001: Usage: xsListUOM FROM context [IN scope]")
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
+        if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsListUOM-F-000: Can't find binary file " + binary)
 
