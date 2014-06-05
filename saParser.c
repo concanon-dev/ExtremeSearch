@@ -95,6 +95,10 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
 {
     int i;
 
+    // Reset Token Count/Index - Unit Tests are re-entrant
+    global_tokenCount = 0;
+    global_tokenIndex = 0;
+
     // parse where line into tokens, validate grammer
     tokenizer(where_line, global_tokenStack, &global_tokenCount, errMsg);
     if (global_tokenCount == -1)
@@ -105,6 +109,7 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
     // Build the expression tree
     return(buildExpressionStack(parseExpression(0), expStack, 0));
 }
+
 
 saExpressionTypePtrArray generateExpStack()
 {
@@ -154,6 +159,7 @@ saExpressionTypePtr parseExpression(precedence)
     else 
     {
         fprintf(stderr, "parseException: Bad token: %s\n", currToken->token);
+        fprintf(stderr, "parseException: Bad token: %d\n", currToken->token_type);
         return(NULL);
     }
 

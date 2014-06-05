@@ -171,6 +171,7 @@ int main(void) {
 #endif
 
 void tokenizer(char *line, saTokenTypePtr *stack, int *inCount, char *error_msg) {
+    tokenCount = 0;
     parse_error_msg[0] = '\0';
     tokenStack = stack;
     setStringSource(line);
