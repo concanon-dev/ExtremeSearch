@@ -37,8 +37,8 @@ USER_DIR = tests
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-cxx.Cygwin := 86_64-w64-mingw32-g++
-cxx.CYGWIN_NT-6.1 := 86_64-w64-mingw32-g++
+cxx.Cygwin := x86_64-w64-mingw32-g++
+cxx.CYGWIN_NT-6.1 := x86_64-w64-mingw32-g++
 cxx.darwin := g++
 cxx.Darwin := g++
 cxx.linux  := g++
@@ -47,8 +47,16 @@ cxx.GNU/Linux  := g++
 CXX := ${cxx.${OSTYPE}}
 #CXX=x86_64-w64-mingw32-g++
 
-CXXFLAGS += -g -Wall -Wextra -pthread 
+cxxflags.Cygwin += -g -Wall -Wextra -pthread -static-libgcc -static-libstdc++
+cxxflags.CYGWIN_NT-6.1 += -g -Wall -Wextra -pthread -static-libgcc -static-libstdc++
+cxxflags.darwin += -g -Wall -Wextra -pthread 
+cxxflags.Darwin += -g -Wall -Wextra -pthread 
+cxxflags.linux  += -g -Wall -Wextra -pthread 
+cxxflags.Linux  += -g -Wall -Wextra -pthread 
+cxxflags.GNU/Linux  += -g -Wall -Wextra -pthread 
+#CXXFLAGS += -g -Wall -Wextra -pthread 
 #CXXFLAGS += -g -Wall -Wextra -pthread -static-libgcc -static-libstdc++
+CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.

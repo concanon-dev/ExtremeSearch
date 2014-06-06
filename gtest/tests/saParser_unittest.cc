@@ -30,6 +30,23 @@ TEST(ParserTest, IS_Clause) {
     EXPECT_STREQ(expStack[2]->field, "is");
 }
 
+TEST(ParserTest, IS_Clause_With_Hedge) {
+
+    char whereLine[MAXROWSIZE / 32] = "Height is very Tall";
+    char tempbuf[MAXROWSIZE];
+    saExpressionTypePtrArray expStack = generateExpStack();
+    int stackSize = saParserParse(whereLine, tempbuf, expStack);
+    EXPECT_EQ(stackSize, 4);
+    EXPECT_EQ(expStack[0]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[0]->field, "Height");
+    EXPECT_EQ(expStack[1]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[1]->field, "Tall");
+    EXPECT_EQ(expStack[2]->type, SA_TOKEN_MODIFIER);
+    EXPECT_STREQ(expStack[2]->field, "very");
+    EXPECT_EQ(expStack[3]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[3]->field, "is");
+}
+
 TEST(ParserTest, IN_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "Height in MaleHeight is Tall";
@@ -50,6 +67,7 @@ TEST(ParserTest, IN_Clause) {
     EXPECT_STREQ(expStack[4]->field, "is");
 }
 
+/*
 TEST(ParserTest, BY_Clause) {
     char whereLine[MAXROWSIZE / 32] = "Height by Gender is Tall";
     char tempbuf[MAXROWSIZE];
@@ -68,7 +86,8 @@ TEST(ParserTest, BY_Clause) {
     EXPECT_EQ(expStack[4]->type, SA_TOKEN_IS);
     EXPECT_STREQ(expStack[4]->field, "is");
 }
-
+*/
+/*
 TEST(ParserTest, IN_Clause_and_BY_Clause) {
     char whereLine[MAXROWSIZE / 32] = "Height in MaleHeight by Age is Tall";
     char tempbuf[MAXROWSIZE];
@@ -91,4 +110,4 @@ TEST(ParserTest, IN_Clause_and_BY_Clause) {
     EXPECT_EQ(expStack[6]->type, SA_TOKEN_IS);
     EXPECT_STREQ(expStack[6]->field, "is");
 }
-
+*/
