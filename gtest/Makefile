@@ -37,8 +37,18 @@ USER_DIR = tests
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-CXX=x86_64-w64-mingw32-g++
-CXXFLAGS += -g -Wall -Wextra -pthread -static-libgcc -static-libstdc++
+cxx.Cygwin := 86_64-w64-mingw32-g++
+cxx.CYGWIN_NT-6.1 := 86_64-w64-mingw32-g++
+cxx.darwin := g++
+cxx.Darwin := g++
+cxx.linux  := g++
+cxx.Linux  := g++
+cxx.GNU/Linux  := g++
+CXX := ${cxx.${OSTYPE}}
+#CXX=x86_64-w64-mingw32-g++
+
+CXXFLAGS += -g -Wall -Wextra -pthread 
+#CXXFLAGS += -g -Wall -Wextra -pthread -static-libgcc -static-libstdc++
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
@@ -84,8 +94,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-saParser_unittest.o : $(USER_DIR)/saParser_unittest.cc \
-                     $(USER_DIR)/saParser_unittest.h $(GTEST_HEADERS)
+saParser_unittest.o : $(USER_DIR)/saParser_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saParser_unittest.cc
 
 saParser_unittest : saParser_unittest.o gtest_main.a
