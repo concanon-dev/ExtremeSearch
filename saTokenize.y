@@ -30,17 +30,15 @@ int tokenCount = 0;
     char *sval;
 };
 
-%token <sval> TOKEN_COMMA
 %token <sval> TOKEN_RIGHT_PAREN
 %token <sval> TOKEN_LEFT_PAREN
 %token <sval> TOKEN_AND
 %token <sval> TOKEN_OR
 %token <sval> TOKEN_NOT
 %token <sval> TOKEN_IN
-%token <sval> TOKEN_BY
 %token <sval> TOKEN_IS
 %token <sval> TOKEN_FIELD
-%type <sval> container is_modifiers is_concept by_clause in_clause in_field field or and is in by right_paren left_paren comma
+%type <sval> container is_modifiers is_concept in_clause in_field field or and is in right_paren left_paren 
 
 %%
 container:
@@ -58,11 +56,6 @@ is_modifiers:
 
 is_concept:
     in_clause is
-    | in_clause by_clause is
-    ;
-by_clause:
-    by_clause comma field
-    | by field
     ;
 
 in_clause:
@@ -84,12 +77,6 @@ field:
     {
         addToken($1, SA_TOKEN_NOT, SA_PRECEDENCE_PREFIX);
         addToken($2, SA_TOKEN_FIELD, SA_PRECEDENCE_FIELD);
-    }
-    ;
-by:
-    TOKEN_BY
-    {
-        addToken($1, SA_TOKEN_BY, SA_PRECEDENCE_BY);
     }
     ;
 in:
@@ -130,11 +117,6 @@ right_paren:
     }
     ;
 
-comma:
-    TOKEN_COMMA
-    {
-    }
-    ;
 %%
 
 void addToken(char *tk, int tk_type, int tk_precedence) {
@@ -264,11 +246,13 @@ void reclassify()
             tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
             tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
         }
+        /*
         else if (tokenStack[i]->token_type == SA_TOKEN_BY)
         {
             tokenStack[i+1]->token_type = SA_TOKEN_FUZZYTERMSET;
             tokenStack[i+1]->token_precedence = SA_PRECEDENCE_FIELD;
         }
+        */
     }
 }
 
