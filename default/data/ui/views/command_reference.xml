@@ -1,33 +1,18 @@
+<?xml-stylesheet type="text/css" href="application.css"?>
 <dashboard>
   <label>Command Reference</label>
   <row>
     <html>
-      <a
-        href="xtreme_overview">
-        <img
-          alt="Return to Overview"
-          src="/static/app/xtreme/images/overview_button.png" />
+      <a class="btn btn-xtreme" href="xtreme_overview">
+        <span class="icon-play"></span>  Overview
       </a>
-      <img
-        src="/static/app/xtreme/images/space.png" />
-      <a
-        href="http://www.sciantaanalytics.com/?q=documentation"
-        target="_blank">
-        <img
-          alt="Support Site"
-          src="/static/app/xtreme/images/doc_button.png" />
+      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation">
+        <span class="icon-play"></span>  Documentation
       </a>
-      <img
-        src="/static/app/xtreme/images/space.png" />
-      <a
-        href="http://www.sciantaanalytics.com/?q=support_pages"
-        target="_blank">
-        <img
-          alt="Support Site"
-          src="/static/app/xtreme/images/support_button.png" />
+      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages">
+        <span class="icon-play"></span>  Support
       </a>
-      <span
-        class="insetrt">Scianta Analytics Help</span>
+      <!--<span class="insetrt">Scianta Analytics Help</span>-->
       <p>All Extreme Search functions may be entered as commands directly within Splunk Search.
         Results are returned within the Splunk web interface. It is not necessary to use an external
         interface. </p>
@@ -36,364 +21,192 @@
         class="head4">Command Details</span>
       <p>Extreme Search for Splunk includes the commands listed below. Click on any command name to
         view the help page for that command. </p>
-      <table
-        width="800"
-        height="851"
-        cellpadding="0"
-        cellspacing="0">
-        <col
-          width="200" />
-        <col
-          width="150" />
-        <col
-          width="450" />
-        <tr>
-          <td
-            width="200"
-            class="head5">COMMAND</td>
-          <td
-            width="150"
-            class="head5">CATEGORY</td>
-          <td
-            width="450"
-            class="head5">DESCRIPTION</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsAggregateAutoRegression">xsAggregateAutoRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Combines multiple Auto Regression algorithms in a weighted fashion to produce a new
-            aggregate regression formula.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsAggregateCorrelation">xsAggregateCorrelation</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Combines multiple correlation algorithms in a weighted fashion to produce a new
-            aggregate correlation formula.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsAggregateLinearRegression">xsAggregateLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Combines multiple Linear Regression algorithms in a weighted fashion to produce a new
-            aggregate regression formula.</td>
-        </tr>
-        <tr class="tableodd">
-          <td>
-            <a
-              href="xsAggregateNonLinearRegression">xsAggregateNonLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Combines multiple NonLinear Regression algorithms in a weighted fashion to produce a
-            new aggregate regression formula.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsAggregateSpearmanCorrelation">xsAggregateSpearmanCorrelation</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Combines multiple Spearman Correlation algorithms in a weighted fashion to produce a
-            new aggregate Spearman Correlation formula.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsApplyAutoRegression">xsApplyAutoRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Applies a formula created via xsPerformAutoRegression (or xsAggreateAutoRegression)
-            against a stream of data</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsApplyLinearRegression">xsApplyLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Applies a formula created via xsPerformLinearRegression (or
-            xsAggregateLinearRegression) against a stream of data</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsApplyNonLinearRegression">xsApplyNonLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Applies a formula created via xsPerformNonLinearRegression (or
-            xsAggreateNonLinearRegression) against a stream of data</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsCloneContext">xsCloneContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Makes a full copy of a Context.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsCloneConcept">xsCloneConcept</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Copies a Concept from one Context to another.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsCreateContext">xsCreateContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Creates a context, which contains concepts based on a variety of methods of
-            mapping qualitative semantics to the data. Note: This is a Splunk 'streaming'
-            command.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsCreateUDContext">xsCreateUDContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Creates a context, which contains concepts based on a variety of methods of
-            mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsDeleteContext">xsDeleteContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Deletes a Context.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsDeleteConcept">xsDeleteConcept</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Deletes a Concept from a Context.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsDiscoverTrend">xsDiscoverTrend</a>
-          </td>
-          <td>Predictive Analytics</td>
-          <td>Takes the lowest and highest x value, applies linear regression to these values, and
-            maps the results to the concept represented by the Y field.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsDisplayContext">xsDisplayContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Displays all of the concepts in a context.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsDisplayConcept">xsDisplayConcept</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Displays one or more concepts (with hedges).</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsDisplayWhere">xsDisplayWhere</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Displays the (hedged) concepts used by xsWhere.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsFindBestConcept">xsFindBestConcept</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Returns the name of the concept that best fits (highest compatability) the field,
-              as well as the associated compatibility index (CIX).
-          </td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsFindMemebership">xsFindMemebership</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Returns the membership value of a data value in each concept in a specified context, or returns
-            the data value given a membership value in a specified context.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsGetDistance">xsGetDistance</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Determine the distance (in miles) between two locations</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsGetWhereCIX">xsGetWhereCIX</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Generates the compatibility index (cix) of a conceptual query.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsLicense">xsLicense</a>
-          </td>
-          <td>System</td>
-          <td>Installs, updates and activates a product license key.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsListContexts">xsListContexts</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>List the contexts in private, app or global.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsListConcepts">xsListConcepts</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>List the concepts from a context in private, app or global.</td>
-        </tr>
-       <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsListUOM">xsListUOM</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>List the Unit of Measurement (UOM) from a context in private, app or global.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsOverlayContext">xsOverlayContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Overlays multiple contexts on a chart or in a table</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsPerformAutoRegression">xsPerformAutoRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Performs linear (least squares) and polynomial (max entropy) regression for a set of
-            data streams. For linear regression, the function y=coef1*x+coef2 is generated for each
-            stream. For polynomial, a three coefficient function, y= coef0*x^2+coef1*x+coef2, is
-            generated for each stream.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsPerformCorrelation">xsPerformCorrelation</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Performs correlation of a data stream or compatibility index stream.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsPerformLinearRegression">xsPerformLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Performs linear regression of data streams (x) over other data streams(y). For each
-            pair of data streams, the following function is generated: y=slope*x+intercept</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsPerformNonLinearRegression">xsPerformNonLinearRegression</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Performs quadratic (non-linear) regression of data streams (x) over other data streams
-            (y). For each pair of data streams, the following function is generated:
-            y=coef0*x^2+coef1*x+coef2.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsPerformSpearmanCorrelation">xsPerformSpearmanCorrelation</a>
-          </td>
-          <td>Statistical Reasoning</td>
-          <td>Performs Spearman correlation of a data stream or compatibility index stream.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsPredict">xsPredict</a>
-          </td>
-          <td>Predictive Analytics</td>
-          <td>Predicts the future values of a time-series data stream.</td>
-        </tr>
-        <tr
-          class="tableodd">
-          <td>
-            <a
-              href="xsRenameContext">xsRenameContext</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Renames a Context.</td>
-        </tr>
-        <tr
-          class="tableeven">
-          <td>
-            <a
-              href="xsWhere">xsWhere</a>
-          </td>
-          <td>Conceptual Search</td>
-          <td>Selects a collection of rows from the data space based on the application of
-            qualitative semantics (which are created by xsCreateContext).</td>
-        </tr>
+
+      <table class="table table-striped table-responsive">
+        <thead>
+          <tr>
+            <th class="head5">COMMAND</th>
+            <th class="head5" style="min-width:125px;">CATEGORY</th>
+            <th class="head5">DESCRIPTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> <a href="xsAggregateAutoRegression">xsAggregateAutoRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Combines multiple Auto Regression algorithms in a weighted fashion to produce a new aggregate regression formula.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsAggregateCorrelation">xsAggregateCorrelation</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Combines multiple correlation algorithms in a weighted fashion to produce a new aggregate correlation formula.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsAggregateLinearRegression">xsAggregateLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Combines multiple Linear Regression algorithms in a weighted fashion to produce a new aggregate regression formula.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsAggregateNonLinearRegression">xsAggregateNonLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Combines multiple NonLinear Regression algorithms in a weighted fashion to produce a new aggregate regression formula.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsAggregateSpearmanCorrelation">xsAggregateSpearmanCorrelation</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Combines multiple Spearman Correlation algorithms in a weighted fashion to produce a new aggregate Spearman Correlation formula.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsApplyAutoRegression">xsApplyAutoRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Applies a formula created via xsPerformAutoRegression (or xsAggreateAutoRegression) against a stream of data</td>
+          </tr>
+          <tr>
+            <td> <a href="xsApplyLinearRegression">xsApplyLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Applies a formula created via xsPerformLinearRegression (or xsAggregateLinearRegression) against a stream of data</td>
+          </tr>
+          <tr>
+            <td> <a href="xsApplyNonLinearRegression">xsApplyNonLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Applies a formula created via xsPerformNonLinearRegression (or xsAggreateNonLinearRegression) against a stream of data</td>
+          </tr>
+          <tr>
+            <td> <a href="xsCloneContext">xsCloneContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Makes a full copy of a Context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsCloneConcept">xsCloneConcept</a> </td>
+            <td>Conceptual Search</td>
+            <td>Copies a Concept from one Context to another.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsCreateContext">xsCreateContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Creates a context, which contains concepts based on a variety of methods of mapping qualitative semantics to the data. Note: This is a Splunk 'streaming' command.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsCreateUDContext">xsCreateUDContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Creates a context, which contains concepts based on a variety of methods of mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDeleteContext">xsDeleteContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Deletes a Context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDeleteConcept">xsDeleteConcept</a> </td>
+            <td>Conceptual Search</td>
+            <td>Deletes a Concept from a Context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDiscoverTrend">xsDiscoverTrend</a> </td>
+            <td>Predictive Analytics</td>
+            <td>Takes the lowest and highest x value, applies linear regression to these values, and maps the results to the concept represented by the Y field.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDisplayContext">xsDisplayContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Displays all of the concepts in a context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDisplayConcept">xsDisplayConcept</a> </td>
+            <td>Conceptual Search</td>
+            <td>Displays one or more concepts (with hedges).</td>
+          </tr>
+          <tr>
+            <td> <a href="xsDisplayWhere">xsDisplayWhere</a> </td>
+            <td>Conceptual Search</td>
+            <td>Displays the (hedged) concepts used by xsWhere.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsFindBestConcept">xsFindBestConcept</a> </td>
+            <td>Conceptual Search</td>
+            <td>Returns the name of the concept that best fits (highest compatability) the field, as well as the associated compatibility index (CIX).  </td>
+          </tr>
+          <tr>
+            <td> <a href="xsFindMemebership">xsFindMemebership</a> </td>
+            <td>Conceptual Search</td>
+            <td>Returns the membership value of a data value in each concept in a specified context, or returns the data value given a membership value in a specified context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsGetDistance">xsGetDistance</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Determine the distance (in miles) between two locations</td>
+          </tr>
+          <tr>
+            <td> <a href="xsGetWhereCIX">xsGetWhereCIX</a> </td>
+            <td>Conceptual Search</td>
+            <td>Generates the compatibility index (cix) of a conceptual query.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsLicense">xsLicense</a> </td>
+            <td>System</td>
+            <td>Installs, updates and activates a product license key.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsListContexts">xsListContexts</a> </td>
+            <td>Conceptual Search</td>
+            <td>List the contexts in private, app or global.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsListConcepts">xsListConcepts</a> </td>
+            <td>Conceptual Search</td>
+            <td>List the concepts from a context in private, app or global.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsListUOM">xsListUOM</a> </td>
+            <td>Conceptual Search</td>
+            <td>List the Unit of Measurement (UOM) from a context in private, app or global.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsOverlayContext">xsOverlayContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Overlays multiple contexts on a chart or in a table</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPerformAutoRegression">xsPerformAutoRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Performs linear (least squares) and polynomial (max entropy) regression for a set of data streams. For linear regression, the function y=coef1*x+coef2 is generated for each stream. For polynomial, a three coefficient function, y= coef0*x^2+coef1*x+coef2, is generated for each stream.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPerformCorrelation">xsPerformCorrelation</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Performs correlation of a data stream or compatibility index stream.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPerformLinearRegression">xsPerformLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Performs linear regression of data streams (x) over other data streams(y). For each pair of data streams, the following function is generated: y=slope*x+intercept</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPerformNonLinearRegression">xsPerformNonLinearRegression</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Performs quadratic (non-linear) regression of data streams (x) over other data streams (y). For each pair of data streams, the following function is generated: y=coef0*x^2+coef1*x+coef2.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPerformSpearmanCorrelation">xsPerformSpearmanCorrelation</a> </td>
+            <td>Statistical Reasoning</td>
+            <td>Performs Spearman correlation of a data stream or compatibility index stream.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsPredict">xsPredict</a> </td>
+            <td>Predictive Analytics</td>
+            <td>Predicts the future values of a time-series data stream.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsRenameContext">xsRenameContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Renames a Context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsWhere">xsWhere</a> </td>
+            <td>Conceptual Search</td>
+            <td>Selects a collection of rows from the data space based on the application of qualitative semantics (which are created by xsCreateContext).</td>
+          </tr>
+        </tbody>
       </table>
       <p
         align="center">

@@ -112,3 +112,20 @@
   margin-right: 20px;
   border-radius: 7px;
 }
+.btn-xtreme {
+  background: #006bc4;
+  background-image: linear-gradient(to bottom, #007fd0, #006bc4);
+  background-repeat: repeat-x;
+  border: 1px solid #006bc4;
+  box-shadow: 0 1px 0 #007fd0 inset;
+  color: #FFFFFF;
+  margin-right: 5px;
+}
+.btn-xtreme:hover {
+  background: #007fd0;
+  background-image: linear-gradient(to bottom, #018de6, #007fd0);
+  background-repeat: repeat-x;
+  border: 1px solid #007fd0;
+  box-shadow: 0 1px 0 #018de6 inset;
+  color: #FFFFFF;
+}

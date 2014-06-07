@@ -70,7 +70,7 @@ Enter values in each field as necessary to create the Context
 
     <row>
         <html>
-            <h2>Membership</h2>
+            <h2 id="ctxName">Membership</h2>
             <div id="chart1" />
         </html>
     </row>

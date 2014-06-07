@@ -52,6 +52,9 @@ require([
 
         myResults.on("data", function() {
             var myData = myResults.data().rows;
+	    var ctxName = myResults.data().fields[0];
+             $('#ctxName').html(ctxName);
+
             var index = 0;
 
             /* get terms from tokens for key at top of chart */

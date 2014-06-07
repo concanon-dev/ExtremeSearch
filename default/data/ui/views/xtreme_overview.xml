@@ -5,22 +5,14 @@
     <html>
       <img src="/static/app/xtreme/images/ess_400.png" />
       <p>
-        <a href="command_reference">
-          <img alt="Jump to Command Reference"
-            src="/static/app/xtreme/images/commandreference_button.png" />
+        <a class="btn btn-xtreme" href="command_reference">
+          <span class="icon-play"></span>  Command Reference
         </a>
-        <img src="/static/app/xtreme/images/space.png" />
-        <a href="http://www.sciantaanalytics.com/?q=documentation"
-          target="_blank">
-          <img alt="Support Site"
-            src="/static/app/xtreme/images/doc_button.png" />
+        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation">
+          <span class="icon-play"></span>  Documentation
         </a>
-        <img src="/static/app/xtreme/images/space.png" />
-        <a href="http://www.sciantaanalytics.com/?q=support_pages"
-          target="_blank">
-          <img
-            alt="Support Site"
-            src="/static/app/xtreme/images/support_button.png" />
+        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages">
+          <span class="icon-play"></span>  Support
         </a>
       </p>
       <p>
