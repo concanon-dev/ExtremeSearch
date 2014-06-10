@@ -35,7 +35,7 @@ bool saSplunkGetContextPath(char *path, int scope, char *app, char *user)
             return(false);
         if (*app == '\0' || *user == '\0')
             return(false);
-        sprintf(path, "%s/users/%s/%s/contexts", splunkHome, user, app);
+        sprintf(path, "%s/etc/users/%s/%s/contexts", splunkHome, user, app);
     } 
     else if (scope == SA_SPLUNK_SCOPE_APP) 
     {
