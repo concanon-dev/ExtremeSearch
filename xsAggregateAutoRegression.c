@@ -17,6 +17,7 @@
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
+
 static char inbuf[MAXSTRING*1000];
 static char tempbuf[MAXSTRING*10];
 static char *fieldList[MAXROWSIZE*4];
@@ -36,20 +37,23 @@ extern FILE *saOpenFile(char *, char *);
 
 char *getField(char *);
 int getIndex(int, int, int);
-void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
     char outfile[256];
     double p;
 
+    // confirm the license
     if (!isLicensed())
         exit(EXIT_FAILURE);
 
+    // initialize system
     initSignalHandler(basename(argv[0]));
     outfile[0] = '\0';
     int c;
     bool argError = false;
+
+    // get arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch (c)
@@ -68,6 +72,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
 
+   // initialize array
    int numFields;
    int i;
    for(i=0; i<MAXROWSIZE; i++)
@@ -84,7 +89,7 @@ int main(int argc, char* argv[])
    int numRowsIndex = -1;
    int xIndex = -1;
 
-   // Get the header
+   // Get the csv header
    numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
@@ -103,8 +108,8 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "x"))
             xIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
+   // load the data
    int maxIndex = 0;
    while(!feof(stdin))
    {
@@ -112,6 +117,11 @@ int main(int argc, char* argv[])
        numFields = saCSVGetLine(inbuf, fieldList);
        if (!feof(stdin))
        {
+           // See if there is already a reference to the class.  A class is the tuple 
+           // formed by the values of the fields "x", "bf" and "bv".  This is used to
+           // make sure that the correct rows are added together correctly in a weighted
+           // fashion.  The weight is the count, the number of events that contribute to
+           // the algorithm.
            index = getIndex(xIndex, byFIndex, byVIndex);
            if (byF[index] == NULL)
            {
@@ -129,6 +139,7 @@ int main(int argc, char* argv[])
                strcpy(X[index], fieldList[xIndex]);
            }
 
+           // increment the coefficients
            int rowCount = atoi(fieldList[numRowsIndex]);
            if (rowCount > 0)
            {
@@ -172,6 +183,7 @@ int main(int argc, char* argv[])
        fclose(f);
 }
 
+// return the contents of a field, without quotes if they exist
 char *getField(char *field)
 {
    if (*field == '"')
@@ -184,6 +196,7 @@ char *getField(char *field)
        return(field);
 }
 
+// find the row that corresponds to the x,bf,bv tuple
 int getIndex(int xIndex, int byFIndex, int byVIndex)
 {
    sprintf(tempbuf, "%s,%s,%s", fieldList[xIndex], fieldList[byFIndex], fieldList[byVIndex]);
@@ -205,16 +218,3 @@ int getIndex(int xIndex, int byFIndex, int byVIndex)
    return(i);
 }
 
-void printLine(char *fieldList[], int numFields)
-{
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
-   {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
-   }
-   fputs("\n", x);
-}

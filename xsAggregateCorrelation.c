@@ -17,6 +17,7 @@
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
+
 static char inbuf[MAXSTRING*1000];
 static char tempbuf[MAXSTRING*10];
 static char *fieldList[MAXROWSIZE*4];
@@ -35,7 +36,6 @@ extern FILE *saOpenFile(char *, char *);
 
 char *getField(char *);
 int getIndex(int, int, int, int);
-void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
@@ -105,7 +105,6 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
    int maxIndex = 0;
    while(!feof(stdin))
@@ -114,6 +113,11 @@ int main(int argc, char* argv[])
        numFields = saCSVGetLine(inbuf, fieldList);
        if (!feof(stdin))
        {
+           // See if there is already a reference to the class.  A class is the tuple
+           // formed by the values of the fields "x", "bf" and "bv".  This is used to
+           // make sure that the correct rows are added together correctly in a weighted
+           // fashion.  The weight is the count, the number of events that contribute to
+           // the algorithm.
            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
            if (byF[index] == NULL)
            {
@@ -163,6 +167,7 @@ int main(int argc, char* argv[])
    }
 }
 
+// return the contents of a field, without quotes if found
 char *getField(char *field)
 {
    if (*field == '"')
@@ -175,6 +180,7 @@ char *getField(char *field)
        return(field);
 }
 
+// find the row that corresponds to the x,bf,bv tuple
 int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
 {
    sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
@@ -197,16 +203,3 @@ int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
    return(i);
 }
 
-void printLine(char *fieldList[], int numFields)
-{
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
-   {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
-   }
-   fputs("\n", x);
-}
