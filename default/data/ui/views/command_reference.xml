@@ -161,11 +161,13 @@
             <td>Conceptual Search</td>
             <td>List the Unit of Measurement (UOM) from a context in private, app or global.</td>
           </tr>
+          <!--
           <tr>
             <td> <a href="xsOverlayContext">xsOverlayContext</a> </td>
             <td>Conceptual Search</td>
             <td>Overlays multiple contexts on a chart or in a table</td>
           </tr>
+          -->
           <tr>
             <td> <a href="xsPerformAutoRegression">xsPerformAutoRegression</a> </td>
             <td>Statistical Reasoning</td>

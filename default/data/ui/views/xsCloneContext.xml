@@ -41,7 +41,7 @@
                         </p>
                         <p>
                                 <span class="explanation">Clones the Context called 'AirTime' from
-                          the global scope to a context called myAirTime in the global scope.</span>
+                          the global scope to a context called myAirTime in the private scope.</span>
                         </p>
                         <p>
                                 <span class="head4">Parameters: </span>
