@@ -29,30 +29,34 @@ int main(int argc, char* argv[])
 {
     saContextTypePtr contextPtr;
     bool argError;
-    char contextName[256];
-    char newContextName[256];
+    char destContextName[256];
+    char srcContextName[256];
     int c;
-    int scope = saSplunkGetScope(NULL);
+    int destScope = saSplunkGetScope(NULL);
+    int srcScope = saSplunkGetScope(NULL);
 
     if (!isLicensed())
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;
-    contextName[0] ='\0';
-    newContextName[0] ='\0';
-    while ((c = getopt(argc, argv, "c:n:s:")) != -1) 
+    destContextName[0] ='\0';
+    srcContextName[0] ='\0';
+    while ((c = getopt(argc, argv, "d:s:0:1:")) != -1) 
     {
         switch (c)
         {
-            case 'c':
-	        strcpy(contextName, optarg);
-                break;
-            case 'n':
-                strcpy(newContextName, optarg);
-                break;
             case 's':
-                scope = saSplunkGetScope(optarg);
+	        strcpy(srcContextName, optarg);
+                break;
+            case 'd':
+                strcpy(destContextName, optarg);
+                break;
+            case '0':
+                srcScope = saSplunkGetScope(optarg);
+                break;
+            case '1':
+                destScope = saSplunkGetScope(optarg);
                 break;
             case '?':
                 fprintf(stderr, "xsRenameContext-F-101: Unrecognised option: -%c\n", optopt);
@@ -61,7 +65,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsRenameContext-F-103: Usage: xsRenameContext -c contextName -s scope\n");
+        fprintf(stderr, "xsRenameContext-F-103: Usage: xsRenameContext -d destContextName -s contextName -0 srcSscope -1 destScope\n");
         exit(EXIT_FAILURE);
     }
 
@@ -79,12 +83,12 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    if(!saSplunkContextRename(contextName, scope, p->app, p->user,
-                              newContextName, scope, p->app, p->user))
+    if(!saSplunkContextRename(srcContextName, srcScope, p->app, p->user,
+                              destContextName, destScope, p->app, p->user))
     {
-        fprintf(stderr, "xsRenameContext-F-107: Can't rename context: %s\n", contextName);
+        fprintf(stderr, "xsRenameContext-F-107: Can't rename context: %s\n", srcContextName);
         exit(EXIT_FAILURE);
     }
-    fprintf(stderr, "Context %s successfully renamed to %s\n", contextName, newContextName);
+    fprintf(stderr, "Context %s successfully renamed to %s\n", srcContextName, destContextName);
     exit(0);
 }
