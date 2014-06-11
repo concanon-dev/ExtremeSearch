@@ -61,7 +61,8 @@ bool saSplunkContextDelete(char *name, int scope, char *app, char *user)
 
     sprintf(file, "/%s.context", name);
     strcat(path, file);
-    if (!unlink(path)) 
+    //if (!unlink(path)) 
+    if (remove(path) == 0) 
     {
         return(true);
     }
