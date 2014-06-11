@@ -8,10 +8,10 @@
         <a class="btn btn-xtreme" href="command_reference">
           <span class="icon-play"></span>  Command Reference
         </a>
-        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation">
+        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
           <span class="icon-play"></span>  Documentation
         </a>
-        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages">
+        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages" target="_blank">
           <span class="icon-play"></span>  Support
         </a>
       </p>
@@ -111,20 +111,11 @@
           <strong>Volume 1: Principles of Cognitive Computing</strong>, Earl Cox, Chief Scientist,
         Scianta Analytics. (pdf)</p>
       <p>
-        <a
-          href="concept_intro">
-          <img
-            alt="Learn More"
-            src="/static/app/xtreme/images/learn_button.png" />
+        <a class="btn btn-xtreme" href="concept_intro" target="_blank">
+          <span class="icon-play"></span>  Learn More
         </a>
-        <img
-          src="/static/app/xtreme/images/space.png" />
-        <a
-          href="http://www.sciantaanalytics.com/sites/default/files/SA-IDXR-REFERENCE-V01_Cognitive_Computing.pdf"
-          target="_blank">
-          <img
-            alt="Deep Dive"
-            src="/static/app/xtreme/images/deepdive_button.png" />
+        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/sites/default/files/SA-IDXR-REFERENCE-V01_Cognitive_Computing.pdf" target="_blank">
+          <span class="icon-play"></span>  Deep Dive
         </a>
       </p>
       <p>

@@ -8,10 +8,10 @@
       <a class="btn btn-xtreme" href="command_reference">
         <span class="icon-play"></span>  Command Reference
       </a>
-      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation">
+      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
         <span class="icon-play"></span>  Documentation
       </a>
-      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages">
+      <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages" target="_blank">
         <span class="icon-play"></span>  Support
 </a>
       <!--<span class="insetrt">Scianta Analytics Help</span>-->
