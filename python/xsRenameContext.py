@@ -23,13 +23,6 @@ if __name__ == '__main__':
         if dest.find(".") != -1 or dest.find("/") != -1:
             raise Exception("xsRenameContext-F-005: newContext can not contain a '/' or '.'");
 
-        if os.path.exists(src):            
-            if os.path.exists(dest):
-                raise Exception("xsRenameContext-F-007: The new Context already exists: " + dest);
-            shutil.move(src, dest)
-        else:
-            raise Exception("xsRenameContext-F-007: No such Context exists: " + src);
-
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsRenameContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
