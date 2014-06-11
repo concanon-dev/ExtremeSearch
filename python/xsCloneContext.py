@@ -4,7 +4,7 @@
 # use is illegal. Violators will be prosecuted. This software 
 # contains proprietary trade and business secrets.            
 #
-import sys, subprocess, os, platform, shutil
+import sys, subprocess, os, platform, shutil, time
 import splunk.Intersplunk as si
 
 if __name__ == '__main__':
