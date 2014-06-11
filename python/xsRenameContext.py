@@ -23,9 +23,6 @@ if __name__ == '__main__':
         if dest.find(".") != -1 or dest.find("/") != -1:
             raise Exception("xsRenameContext-F-005: newContext can not contain a '/' or '.'");
 
-        src = "../contexts/" + src + ".context"
-        dest = "../contexts/" + dest + ".context"
-
         if os.path.exists(src):            
             if os.path.exists(dest):
                 raise Exception("xsRenameContext-F-007: The new Context already exists: " + dest);
@@ -39,7 +36,7 @@ if __name__ == '__main__':
         if not os.path.isfile(binary):
             raise Exception("xsRenameContext-F-000: Can't find binary file " + binary)
 
-        subprocess.call([binary, '-f', dest])
+        subprocess.call([binary, '-c', src, '-n', dest])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

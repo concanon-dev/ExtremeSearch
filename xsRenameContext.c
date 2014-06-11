@@ -20,7 +20,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern bool saSplunkContextDelete(char *, int, char *, char *);
+extern bool saSplunkContextRename(char *, int, char *, char *, char *, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern int saSplunkGetScope(char *);
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
     char contextName[256];
+    char newContextName[256];
     int c;
     int scope = saSplunkGetScope(NULL);
 
@@ -39,45 +40,51 @@ int main(int argc, char* argv[])
     initSignalHandler(basename(argv[0]));
     argError = false;
     contextName[0] ='\0';
-    while ((c = getopt(argc, argv, "c:s:")) != -1) 
+    newContextName[0] ='\0';
+    while ((c = getopt(argc, argv, "c:n:s:")) != -1) 
     {
         switch (c)
         {
             case 'c':
 	        strcpy(contextName, optarg);
                 break;
+            case 'n':
+                strcpy(newContextName, optarg);
+                break;
             case 's':
                 scope = saSplunkGetScope(optarg);
                 break;
             case '?':
-                fprintf(stderr, "xsDeleteContext-F-101: Unrecognised option: -%c\n", optopt);
+                fprintf(stderr, "xsRenameContext-F-101: Unrecognised option: -%c\n", optopt);
                 argError = true;
         }
     }
     if (argError)
     {
-        fprintf(stderr, "xsDeleteContext-F-103: Usage: xsDeleteContext -c contextName -s scope\n");
+        fprintf(stderr, "xsRenameContext-F-103: Usage: xsRenameContext -c contextName -s scope\n");
         exit(EXIT_FAILURE);
     }
 
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsDeleteContext-F-105: Can't get info header\n");
+        fprintf(stderr, "xsRenameContext-F-105: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsDeleteContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsRenameContext-F-105: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
 
-    if(!saSplunkContextDelete(contextName, scope, p->app, p->user))
+    if(!saSplunkContextRename(contextName, scope, p->app, p->user,
+                              newContextName, scope, p->app, p->user))
     {
-        fprintf(stderr, "xsDeleteContext-F-107: Can't delete context: %s\n", contextName);
+        fprintf(stderr, "xsRenameContext-F-107: Can't rename context: %s\n", contextName);
         exit(EXIT_FAILURE);
     }
+    fprintf(stderr, "Context %s successfully renamed to %s\n", contextName, newContextName);
     exit(0);
 }
