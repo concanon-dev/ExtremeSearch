@@ -37,6 +37,8 @@ if __name__ == '__main__':
                 else:
                     dest = arg
 
+        if src == '' or dest == '':
+            raise Exception("xsRenameContext-F-001: Usage: xsRenameContext src [in scope] TO dest [in scope]");
         if src.find(".") != -1 or src.find("/") != -1:
             raise Exception("xsRenameContext-F-003: src can not contain a '/' or '.'");
         if dest.find(".") != -1 or dest.find("/") != -1:
