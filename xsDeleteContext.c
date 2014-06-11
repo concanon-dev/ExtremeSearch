@@ -79,5 +79,6 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsDeleteContext-F-107: Can't delete context: %s\n", contextName);
         exit(EXIT_FAILURE);
     }
+    fprintf(stderr, "Context %s successfully deleted\n", contextName);
     exit(0);
 }
