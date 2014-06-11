@@ -128,6 +128,32 @@ saContextTypePtr saSplunkContextLoad(char *name, int *scope, char *app, char *us
     return(contextPtr);
 }
 
+
+bool saSplunkContextRename(char *name, int scope, char *app, char *user,
+                           char *newName, int newScope, char *newApp, char *newUser)
+{
+    char file[1024];
+    char newFile[1024];
+    char newPath[1024];
+    char path[1024];
+
+    if (saSplunkGetContextPath(path, scope, app, user) == false)
+        return(false);
+
+    if (saSplunkGetContextPath(newPath, newScope, newApp, newUser) == false)
+        return(false);
+
+    sprintf(file, "/%s.context", name);
+    sprintf(newFile, "/%s.context", newName);
+    strcat(path, file);
+    strcat(newPath, newFile);
+    if (rename(path, newPath) == 0)
+    {
+        return(true);
+    }
+    return(false);
+}
+
 bool saSplunkContextSave(saContextTypePtr contextPtr, int scope, char *app, char *user)
 {
     char file[1024];
