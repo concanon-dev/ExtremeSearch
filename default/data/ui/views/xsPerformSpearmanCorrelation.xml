@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsPerformCorrelation</label>
+        <label>xsPerformSpearmanCorrelation</label>
         <row>
                 <html>
                         <a class="btn btn-xtreme" href="xtreme_overview">
@@ -20,7 +20,7 @@
                                 <span
                                         class="head4">Command: </span>
                                 <span
-                                        class="cmd">xsPerformCorrelation</span>
+                                        class="cmd">xsPerformSpearmanCorrelation</span>
                         </p>
                         <p>
                                 <span
@@ -38,7 +38,7 @@
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsPerformCorrelation (x_field)+ [WITH
+                                        class="bodytext">xsPerformSpearmanCorrelation (x_field)+ [WITH
                                         (y_field)+] [BY field]</span>
                         </p>
                         <br />
@@ -46,7 +46,7 @@
                         <span
                                 class="head4">Example: </span>
                         <span
-                                class="code">xsPerformCorrelation AirTime WITH ArrDelay BY
+                                class="code">xsPerformSpearmanCorrelation AirTime WITH ArrDelay BY
                                 Carrier</span>
                         <p>
                                 <span
@@ -77,7 +77,7 @@
                         <span
                                 class="head4">Example: </span>
                         <span
-                                class="code">xsPerformCorrelation AirTime ArrDelay</span>
+                                class="code">xsPerformSpearmanCorrelation AirTime ArrDelay</span>
                         <p>
                                 <span
                                         class="explanation">Performs a correlation of all of the

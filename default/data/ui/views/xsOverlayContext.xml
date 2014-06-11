@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsRenameContext</label>
+        <label>xsOverlayContext</label>
         <row>
                 <html>
                         <a class="btn btn-xtreme" href="xtreme_overview">
@@ -20,7 +20,7 @@
                                 <span
                                         class="head4">Command: </span>
                                 <span
-                                        class="cmd">xsRenameContext</span>
+                                        class="cmd">xsOverlayContext</span>
                         </p>
                         <p>
                                 <span
@@ -32,70 +32,44 @@
                                 <span
                                         class="head4">Description: </span>
                                 <span
-                                        class="bodytext">Renames a Context.</span>
+                                        class="bodytext">Overlays multiple contexts on a chart or in a table.</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsRenameContext oldContext [in scope] to newContext [in scope]</span>
+                                        class="bodytext">xsOverlayContext key=field count=field context</span>
                         </p>
                         <p>
                                 <br />
                                 <span
                                         class="head4">Example: </span>
                                 <span
-                                        class="code">| xsRenameContext AirTime in global to AirTime2 in private</span>
+                                        class="code">| xsOverlayContext key=ArrTime count=ArrTime ArrDelay</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">Renames the Context called 'AirTime' from the global scope to a context called AirTime2 in the private scope.</span>
+                                        class="explanation">TODO</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Parameters: </span>
                                 <span
-                                        class="bodytext">oldContext, oldScope, newContext, newScope</span>
+                                        class="bodytext"></span>
                         </p>
                         <p>
                                 <span
-                                        class="para">oldContext</span>
+                                        class="para">key</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">The name of the existing Context.</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="para">oldScope</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="explanation">The scope of the existing Context.</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="para">newContext</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="explanation">The new name of the Context.</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="para">newScope</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="explanation">The scope of the Context.</span>
+                                        class="explanation">TODO</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Result: </span>
                                 <span
-                                        class="bodytext">The context is renamed. See <a
-                                                href="xsCloneContext">xsCloneContext</a> for details
-                                        about cloning a context. </span>
+                                        class="bodytext">TODO</span>
                         </p>
                         <p>
                                 <span
@@ -108,7 +82,7 @@
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20131109.2</p>
+                        <p><br />Version 20131231.2</p>
 
                 </html>
         </row>

@@ -127,7 +127,7 @@
             <td>Returns the name of the concept that best fits (highest compatability) the field, as well as the associated compatibility index (CIX).  </td>
           </tr>
           <tr>
-            <td> <a href="xsFindMemebership">xsFindMemebership</a> </td>
+            <td> <a href="xsFindMembership">xsFindMembership</a> </td>
             <td>Conceptual Search</td>
             <td>Returns the membership value of a data value in each concept in a specified context, or returns the data value given a membership value in a specified context.</td>
           </tr>
