@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     char lon1Field[128];
     char lat2Field[128];
     char lon2Field[128];
+    char *splunk_home = getenv("SPLUNK_HOME");
     char toFieldList[1024];
     char *toFields[4];
     double latLon1[2];
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
     lat2Field[0] = '\0';
     lon2Field[0] = '\0';
     strcpy(distanceField, "distance");
-    strcpy(geoLiteCityFile, "../lookups/GeoLiteCity-Location.csv");
+    sprintf(geoLiteCityFile, "%s/etc/apps/xtreme/lookups/GeoLiteCity-Location.csv", splunk_home);
     while ((c = getopt(argc, argv, "d:g:f:t:")) != -1)
     {
         switch (c)
