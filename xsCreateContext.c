@@ -164,6 +164,11 @@ int main(int argc, char* argv[])
         }
     }
 
+    if (min >= max)
+    {
+        fprintf(stderr, "xsCreateContext-F-125: min must be less than max\n");
+        exit(0);
+    }
     if (!setAvg)
         avg = (min + max) / (double)2.0;
 
@@ -196,8 +201,15 @@ int main(int argc, char* argv[])
 
     // Go out and create the context based on type
     if (!strcmp(contextType, SA_CONTEXT_TYPE_AVERAGE_CENTERED))
+    {
+        if (sdev == 0)
+        {
+            fprintf(stderr, "xsCreateContext-F-113: For an average_centered context, sdev must be > 0\n");
+            exit(EXIT_FAILURE);
+        }
         cPtr = saContextCreateAvgCentered(name, avg, sdev, conceptNames, numConcepts,
                                           shapeStr, endShapeStr, count, notes, uom);
+    }
     else if (!strcmp(contextType, SA_CONTEXT_TYPE_DOMAIN))
         cPtr = saContextCreateDomain(name, min, max, conceptNames, numConcepts, shapeStr,
                                      endShapeStr, count, notes, uom);
