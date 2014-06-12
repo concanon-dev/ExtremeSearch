@@ -111,7 +111,14 @@ int main(int argc, char* argv[])
                              SA_CONTEXT_TYPE_DOMAIN, SA_CONTEXT_NOTES_SINGLE_TERM, "");
     }
 
-    // if the new concept changes the domain (lower min or higher max)
+    // make sure the min is < the max
+    if (min >= max)
+    {
+        fprintf(stderr, "xsCreateConcept-F-111: min must be less than max\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // if the new conceit changes the domain (lower min or higher max)
     //    recalculate all of the concepts over the new domain
     if (cPtr->domainMin > min || cPtr->domainMax < max)
         saContextRecreateConcepts(cPtr, min, max);
