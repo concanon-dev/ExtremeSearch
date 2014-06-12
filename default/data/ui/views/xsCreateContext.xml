@@ -170,7 +170,7 @@
                         </p>
                         <p>
                                 <span class="head4">Result: </span>
-                                <span class="bodytext">The context created by xsCrateContext is
+                                <span class="bodytext">The context created by xsCreateContext is
                                         displayed in table or chart format. 
                                         See <a href="xsDisplayContext">xsDisplayContext</a> for
                                         details about display of the created Context. <br />

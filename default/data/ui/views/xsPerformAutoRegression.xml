@@ -50,7 +50,7 @@
                                 class="head4">Example: </span>
                         <span
                                 class="code">xsPerformAutoRegression AirTime BY Carrier USING
-                                maxentrpy OUTPUT ArrDelay_auto</span>
+                                maxentropy OUTPUT ArrDelay_auto</span>
                         <p>
                                 <span
                                         class="explanation">Performs a leastsquares regression where

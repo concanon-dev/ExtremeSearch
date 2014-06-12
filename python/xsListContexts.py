@@ -19,6 +19,8 @@ if __name__ == '__main__':
             scope = scope.lower()
 
         binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListContexts"
+	if (platform.system() == 'Windows'):
+            binary = binary + ".exe"
         if not os.path.isfile(binary):
             raise Exception("xsListContexts-F-000: Can't find binary file " + binary)
 

@@ -82,6 +82,11 @@
             <td>Copies a Concept from one Context to another.</td>
           </tr>
           <tr>
+            <td> <a href="xsCreateConcept">xsCreateConcept</a> </td>
+            <td>Conceptual Search</td>
+            <td>Creates a Concept for an existing Context.</td>
+          </tr>
+          <tr>
             <td> <a href="xsCreateContext">xsCreateContext</a> </td>
             <td>Conceptual Search</td>
             <td>Creates a context, which contains concepts based on a variety of methods of mapping qualitative semantics to the data. Note: This is a Splunk 'streaming' command.</td>

@@ -1,0 +1,109 @@
+<dashboard>
+        <label>xsCreateConcept</label>
+        <row>
+                <html>
+                        <a class="btn btn-xtreme" href="xtreme_overview">
+                            <span class="icon-play"></span>  Overview
+                        </a>
+                        <a class="btn btn-xtreme" href="command_reference">
+                            <span class="icon-play"></span>  Command Reference
+                        </a>
+                        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
+                            <span class="icon-play"></span>  Documentation
+                        </a>
+                        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages" target="_blank">
+                            <span class="icon-play"></span>  Support
+                        </a>
+			<!--<span class="insetrt">Scianta Analytics Help</span>-->
+                        <p>
+                                <br />
+                                <span class="head4">Command: </span>
+                                <span class="cmd">xsCreateConcept</span>
+                        </p>
+                        <p>
+                                <span class="head4">Category: </span>
+                                <span class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span class="head4">Description: </span>
+                                <span class="bodytext">Creates a Concept for an existing Context with specified parameters.  </span>
+                        </p>
+                        <p>
+                                <span class="head4">Syntax: </span>
+                                <span class="bodytext">xsCreateConcept conceptName IN Context WITH min=double max=double [shape=(pi|trapezoid|triangle|curveincrease|curvedescrease|linearincrease|lineardecrease)] [scope=(private,app,global)] </span>
+                        </p>
+                        <p>
+                                <br />
+                                <span class="head4">Example: </span>
+                                <span class="code">| xsCreateConcept teeny IN Height WITH min=0 max=40 shape=pi scope=app</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Creates a concept called teeny in the Context Height with a value range of 0 to 40.  </span>
+                        </p>
+                        <p>
+                                <span class="head4">Parameters: </span>
+                                <span class="bodytext"> name, context, min, max, shape, scope</span>
+                        </p>
+                        <p>
+                                <span class="para">name (Concept name)</span>
+                        </p>
+                        <p>
+                                <span class="explanation">A legal string which specifies the name
+                                        by which the created Concept will be known.</span>
+                        </p>
+                        <p>
+                                <span class="para">context</span>
+                        </p>
+                        <p>
+                                <span class="explanation">A legal string that identifies an existing context.</span>
+                        </p>
+                        <p>
+                                <span class="para">max</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The maximum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats max(field).</span>. 
+                        </p>
+                        <p>
+                                <span class="para">min</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The minimum value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats min(field).</span>. </p>
+                        <p>
+                                <span class="para">scope</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Where to save the context (private, app, global).  
+                                        This defaults to global</span>. 
+                        </p> 
+                        <p>
+                                <span class="para">shape</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The shape of the concept.  
+                                        This defaults to pi</span>. 
+                        </p> 
+                        <p>
+                                <span class="head4">Result: </span>
+                                <span class="bodytext">The concept created by xsCreateConcept is
+                                        displayed in table or chart format. 
+                                        See <a href="xsDisplayConcept">xsDisplayConcept</a> for
+                                        details about display of the created Concept. <br />
+                                        </span>
+                        </p>
+                        <p>
+                                <span class="head4">Learn more: </span>
+                                <span class="bodytext">
+                                        <a href="http://www.sciantaanalytics.com?q=es_documentation"
+                                             target="_blank">Scianta Analytics Extreme Search for
+                                             Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20140326.4</p>
+
+                </html>
+        </row>
+</dashboard>
