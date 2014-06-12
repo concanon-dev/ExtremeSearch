@@ -286,7 +286,7 @@ int main(int argc, char* argv[])
         double lY = A[i]*xLow[i] + B[i];
         double hY = A[i]*xHigh[i] + B[i];
  
-        // load the fuzzy Term Set for Y
+        // load the Context for Y
         // using linear regression, calculate the lowest Y from lowest X
         // using linear regression, calculate the highest Y from highest X
         // for each set in the fuzzy Term Set

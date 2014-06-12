@@ -109,7 +109,6 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
    int maxIndex = 0;
    while(!feof(stdin))

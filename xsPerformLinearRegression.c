@@ -118,7 +118,6 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
    int maxIndex = 0;
    while(!feof(stdin))
@@ -187,6 +186,10 @@ int main(int argc, char* argv[])
        }
    }
 
+   // write results
+   FILE *f = saOpenFile(outfile, "w");
+   if (f != NULL)
+       fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", f);
    fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", stdout);
 
    
@@ -198,10 +201,15 @@ int main(int argc, char* argv[])
        B[i] = B[i] / (float)numRows[i];
        errA[i] = errA[i] / (float)numRows[i];
        errB[i] = errB[i] / (float)numRows[i];
- 
+
+       if (f != NULL) 
+           fprintf(f, "%s,%s,%s,%s,%d,%.10f,%.10f,%.10f,%.10f,%.10f\n", X[i], Y[i], byF[i], byV[i],
+                   numRows[i], A[i], B[i], errA[i], errB[i], R[i]);
        fprintf(stdout, "%s,%s,%s,%s,%d,%.10f,%.10f,%.10f,%.10f,%.10f\n", X[i], Y[i], byF[i], byV[i],
                numRows[i], A[i], B[i], errA[i], errB[i], R[i]);
    }
+   if (f != NULL)
+       fclose(f);
 }
 
 char *getField(char *field)
