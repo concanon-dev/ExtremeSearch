@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     conceptName[0] = '\0';
     newContextName[0] ='\0';
     oldContextName[0] ='\0';
-    while ((c = getopt(argc, argv, "f:n:o:t:")) != -1) 
+    while ((c = getopt(argc, argv, "N:O:c:n:o:")) != -1) 
     {
         switch (c)
         {
@@ -58,14 +58,14 @@ int main(int argc, char* argv[])
             case 'O':
                 oldScope = saSplunkGetScope(optarg);
                 break;
+            case 'c':
+                strcpy(conceptName, optarg);
+                break;
             case 'n':
                 strcpy(newContextName, optarg);
                 break;
             case 'o':
                 strcpy(oldContextName, optarg);
-                break;
-            case 's':
-                strcpy(conceptName, optarg);
                 break;
             case '?':
                 fprintf(stderr, "xsCloneConcept-F-101: Unrecognised option: -%c\n", optopt);
