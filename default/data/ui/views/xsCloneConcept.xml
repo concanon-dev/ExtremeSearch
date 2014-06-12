@@ -38,7 +38,7 @@
                                 <br />
                                 <span class="head4">Example: </span>
                                 <span class="code">| xsCloneConcept late in ArrDelay_monday IN private
-                                        to late in ArrDelay_monday IN app</span>
+                                        to ArrDelay_monday IN app</span>
                         </p>
                         <p>
                                 <span class="explanation">Clones the Concept 'late' in Context
