@@ -48,8 +48,6 @@ if __name__ == '__main__':
             raise Exception("xsApplyAutoRegression-F-001: Usage: xsApplyAutoRegression ((FROM file) | (coef0=value coef1=value ceof2=value OVER (field)+))  ");
 
         if f != '':
-            f = "../lookups/" + f + ".csv"
-
             binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsApplyAutoRegressionFromFile"
             if (platform.system() == 'Windows'):
                 binary = binary + ".exe"

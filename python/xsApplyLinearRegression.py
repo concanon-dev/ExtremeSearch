@@ -43,7 +43,6 @@ if __name__ == '__main__':
             raise Exception("xsApplyLinearRegression-F-001: Usage: xsApplyLinearRegression ((FROM file) | (slope=value intercept=value OVER (field)+))");
 
         if f != '':
-            f = "../lookups/" + f + ".csv"
 
             binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegressionFromFile'
             if (platform.system() == 'Windows'):
