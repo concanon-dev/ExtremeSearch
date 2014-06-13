@@ -173,7 +173,7 @@ int main(int argc, char* argv[])
    }
 
    char tempDir[512];
-   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s", getenv("SPLUNK_HOME"), p->app, outfile);
+   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, outfile);
    FILE *f = saOpenFile(tempDir, "w");
    // write out the results
    if (f != NULL)

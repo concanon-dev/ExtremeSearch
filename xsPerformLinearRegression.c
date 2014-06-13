@@ -202,7 +202,7 @@ int main(int argc, char* argv[])
 
    // write results
    char tempDir[512];
-   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s", getenv("SPLUNK_HOME"), p->app, outfile);
+   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, outfile);
    FILE *f = saOpenFile(tempDir, "w");
    if (f != NULL)
        fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", f);

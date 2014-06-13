@@ -73,10 +73,10 @@ gcc.GNU/Linux := gcc -g
 GCC := ${gcc.${OSTYPE}}
 
 
-licenselib.Cygwin := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
-licenselib.CYGWIN_NT-6.1 := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
-licenselib.darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
-licenselib.Darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
+licenselib.Cygwin :=  -lws2_32 
+licenselib.CYGWIN_NT-6.1 :=  -lws2_32 
+licenselib.darwin := -Wl,-rpath,@executable_path/. 
+licenselib.Darwin := -Wl,-rpath,@executable_path/. 
 licenselib.linux := -Wl,-R,$(ORIGIN) 
 licenselib.Linux := -Wl,-R,$(ORIGIN)
 licenselib.GNU/Linux := -Wl,-R,$(ORIGIN) 
@@ -108,15 +108,15 @@ all: $(EXECUTABLES)
 # Executables
 #
 xsAggregateAutoRegression: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateAutoRegression.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateAutoRegression.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsAggregateCorrelation: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateCorrelation.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateCorrelation.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o  $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsAggregateLinearRegression: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateLinearRegression.o $(OBJDIR)/saLinearRegression.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateLinearRegression.o $(OBJDIR)/saLinearRegression.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsAggregateQuadRegression: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateQuadRegression.o $(OBJDIR)/saQuadRegression.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateQuadRegression.o $(OBJDIR)/saQuadRegression.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsAggregateSpearmanCorrelation: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateSpearmanCorrelation.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsAggregateSpearmanCorrelation.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saCSV.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsApplyAutoRegression: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsApplyAutoRegression.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsApplyAutoRegressionFromFile: $(OBJECTS)

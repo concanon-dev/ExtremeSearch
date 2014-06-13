@@ -106,10 +106,10 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    if (!strcmp(method, "maxentropy"))
-        mode = SA_AUTOREGRESSION_MAXENTROPY;
-    else
+    if (!strcmp(method, "leastsquares"))
         mode = SA_AUTOREGRESSION_LEASTSQUARES;
+    else
+        mode = SA_AUTOREGRESSION_MAXENTROPY;
 
     int numBAxis = -1;
     if (hasByClause)

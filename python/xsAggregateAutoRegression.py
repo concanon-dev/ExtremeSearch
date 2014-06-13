@@ -31,7 +31,6 @@ if __name__ == '__main__':
         if outfile == '':
             subprocess.call([binary])
         else:
-            outfile = "../lookups/" + outfile + ".csv"
             subprocess.call([binary, '-f', outfile])
         if platform.system() == 'Windows':
             sys.stdout.flush()

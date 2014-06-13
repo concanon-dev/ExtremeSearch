@@ -17,7 +17,7 @@ if __name__ == '__main__':
     byKeyword=''
     outputKeyword=''
     usingKeyword=''
-
+    using="maxentropy"
     if len(sys.argv) >1:
         for arg in sys.argv[1:]:
             if arg.lower() == "output":
@@ -46,11 +46,6 @@ if __name__ == '__main__':
 
     if xCount < 1:
         raise Exception("xsPerformAutoRegression-F-003: Missing x parameter"); 
-
-    if using != '':
-        if using != 'maxentropy' and using != 'leastsquares':
-            badusing = "xsPerformAutoRegression-F-005: Invalid USING parameter: " + using 
-            raise Exception(badusing); 
 
     try:
         (isgetinfo, sys.argv) = si.isGetInfo(sys.argv)

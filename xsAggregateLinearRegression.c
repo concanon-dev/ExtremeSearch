@@ -14,6 +14,7 @@
 #include "saCSV.h"
 #include "saLicensing.h"
 #include "saSignal.h"
+#include "saSplunk.h"
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
@@ -36,6 +37,8 @@ static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
 extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 char *getField(char *);
 int getIndex(int, int, int, int);
@@ -44,7 +47,6 @@ void printLine(char *[], int);
 int main(int argc, char* argv[]) 
 {
     char outfile[256];
-    double p;
 
     if (!isLicensed())
         exit(EXIT_FAILURE);
@@ -69,6 +71,19 @@ int main(int argc, char* argv[])
     {
         fprintf(stderr, "xsAggregateLinearRegression-F-103: Usage: xsAggregateLinearRegression [-f file]\n");
         exit(0);
+    }
+
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsPerformAutoRegression-F-105: Can't get info header\n");
+        exit(EXIT_FAILURE);
+    } 
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsPerformAutoRegression-F-105: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
+        exit(EXIT_FAILURE);
     }
 
    int numFields;
@@ -117,7 +132,6 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
    int maxIndex = 0;
    while(!feof(stdin))
@@ -171,8 +185,12 @@ int main(int argc, char* argv[])
        }
    }
 
+   char tempDir[512];
+   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, outfile);
+   FILE *f = saOpenFile(tempDir, "w");
+   if (f != NULL)
+       fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", f);
    fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", stdout);
-
    
    // Determine the weighted avg of R
    for(i=0; i<=maxIndex; i++)
@@ -183,9 +201,14 @@ int main(int argc, char* argv[])
        errA[i] = errA[i] / (float)numRows[i];
        errB[i] = errB[i] / (float)numRows[i];
  
+       if (f != NULL)
+           fprintf(f, "%s,%s,%s,%s,%d,%.10f,%.10f,%.10f,%.10f,%.10f\n", X[i], Y[i], byF[i], byV[i],
+                   numRows[i], A[i], B[i], errA[i], errB[i], R[i]);
        fprintf(stdout, "%s,%s,%s,%s,%d,%.10f,%.10f,%.10f,%.10f,%.10f\n", X[i], Y[i], byF[i], byV[i],
                numRows[i], A[i], B[i], errA[i], errB[i], R[i]);
    }
+   if (f != NULL)
+       fclose(f);
 }
 
 char *getField(char *field)

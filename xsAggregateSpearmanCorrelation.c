@@ -6,6 +6,7 @@
 */
 #include <libgen.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,71 +14,113 @@
 #include "saCSV.h"
 #include "saLicensing.h"
 #include "saSignal.h"
+#include "saSplunk.h"
 
 #define MAXROWSIZE 256
+#define MAXSTRING 1024
 
-static char inbuf[MAXROWSIZE];
-static char tempbuf[MAXROWSIZE];
-static char *fieldList[MAXROWSIZE];
+static char inbuf[MAXSTRING*1000];
+static char tempbuf[MAXSTRING*10];
+static char *fieldList[MAXROWSIZE*4];
 
-static int numRows[MAXROWSIZE];
-static double R[MAXROWSIZE];
-static char *by[MAXROWSIZE];
+static char *byF[MAXROWSIZE];
+static char *byV[MAXROWSIZE];
 static char *X[MAXROWSIZE];
 static char *Y[MAXROWSIZE];
+static double R[MAXROWSIZE];
+static int numRows[MAXROWSIZE];
 
-void printLine(char *[], int);
+static char *indexString[MAXROWSIZE];
+static int numIndexes = 0;
+
+extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+
+char *getField(char *);
+int getIndex(int, int, int, int);
 
 int main(int argc, char* argv[]) 
 {
+    char outfile[256];
+
+    if (!isLicensed())
+        exit(EXIT_FAILURE);
+
+    initSignalHandler(basename(argv[0]));
+    outfile[0] = '\0';
+    int c;
+    bool argError = false;
+    while ((c = getopt(argc, argv, "f:")) != -1) 
+    {
+        switch (c)
+        {
+            case 'f':
+                strcpy(outfile, optarg);
+                break;
+            case '?':
+                fprintf(stderr, "xsAggregateSpearmanCorrelation-F-101: Unrecognised option: -%c\n", optopt);
+                argError = true;
+        }
+    }
+    if (argError == true)
+    {
+        fprintf(stderr, "xsAggregateSpearmanCorrelation-F-103: Usage: xsAggregateSpearmanCorrelation [-f file]\n");
+        exit(0);
+    }
+
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsAggregateSpearmanCorrelation-F-105: Can't get info header\n");
+        exit(EXIT_FAILURE);
+    } 
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsAggregateSpearmanCorrelation-F-105: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
+        exit(EXIT_FAILURE);
+    }
+
    int numFields;
-
-   if (!isLicensed())
-       exit(EXIT_FAILURE);
-
-   initSignalHandler(basename(argv[0]));
-
    int i;
    for(i=0; i<MAXROWSIZE; i++)
    {
        numRows[i] = 0;
        R[i] = 0.0;
+       X[i] = NULL;
+       Y[i] = NULL;
    }
 
-   int byIndex = -1;
-   int iIndex = -1;
+   int aIndex = -1;
+   int bIndex = -1;
+   int byFIndex = -1;
+   int byVIndex = -1;
+   int errAIndex = -1;
+   int errBIndex = -1;
    int numRowsIndex = -1;
-   int rIndex = -1;
+   int r2Index = -1;
    int xIndex = -1;
    int yIndex = -1;
 
-   /*
-       The parallel processing routine xprecorrelate returns it's results as
-       rows with 5 fields: i,numRows,x,y,R.  So, we need to determine which column
-       contains which field.
-   */
    // Get the header
    numFields = saCSVGetLine(inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
-       if (!saCSVCompareField(fieldList[i], "by"))
-           byIndex = i;
-       else if (!saCSVCompareField(fieldList[i], "i"))
-           iIndex = i;
+       if (!saCSVCompareField(fieldList[i], "bf"))
+           byFIndex = i;
+       else if (!saCSVCompareField(fieldList[i], "bv"))
+           byVIndex = i;
        else if (!saCSVCompareField(fieldList[i], "numRows"))
            numRowsIndex = i;
        else if (!saCSVCompareField(fieldList[i], "R"))
-           rIndex = i;
+           r2Index = i;
        else if (!saCSVCompareField(fieldList[i], "x"))
             xIndex = i;
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
 
-   /*
-       Walk the rows of data and populate the arrays with the correct values from
-       each column.
-   */
    int maxIndex = 0;
    while(!feof(stdin))
    {
@@ -85,77 +128,102 @@ int main(int argc, char* argv[])
        numFields = saCSVGetLine(inbuf, fieldList);
        if (!feof(stdin))
        {
-           // get the index (number) associated with the x,y pair to correlate
-           index = atoi(fieldList[iIndex]);
-
-           // If the BY for the correlation index is not defined, set it
-           if (by[index] == NULL || (*by[index] == '\0'))
+           // See if there is already a reference to the class.  A class is the tuple
+           // formed by the values of the fields "x", "bf" and "bv".  This is used to
+           // make sure that the correct rows are added together correctly in a weighted
+           // fashion.  The weight is the count, the number of events that contribute to
+           // the algorithm.
+           index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
+           if (byF[index] == NULL)
            {
-               by[index] = malloc(strlen(fieldList[byIndex]));
-               strcpy(by[index], fieldList[byIndex]);
+               byF[index] = malloc(strlen(fieldList[byFIndex]));
+               strcpy(byF[index], fieldList[byFIndex]);
            }
-
-           // If the X value for the correlation index is not defined, set it
-           if (X[index] == NULL || (*X[index] == '\0'))
+           if (byV[index] == NULL)
+           {
+               byV[index] = malloc(strlen(fieldList[byVIndex]));
+               strcpy(byV[index], fieldList[byVIndex]);
+           }
+           if (X[index] == NULL)
            {
                X[index] = malloc(strlen(fieldList[xIndex]));
                strcpy(X[index], fieldList[xIndex]);
            }
 
-           // If the Y value for the correlation index is not defined, set it
-           if (Y[index] == NULL || (*Y[index] == '\0'))
+           if (Y[index] == NULL)
            {
                Y[index] = malloc(strlen(fieldList[yIndex]));
                strcpy(Y[index], fieldList[yIndex]);
            }
 
-           // get the number of rows for this sample
            int rowCount = atoi(fieldList[numRowsIndex]);
-
-           // get the pearsons R value
-           double thisR;
-           if (*fieldList[rIndex] == '"')
-           {
-               strcpy(tempbuf, (fieldList[rIndex])+1);
-               tempbuf[strlen(fieldList[rIndex])-2] = '\0';
-               thisR = atof(tempbuf);
-           }
-           else
-               thisR = atof(fieldList[rIndex]);
-
-           // Increment the row count and the R**2 value for this index
            if (rowCount > 0)
            {
+               double thisR = atof(getField(fieldList[r2Index]));
                numRows[index] = numRows[index] + rowCount;
+
                R[index] = R[index] + (thisR * rowCount);
+               
                if (index > maxIndex)
                    maxIndex = index;
            }
        }
    }
 
+   char tempDir[512];
+   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, outfile);
+   FILE *f = saOpenFile(tempDir, "w");
+
+   if (f != NULL)
+       fputs("x,y,bf,bv,numRows,R\n", f);
+   fputs("x,y,bf,bv,numRows,R\n", stdout);
+   
    // Determine the weighted avg of R
    for(i=0; i<=maxIndex; i++)
+   {
        R[i] = R[i] / (float)numRows[i];
-
-   // write out the results
-   fputs("x,y,by,numRows,R\n", stdout);
-   for(i=0; i<=maxIndex; i++)
-   {
-       fprintf(stdout, "%s,%s,%s,%d,%.10f\n", X[i], Y[i], by[i], numRows[i], R[i]);
+ 
+       if (f != NULL)
+           fprintf(f, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
+       fprintf(stdout, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
    }
+   if (f != NULL)
+       fclose(f);
 }
 
-void printLine(char *fieldList[], int numFields)
+// return the contents of a field, without quotes if found
+char *getField(char *field)
 {
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
+   if (*field == '"')
    {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
+       strcpy(tempbuf, field+1);
+       tempbuf[strlen(field)-2] = '\0';
+       return(tempbuf);
    }
-   fputs("\n", x);
+   else
+       return(field);
 }
+
+// find the row that corresponds to the x,bf,bv tuple
+int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
+{
+   sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
+           fieldList[byVIndex]);
+   bool found = false;
+   int i=0;
+   while(i<numIndexes && !found)
+   {
+       if (!strcmp(tempbuf, indexString[i]))
+           found = true;
+       else
+           i++;
+   }
+   if (!found)
+   {
+       indexString[i] = malloc(strlen(tempbuf)+1);
+       strcpy(indexString[i], tempbuf);
+       numIndexes++;
+   }
+   return(i);
+}
+
