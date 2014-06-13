@@ -1,0 +1,47 @@
+#!/usr/bin/expect
+set timeout 180
+#log_user 0
+spawn bash
+send "export SPLUNK_HOME=c:/PROGRA~1/Splunk\r"
+
+send_user "\n\nANALYTICS REGRESSION TESTS (FAA) STARTED\n"
+
+# PerformLinearRegression (AirTime OVER ArrDelay BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformLinearRegression AirTime OVER ArrDelay BY Carrier' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformLinearRegression (AirTime OVER ArrDelay BY Carrier)"; exit 1 }
+    "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*" { send_user "\nTEST PASS - xsPerformLinearRegression (AirTime OVER ArrDelay BY Carrier)" }
+}
+
+# PerformCorrelation (AirTime WITH ArrDelay BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformCorrelation AirTime WITH ArrDelay BY Carrier' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformCorrelation (AirTime WITH ArrDelay BY Carrier)"; exit 1 }
+    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsCorrelation (AirTime WITH ArrDelay BY Carrier)" }
+}
+
+# PerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformNonLinearRegression AirTime OVER ArrDelay BY Carrier' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)"; exit 1 }
+    "x*y*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)" }
+}
+
+# PerformAutoRegression (AirTime BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformAutoRegression AirTime BY Carrier' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformAutoRegression (AirTime BY Carrier)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformAutoRegression (AirTime BY Carrier)" }
+}
+
+# PerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformSpearmanCorrelation AirTime WITH ArrDelay BY Carrier' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)"; exit 1 }
+    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsPerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)" }
+}
+
+send_user "\n\nANALYTICS REGRESSION TESTS (FAA) COMPLETED\n"
+
+
+

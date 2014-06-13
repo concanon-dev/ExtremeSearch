@@ -1,0 +1,26 @@
+#!/usr/bin/expect
+set timeout 120
+#log_user 0
+spawn bash
+send "export SPLUNK_HOME=c:/PROGRA~1/Splunk\r"
+
+send_user "\n\nANALYTICS REGRESSION TESTS (DEMOGRAPHICS) STARTED\n"
+
+# PerformLinearRegression (Height over Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformLinearRegression Height over Age' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformLinearRegression (Height OVER Age)"; exit 1 }
+    "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*" { send_user "\nTEST PASS - xsPerformLinearRegression (Height OVER Age)" }
+}
+
+# PerformCorrelation (Height WITH Age BY Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformCorrelation (Height WITH Age BY Age)"; exit 1 }
+    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsCorrelation (Height WITH Age BY Age)" }
+}
+
+send_user "\n\nANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED\n"
+
+
+
