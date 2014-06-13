@@ -16,6 +16,7 @@
 #include "saCSV.h"
 #include "saLicensing.h"
 #include "saSignal.h"
+#include "saSplunk.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -69,6 +70,19 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, "xsApplyLinearRegression-F-101: usage xsApplyLinearRegression -a double -b double -x fieldList)");
+        exit(EXIT_FAILURE);
+    }
+
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsApplyLinearRegression-F-105: Can't get info header\n");
+        exit(EXIT_FAILURE);
+    }
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsApplyLinearRegression-F-105: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
 

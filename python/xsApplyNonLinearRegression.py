@@ -48,7 +48,6 @@ if __name__ == '__main__':
             raise Exception("xsApplyNonLinearRegression-F-001: Usage: xsApplyNonLinearRegression ((FROM file) | (coef0=value coef1=value ceof2=value OVER (field)+))");
 
         if f != '':
-            f = "../lookups/" + f + ".csv"
             if rType == "Quad":
 
                 binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'

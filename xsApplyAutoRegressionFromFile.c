@@ -16,6 +16,7 @@
 #include "saCSV.h"
 #include "saLicensing.h"
 #include "saSignal.h"
+#include "saSplunk.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -32,6 +33,8 @@ extern char *optarg;
 extern int optind, optopt;
 
 extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 int main(int argc, char* argv[]) 
 {
@@ -70,7 +73,22 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    FILE *f = saOpenFile(fileName, "r");
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsApplyAutoRegression-F-105: Can't get info header\n");
+        exit(EXIT_FAILURE);
+    } 
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsApplyAutoRegression-F-105: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
+        exit(EXIT_FAILURE);
+    }
+
+    char tempDir[512];
+    sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, fileName);
+    FILE *f = saOpenFile(tempDir, "w");
     if (f == NULL)
     {
         fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s", fileName);
