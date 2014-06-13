@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 
     char tempDir[512];
     sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, fileName);
-    FILE *f = saOpenFile(tempDir, "w");
+    FILE *f = saOpenFile(tempDir, "r");
     if (f == NULL)
     {
         fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s", fileName);
