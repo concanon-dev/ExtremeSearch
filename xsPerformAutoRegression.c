@@ -14,6 +14,7 @@
 #include "saCSV.h"
 #include "saLicensing.h"
 #include "saSignal.h"
+#include "saSplunk.h"
 
 #define MAXROWSIZE 256
 #define MAXSTRING 1024
@@ -33,6 +34,9 @@ static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
 extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+
 
 char *getField(char *);
 int getIndex(int, int, int);
@@ -41,7 +45,6 @@ void printLine(char *[], int);
 int main(int argc, char* argv[]) 
 {
     char outfile[256];
-    double p;
 
     if (!isLicensed())
         exit(EXIT_FAILURE);
@@ -66,6 +69,19 @@ int main(int argc, char* argv[])
     {
         fprintf(stderr, "xsPerformAutoRegression-F-103: Usage: xsPerformAutoRegression\n");
         exit(0);
+    }
+
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsPerformAutoRegression-F-105: Can't get info header\n");
+        exit(EXIT_FAILURE);
+    }
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsPerformAutoRegression-F-105: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
+        exit(EXIT_FAILURE);
     }
 
    int numFields;
@@ -146,7 +162,9 @@ int main(int argc, char* argv[])
        }
    }
 
-   FILE *f = saOpenFile(outfile, "w");
+   char tempDir[512];
+   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s", getenv("SPLUNK_HOME"), p->app, outfile);
+   FILE *f = saOpenFile(tempDir, "w");
 
    // write out the results
    if (f != NULL)
