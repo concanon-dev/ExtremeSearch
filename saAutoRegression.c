@@ -118,7 +118,9 @@ int ARMaxEntropy(double *inputseries, int length, int degree, double **ar, doubl
 int ARLeastSquare(double *inputseries, int length, int degree, double *coefficients)
 {
     int i,j,k,hj,hi;
-
+fprintf(stderr, "%d %d\n", length, degree);
+for(i=0; i<length; i++)
+fprintf(stderr, "%.4f\n", inputseries[i]);
     double **mat = (double **)malloc(degree*sizeof(double *));
     for(i=0; i<degree; i++)
         mat[i] = (double *)malloc(degree*sizeof(double));
@@ -158,7 +160,8 @@ int ARLeastSquare(double *inputseries, int length, int degree, double *coefficie
 double *autoRegression(double *inputseries, int length, int degree, int method)
 {
     int i, t;
-
+for(i=0;i<length; i++)
+fprintf(stderr, "%d %.4f\n", i, inputseries[i]);
     double *coef = (double *)malloc((degree+1)*sizeof(double *));
     double *g = (double *)malloc((degree+2)*sizeof(double));
     double *h = (double *)malloc((degree+1)*sizeof(double));

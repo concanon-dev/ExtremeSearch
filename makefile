@@ -12,7 +12,6 @@ VERSION := `echo ${version} | sed -e 's/_/./g'`
 
 license=expiretime
 ltype.expiretime := s
-ltype.wyday := p
 LTYPE := ${ltype.${license}}
 
 platform.Cygwin := Win/x64
@@ -78,19 +77,11 @@ licenselib.Cygwin := LimeLM/Win/x64/TurboActivate.lib -lws2_32
 licenselib.CYGWIN_NT-6.1 := LimeLM/Win/x64/TurboActivate.lib -lws2_32 
 licenselib.darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
 licenselib.Darwin := -Wl,-rpath,@executable_path/. -LLimeLM/Mac -lTurboActivate
-licenselib.linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
-licenselib.Linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
-licenselib.GNU/Linux := -Wl,-R,$(ORIGIN) -LLimeLM/Linux/x64 -lTurboActivate 
+licenselib.linux := -Wl,-R,$(ORIGIN) 
+licenselib.Linux := -Wl,-R,$(ORIGIN)
+licenselib.GNU/Linux := -Wl,-R,$(ORIGIN) 
 LICENSELIB := ${licenselib.${OSTYPE}}
 
-licensefile.Cygwin := LimeLM/Win/x64/TurboActivate.dll
-licensefile.CYGWIN_NT-6.1 := LimeLM/Win/x64/TurboActivate.dll
-licensefile.darwin := LimeLM/Mac/TurboActivate.dll
-licensefile.Darwin := LimeLM/Mac/TurboActivate.dll
-licensefile.linux := LimeLM/Linux/x64/TurboActivate.dll
-licensefile.Linux := LimeLM/Linux/x64/TurboActivate.dll
-licensefile.GNU/Linux := LimeLM/Linux/x64/TurboActivate.dll
-LICENSEFILE := ${licensefile.${OSTYPE}}
 
 winobjs.Cygwin := obj/${PLATFORM}/strsep.o
 winobjs.CYGWIN_NT-6.1 := obj/${PLATFORM}/strsep.o
@@ -104,10 +95,10 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 CFLAGS=-O2 -Wall
 LDFLAGS=-lm -g
-SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLicenseMain.c saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsLicense.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprelicense.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c saDice.c saDoubleField.c saFloatField.c saField.c saIntField.c saOutput.c saProperties.c saStringField.c saTimeField.c strsep.c saTokenize.tab.o lex.yy.o
+SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c  saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c saDice.c saDoubleField.c saFloatField.c saField.c saIntField.c saOutput.c saProperties.c saStringField.c saTimeField.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsLicense xsListContexts xsListConcepts xsListUOM xsOverlayContext xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xspredict xsprelicense xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
+EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsListContexts xsListConcepts xsListUOM xsOverlayContext xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xspredict xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
 
 
 
@@ -168,8 +159,6 @@ xsGetDistance: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsGetDistance.o $(OBJDIR)/saGeoLiteCity.o $(OBJDIR)/saStatistics.o  $(OBJDIR)/saHash.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(WINOBJS) $(LDFLAGS)
 xsGetWhereCix: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
-xsLicense: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsLicense.o $(OBJDIR)/saLicenseMain.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsListContexts: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsListContexts.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saListDir.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsListConcepts: $(OBJECTS)
@@ -198,8 +187,6 @@ xsprecorrelate: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprecorrelate.o $(OBJDIR)/saLinearCorrelation.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saInsertUniqueValue.o  $(OBJDIR)/saMatrixArgs.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xspredict: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspredict.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
-xsprelicense: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprelicense.o $(OBJDIR)/saLicenseMain.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsprequadregress: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprequadregress.o $(OBJDIR)/saQuadRegression.o $(OBJDIR)/saInsertUniqueValue.o  $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xspreregress: $(OBJECTS)
@@ -238,8 +225,6 @@ saHedge.o:
 	$(GCC) -c saHedge.c -o $(OBJDIR)/$@
 saInsertUniqueValue.o:
 	$(GCC) -c saInsertUniqueValue.c -o $(OBJDIR)/$@
-saLicenseMain.o:
-	$(GCC) -c saLicenseMain.c -o $(OBJDIR)/$@
 saLicensing.o:
 	$(GCC) -c saLicensing.${license}.c -o $(OBJDIR)/$@
 saLinearCorrelation.o:
@@ -322,8 +307,6 @@ xsGetCompatibility.o:
 	$(GCC) -c xsGetCompatibility.c -o $(OBJDIR)/$@
 xsGetDistance.o:
 	$(GCC) -c xsGetDistance.c -o $(OBJDIR)/$@
-xsLicense.o:
-	$(GCC) -c xsLicense.c -o $(OBJDIR)/$@
 xsListContexts.o:
 	$(GCC) -c xsListContexts.c -o $(OBJDIR)/$@
 xsListConcepts.o:
@@ -352,8 +335,6 @@ xsprecorrelate.o:
 	$(GCC) -c xsprecorrelate.c -o $(OBJDIR)/$@
 xspredict.o:
 	$(GCC) -c xspredict.c -o $(OBJDIR)/$@
-xsprelicense.o:
-	$(GCC) -c xsprelicense.c -o $(OBJDIR)/$@
 xsprequadregress.o:
 	$(GCC) -c xsprequadregress.c -o $(OBJDIR)/$@
 xspreregress.o:

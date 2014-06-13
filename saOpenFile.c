@@ -11,6 +11,8 @@
 
 FILE *saOpenFile(char *fname, char *mode)
 {
+    return(fopen(fname, mode));
+/*
     // only check directory of file if you are writing
     if (!strcmp(mode, "w"))
     {
@@ -25,4 +27,5 @@ FILE *saOpenFile(char *fname, char *mode)
         return(fopen(fname, mode));
     else
         return(NULL);
+*/
 }
