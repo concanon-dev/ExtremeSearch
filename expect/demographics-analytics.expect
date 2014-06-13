@@ -1,23 +1,44 @@
 #!/usr/bin/expect
 set timeout 120
-#log_user 0
+log_user 0
 spawn bash
 send "export SPLUNK_HOME=c:/PROGRA~1/Splunk\r"
 
 send_user "\n\nANALYTICS REGRESSION TESTS (DEMOGRAPHICS) STARTED\n"
 
-# PerformLinearRegression (Height over Age)
-send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformLinearRegression Height over Age' -auth admin:admin \r"
+# PerformAutoRegression (Height BY Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformAutoRegression (Height BY Age)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformAutoRegression (Height BY Age)" }
+}
+
+# PerformLinearRegression (Height OVER Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformLinearRegression Height OVER Age' -auth admin:admin \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsPerformLinearRegression (Height OVER Age)"; exit 1 }
     "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*" { send_user "\nTEST PASS - xsPerformLinearRegression (Height OVER Age)" }
+}
+
+# PerformNonLinearRegression (Height OVER Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformNonLinearRegression Height OVER Age' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression (Height OVER Age)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformNonLinearRegression (Height OVER Age)" }
 }
 
 # PerformCorrelation (Height WITH Age BY Age)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth admin:admin \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsPerformCorrelation (Height WITH Age BY Age)"; exit 1 }
-    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsCorrelation (Height WITH Age BY Age)" }
+    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsPerformCorrelation (Height WITH Age BY Age)" }
+}
+
+# PerformSpearmanCorrelation (Height WITH Age)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height WITH Age' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation (Height WITH Age)"; exit 1 }
+    "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xPerformSpearmansCorrelation (Height WITH Age)" }
 }
 
 send_user "\n\nANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED\n"

@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 set timeout 20
-#log_user 0
+log_user 0
 spawn bash
 send "export SPLUNK_HOME=c:/PROGRA~1/Splunk\r"
 send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
