@@ -42,8 +42,6 @@ static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 static double yAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
-extern FILE *saDebugOpenFile(int);
-
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
@@ -70,8 +68,6 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
-    saDebugBegin();
-
     argError = false;
     hasByClause = false;
     mustMatchFields = true;
@@ -104,7 +100,7 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xspreregress-F-103: Uage: xspreregress [-d] [-i] [-r] -x fieldList -y fieldList");
+                "xspreregress-F-103: Uage: xspreregress [-d] [-i] [-r] -x fieldList -y fieldList\n");
         exit(EXIT_FAILURE);
     }
 
@@ -146,18 +142,6 @@ int main(int argc, char* argv[])
 
     // Get Header line
     int numFields = saCSVGetLine(inbuf, fieldList);
-    if (debug_levels[DEBUG_DATA] > 1)
-    {   
-        FILE *d = saDebugOpenFile(DEBUG_DATA);
-        for(i=0; i<numFields; i++)
-        {
-            if (i>0)
-                fputs(",", d);
-            fputs(fieldList[i], d);
-        }
-        fputs("\n", d);
-        fclose(d);
-    }
 
     // Find the x and y fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -234,18 +218,6 @@ int main(int argc, char* argv[])
             int numCols = saCSVGetLine(inbuf, fieldList);
             if (!feof(stdin))
             {
-                if (debug_levels[DEBUG_DATA] > 1)
-                {
-                    FILE *d = saDebugOpenFile(DEBUG_DATA);
-                    for(i=0; i<numCols; i++)
-                    {
-                        if (i>0)
-                            fputs(",", d);
-                        fputs(fieldList[i], d);
-                    }
-                    fputs("\n", d);
-                    fclose(d);
-                }
                 for(i=0; i<numXAxis; i++)
                 {
                     bool badField = false;
@@ -320,27 +292,10 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (debug_levels[DEBUG_DATA] > 0)
-    {
-        FILE *d = saDebugOpenFile(DEBUG_DATA);
-        for(i=0; i<totalRows[0]; i++)
-            fprintf(d, "%.10f,%.10f\n", xAxis[0][i], yAxis[0][i]);
-        fclose(d);
-    }
-
-    FILE *d = saDebugOpenFile(DEBUG_OUTPUT);
-    if (debug_levels[DEBUG_OUTPUT] > 0)
-        fputs("numRows,x,y,bf,bv,slope,intercept,errA,errB,R", d);
     fputs("numRows,x,y,bf,bv,slope,intercept,errA,errB,R", stdout);
 
     if (showRange == true)
-    {
-        if (debug_levels[DEBUG_OUTPUT] > 0)
-            fputs(",xLow,xHigh,yLow,yHigh", d);
         fputs(",xLow,xHigh,yLow,yHigh", stdout);
-    }
-    if (debug_levels[DEBUG_OUTPUT] > 0)
-        fputs("\n", d);
     fputs("\n", stdout);
 
     double r2;
@@ -364,9 +319,6 @@ int main(int argc, char* argv[])
                     }
                     k++;
                 }
-                if (debug_levels[DEBUG_LOG] > 0)
-                    fprintf(d, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], 
-                            bList[i], bValues[j]);
                 fprintf(stdout, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], 
                         bList[i], bValues[j]);
 
@@ -375,35 +327,19 @@ int main(int argc, char* argv[])
                 getRegressionLine(lrPtr);
                 if (totalRows[i] > 0)
                 {
-                    if (debug_levels[DEBUG_LOG] > 0)
-                        fprintf(d, ",%.10f,%.10f,%.10f,%.10f,%.10f", lrPtr->coefA, lrPtr->coefB,
-                                lrPtr->stdError_CoefA, lrPtr->stdError_CoefB, lrPtr->R);
                     fprintf(stdout, ",%.10f,%.10f,%.10f,%.10f,%.10f", lrPtr->coefA, lrPtr->coefB,
                             lrPtr->stdError_CoefA, lrPtr->stdError_CoefB, lrPtr->R);
 
                     if (showRange == true)
-                    {
-                        if (debug_levels[DEBUG_OUTPUT] > 0)
-                            fprintf(d, ",%.10f,%.10f,%.10f,%.10f", xAxisLow[i], xAxisHigh[i],
-                                    yAxisLow[i], yAxisHigh[i]);
                         fprintf(stdout, ",%.10f,%.10f,%.10f,%.10f", xAxisLow[i], xAxisHigh[i],
                                 yAxisLow[i], yAxisHigh[i]);
-                    }
                 }
                 else
                 {
-                    if (debug_levels[DEBUG_OUTPUT] > 0)
-                        fprintf(d, ",0.0,0.0,0.0,0.0,0.0");
                     fprintf(stdout, ",0.0,0.0,0.0,0.0,0.0");
                     if (showRange == true)
-                    {
-                        if (debug_levels[DEBUG_OUTPUT] > 0)
-                            fprintf(d, ",0.0,0.0,0.0,0.0");
                         fprintf(stdout, ",0.0,0.0,0.0,0.0");
-                    }
                 }
-                if (debug_levels[DEBUG_OUTPUT] > 0)
-                    fputs("\n", d);
                 fputs("\n", stdout);
             }
         }
@@ -415,42 +351,24 @@ int main(int argc, char* argv[])
             saLinearRegressionTypePtr lrPtr = createLR(xAxis[i], yAxis[i], totalRows[i]);
             getRegressionLine(lrPtr);
 
-            if (debug_levels[DEBUG_OUTPUT] > 0)
-                fprintf(d, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
             fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
 
             if (totalRows[i] > 0)
             {
-                if (debug_levels[DEBUG_OUTPUT] > 0)
-                    fprintf(d, ",%.10f,%.10f,%.10f,%.10f,%.10f", lrPtr->coefA, lrPtr->coefB, 
-                            lrPtr->stdError_CoefA, lrPtr->stdError_CoefB, lrPtr->R);
                 fprintf(stdout, ",%.10f,%.10f,%.10f,%.10f,%.10f", lrPtr->coefA, lrPtr->coefB, 
                         lrPtr->stdError_CoefA, lrPtr->stdError_CoefB, lrPtr->R);
 
                 if (showRange == true)
-                {
-                    if (debug_levels[DEBUG_OUTPUT] > 0)
-                        fprintf(d, ",%.10f,%.10f,%.10f,%.10f", xAxisLow[i], xAxisHigh[i],
-                                yAxisLow[i], yAxisHigh[i]);
                     fprintf(stdout, ",%.10f,%.10f,%.10f,%.10f", xAxisLow[i], xAxisHigh[i],
                             yAxisLow[i], yAxisHigh[i]);
-                }
             }
             else
             {
-                if (debug_levels[DEBUG_OUTPUT] > 0)
-                    fprintf(d, ",0.0,0.0,0.0,0.0,0.0");
                 fprintf(stdout, ",0.0,0.0,0.0,0.0,0.0");
 
                 if (showRange == true)
-                {
-                    if (debug_levels[DEBUG_OUTPUT] > 0)
-                        fprintf(d, ",0.0,0.0,0.0,0.0");
                     fprintf(stdout, ",0.0,0.0,0.0,0.0");
-                }
             }
-            if (debug_levels[DEBUG_OUTPUT] > 0)
-                fputs("\n", d);
             fputs("\n", stdout);
         }
     }
