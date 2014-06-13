@@ -34,7 +34,7 @@ if __name__ == '__main__':
             subprocess.call([binary, '-f', outfile])
         if platform.system() == 'Windows':
             sys.stdout.flush()
-            time.sleep(0.5)
+            time.sleep(1.)
 
     except Exception, e:
         si.generateErrorResults(e)

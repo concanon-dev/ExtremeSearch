@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
         if platform.system() == 'Windows':
             sys.stdout.flush()
-            time.sleep(0.5)
+            time.sleep(1.0)
 
     except Exception, e:
         si.generateErrorResults(e)
