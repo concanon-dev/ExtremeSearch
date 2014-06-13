@@ -60,22 +60,17 @@
                                 <span
                                         class="head4"> Example Output: </span>
                                 <span
-                                        class="code"> x,y,bf,bv,numRows,coef0,coef1,coef2<br />
-                                        AirTime,ArrDelay,Carrier,B6,118,78.2604583585,18.6901866764,0.9680026802
-                                        AirTime,ArrDelay,Carrier,AS,41,1.1325924020,0.1557147973,0.0040202551
-                                        AirTime,ArrDelay,Carrier,AA,135,-26.0565180546,-3.5230130010,-0.0846049259
-                                        AirTime,ArrDelay,Carrier,DL,94,-103.4711161173,-11.5135877840,-0.2499337704
-                                        AirTime,ArrDelay,Carrier,UA,96,-187.8388775137,-22.7350956484,-0.4859345237
-                                        AirTime,ArrDelay,Carrier,US,113,-85.2347784626,-6.9494818248,-0.0840156803
-                                        AirTime,ArrDelay,Carrier,OO,82,198.9509270901,27.3017214549,0.6730170371
-                                        AirTime,ArrDelay,Carrier,MQ,94,-0.5512952076,-0.1478082821,-0.0003013436
-                                        AirTime,ArrDelay,Carrier,YV,24,-1.6202881521,-0.1124871661,-0.0010837227
-                                        AirTime,ArrDelay,Carrier,HA,12,-196.2344572256,-219.2221626283,-39.8398350399
-                                        AirTime,ArrDelay,Carrier,EV,52,15.8423239651,1.3738515117,0.0211298248
-                                        AirTime,ArrDelay,Carrier,F9,8,2.0334106189,0.1670090165,0.0027021810
-                                        AirTime,ArrDelay,Carrier,WN,87,301.0510037695,24.6300835293,0.3429219966
-                                        AirTime,ArrDelay,Carrier,FL,28,-5.9103290850,-0.4708288806,-0.0069072303
-                                        AirTime,ArrDelay,Carrier,VX,9,-1.9957166109,-0.1476301836,-0.0021120042</span>
+                                        class="code"> x,y,bf,bv,numRows,slope,intercept,errA,errB,R<br />
+                                        ArrDelay,AirTime,Carrier,US,15850,0.0564407742,124.5891931895,0.0225071253,0.6151493233,0.0199158825
+                                        ArrDelay,AirTime,Carrier,UA,40254,0.0989102320,167.9584758827,0.0181335584,0.6385106643,0.0388211718
+                                        ArrDelay,AirTime,Carrier,OO,54160,0.0323036858,71.6142411295,0.0080257546,0.2856651392,0.0289065273
+                                        ArrDelay,AirTime,Carrier,MQ,22095,0.0242985635,79.7557340537,0.0052194693,0.2485128779,0.0342956182
+                                        ArrDelay,AirTime,Carrier,HA,997,0.0649157412,26.1821236576,0.0196158935,0.1811502524,0.1043406045
+                                        ArrDelay,AirTime,Carrier,FL,1065,0.0895427501,104.6696789231,0.0480687246,1.2074761785,0.0570418362
+                                        ArrDelay,AirTime,Carrier,EV,427,-0.0306985493,73.9966931499,0.0358537064,1.5811809426,0.0414968454
+                                        ArrDelay,AirTime,Carrier,YV,9203,-0.1066278505,68.9764650653,0.0128718120,0.3786613129,0.0860399124
+					ArrDelay,AirTime,Carrier,WN,4788,0.0736320476,100.5478056138,0.0228410401,0.8232790319,0.0465472108 </span>
+
                         </p>
                         <p>
                                 <span
