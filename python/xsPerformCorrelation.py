@@ -9,18 +9,24 @@ import splunk.Intersplunk as si
 
 if __name__ == '__main__':
 
+    outfile=''
     by=''
     x=''
     xCount=0
     y=''
     yCount=0
     byKeyword=''
+    outputKeyword=''
     withKeyword=''
 
     if len(sys.argv) >1:
         for arg in sys.argv[1:]:
-            if arg.lower() == "with":
+            if arg.lower() == "output":
+                outputKeyword="output"
+            elif arg.lower() == "with":
                 withKeyword="with"
+            elif outputKeyword == "output":
+                outfile = arg
             elif not arg.startswith("__"):
                 if withKeyword == '':
                     if len(x) < 1:
@@ -66,7 +72,10 @@ if __name__ == '__main__':
         if not os.path.isfile(binary):
             raise Exception("xsPerformCorrelation-F-000: Can't find binary file " + binary)
 
-        subprocess.call([binary])
+        if outfile == '':
+            subprocess.call([binary])
+        else:
+            subprocess.call([binary, '-f', outfile])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

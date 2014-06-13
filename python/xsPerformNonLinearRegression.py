@@ -85,7 +85,6 @@ if __name__ == '__main__':
             if rType == "Quad":
                 subprocess.call([binary])
         else:
-            outfile = "../lookups/" + outfile + ".csv"
             if rType == "Quad":
                 subprocess.call([binary, '-f', outfile])
 
