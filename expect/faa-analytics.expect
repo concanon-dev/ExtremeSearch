@@ -1,17 +1,38 @@
 #!/usr/bin/expect
-set timeout 180
-log_user 0
+set timeout 240
+#log_user 0
 spawn bash
-send "export SPLUNK_HOME=c:/PROGRA~1/Splunk\r"
+set env(SPLUNK_HOME) c:/PROGRA~1/Splunk
 
 send_user "\n\nANALYTICS REGRESSION TESTS (FAA) STARTED\n"
 
+# PerformAutoRegression (AirTime BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformAutoRegression AirTime BY Carrier OUTPUT FAA_AirTime_By_Carrier_Auto' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformAutoRegression (AirTime BY Carrier)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformAutoRegression (AirTime BY Carrier)" }
+}
+sleep 1
+send "cp $env(SPLUNK_HOME)/etc/apps/search/lookups/FAA_AirTime_By_Carrier_Auto.csv $env(SPLUNK_HOME)/etc/apps/xtreme/lookups\r"
+
 # PerformLinearRegression (AirTime OVER ArrDelay BY Carrier)
-send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformLinearRegression AirTime OVER ArrDelay BY Carrier' -auth admin:admin \r"
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformLinearRegression AirTime OVER ArrDelay BY Carrier OUTFILE FAA_AirTime_Over_ArrDelay_Linear' -auth admin:admin \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsPerformLinearRegression (AirTime OVER ArrDelay BY Carrier)"; exit 1 }
     "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*" { send_user "\nTEST PASS - xsPerformLinearRegression (AirTime OVER ArrDelay BY Carrier)" }
 }
+sleep 1
+send "cp $env(SPLUNK_HOME)/etc/apps/search/lookups/FAA_AirTime_Over_ArrDelay_Linear.csv $env(SPLUNK_HOME)/etc/apps/xtreme/lookups\r"
+
+# PerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformNonLinearRegression AirTime OVER ArrDelay BY Carrier OUTPUT FAA_AirTime_Over_ArrDelay_NonLinear' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)"; exit 1 }
+    "x*y*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)" }
+}
+sleep 1
+send "cp $env(SPLUNK_HOME)/etc/apps/search/lookups/FAA_AirTime_Over_ArrDelay_NonLinear.csv $env(SPLUNK_HOME)/etc/apps/xtreme/lookups\r"
+
 
 # PerformCorrelation (AirTime WITH ArrDelay BY Carrier)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformCorrelation AirTime WITH ArrDelay BY Carrier' -auth admin:admin \r"
@@ -19,20 +40,7 @@ expect {
     timeout { send_user "\nTEST FAIL - xsPerformCorrelation (AirTime WITH ArrDelay BY Carrier)"; exit 1 }
     "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsCorrelation (AirTime WITH ArrDelay BY Carrier)" }
 }
-
-# PerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)
-send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformNonLinearRegression AirTime OVER ArrDelay BY Carrier' -auth admin:admin \r"
-expect {
-    timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)"; exit 1 }
-    "x*y*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformNonLinearRegression (AirTime OVER ArrDelay BY Carrier)" }
-}
-
-# PerformAutoRegression (AirTime BY Carrier)
-send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformAutoRegression AirTime BY Carrier' -auth admin:admin \r"
-expect {
-    timeout { send_user "\nTEST FAIL - xsPerformAutoRegression (AirTime BY Carrier)"; exit 1 }
-    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsPerformAutoRegression (AirTime BY Carrier)" }
-}
+sleep 1
 
 # PerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsPerformSpearmanCorrelation AirTime WITH ArrDelay BY Carrier' -auth admin:admin \r"
@@ -40,6 +48,31 @@ expect {
     timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)"; exit 1 }
     "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsPerformSpearmanCorrelation (AirTime WITH ArrDelay BY Carrier)" }
 }
+sleep 1
+
+# ApplyAutoRegression (FROM FAA_AirTime_By_Carrier_Auto)
+#send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsApplyAutoRegression FROM FAA_AirTime_By_Carrier_Auto' -auth admin:admin \r"
+#expect {
+#    timeout { send_user "\nTEST FAIL - xsApplyAutoRegression (FROM FAA_AirTime_By_Carrier_Auto)"; exit 1 }
+#    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsApplyAutoRegression (FROM FAA_AirTime_By_Carrier_Auto)" }
+#}
+sleep 1
+
+# ApplyLinearRegression (FROM FAA_AirTime_Over_ArrDelay_Linear)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsApplyLinearRegression FROM FAA_AirTime_Over_ArrDelay_Linear' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsApplyLinearRegression (FROM FAA_AirTime_Over_ArrDelay_Linear)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsApplyLinearRegression (FROM FAA_AirTime_Over_ArrDelay_Linear)" }
+}
+sleep 1
+
+# ApplyNonLinearRegression (FROM FAA_AirTime_Over_ArrDelay_NonLinear)
+send "$env(SPLUNK_HOME)/bin/splunk search 'index=faa | xsApplyNonLinearRegression FROM FAA_AirTime_Over_ArrDelay_NonLinear' -auth admin:admin \r"
+expect {
+    timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression (FROM FAA_AirTime_Over_ArrDelay_NonLinear)"; exit 1 }
+    "x*bf*bv*numRows*coef0*coef1*coef2*" { send_user "\nTEST PASS - xsApplyNonLinearRegression (FROM FAA_AirTime_Over_ArrDelay_NonLinear)" }
+}
+sleep 1
 
 send_user "\n\nANALYTICS REGRESSION TESTS (FAA) COMPLETED\n"
 
