@@ -147,9 +147,6 @@ bool saSplunkContextRename(char *name, int scope, char *app, char *user,
     sprintf(newFile, "/%s.context", newName);
     strcat(path, file);
     strcat(newPath, newFile);
-FILE *z = fopen("./z.txt", "a");
-fprintf(z, "%s --> %s\n", path, newPath);
-fclose(z);
     if (rename(path, newPath) == 0)
     {
         return(true);

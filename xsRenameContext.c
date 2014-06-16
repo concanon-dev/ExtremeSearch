@@ -29,7 +29,6 @@ extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 int main(int argc, char* argv[]) 
 {
-    saContextTypePtr contextPtr;
     bool argError;
     char destContextName[256];
     char srcContextName[256];
@@ -92,7 +91,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     saContextTypePtr cPtr = saSplunkContextLoad(destContextName, &destScope, p->app, p->user);
-    if (contextPtr == NULL)
+    if (cPtr == NULL)
     {
         fprintf(stderr, "xsRenameContext-F-109: Can't open context: %s\n", destContextName);
         exit(EXIT_FAILURE);
