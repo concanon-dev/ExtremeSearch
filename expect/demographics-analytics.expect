@@ -1,9 +1,10 @@
 #!/usr/bin/expect
 set timeout 160
-#log_user 0
+log_user 0
 spawn bash
 set login admin
 set passwd admin
+log_file -a demographics-analytics.out
 
 send_user "\n\nREGRESSION TESTS (DEMOGRAPHICS) STARTED\n"
 
@@ -15,8 +16,12 @@ expect {
         send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
         send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib\r"
     }
-    "*Linux*" { set env(SPLUNK_HOME) /opt/splunk }
-    "*Darwin*" { set env(SPLUNK_HOME) /opt/splunk }
+    "*Linux*" { 
+        set env(SPLUNK_HOME) /opt/splunk 
+    }
+    "*Darwin*" { 
+        set env(SPLUNK_HOME) /Applications/splunk 
+    }
 }
 
 # PerformAutoRegression (Height BY Age)
@@ -52,7 +57,7 @@ send "cp $env(SPLUNK_HOME)/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinea
 # PerformCorrelation (Height WITH Age BY Age)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsPerformCorrelation (Height WITH Age BY Age)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsPerformCorrelation (Height WITH Age BY Age)" }
     "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsPerformCorrelation (Height WITH Age BY Age)" }
 }
 sleep 1
@@ -60,7 +65,7 @@ sleep 1
 # PerformSpearmanCorrelation (Height WITH Age)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height WITH Age' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation (Height WITH Age)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation (Height WITH Age)" }
     "x*y*bf*bv*numRows*R*" { send_user "\nTEST PASS - xsPerformSpearmansCorrelation (Height WITH Age)" }
 }
 sleep 1
@@ -68,7 +73,8 @@ sleep 1
 # ApplyAutoRegression (FROM Demo_Height_By_Age_Auto)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsApplyAutoRegression FROM Demo_Height_By_Age_Auto' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsApplyAutoRegression (FROM Height_By_Age_Auto)" }
+    timeout { send_user "\nTEST FAIL - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto)" }
+    "*Segmentation Violation*" { send_user "\nTEST FAIL - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto) - Segmentation Violation" }
     "*Male*" { send_user "\nTEST PASS - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto)" }
 }
 sleep 1
@@ -77,7 +83,8 @@ sleep 1
 # ApplyLinearRegression (FROM Demo_Height_Over_Age_Linear)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsApplyLinearRegression FROM Demo_Height_Over_Age_Linear' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsApplyLinearRegression (FROM Height_Over_Age_Linear)" }
+    timeout { send_user "\nTEST FAIL - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Linear)" }
+    "*Segmentation Violation*" { send_user "\nTEST FAIL - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Auto) - Segmentation Violation" }
     "*Male*" { send_user "\nTEST PASS - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Linear)" }
 }
 sleep 1
@@ -85,7 +92,8 @@ sleep 1
 # ApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)
 send "$env(SPLUNK_HOME)/bin/splunk search 'index=demographics | xsApplyNonLinearRegression FROM Demo_Height_Over_Age_NonLinear' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression (FROM Height_Over_Age_NonLinear)" }
+    timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)" }
+    "*Segmentation Violation*" { send_user "\nTEST FAIL - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear) - Segmentation Violation" }
     "*Male*" { send_user "\nTEST PASS - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)" }
 }
 sleep 1

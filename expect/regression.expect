@@ -5,6 +5,7 @@ spawn bash
 
 set login admin
 set passwd admin
+log_file -a regression.out
 
 send_user "\n\nREGRESSION TESTS STARTED\n"
 
@@ -16,42 +17,46 @@ expect {
         send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
         send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib\r"
     }
-    "*Linux*" { set env(SPLUNK_HOME) /opt/splunk }
-    "*Darwin*" { set env(SPLUNK_HOME) /opt/splunk }
+    "*Linux*" { 
+        set env(SPLUNK_HOME) /opt/splunk 
+    }
+    "*Darwin*" { 
+        set env(SPLUNK_HOME) /Applications/splunk 
+    }
 }
 
 # Create Context (type=domain)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext name=TEST terms=\"tiny,short,medium,tall,gigantic\" type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches scope=global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)" }
     "TEST*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsCreateContext (type=domain)" }
 }
 
 # Create Context (type=average_centered)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext name=TEST2 terms=\"tiny,short,medium,tall,gigantic\" type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches scope=global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)" }
     "TEST2*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsCreateContext (type=average_centered)" }
 }
 
 # Create UD Context (type=domain)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext name=TESTUD terms=\"small,medium,big\" type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)" }
     "TESTUD*small*medium*big*" { send_user "\nTEST PASS - xsCreateUDContext (type=domain)" }
 }
 
 # Create UD Context (type=average_centered)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext name=TESTUD2 terms=\"small,medium,big\" type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)"; }
     "TESTUD2*small*medium*big*" { send_user "\nTEST PASS - xsCreateUDContext (type=average_centered)" }
 }
 
 # List Contexts (TEST, TEST2, TESTUD, TESTUD2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsListContexts -s app' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)"; }
     "context*TEST*TEST*TESTUD*TESTUD*" { send_user "\nTEST PASS - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)" }
 }
 
@@ -59,7 +64,7 @@ expect {
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCloneContext TEST IN global to TEST3 IN global' -auth $login:$passwd \r"
 # NO RESPONSE TO VALIDATE
 #expect {
-#    timeout { send_user "\nTEST FAIL - xsCloneContexts (TEST -> TEST3)"; exit 1 }
+#    timeout { send_user "\nTEST FAIL - xsCloneContexts (TEST -> TEST3)" }
 #    "context*TEST*TEST2*TEST3*TESTUD*TESTUD2" { send_user "\nTEST PASS - xsCloneContexts (TEST -> TEST3)" }
 #}
 
@@ -67,7 +72,7 @@ send "$env(SPLUNK_HOME)/bin/splunk search '| xsCloneContext TEST IN global to TE
 # Display Context (TEST)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDisplayContext TEST' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDisplayContext (TEST,TEST2,TESTUD,TESTUD2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDisplayContext (TEST,TEST2,TESTUD,TESTUD2)"; }
     "TEST*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsDisplayContext (TEST)" }
 }
 
@@ -75,13 +80,14 @@ expect {
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsRenameContext TEST in global to TESTR in global' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsRenameContext (TEST -> TESTR)" }
+    "Can't open context: TESTR" { send_user "\nTEST FAIL - xsRenameContext (TEST -> TESTR) - Can't open context: TESTR" }
     "Context TEST successfully renamed to TESTR" { send_user "\nTEST PASS - xsRenameContext (TEST -> TESTR)" }
 }
 
 # Create Concept (teeny in TESTR)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateConcept teeny IN TESTR WITH min=0 max=10 shape=pi scope=global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsCreateConcept (teeny in TESTR)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsCreateConcept (teeny in TESTR)" }
     "TESTR*tiny*short*medium*tall*gigantic*teeny*" { send_user "\nTEST PASS - xsCreateConcept (teeny in TESTR)" }
 }
 
@@ -89,7 +95,7 @@ expect {
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsCloneConcept  teeny FROM TESTR in global TO teeny FROM TEST2 in global' -auth $login:$passwd \r"
 # NO RESPONSE TO VALIDATE
 #expect {
-#    timeout { send_user "\nTEST FAIL - xsCloneConcept (teeny from TESTR to teeny from TEST2)"; exit 1 }
+#    timeout { send_user "\nTEST FAIL - xsCloneConcept (teeny from TESTR to teeny from TEST2)" }
 #    "Concept teeny successfully cloned" { send_user "\nTEST PASS - xsCloneConcept (teeny from TESTR to teeny from TEST2)" }
 #}
 
@@ -97,69 +103,69 @@ send "$env(SPLUNK_HOME)/bin/splunk search '| xsCloneConcept  teeny FROM TESTR in
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteConcept  teeny FROM TESTR in global' -auth $login:$passwd \r"
 # NO RESPONSE TO VALIDATE
 #expect {
-#    timeout { send_user "\nTEST FAIL - xsDeleteConcept (teeny from TESTR)"; exit 1 }
+#    timeout { send_user "\nTEST FAIL - xsDeleteConcept (teeny from TESTR)" }
 #    "Concept teeny successfully deleted" { send_user "\nTEST PASS - xsDeleteConcept (teeny from TESTR)" }
 #}
 
 # List Concept (TESTR)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsListConcepts FROM TESTR in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsListConcepts (TESTR)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsListConcepts (TESTR)" }
     "Concept*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsListConcepts (TESTR)" }
 }
 
 # List Concept (TEST2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsListConcepts FROM TEST2 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsListConcepts (TEST2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsListConcepts (TEST2)" }
     "Concept*tiny*short*medium*tall*gigantic*teeny*" { send_user "\nTEST PASS - xsListConcepts (TEST2)" }
 }
 
 # Display Concept (tiny from TEST2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDisplayConcept tiny FROM TEST2 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDisplayConcept (tiny from TEST2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDisplayConcept (tiny from TEST2)" }
     "domain*tiny*" { send_user "\nTEST PASS - xsDisplayConcept (tiny from TEST2)" }
 }
 
 # List UOM (TEST2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsListUOM FROM TEST2 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsListUOM (TEST2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsListUOM (TEST2)" }
     "*UOM*inches*" { send_user "\nTEST PASS - xsListUOM (TEST2)" }
 }
 
 # Delete Context (TESTR)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteContext TESTR in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTR)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTR)" }
     "Context TESTR successfully deleted" { send_user "\nTEST PASS - xsDeleteContext (TESTR)" }
 }
 
 # Delete Context (TEST2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteContext TEST2 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDeleteContext (TEST2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDeleteContext (TEST2)" }
     "Context TEST2 successfully deleted" { send_user "\nTEST PASS - xsDeleteContext (TEST2)" }
 }
 
 # Delete Context (TESTUD)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteContext TESTUD in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTUD)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTUD)" }
     "Context TESTUD successfully deleted" { send_user "\nTEST PASS - xsDeleteContext (TESTUD)" }
 }
 
 # Delete Context (TESTUD2)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteContext TESTUD2 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTUD2)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDeleteContext (TESTUD2)" }
     "Context TESTUD2 successfully deleted" { send_user "\nTEST PASS - xsDeleteContext (TESTUD2)" }
 }
 # Delete Context (TEST3)
 send "$env(SPLUNK_HOME)/bin/splunk search '| xsDeleteContext TEST3 in global' -auth $login:$passwd \r"
 expect {
-    timeout { send_user "\nTEST FAIL - xsDeleteContext (TEST3)"; exit 1 }
+    timeout { send_user "\nTEST FAIL - xsDeleteContext (TEST3)" }
     "Context TEST3 successfully deleted" { send_user "\nTEST PASS - xsDeleteContext (TEST3)" }
 }
 
