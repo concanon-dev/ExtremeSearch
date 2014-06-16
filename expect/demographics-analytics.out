@@ -1,0 +1,378 @@
+
+
+REGRESSION TESTS (DEMOGRAPHICS) STARTED
+uname -s
+[?1034hbash-3.2# uname -s
+Darwin
+rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv /Applications/splunk/etc/apps/xtreme/lookups/Demo_Height_By_Age_Auto.csv
+/Applications/splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto ' -auth admin:admin 
+bash-3.2# rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv /Applications/splun k/etc/apps/xtreme/lookups/Demo_Height_By_Age_Auto.csv
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age  OUTPUT Demo_Height_By_Age_Auto ' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+[H[2JPreview of: index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto 
+
+  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 40     417 -0.0992500425 0.0182186502  -0.0378179512
+Height Age 47     321 -0.0225135152 0.0308810264  0.0388176169
+Height Age 42     399 0.0885509058  0.0525251711  -0.0050677363
+Height Age 44     421 0.0383425418  -0.0295979439 0.0921684009
+Height Age 24     164 0.0334501833  -0.0998362336 0.0396553071
+Height Age 28     334 -0.0033816649 0.0558529345  0.0354929515
+Height Age 50     220 -0.0908978725 0.1161464356  0.0286383360
+Height Age 33     478 0.0042833524  -0.0015841643 0.0063923743
+Height Age 36     462 -0.0940475029 -0.0527760179 -0.0877613687
+Height Age 39     463 0.0230622292  -0.0040487761 0.0008698357
+Height Age 30     344 -0.0104794033 0.0725300234  0.0015056634
+Height Age 52     196 0.0359376334  -0.0307026522 -0.0109609937
+Height Age 38
+TEST PASS - xsPerformAutoRegression (Height OVER Age)     422 -0.0137908601 0.0276373264  -0.0212122473
+Height Age 45     348 -0.0127262584 -0.0452883414 -0.0121895884
+Height Age 35     527 0.0220994584  0.0047511546  -0.0390328802
+Height Age 48     259 0.0164992566  0.0586128584  0.0064452022
+Height Age 41     387 -0.0114844424 0.0575329194  -0.0085442836
+Height Age 26     246 0.0410638009  -0.1126665474 -0.0387938971
+Height Age 43     387 0.0294635226  0.0789635264  0.0022178922
+Height Age 32     484 -0.0651052343 0.0464009834  -0.0342793689
+Height Age 31     403 0.0294119354  0.0360609150  0.0033711027
+Height Age 54     178 -0.2414191941 -0.1339635834 0.0549117575
+Height Age 67      43 0.0708647100  -0.2841634122 0.2523480974
+Height Age 27     270 -0.0545184247 -0.0133378924 0.0015716623
+Height Age 57     144 0.1154301449  0.0335344718  -0.0405011023
+cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv /Applications/splunk/etc/apps/xtreme/lookups
+rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Line[H[2JPreview of: index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto 
+
+  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 40     841 -0.0293175034 -0.0158079271 0.0029497414
+Height Age 47     592 -0.0139448256 0.0376093653  0.0372187058
+Height Age 42     805 0.0343299179  0.0294316842  -0.0006657082
+Height Age 44     781 0.0607130651  -0.0280055846 0.0244609109
+Height Age 24     331 -0.0438076929 -0.0176072600 0.0190309449
+Height Age 28     632 -0.0188183050 0.0506723205  -0.0149652251
+Height Age 50     451 -0.0584285729 0.0582652800  0.0250684178
+Height Age 33     964 -0.0034485167 -0.0125066345 -0.0062093811
+Height Age 36     960 -0.0274709825 -0.0292474290 -0.0323578430
+Height Age 39     873 0.0188362594  0.0096376425  -0.0172434619
+Height Age 30     730 -0.0084463081 0.0777259269  0.0218634619
+Height Age 52     387 0.1048802702  -0.0375932449 0.0008696163
+Height Age 38     883 0.0522577571  0.0102255394  -0.0656570378
+Height Age 45     704 -0.0358999130 0.0032547549  -0.0850653824
+Height Age 35    1029 0.0137197720  0.0211505851  -0.0282582324
+Height Age 48     563 0.0176333371  0.0428763831  -0.0676276417
+Height Age 41     785 -0.0351549948 0.0272069046  -0.0370669923
+Height Age 26     465 0.0580391123  -0.0923473730 -0.0690746232
+Height Age 43     785 -0.0414033536 0.0882563011  -0.0119399418
+Height Age 32     897 -0.0409273462 0.0692613182  -0.0220724934
+Height Age 31     818 -0.0079911438 -0.0411816601 0.0345898466
+Height Age 54     348 -0.1581207278 -0.0848154703 0.0777937223
+Height Age 67      87 0.0408807302  -0.0965628092 0.1758729239
+Height Age 27     528 -0.0006090464 -0.0294043152 -0.0140542213
+Height Age 57     287 0.0838865943  0.0034991030  0.0180904534
+[H[2JPreview of: index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto 
+
+  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 40    1422 -0.0129617342 -0.0331732691 -0.0316348389
+Height Age 47    1040 0.0009015990  0.0213378344  0.0438374172
+Height Age 42    1385 0.0298686916  0.0247727826  -0.0078943587
+Height Age 44    1383 0.0212802805  -0.0191744809 -0.0085295346
+Height Age 24     582 -0.0204600179 -0.0493179434 0.0104591396
+Height Age 28    1071 -0.0325458267 0.0301164713  0.0105755704
+Height Age 50     745 -0.0574050107 -0.0227395241 -0.0214354131
+Height Age 33    1649 0.0023052726  -0.0204635812 -0.0058303776
+Height Age 36    1644 -0.0449482961 -0.0304531992 -0.0077563587
+Height Age 39    1458 -0.0034739502 0.0156466693  -0.0161237811
+Height Age 30    1277 -0.0031350328 0.0156712336  0.0119623605
+Height Age 52     640 0.0710258768  -0.0479154376 0.0099792061
+Height Age 38    1546 0.0333406677  0.0136801294  -0.0353593283
+Height Age 45    1291 -0.0271398920 -0.0045789405 -0.0369022628
+Height Age 35    1751 0.0179955596  0.0172448963  -0.0044854345
+Height Age 48     971 0.0199325942  0.0339591594  -0.0285741536
+Height Age 41    1371 -0.0259844312 0.0118383379  -0.0172209085
+Height Age 26     786 0.0214985910  -0.0370138655 -0.0589550296
+Height Age 43    1382 0.0108989949  0.0361558406  -0.0097883685
+Height Age 32    1559 -0.0061507485 0.0390598224  -0.0272110842
+Height Age 31    1412 -0.0196238583 -0.0076609438 0.0089236724
+Height Age 54     606 -0.0853252546 -0.0645919063 0.0603380640
+Height Age 67     145 -0.0765819726 -0.0736763102 -0.0130463775
+Height Age 27     899 0.0014474749  -0.0126610001 0.0115556932
+Height Age 57     498 0.0348994485  0.0254207349  0.0192046445
+[H[2J  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 40    1422 -0.0129617342 -0.0331732691 -0.0316348389
+Height Age 47    1040 0.0009015990  0.0213378344  0.0438374172
+Height Age 42    1385 0.0298686916  0.0247727826  -0.0078943587
+Height Age 44    1383 0.0212802805  -0.0191744809 -0.0085295346
+Height Age 24     582 -0.0204600179 -0.0493179434 0.0104591396
+Height Age 28    1071 -0.0325458267 0.0301164713  0.0105755704
+Height Age 50     745 -0.0574050107 -0.0227395241 -0.0214354131
+Height Age 33    1649 0.0023052726  -0.0204635812 -0.0058303776
+Height Age 36    1644 -0.0449482961 -0.0304531992 -0.0077563587
+Height Age 39    1458 -0.0034739502 0.0156466693  -0.0161237811
+Height Age 30    1277 -0.0031350328 0.0156712336  0.0119623605
+Height Age 52     640 0.0710258768  -0.0479154376 0.0099792061
+Height Age 38    1546 0.0333406677  0.0136801294  -0.0353593283
+Height Age 45    1291 -0.0271398920 -0.0045789405 -0.0369022628
+Height Age 35    1751 0.0179955596  0.0172448963  -0.0044854345
+Height Age 48     971 0.0199325942  0.0339591594  -0.0285741536
+Height Age 41    1371 -0.0259844312 0.0118383379  -0.0172209085
+Height Age 26     786 0.0214985910  -0.0370138655 -0.0589550296
+Height Age 43    1382 0.0108989949  0.0361558406  -0.0097883685
+Height Age 32    1559 -0.0061507485 0.0390598224  -0.0272110842
+Height Age 31    1412 -0.0196238583 -0.0076609438 0.0089236724
+Height Age 54     606 -0.0853252546 -0.0645919063 0.0603380640
+Height Age 67     145 -0.0765819726 -0.0736763102 -0.0130463775
+Height Age 27     899 0.0014474749  -0.0126610001 0.0115556932
+Height Age 57     498 0.0348994485  0.0254207349  0.0192046445
+Height Age 19     147 0.0346034940  -0.1704129042 0.0950407293
+Height Age 29    1025 0.0420521333  -0.0450534843 -0.0125117131
+Height Age 37    1653 0.0250445153  -0.0189948883 0.0190300433
+Height Age 46    1180 0.0191223335  -0.0028293488 -0.0092559954
+Height Age 56     576 0.0293759585  0.0514001647  -0.0147395277
+Height Age 60     438 -0.0480608537 -0.0310759517 -0.0228171172
+Height Age 68     128 -0.1557927002 0.0240566487  0.0870311411
+Height Age 34    1642 0.0073124493  -0.0169600596 0.0419465885
+Height Age 58     483 0.0663571448  -0.0349517453 0.0439903596
+Height Age 22     368 -0.0567550596 -0.0449774444 -0.0655666233
+Height Age 21     299 -0.0984244719 -0.1542762181 0.0228824314
+Height Age 59     470 0.0047831246  -0.0847236893 -0.0422934169
+Height Age 53     599 -0.0107493445 -0.0734029482 0.0451283240
+Height Age 20     194 -0.0307738692 0.1263056692  0.0089508229
+Height Age 62     302 -0.0668926140 -0.0563165038 0.1004000221
+Height Age 69      84 -0.0912112663 -0.1374169702 0.1487796593
+Height Age 64     248 -0.1609324253 0.0794512509  0.1011806001
+Height Age 49     867 0.0236760639  -0.0360536535 -0.0191493848
+Height Age 55     575 -0.0360425018 0.0141868325  -0.0358419658
+Height Age 18     112 -0.0980078673 0.0357271761  0.0276233764
+Height Age 25     728 -0.0077114604 -0.0068269906 -0.0776418719
+Height Age 23     525 -0.0458685645 -0.0453076529 -0.0530691286
+Height Age 51     721 -0.0614117329 -0.0112157475 -0.0139264748
+Height Age 61     379 -0.0018611623 0.0510447100  -0.1183161000
+Height Age 16      41 -0.0054666205 -0.2830364596 -0.1186528345
+Height Age 65     189 -0.0967215614 -0.0980865622 0.0392349997
+Height Age 66     180 0.1470848986  -0.0922619326 -0.0137834816
+Height Age 17      52 -0.2884735237 -0.2429562914 -0.0233872663
+Height Age 70      47 -0.3889236539 -0.4465699762 -0.0934528971
+Height Age 15      27 -0.2249949033 -0.1635715569 -0.4784519173
+Height Age 63     275 -0.0284072041 0.0530087550  -0.0783948591
+Height Age 14      20 -0.4169037930 -0.2467693458 0.2932381635
+Height Age 71      17 0.1490685818  -0.7728667830 -0.1435040502
+Height Age 13      10 -0.1469759528 0.0681308530  0.3494023563
+Height Age 12       3 0.0000000000  0.0000000000  0.0000000000
+Height Age 72       3 0.0000000000  0.0000000000  0.0000000000
+Height Age 11       3 0.0000000000  0.0000000000  0.0000000000
+Height Age 10       1 0.0000000000  0.0000000000  0.0000000000
+bash-3.2# cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv /Applications/splunk/e tc/apps/xtreme/lookups
+bash-3.2# rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv /Applications/s plunk/etc/apps/xtreme/lookups/Demo_Height_Over_Age_Linear.csv
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsPerformLinearRegression Height OVER  Age OUTPUT Demo_Height_Over_Age_Linear' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+[H[2JPreview of: index=demographics | xsPerformLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_Line
+
+ x    y    bf bv numRows    slope       intercept       errA         errB          R
+--- ------ -- -- ------- ------------ ------------- ------------ ------------ ------------
+Age Height *  *    25000 0.0278104278 65.0961604591 0.0031424114 0.1303583916 0.0789378989
+
+TEST PASS - xsPerformLinearRegression (Height OVER Age)cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv /Applications/splunk/etc/apps/xtreme/lookups
+rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv /Applications/splunk/etc/apps/xtreme/lookups/Demo_Height_Over_Age_NonLinear.csv
+/Applications/splunk/bin/splunk search 'index=demographics | xsPerformNonLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_NonLinear' -auth admin:admin 
+[H[2JPreview of: index=demographics | xsPerformLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_Line
+
+ x    y    bf bv numRows    slope       intercept       errA         errB          R
+--- ------ -- -- ------- ------------ ------------- ------------ ------------ ------------
+Age Height *  *    43124 0.0282325796 65.0846260155 0.0033622831 0.1396941211 0.0795704094
+[H[2J x    y    bf bv numRows    slope       intercept       errA         errB          R
+--- ------ -- -- ------- ------------ ------------- ------------ ------------ ------------
+Age Height *  *    43124 0.0282325796 65.0846260155 0.0033622831 0.1396941211 0.0795704094
+bash-3.2# cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv /Applications/splu nk/etc/apps/xtreme/lookups
+bash-3.2# rm -f /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv /Application s/splunk/etc/apps/xtreme/lookups/Demo_Height_Over_Age_NonLinear.csv
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsPerformNonLinearRegression Height O VER Age OUTPUT Demo_Height_Over_Age_NonLinear' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+[H[2JPreview of: index=demographics | xsPerformNonLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_N
+
+ x  bf bv numRows     coef0         coef1         coef2
+--- -- -- ------- ------------- ------------- -------------
+Age *  *    25000 -0.0026488763 -0.0025796771 -0.0071562023
+
+TEST PASS - xsPerformNonLinearRegression (Height OVER Age)cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv /Applications/splunk/etc/apps/xtreme/lookups
+/Applications/splunk/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth admin:admin 
+[H[2JPreview of: index=demographics | xsPerformNonLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_N
+
+ x  bf bv numRows     coef0         coef1         coef2
+--- -- -- ------- ------------- ------------- -------------
+Age *  *    43124 -0.0027191094 -0.0056707848 -0.0046068203
+[H[2J x  bf bv numRows     coef0         coef1         coef2
+--- -- -- ------- ------------- ------------- -------------
+Age *  *    43124 -0.0027191094 -0.0056707848 -0.0046068203
+bash-3.2# cp /Applications/splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv /Applications/s plunk/etc/apps/xtreme/lookups
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age  BY Age' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+[H[2JPreview of: index=demographics | xsPerformCorrelation Height WITH Age BY Age
+
+  x     y  bf  bv numRows      R
+------ --- --- -- ------- ------------
+Height Age Age 40     841 0.0000000000
+Height Age Age 47     592 0.0000000000
+Height Age Age 42     805 0.0000000000
+Height Age Age 44     781 0.0000000000
+Height Age Age 24     331 0.0000000000
+Height Age Age 28     632 0.0000000000
+Height Age Age 50     451 0.0000000000
+Height Age Age 33     964 0.0000000000
+Height Age Age 36     960 0.0000000000
+Height Age Age 39     873 0.0000000000
+Height Age Age 30     730 0.0000000000
+Height Age Age 52     387 0.0000000000
+Height Age Age 38     883 0.0000000000
+Height Age Age 45     704 0.0000000000
+Height Age Age 35    1029 0.0000000000
+Height Age Age 48     563 0.0000000000
+Height Age Age 41     785 0.0000000000
+Height Age Age 26     465 0.0000000000
+Height Age Age 43     785 0.0000000000
+Height Age Age 32     897 0.0000000000
+Height Age Age 31     818 0.0000000000
+Height Age Age 54     3
+TEST PASS - xsPerformCorrelation (Height WITH Age BY Age)48 0.0000000000
+Height Age Age 67      87 0.0000000000
+Height Age Age 27     528 0.0000000000
+Height Age Age 57     287 0.0000000000
+/Applications/splunk/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height WITH Age' -auth admin:admin 
+[H[2JPreview of: index=demographics | xsPerformCorrelation Height WITH Age BY Age
+
+  x     y  bf  bv numRows      R
+------ --- --- -- ------- ------------
+Height Age Age 40    1422 0.0000000000
+Height Age Age 47    1040 0.0000000000
+Height Age Age 42    1385 0.0000000000
+Height Age Age 44    1383 0.0000000000
+Height Age Age 24     582 0.0000000000
+Height Age Age 28    1071 0.0000000000
+Height Age Age 50     745 0.0000000000
+Height Age Age 33    1649 0.0000000000
+Height Age Age 36    1644 0.0000000000
+Height Age Age 39    1458 0.0000000000
+Height Age Age 30    1277 0.0000000000
+Height Age Age 52     640 0.0000000000
+Height Age Age 38    1546 0.0000000000
+Height Age Age 45    1291 0.0000000000
+Height Age Age 35    1751 0.0000000000
+Height Age Age 48     971 0.0000000000
+Height Age Age 41    1371 0.0000000000
+Height Age Age 26     786 0.0000000000
+Height Age Age 43    1382 0.0000000000
+Height Age Age 32    1559 0.0000000000
+Height Age Age 31    1412 0.0000000000
+Height Age Age 54     6
+TEST PASS - xsPerformSpearmansCorrelation (Height WITH Age)06 0.0000000000
+Height Age Age 67     145 0.0000000000
+Height Age Age 27     899 0.0000000000
+Height Age Age 57     498 0.0000000000
+[H[2J  x     y  bf  bv numRows      R
+------ --- --- -- ------- ------------
+Height Age Age 40    1422 0.0000000000
+Height Age Age 47    1040 0.0000000000
+Height Age Age 42    1385 0.0000000000
+Height Age Age 44    1383 0.0000000000
+Height Age Age 24     582 0.0000000000
+Height Age Age 28    1071 0.0000000000
+Height Age Age 50     745 0.0000000000
+Height Age Age 33    1649 0.0000000000
+Height Age Age 36    1644 0.0000000000
+Height Age Age 39    1458 0.0000000000
+Height Age Age 30    1277 0.0000000000
+Height Age Age 52     640 0.0000000000
+Height Age Age 38    1546 0.0000000000
+Height Age Age 45    1291 0.0000000000
+Height Age Age 35    1751 0.0000000000
+Height Age Age 48     971 0.0000000000
+Height Age Age 41    1371 0.0000000000
+Height Age Age 26     786 0.0000000000
+Height Age Age 43    1382 0.0000000000
+Height Age Age 32    1559 0.0000000000
+Height Age Age 31    1412 0.0000000000
+Height Age Age 54     606 0.0000000000
+Height Age Age 67     145 0.0000000000
+Height Age Age 27     899 0.0000000000
+Height Age Age 57     498 0.0000000000
+Height Age Age 19     147 0.0000000000
+Height Age Age 29    1025 0.0000000000
+Height Age Age 37    1653 0.0000000000
+Height Age Age 46    1180 0.0000000000
+Height Age Age 56     576 0.0000000000
+Height Age Age 60     438 0.0000000000
+Height Age Age 68     128 0.0000000000
+Height Age Age 34    1642 0.0000000000
+Height Age Age 58     483 0.0000000000
+Height Age Age 22     368 0.0000000000
+Height Age Age 21     299 0.0000000000
+Height Age Age 59     470 0.0000000000
+Height Age Age 53     599 0.0000000000
+Height Age Age 20     194 0.0000000000
+Height Age Age 62     302 0.0000000000
+Height Age Age 69      84 0.0000000000
+Height Age Age 64     248 0.0000000000
+Height Age Age 49     867 0.0000000000
+Height Age Age 55     575 0.0000000000
+Height Age Age 18     112 0.0000000000
+Height Age Age 25     728 0.0000000000
+Height Age Age 23     525 0.0000000000
+Height Age Age 51     721 0.0000000000
+Height Age Age 61     379 0.0000000000
+Height Age Age 16      41 0.0000000000
+Height Age Age 65     189 0.0000000000
+Height Age Age 66     180 0.0000000000
+Height Age Age 17      52 0.0000000000
+Height Age Age 70      47 0.0000000000
+Height Age Age 15      27 0.0000000000
+Height Age Age 63     275 0.0000000000
+Height Age Age 14      20 0.0000000000
+Height Age Age 71      17 0.0000000000
+Height Age Age 13      10 0.0000000000
+Height Age Age 12       3 0.0000000000
+Height Age Age 72       3 0.0000000000
+Height Age Age 11       3 0.0000000000
+Height Age Age 10       1 0.0000000000
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height W ITH Age' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+[H[2JPreview of: index=demographics | xsPerformSpearmanCorrelation Height WITH Age
+
+  x     y  bf bv numRows       R
+------ --- -- -- ------- -------------
+Height Age *  *    25000 -0.0000212578
+[H[2JPreview of: index=demographics | xsPerformSpearmanCorrelation Height WITH Age
+
+  x     y  bf bv numRows       R
+------ --- -- -- ------- -------------
+Height Age *  *    43124 -0.0000284510
+[H[2J  x     y  bf bv numRows       R
+------ --- -- -- ------- -------------
+Height Age *  *    43124 -0.0000284510
+bash-3.2# /Applications/splunk/bin/splunk search 'index=demographics | xsApplyAutoRegression FROM Demo_Heigh t_By_Age_Auto' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+ERROR: xsApplyAutoRegressionFromFile-F-000: Received signal (11) Segmentation Violation
+
+TEST FAIL - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto) - Segmentation ViolationERROR: xsApplyAutoRegressionFromFile-F-000: Received signal (11) Segmentation Violation
+bash-3.2# /Applicat
+TEST FAIL - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Auto) - Segmentation Violationions/splunk/bin/splunk search 'index=demographics | xsApplyLinearRegression FROM Demo_Hei ght_Over_Age_Linear' -auth admin:admin 
+Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/data/Applications/splunk6".  If this is not correct, edit /Volumes/data/Applications/splunk6/etc/splunk-launch.conf
+/Applications/splunk/bin/splunk search 'index=demographics | xsApplyNonLinearRegression FROM Demo_Height_Over_Age_NonLinear' -auth admin:admin 
+144124,Rihanna,T,5,11,71,MA,01522,R&D,58335,40,Female
+144123,Honour,A,5,0,60,GA,31328,ADMN,84269,47,Female
+144122,Rachael,T,5,1,61,WV,25306,MFG,34236,42,Female
+144121,Sade,A,5,1,61,CA,95603,QA,42612,44,Female
+144120,Aaliyah,G,5,1,61,CA,94903,SUP,88808,24,Female
+144119,Terri,O,5,5,65,NY,14464,SUP,55733,28,Female
+144118,Nesbit,Y,5,8,68,CA,90305,ADMN,40663,50,Male
+144117,Gia,Y,5,4,64,IL,62002,IT,204746,33,Female
+144116,Joseph,W,5,11,71,SC,29010,MKT,147069,36,Male
+144115,Phineas,H,5,9,69,FL,32426,AGG,35205,39,Male
+144114,Sherri,O,5,4,64,CT,06002,QA,36209,30,Female
+144113,Wharton,R,5,10,70,OH,43311,OPS,69970,42,Male
+144112,Werner,S,5,4,64,GA,31322,QA,71488,52,Male
+144111,Oakley,N,5,10,70,ND,58454,AGG,30385,38,Male
+144110,Cathleen,M,5,0,60,CA,93402,CS,65026,45,Female
+
+TEST PASS - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)
+
+ANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED
