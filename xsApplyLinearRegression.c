@@ -27,10 +27,11 @@ static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
 
 extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 extern char *optarg;
 extern int optind, optopt;
-
 
 int main(int argc, char* argv[]) 
 {

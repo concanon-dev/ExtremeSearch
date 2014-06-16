@@ -147,9 +147,20 @@ int main(int argc, char* argv[])
            int rowCount = atoi(fieldList[numRowsIndex]);
            if (rowCount > 0)
            {
-               double thisCoef0 = atof(getField(fieldList[coef0Index]));
-               double thisCoef1 = atof(getField(fieldList[coef1Index]));
-               double thisCoef2 = atof(getField(fieldList[coef2Index]));
+               double thisCoef0 = 0.0;
+               if (strcmp(getField(fieldList[coef0Index]), "nan") &&
+                   strcmp(getField(fieldList[coef0Index]), "-nan"))
+                   thisCoef0 = atof(getField(fieldList[coef0Index]));
+
+               double thisCoef1 = 0.0;
+               if (strcmp(getField(fieldList[coef1Index]), "nan") &&
+                   strcmp(getField(fieldList[coef1Index]), "-nan"))
+               thisCoef1 = atof(getField(fieldList[coef1Index]));
+
+               double thisCoef2 = 0.0;
+               if (strcmp(getField(fieldList[coef2Index]), "nan") &&
+                   strcmp(getField(fieldList[coef2Index]), "-nan"))
+               thisCoef2 = atof(getField(fieldList[coef2Index]));
                numRows[index] = numRows[index] + rowCount;
 
                coef0[index] = coef0[index] + (thisCoef0 * rowCount);

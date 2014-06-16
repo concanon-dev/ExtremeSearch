@@ -30,6 +30,8 @@ extern char *optarg;
 extern int optind, optopt;
 
 extern FILE *saOpenFile(char *, char *);
+extern saSplunkInfoPtr saSplunkLoadHeader();
+extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 int main(int argc, char* argv[]) 
 {

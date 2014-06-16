@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     hasByClause = false;
     mustMatchFields = true;
     showRange = false;
-    strcpy(method, "leastsquares");
+    strcpy(method, "maxentropy");
     while ((c = getopt(argc, argv, "b:c:im:x:y:")) != -1) 
     {
         switch (c)

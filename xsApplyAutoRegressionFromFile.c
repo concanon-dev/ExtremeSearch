@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));  
+    fileName[0] = '\0';
     argError = false;
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
@@ -69,7 +70,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-101: usage xsApplyAutoRegressionFromFile -f fileName");
+        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-101: usage xsApplyAutoRegressionFromFile -f fileName\n");
         exit(EXIT_FAILURE);
     }
 
@@ -91,7 +92,7 @@ int main(int argc, char* argv[])
     FILE *f = saOpenFile(tempDir, "r");
     if (f == NULL)
     {
-        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s", fileName);
+        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s\n", fileName);
         exit(EXIT_FAILURE);
     }
     numFileHeader = saCSVFGetLine(f, fileInBuf[numFileRows++], fileFieldList);
