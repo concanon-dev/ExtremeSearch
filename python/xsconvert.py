@@ -24,7 +24,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsconvert-F-001: Usage: xsconvert oldContext TO newContext");
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsconvert"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsconvert"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

@@ -95,7 +95,7 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 CFLAGS=-O2 -Wall
 LDFLAGS=-lm -g
-SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c  saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c saDice.c saDoubleField.c saFloatField.c saField.c saIntField.c saOutput.c saProperties.c saStringField.c saTimeField.c strsep.c saTokenize.tab.o lex.yy.o
+SOURCES= OLDsaLoadContext.c fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c  saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsconvert.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsOverlayContext.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsListContexts xsListConcepts xsListUOM xsOverlayContext xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xspredict xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
@@ -346,25 +346,6 @@ xsrepredict.o:
 # strsep only for cgwin
 strsep.o:
 	$(GCC) -c strsep.c -o $(OBJDIR)/$@
-# For Datagen
-saDice.o:
-	$(GCC) -c saDice.c -o $(OBJDIR)/$@
-saDoubleField.o:
-	$(GCC) -c saDoubleField.c -o $(OBJDIR)/$@
-saFloatField.o:
-	$(GCC) -c saFloatField.c -o $(OBJDIR)/$@
-saField.o:
-	$(GCC) -c saField.c -o $(OBJDIR)/$@
-saIntField.o:
-	$(GCC) -c saIntField.c -o $(OBJDIR)/$@
-saOutput.o:
-	$(GCC) -c saOutput.c -o $(OBJDIR)/$@
-saProperties.o:
-	$(GCC) -c saProperties.c -o $(OBJDIR)/$@
-saStringField.o:
-	$(GCC) -c saStringField.c -o $(OBJDIR)/$@
-saTimeField.o:
-	$(GCC) -c saTimeField.c -o $(OBJDIR)/$@
 
 saTokenize.tab.c saTokenize.tab.h: saTokenize.y
 	bison -d saTokenize.y

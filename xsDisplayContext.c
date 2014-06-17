@@ -23,7 +23,7 @@ extern char *optarg;
 extern int optind, optopt;
 
 extern void saContextDisplay(saContextTypePtr);
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
     char contextName[256];
+    char *root = dirname(argv[0]);
     int c;
     int scope = saSplunkGetScope(NULL);
 
@@ -74,7 +75,7 @@ int main(int argc, char* argv[])
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
-    contextPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsDisplayContext-F-107: Can't open context: %s\n", contextName);

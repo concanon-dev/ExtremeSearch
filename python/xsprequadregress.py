@@ -34,7 +34,7 @@ if __name__ == '__main__':
         if len(x) < 1:
             raise Exception("xsprequadregress-F-003: Missing x parameter"); 
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprequadregress"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprequadregress"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

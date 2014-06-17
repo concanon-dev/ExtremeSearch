@@ -103,7 +103,7 @@ if __name__ == '__main__':
             notes = 'none'
 
         info_file = settings['infoPath']
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" + platform.system() + "/" + platform.architecture()[0] + "/xsUpdateContext"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" + platform.system() + "/" + platform.architecture()[0] + "/xsUpdateContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

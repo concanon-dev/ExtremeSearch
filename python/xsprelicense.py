@@ -21,7 +21,7 @@ if __name__ == '__main__':
                     eqsign = arg.find('=')
                     reactivate = arg[eqsign+1:len(arg)]
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprelicense"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

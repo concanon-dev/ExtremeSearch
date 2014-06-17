@@ -31,7 +31,7 @@ if __name__ == '__main__':
                 preop = preop + " reactivate=true"
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsLicense"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsLicense"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

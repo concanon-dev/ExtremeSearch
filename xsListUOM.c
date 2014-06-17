@@ -24,7 +24,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
     char contextString[128];
+    char *root = dirname(argv[0]);
     char scopeString[256];
     int i, c;
 
@@ -84,7 +85,7 @@ int main(int argc, char* argv[])
     }
 
     int scope = saSplunkGetScope(scopeString);
-    contextPtr = saSplunkContextLoad(contextString, &scope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(contextString, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsListUOM-F-111: can't open context %s\n", contextString);

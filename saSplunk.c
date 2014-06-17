@@ -22,9 +22,8 @@ extern saContextTypePtr saContextLoad(FILE *);
 extern int saContextSave(FILE *, saContextTypePtr);
 extern FILE *saOpenFile(char *, char *);
 
-bool saSplunkGetContextPath(char *path, int scope, char *app, char *user)
+bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *user)
 {
-    char *splunkHome = getenv("SPLUNK_HOME");
     if (path == NULL)
         return(false);
     *path = '\0';
@@ -35,7 +34,7 @@ bool saSplunkGetContextPath(char *path, int scope, char *app, char *user)
             return(false);
         if (*app == '\0' || *user == '\0')
             return(false);
-        sprintf(path, "%s/etc/users/%s/%s/contexts", splunkHome, user, app);
+        sprintf(path, "%s/users/%s/%s/contexts", root, user, app);
     } 
     else if (scope == SA_SPLUNK_SCOPE_APP) 
     {
@@ -43,20 +42,20 @@ bool saSplunkGetContextPath(char *path, int scope, char *app, char *user)
             return(false);
         if (*app == '\0')
             return(false);
-        sprintf(path, "%s/etc/apps/%s/contexts", splunkHome, app);
+        sprintf(path, "%s/apps/%s/contexts", root, app);
     } 
     else 
-        sprintf(path, "%s/etc/apps/xtreme/contexts", splunkHome);
+        sprintf(path, "%s/apps/xtreme/contexts", root);
     return(true);
 }
 
-bool saSplunkContextDelete(char *name, int scope, char *app, char *user)
+bool saSplunkContextDelete(char *name, char *root, int scope, char *app, char *user)
 {
 
     char file[1024];
     char path[1024];
 
-    if (saSplunkGetContextPath(path, scope, app, user) == false)
+    if (saSplunkGetContextPath(path, root, scope, app, user) == false)
         return(false);
 
     sprintf(file, "/%s.context", name);
@@ -69,25 +68,24 @@ bool saSplunkContextDelete(char *name, int scope, char *app, char *user)
     return(false);
 }
 
-saContextTypePtr saSplunkContextFind(char *name, char *app, char *user, int *scope)
+saContextTypePtr saSplunkContextFind(char *name, char *root, char *app, char *user, int *scope)
 {
     saContextTypePtr contextPtr = NULL;
     char path[1024];
-    char *splunkHome = getenv("SPLUNK_HOME");
 
     if (app == NULL || user == NULL)
         return(NULL);
 
     *scope = SA_SPLUNK_SCOPE_PRIVATE;
-    sprintf(path, "%s/etc/users/%s/%s/contexts/%s.context", splunkHome, user, app, name);
+    sprintf(path, "%s/users/%s/%s/contexts/%s.context", root, user, app, name);
     if (access(path, F_OK) == -1)
     {
         *scope = SA_SPLUNK_SCOPE_APP;
-        sprintf(path, "%s/etc/apps/%s/contexts/%s.context", splunkHome, app, name);
+        sprintf(path, "%s/apps/%s/contexts/%s.context", root, app, name);
         if (access(path, F_OK) == -1)
         {
             *scope = SA_SPLUNK_SCOPE_GLOBAL;
-            sprintf(path, "%s/etc/apps/xtreme/contexts/%s.context", splunkHome, name);
+            sprintf(path, "%s/apps/xtreme/contexts/%s.context", root, name);
             if (access(path, F_OK) == -1)
                 return(NULL);
         }
@@ -104,17 +102,20 @@ saContextTypePtr saSplunkContextFind(char *name, char *app, char *user, int *sco
     return(contextPtr);    
 }
 
-saContextTypePtr saSplunkContextLoad(char *name, int *scope, char *app, char *user)
+saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *app, char *user)
 {
     char file[1024];
     char path[1024];
     saContextTypePtr contextPtr = NULL;
 
+FILE *z = fopen("./zzz.txt", "a");
+fprintf(z, "%s %s %d %s %s\n", name, root, *scope, app, user);
+fclose(z);
     if (*scope == SA_SPLUNK_SCOPE_NONE)
-        return(saSplunkContextFind(name, app, user, scope));
+        return(saSplunkContextFind(name, root, app, user, scope));
     else
     {
-        if (saSplunkGetContextPath(path, *scope, app, user) == false)
+        if (saSplunkGetContextPath(path, root, *scope, app, user) == false)
             return(NULL);
 
         sprintf(file, "/%s.context", name);
@@ -129,18 +130,18 @@ saContextTypePtr saSplunkContextLoad(char *name, int *scope, char *app, char *us
 }
 
 
-bool saSplunkContextRename(char *name, int scope, char *app, char *user,
-                           char *newName, int newScope, char *newApp, char *newUser)
+bool saSplunkContextRename(char *name, char *root, int scope, char *app, char *user,
+                           char *newName, char *newRoot, int newScope, char *newApp, char *newUser)
 {
     char file[1024];
     char newFile[1024];
     char newPath[1024];
     char path[1024];
 
-    if (saSplunkGetContextPath(path, scope, app, user) == false)
+    if (saSplunkGetContextPath(path, root, scope, app, user) == false)
         return(false);
 
-    if (saSplunkGetContextPath(newPath, newScope, newApp, newUser) == false)
+    if (saSplunkGetContextPath(newPath, newRoot, newScope, newApp, newUser) == false)
         return(false);
 
     sprintf(file, "/%s.context", name);
@@ -154,12 +155,12 @@ bool saSplunkContextRename(char *name, int scope, char *app, char *user,
     return(false);
 }
 
-bool saSplunkContextSave(saContextTypePtr contextPtr, int scope, char *app, char *user)
+bool saSplunkContextSave(saContextTypePtr contextPtr, char *root, int scope, char *app, char *user)
 {
     char file[1024];
     char path[1024];
 
-    if (saSplunkGetContextPath(path, scope, app, user) == false)
+    if (saSplunkGetContextPath(path, root, scope, app, user) == false)
         return(false);
 
 #ifdef _UNICODE
@@ -178,6 +179,20 @@ bool saSplunkContextSave(saContextTypePtr contextPtr, int scope, char *app, char
     saContextSave(f, contextPtr);
     fclose(f);
     return(true);
+}
+
+char *saSplunkGetRoot(char *root)
+{
+    char *newRoot = root;
+    int i=0;
+    while(i<6)
+    {
+        if (newRoot == NULL)
+            return(NULL);
+        newRoot = dirname(newRoot);
+        i++;
+    }
+    return(newRoot);
 }
 
 int saSplunkGetScope(char *scopeStr)

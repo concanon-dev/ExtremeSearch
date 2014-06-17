@@ -4,6 +4,7 @@ xsCloneContext.c
 xsCreateConcept.c
 xsCreateContext.c
 xsDeleteConcept.c
+xsDeleteContext.c
 xsDiscoverTrend.c
 xsDisplayConcept.c
 xsDisplayContext.c
@@ -16,14 +17,3 @@ xsListUOM.c
 xsRenameContext.c
 xsWhere.c
 xsWherenew.c
-saSplunk.c
-xsCloneConcept.c
-xsCloneContext.c
-xsCreateConcept.c
-xsCreateContext.c
-xsDeleteConcept.c
-xsRenameContext.c
-saSplunk.c
-xsDeleteContext.c
-saSplunk.c
-xsRenameContext.c

@@ -37,7 +37,7 @@ extern void *saHashGet(saHashtableTypePtr, char *);
 extern void saHashSet(saHashtableTypePtr, char *, char *);
 
 extern void saContextLookup(saContextTypePtr, double, double *);;;;
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
     bool wroteContextHeaders = false;
     char contextName[128];
     char fieldName[128];
+    char *root = dirname(argv[0]);
     int c;
     int numHeaderFields;
     int numConcepts;
@@ -160,7 +161,7 @@ int main(int argc, char* argv[])
             contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);
             if (contextPtr == NULL)
             {
-                contextPtr = saSplunkContextLoad(realContextName, &scope, p->app, p->user);
+                contextPtr = saSplunkContextLoad(realContextName, root, &scope, p->app, p->user);
                 if (contextPtr == NULL)
                 {
                     int q;
@@ -185,7 +186,7 @@ int main(int argc, char* argv[])
                     contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);
                     if (contextPtr == NULL)
                     {
-                        contextPtr = saSplunkContextLoad(realContextName, &scope, p->app, p->user);
+                        contextPtr = saSplunkContextLoad(realContextName, root, &scope, p->app, p->user);
                         if (contextPtr == NULL)
                         {
                             fprintf(stderr, "xsFindBestConcept-F-107: Can't load context: %s\n", contextName);

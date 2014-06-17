@@ -7,6 +7,8 @@
 #ifndef __sasplunk
 #define __sasplunk TRUE
 
+#include <libgen.h>
+
 #define SA_SPLUNK_MAXSTR 1024
 
 #define SA_SPLUNK_SCOPE_NONE    0

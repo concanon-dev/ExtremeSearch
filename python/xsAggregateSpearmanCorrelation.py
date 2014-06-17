@@ -22,7 +22,7 @@ if __name__ == '__main__':
         raise Exception("xsAggregateSpearmanCorrelation-F-001: Usage: xsAggregateSpearmanCorrelation [OUTPUT filename]")
 
     try:
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateSpearmanCorrelation"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateSpearmanCorrelation"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

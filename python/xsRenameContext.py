@@ -44,7 +44,7 @@ if __name__ == '__main__':
         if dest.find(".") != -1 or dest.find("/") != -1:
             raise Exception("xsRenameContext-F-005: dest can not contain a '/' or '.'");
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsRenameContext"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsRenameContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

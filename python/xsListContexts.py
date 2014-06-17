@@ -18,7 +18,7 @@ if __name__ == '__main__':
             scope = sys.argv[1]
             scope = scope.lower()
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListContexts"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListContexts"
 	if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

@@ -20,7 +20,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern bool saSplunkContextDelete(char *, int, char *, char *);
+extern bool saSplunkContextDelete(char *, char *, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern int saSplunkGetScope(char *);
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
     char contextName[256];
+    char *root = dirname(argv[0]);
     int c;
     int scope = saSplunkGetScope(NULL);
 
@@ -74,7 +75,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    if(!saSplunkContextDelete(contextName, scope, p->app, p->user))
+    if(!saSplunkContextDelete(contextName, root, scope, p->app, p->user))
     {
         fprintf(stderr, "xsDeleteContext-F-107: Can't delete context: %s\n", contextName);
         exit(EXIT_FAILURE);

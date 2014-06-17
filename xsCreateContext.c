@@ -24,8 +24,8 @@ extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], 
                                               char *, int, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saContextMerge(saContextTypePtr, saContextTypePtr, char *);
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
 
@@ -45,14 +45,15 @@ int main(int argc, char* argv[])
     bool setSDev = false;
     bool update = false;
 
-    char endShapeStr[256];
     char *conceptNames[SA_CONTEXT_MAXTERMS];
+    char *conceptsList = NULL;
     char contextType[256];
+    char endShapeStr[256];
     char infoFile[256];
     char name[256];
     char notes[1024];
+    char *root = dirname(argv[0]);
     char shapeStr[256];
-    char *conceptsList = NULL;
     char uom[256];
 
     double avg = 0.0;
@@ -157,7 +158,7 @@ int main(int argc, char* argv[])
     // if update flag is set, try to load original context
     if (update == true) 
     {
-        if ((origCPtr = saSplunkContextLoad(name, &fileScope, iPtr->app, iPtr->user)) == NULL)
+        if ((origCPtr = saSplunkContextLoad(name, root, &fileScope, iPtr->app, iPtr->user)) == NULL)
         {
             fprintf(stderr, "xsCreateContext-F-121: Can't load context %s\n", name);
             exit(EXIT_FAILURE);
@@ -228,7 +229,7 @@ int main(int argc, char* argv[])
             exit(EXIT_FAILURE);
         }
     }
-    saSplunkContextSave(cPtr, fileScope, iPtr->app, iPtr->user);
+    saSplunkContextSave(cPtr, root, fileScope, iPtr->app, iPtr->user);
     saContextDisplay(cPtr);
     exit(0);
 }

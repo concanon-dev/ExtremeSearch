@@ -21,9 +21,9 @@ static double stdDev(double, double);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern void saContextRecreateConcepts(saContextTypePtr, double, double);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 extern void saContextCreateConcept(saContextTypePtr, char *, char *, double, double);
 
 extern saSplunkInfoPtr saSplunkLoadHeader();
@@ -40,8 +40,9 @@ int main(int argc, char* argv[])
     bool setMax = false;
     bool setMin = false;
     char contextName[256];
-    char termName[256];
+    char *root = dirname(argv[0]);
     char shapeStr[256];
+    char termName[256];
     double max = 0.0;
     double min = 0.0;
     int c;
@@ -104,7 +105,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    saContextTypePtr cPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
+    saContextTypePtr cPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (cPtr == NULL)
     {
         cPtr = saContextInit(contextName, min, max, (double)0.0, (double)0.0, 0, 1,
@@ -123,7 +124,7 @@ int main(int argc, char* argv[])
     if (cPtr->domainMin > min || cPtr->domainMax < max)
         saContextRecreateConcepts(cPtr, min, max);
     saContextCreateConcept(cPtr, termName, shapeStr, min, max);
-    if (saSplunkContextSave(cPtr, scope, p->app, p->user) == false)
+    if (saSplunkContextSave(cPtr, root, scope, p->app, p->user) == false)
     {
         fprintf(stderr, "xsCreateConcept-F-109: Can't save Context: %s\n", contextName);
         exit(EXIT_FAILURE);

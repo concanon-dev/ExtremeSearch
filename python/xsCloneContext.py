@@ -36,7 +36,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsCloneContext-F-001: Usage: xsCloneContext oldContext [IN scope] TO newContext [IN scope]");
 
-        binary = os.environ["SPLUNK_HOME"] + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneContext"
+        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

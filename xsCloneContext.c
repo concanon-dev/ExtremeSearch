@@ -20,8 +20,8 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
     bool argError;
     char newName[256];
     char oldName[256];
+    char *root = dirname(argv[0]);
     int c;
     int newScope = saSplunkGetScope(NULL);
     int oldScope = saSplunkGetScope(NULL);
@@ -84,7 +85,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    contextPtr = saSplunkContextLoad(oldName, &oldScope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(oldName, root, &oldScope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsCloneContext-F-107: Can't load context: %s\n", oldName);
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
     }
 
     strcpy(contextPtr->name, newName);
-    if (saSplunkContextSave(contextPtr, newScope, p->app, p->user) == false)
+    if (saSplunkContextSave(contextPtr, root, newScope, p->app, p->user) == false)
     {
         fprintf(stderr, "xsCloneContext-F-109: Can't save context: %s\n", newName);
         exit(EXIT_FAILURE);

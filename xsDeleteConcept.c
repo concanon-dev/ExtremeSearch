@@ -20,11 +20,11 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 
 FILE *saOpenFile(char *, char *);
 
@@ -33,8 +33,9 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
 
-    char contextName[512];
     char conceptName[512];
+    char contextName[512];
+    char *root = dirname(argv[0]);
     int i, c;
     int scope = saSplunkGetScope(NULL);
 
@@ -83,7 +84,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    contextPtr = saSplunkContextLoad(contextName, &scope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsDeleteConcept-F-113: Can't open context: %s\n", contextName);
@@ -112,7 +113,7 @@ int main(int argc, char* argv[])
         contextPtr->concepts[j] = contextPtr->concepts[j+1];
     contextPtr->numConcepts--;
 
-    if (saSplunkContextSave(contextPtr, scope, p->app, p->user) == false)
+    if (saSplunkContextSave(contextPtr, root, scope, p->app, p->user) == false)
     {
         fprintf(stderr, "xsDeleteConcept-F-117: Can't save context %s\n", contextPtr->name);
         exit(0);

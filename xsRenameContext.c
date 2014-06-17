@@ -20,9 +20,9 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
-extern bool saSplunkContextRename(char *, int, char *, char *, char *, int, char *, char *);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern bool saSplunkContextRename(char *, char *, int, char *, char *, char *, char *, int, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern int saSplunkGetScope(char *);
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -31,6 +31,7 @@ int main(int argc, char* argv[])
 {
     bool argError;
     char destContextName[256];
+    char *root = dirname(argv[0]);
     char srcContextName[256];
     int c;
     int destScope = saSplunkGetScope(NULL);
@@ -84,20 +85,20 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    if(!saSplunkContextRename(srcContextName, srcScope, p->app, p->user,
-                              destContextName, destScope, p->app, p->user))
+    if(!saSplunkContextRename(srcContextName, root, srcScope, p->app, p->user,
+                              destContextName, root, destScope, p->app, p->user))
     {
         fprintf(stderr, "xsRenameContext-F-107: Can't rename context: %s\n", srcContextName);
         exit(EXIT_FAILURE);
     }
-    saContextTypePtr cPtr = saSplunkContextLoad(destContextName, &destScope, p->app, p->user);
+    saContextTypePtr cPtr = saSplunkContextLoad(destContextName, root, &destScope, p->app, p->user);
     if (cPtr == NULL)
     {
         fprintf(stderr, "xsRenameContext-F-109: Can't open context: %s\n", destContextName);
         exit(EXIT_FAILURE);
     }
     cPtr->name = destContextName;
-    saSplunkContextSave(cPtr, destScope, p->app, p->user);
+    saSplunkContextSave(cPtr, root, destScope, p->app, p->user);
     fprintf(stderr, "Context %s successfully renamed to %s\n", srcContextName, destContextName);
     exit(0);
 }

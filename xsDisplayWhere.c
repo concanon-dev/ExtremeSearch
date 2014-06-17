@@ -45,6 +45,8 @@ static saSplunkInfoPtr p = NULL;
 
 static saSynonymTableType synonyms;
 
+static char *root;
+
 extern FILE *saOpenFile(char *, char *);
 
 extern char *optarg;
@@ -66,7 +68,7 @@ extern double saConceptLookup(saConceptTypePtr, double);
 extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 extern int saParserParse(char *, char [], saExpressionTypePtrArray);
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -87,6 +89,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
+    root = dirname(argv[0]);
     conceptTable = saHashCreateDefault();
 
     /* determine if this is being called as FCIX */
@@ -454,7 +457,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 else
                 {
                     int scope = SA_SPLUNK_SCOPE_NONE;
-                    t = saSplunkContextLoad(contextName, &scope, p->app, p->user);
+                    t = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
                     if (t == NULL)
                     {
                         fprintf(stderr, "xsWhere-F-111: can't open context %s\n", contextName);

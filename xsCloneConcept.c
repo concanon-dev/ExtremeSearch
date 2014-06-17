@@ -22,8 +22,8 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
-extern bool saSplunkContextSave(saContextTypePtr, int, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
     saContextTypePtr newContextPtr, oldContextPtr;
     bool argError;
 
+    char conceptName[512];
     char newContextName[512];
     char oldContextName[512];
-    char conceptName[512];
+    char *root = dirname(argv[0]);
     int i, c;
     int newScope = saSplunkGetScope(NULL);
     int oldScope = saSplunkGetScope(NULL);
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    oldContextPtr = saSplunkContextLoad(oldContextName, &oldScope, p->app, p->user);
+    oldContextPtr = saSplunkContextLoad(oldContextName, root, &oldScope, p->app, p->user);
     if (oldContextPtr == NULL)
     {
         fprintf(stderr, "xsCloneConcept-F-107: Can't load context: %s\n", oldContextName);
@@ -102,7 +103,7 @@ int main(int argc, char* argv[])
     if (newScope == SA_SPLUNK_SCOPE_NONE)
         newScope = oldScope;
 
-    newContextPtr = saSplunkContextLoad(newContextName, &newScope, p->app, p->user);
+    newContextPtr = saSplunkContextLoad(newContextName, root, &newScope, p->app, p->user);
     if (newContextPtr == NULL)
     {
         fprintf(stderr, "xsCloneConcept-F-109: Can't load context: %s\n", newContextName);
@@ -128,7 +129,7 @@ int main(int argc, char* argv[])
 
     newContextPtr->concepts[newContextPtr->numConcepts++] = oldContextPtr->concepts[i];
 
-    if (saSplunkContextSave(newContextPtr, newScope, p->app, p->user) == false)
+    if (saSplunkContextSave(newContextPtr, root, newScope, p->app, p->user) == false)
     {
         fprintf(stderr, "xsCloneConcept-F-111: Can't save context: %s\n", newContextName);
         exit(EXIT_FAILURE);

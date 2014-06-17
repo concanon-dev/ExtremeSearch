@@ -12,7 +12,7 @@ extern int optind, optopt;
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
-extern void saSplunkGetContextPath(char *, int, char *, char *);
+extern void saSplunkGetContextPath(char *, char *, int, char *, char *);
 extern void saListDir(char *, char *, bool, FILE *, char *);
 
 int main(int argc, char *argv[])
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     }
 
     char path[1024];
-    saSplunkGetContextPath(path, scope, p->app, p->user);
+    char *root = dirname(argv[0]);
+    saSplunkGetContextPath(path, root, scope, p->app, p->user);
     saListDir(path, ".context", true, stdout, "context");
 }
