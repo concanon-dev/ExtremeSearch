@@ -376,3 +376,334 @@ Warning: overriding $SPLUNK_HOME setting in environment (".") with "/Volumes/dat
 TEST PASS - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)
 
 ANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED
+
+
+REGRESSION TESTS (DEMOGRAPHICS) STARTED
+uname -s
+[?1034h]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ uname -s
+CYGWIN_NT-6.1
+export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7
+export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib
+rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_Height_By_Age_Auto.csv
+c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto ' -auth admin:admin 
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_Heig ht_By_Age_Auto.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto '  -auth admin:admin 
+  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 37     354 -0.0298460673 -0.0136189736 -0.0430311860
+Height Age 44     268 -0.0820986806 -0.1109987789 0.0128426030
+He
+TEST PASS - xsPerformAutoRegression (Height OVER Age)ight Age 41     376 -0.0006045028 0.0421933435  -0.0061099162
+Height Age 42     353 -0.0729989168 0.0090890623  -0.0367785622
+Height Age 39     395 0.0032919531  0.0390574196  -0.0341693693
+Height Age 40     362 0.0779293905  0.0033276536  -0.0389665312
+Height Age 43     303 0.0302508890  -0.0162290199 -0.0323415240
+Height Age 49      87 0.2236588719  0.0361370944  0.0848579035
+Height Age 48     118 -0.0078520701 0.0992632911  -0.1373760022
+Height Age 35     300 -0.0293003404 0.0310361933  0.0224768745
+Height Age 33     193 -0.0303100059 -0.0580865508 -0.1160524183
+Height Age 29      80 0.2390335151  -0.0203107912 -0.0353071216
+Height Age 36     333 0.0589681224  -0.0201263150 -0.0025056073
+Height Age 45     236 0.0315829400  -0.0407393108 -0.0669721724
+Height Age 47     171 -0.0032735014 -0.0175426633 0.0227295545
+Height Age 31     126 -0.1207188475 -0.0804378720 -0.0558204042
+Height Age 34     245 -0.0699941140 0.0280784848  -0.0013887788
+Height Age 32     176 -0.0517310482 -0.0928907132 -0.0728706629
+Height Age 25      14 -0.1018398408 -0.0558601410 0.2506382294
+Height Age 30      90 -0.0241997570 -0.1641106653 -0.1314183098
+Height Age 46     183 -0.1361880316 0.0192111179  -0.0256535470
+Height Age 38     375 0.0102078627  -0.0131463478 -0.0664922741
+Height Age 50      72 0.0049448343  0.1832531314  0.2197299026
+Height Age 26      29 0.1564929756  0.2231260899  -0.4513849955
+Height Age 51      47 -0.1381458352 0.0392456532  0.1699100312
+Height Age 53      21 -0.0500502375 -0.3221901579 -0.0119977294
+Height Age 55      11 -0.0709254151 -0.6617621867 -0.2352769377
+Height Age 28      51 0.1160086607  -0.4417164804 0.0685112812
+Height Age 52      36 0.0861315220  -0.0418675392 0.0793384964
+Height Age 24      11 -0.0136158990 0.2996634829  -0.3981470109
+Height Age 27      34 0.0011327623  -0.0180511383 -0.3825958346
+Height Age 54       8 -0.3689606765 -0.2029160327 0.3356672924
+Height Age 22       3 1.0000000000  1.0000000000  1.0000000000
+Height Age 57       1 1.0000000000  1.0000000000  1.0000000000
+Height Age 21       3 1.0000000000  1.0000000000  1.0000000000
+Height Age 23       7 -0.0794121377 -0.0877654095 -0.6581710057
+Height Age 56       8 -0.0128217946 -0.2117647059 -0.0605473633
+Height Age 58       1 1.0000000000  1.0000000000  1.0000000000
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_ Height_Over_Age_Linear.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_ Linear' -auth admin:admin 
+ x    y    bf bv numRows     slope       intercept       errA         errB          R
+--- ------ -- -- ------- ------------- ------------- ------------ ------------ ------------
+Age Height *  *     5481 -0.0042856464 14.2127549085 0.0080918562 0.321616822
+TEST PASS - xsPerformLinearRegression (Height OVER Age)0 0.0071549469
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/De mo_Height_Over_Age_NonLinear.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformNonLinearRegression Height OVER Age OUTPUT Demo_Height_Over_A ge_NonLinear' -auth admin:admin 
+ x  bf bv numRows     coef0        coef1         coef2
+--- -- -- ------- ------------- ------------ -------------
+Age *  *     5481 -0.0134001281 0.0074122617 -0.0057363361
+
+TEST PASS - xsPerformNonLinearRegression (Height OVER Age)]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth admin:admin 
+  x     y  bf  bv numRows      R
+------ --- --- -- ------- ------------
+Height Age Age 37     354 0.0000000000
+Height Age Age 44     268 0.0000000000
+Height Age Age 41     376 0.0000000000
+Height Age Age 42     353 0.0000000000
+Height Age Age 39     3
+TEST PASS - xsPerformCorrelation (Height WITH Age BY Age)95 0.0000000000
+Height Age Age 40     362 0.0000000000
+Height Age Age 43     303 0.0000000000
+Height Age Age 49      87 0.0000000000
+Height Age Age 48     118 0.0000000000
+Height Age Age 35     300 0.0000000000
+Height Age Age 33     193 0.0000000000
+Height Age Age 29      80 0.0000000000
+Height Age Age 36     333 0.0000000000
+Height Age Age 45     236 0.0000000000
+Height Age Age 47     171 0.0000000000
+Height Age Age 31     126 0.0000000000
+Height Age Age 34     245 0.0000000000
+Height Age Age 32     176 0.0000000000
+Height Age Age 25      14 0.0000000000
+Height Age Age 30      90 0.0000000000
+Height Age Age 46     183 0.0000000000
+Height Age Age 38     375 0.0000000000
+Height Age Age 50      72 0.0000000000
+Height Age Age 26      29 0.0000000000
+Height Age Age 51      47 0.0000000000
+Height Age Age 53      21 0.0000000000
+Height Age Age 55      11 0.0000000000
+Height Age Age 28      51 0.0000000000
+Height Age Age 52      36 0.0000000000
+Height Age Age 24      11 0.0000000000
+Height Age Age 27      34 0.0000000000
+Height Age Age 54       8 0.0000000000
+Height Age Age 22       3 0.0000000000
+Height Age Age 57       1 0.0000000000
+Height Age Age 21       3 0.0000000000
+Height Age Age 23       7 0.0000000000
+Height Age Age 56       8 0.0000000000
+Height Age Age 58       1 0.0000000000
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height WITH Age' -auth admin:admin 
+  x     y  bf bv numRows       R
+------ --- -- -- ------- -------------
+Height Age *  *     5481 -0.0005806672
+
+TEST PASS - xsPerformSpearmansCorrelation (Height WITH Age)]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsApplyAutoRegression FROM Demo_Height_By_Age_Auto' -auth admin:admin  [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K 
+ERROR: K@a-F-000: Received signal (11) Segmentation Violation
+ERROR: K@a-F-000: Received signal (11) Segmentation Violation
+ERROR: K@a-F-000: Received signal (11) Segmentation Violation
+ERROR: K@a-F-000: Received signal (11) Segmentation Violation
+E
+TEST FAIL - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto) - Segmentation ViolationRROR: K@a-F-000: Received signal (11) Segmentation Violation
+ERROR: K@a-F-000: Received signal (11) Segmentation Violation
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSea
+TEST FAIL - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Auto) - Segmentation Violationrch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsApplyLinearRegression FROM Demo_Height_Over_Age_Linear' -auth admin: admin 
+c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsApplyNonLinearRegression FROM Demo_Height_Over_Age_NonLinear' -auth admin:admin 
+2014/03/02 21:40:04 EST,15480,first1,last3,Female,37,12,33483,worker,325359
+2014/03/02 21:39:34 EST,15479,first3,last2,Male,37,13,06117,worker,277896
+2014/03/02 21:39:04 EST,15478,first2,last3,Female,44,18,33483,boss,301974
+2014/03/02 21:38:34 EST,15477,
+TEST PASS - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)
+
+ANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED
+
+
+REGRESSION TESTS (DEMOGRAPHICS) STARTED
+uname -s
+[?1034h]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ uname -s
+CYGWIN_NT-6.1
+export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7
+export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib
+rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_Height_By_Age_Auto.csv
+c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto ' -auth admin:admin 
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_Heig ht_By_Age_Auto.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformAutoRegression Height BY Age OUTPUT Demo_Height_By_Age_Auto '  -auth admin:admin 
+  x    bf  bv numRows     coef0         coef1         coef2
+------ --- -- ------- ------------- ------------- -------------
+Height Age 37     354 -0.0298460673 -0.0136189736 -0.0430311860
+Height Age 44     268 -0.0820986806 -0.1109987789 0.0128426030
+He
+TEST PASS - xsPerformAutoRegression (Height OVER Age)ight Age 41     376 -0.0006045028 0.0421933435  -0.0061099162
+Height Age 42     353 -0.0729989168 0.0090890623  -0.0367785622
+Height Age 39     395 0.0032919531  0.0390574196  -0.0341693693
+Height Age 40     362 0.0779293905  0.0033276536  -0.0389665312
+Height Age 43     303 0.0302508890  -0.0162290199 -0.0323415240
+Height Age 49      87 0.2236588719  0.0361370944  0.0848579035
+Height Age 48     118 -0.0078520701 0.0992632911  -0.1373760022
+Height Age 35     300 -0.0293003404 0.0310361933  0.0224768745
+Height Age 33     193 -0.0303100059 -0.0580865508 -0.1160524183
+Height Age 29      80 0.2390335151  -0.0203107912 -0.0353071216
+Height Age 36     333 0.0589681224  -0.0201263150 -0.0025056073
+Height Age 45     236 0.0315829400  -0.0407393108 -0.0669721724
+Height Age 47     171 -0.0032735014 -0.0175426633 0.0227295545
+Height Age 31     126 -0.1207188475 -0.0804378720 -0.0558204042
+Height Age 34     245 -0.0699941140 0.0280784848  -0.0013887788
+Height Age 32     176 -0.0517310482 -0.0928907132 -0.0728706629
+Height Age 25      14 -0.1018398408 -0.0558601410 0.2506382294
+Height Age 30      90 -0.0241997570 -0.1641106653 -0.1314183098
+Height Age 46     183 -0.1361880316 0.0192111179  -0.0256535470
+Height Age 38     375 0.0102078627  -0.0131463478 -0.0664922741
+Height Age 50      72 0.0049448343  0.1832531314  0.2197299026
+Height Age 26      29 0.1564929756  0.2231260899  -0.4513849955
+Height Age 51      47 -0.1381458352 0.0392456532  0.1699100312
+Height Age 53      21 -0.0500502375 -0.3221901579 -0.0119977294
+Height Age 55      11 -0.0709254151 -0.6617621867 -0.2352769377
+Height Age 28      51 0.1160086607  -0.4417164804 0.0685112812
+Height Age 52      36 0.0861315220  -0.0418675392 0.0793384964
+Height Age 24      11 -0.0136158990 0.2996634829  -0.3981470109
+Height Age 27      34 0.0011327623  -0.0180511383 -0.3825958346
+Height Age 54       8 -0.3689606765 -0.2029160327 0.3356672924
+Height Age 22       3 1.0000000000  1.0000000000  1.0000000000
+Height Age 57       1 1.0000000000  1.0000000000  1.0000000000
+Height Age 21       3 1.0000000000  1.0000000000  1.0000000000
+Height Age 23       7 -0.0794121377 -0.0877654095 -0.6581710057
+Height Age 56       8 -0.0128217946 -0.2117647059 -0.0605473633
+Height Age 58       1 1.0000000000  1.0000000000  1.0000000000
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_By_Age_Auto.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/Demo_ Height_Over_Age_Linear.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformLinearRegression Height OVER Age OUTPUT Demo_Height_Over_Age_ Linear' -auth admin:admin 
+ x    y    bf bv numRows     slope       intercept       errA         errB          R
+--- ------ -- -- ------- ------------- ------------- ------------ ------------ ------------
+Age Height *  *     5481 -0.0042856464 14.2127549085 0.0080918562 0.321616822
+TEST PASS - xsPerformLinearRegression (Height OVER Age)0 0.0071549469
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_Linear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ rm -f c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups/De mo_Height_Over_Age_NonLinear.csv
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformNonLinearRegression Height OVER Age OUTPUT Demo_Height_Over_A ge_NonLinear' -auth admin:admin 
+ x  bf bv numRows     coef0        coef1         coef2
+--- -- -- ------- ------------- ------------ -------------
+Age *  *     5481 -0.0134001281 0.0074122617 -0.0057363361
+
+TEST PASS - xsPerformNonLinearRegression (Height OVER Age)]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ cp c:/PROGRA~1/Splunk/etc/apps/search/lookups/Demo_Height_Over_Age_NonLinear.csv c:/PROGRA~1/Splunk/etc/apps/xtreme/lookups
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformCorrelation Height WITH Age BY Age' -auth admin:admin 
+  x     y  bf  bv numRows      R
+------ --- --- -- ------- ------------
+Height Age Age 37     354 0.0000000000
+Height Age Age 44     268 0.0000000000
+Height Age Age 41     376 0.0000000000
+Height Age Age 42     353 0.0000000000
+Height Age Age 39     3
+TEST PASS - xsPerformCorrelation (Height WITH Age BY Age)95 0.0000000000
+Height Age Age 40     362 0.0000000000
+Height Age Age 43     303 0.0000000000
+Height Age Age 49      87 0.0000000000
+Height Age Age 48     118 0.0000000000
+Height Age Age 35     300 0.0000000000
+Height Age Age 33     193 0.0000000000
+Height Age Age 29      80 0.0000000000
+Height Age Age 36     333 0.0000000000
+Height Age Age 45     236 0.0000000000
+Height Age Age 47     171 0.0000000000
+Height Age Age 31     126 0.0000000000
+Height Age Age 34     245 0.0000000000
+Height Age Age 32     176 0.0000000000
+Height Age Age 25      14 0.0000000000
+Height Age Age 30      90 0.0000000000
+Height Age Age 46     183 0.0000000000
+Height Age Age 38     375 0.0000000000
+Height Age Age 50      72 0.0000000000
+Height Age Age 26      29 0.0000000000
+Height Age Age 51      47 0.0000000000
+Height Age Age 53      21 0.0000000000
+Height Age Age 55      11 0.0000000000
+Height Age Age 28      51 0.0000000000
+Height Age Age 52      36 0.0000000000
+Height Age Age 24      11 0.0000000000
+Height Age Age 27      34 0.0000000000
+Height Age Age 54       8 0.0000000000
+Height Age Age 22       3 0.0000000000
+Height Age Age 57       1 0.0000000000
+Height Age Age 21       3 0.0000000000
+Height Age Age 23       7 0.0000000000
+Height Age Age 56       8 0.0000000000
+Height Age Age 58       1 0.0000000000
+]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsPerformSpearmanCorrelation Height WITH Age' -auth admin:admin 
+  x     y  bf bv numRows       R
+------ --- -- -- ------- -------------
+Height Age *  *     5481 -0.0005806672
+
+TEST PASS - xsPerformSpearmansCorrelation (Height WITH Age)]0;/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect
+[32mJoseph McGlynn@ZAZU [33m/cygdrive/c/myprojects/scianta/ExtremeSearch4/expect[0m
+$ c:/PROGRA~1/Splunk/bin/splunk search 'index=demographics | xsApplyAutoRegression FROM Demo_Height_By_Age_Auto' -auth admin:admin  [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K 
+2014/03/02 21:40:04 EST,15480,first1,last3,Female,37,12,33483,worker,325359
+2014/03/02 21:39:34 EST,15479,first3,last2,Male,37,13,06117,worker,277896
+2014/03/02 21:39:04 EST,15478,first2,last3,Female,44,18,33483,boss,301974
+2014/03/02 21:38:34 EST,15477,
+TEST PASS - xsApplyAutoRegression (FROM Demo_Height_By_Age_Auto)first1,last2,Male,41,14,33483,executive,383687
+2014/03/02 21:38:04 EST,15476,first1,last2,Male,37,19,90266,worker,382824
+2014/03/02 21:37:34 EST,15475,first3,last1,Male,42,16,15213,worker,348449
+2014/03/02 21:37:04 EST,15474,first2,last1,Female,39,18,902
+TEST PASS - xsApplyLinearRegression (FROM Demo_Height_Over_Age_Linear)66,boss,347038
+2014/03/02 21:36:34 EST,15473,first2,last3,Female,42,6,06117,executive,326128
+2014/03/02 21:36:04 EST,15472,first1,last2,Male,40,7,15213,boss,334206
+2014/03/02 21:35:34 EST,15471,first1,last2,Male,43,16,06117,boss,322145
+2014/03/02 21:35:
+TEST PASS - xsApplyNonLinearRegression (FROM Demo_Height_Over_Age_NonLinear)
+
+ANALYTICS REGRESSION TESTS (DEMOGRAPHICS) COMPLETED

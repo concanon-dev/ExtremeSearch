@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-set timeout 240
+set timeout 480
 log_user 0
 spawn bash
 set login admin
