@@ -22,6 +22,7 @@ extern int optind, optopt;
 
 extern bool saSplunkContextDelete(char *, char *, int, char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
+extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -30,7 +31,7 @@ int main(int argc, char* argv[])
     saContextTypePtr contextPtr;
     bool argError;
     char contextName[256];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     int c;
     int scope = saSplunkGetScope(NULL);
 

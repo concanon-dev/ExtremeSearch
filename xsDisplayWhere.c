@@ -69,6 +69,7 @@ extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 extern int saParserParse(char *, char [], saExpressionTypePtrArray);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -89,7 +90,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
-    root = dirname(argv[0]);
+    root = saSplunkGetRoot(argv[0]);
     conceptTable = saHashCreateDefault();
 
     /* determine if this is being called as FCIX */

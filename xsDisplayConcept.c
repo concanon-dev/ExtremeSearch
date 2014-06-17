@@ -29,6 +29,7 @@ extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -48,7 +49,7 @@ int main(int argc, char* argv[])
     char contextString[128];
     char filePath[128];
     char *finalSetName[32];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     char *scopeList[32];
     char scopeString[256];
     char *setArray[64];

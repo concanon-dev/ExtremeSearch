@@ -26,6 +26,7 @@ extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saContextMerge(saContextTypePtr, saContextTypePtr, char *);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
 
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
     char infoFile[256];
     char name[256];
     char notes[1024];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     char shapeStr[256];
     char uom[256];
 

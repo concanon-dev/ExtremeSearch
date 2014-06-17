@@ -22,9 +22,10 @@ static double stdDev(double, double);
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern void saContextCreateConcept(saContextTypePtr, char *, char *, double, double);
 extern void saContextRecreateConcepts(saContextTypePtr, double, double);
 extern bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
-extern void saContextCreateConcept(saContextTypePtr, char *, char *, double, double);
+extern char *saSplunkGetRoot(char *);
 
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern saSplunkInfoPtr saSplunkLoadInfo(char *);
@@ -40,7 +41,7 @@ int main(int argc, char* argv[])
     bool setMax = false;
     bool setMin = false;
     char contextName[256];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     char shapeStr[256];
     char termName[256];
     double max = 0.0;

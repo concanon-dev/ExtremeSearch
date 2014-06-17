@@ -25,6 +25,7 @@ static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 
 extern void saContextLookup(saContextTypePtr, double, double *);;;;
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -40,7 +41,7 @@ int main(int argc, char* argv[])
     bool wroteContextHeaders = false;
     char contextName[128];
     char fieldName[128];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     int c;
     int numFields;
     int numConcepts;

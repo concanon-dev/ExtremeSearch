@@ -47,8 +47,9 @@ static saSynonymTableType synonyms;
 
 static char *root;
 
-extern int saParserParse(char *, char [], saExpressionTypePtrArray);
 extern FILE *saOpenFile(char *, char *);
+extern int saParserParse(char *, char [], saExpressionTypePtrArray);
+extern char *saSplunkGetRoot(char *);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -89,7 +90,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
-    root = dirname(argv[0]);
+    root = saSplunkGetRoot(argv[0]);
     conceptTable = saHashCreateDefault();
 
     /* determine if this is being called as FCIX */

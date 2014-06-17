@@ -47,6 +47,7 @@ static int numIndexes = 0;
 
 extern double saConceptLookup(saConceptTypePtr, double);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
 {
     char *contextList[32];
     char contextListString[512];
-    char *root = dirname(argv[0]);
+    char *root = saSplunkGetRoot(argv[0]);
     char *yList[32];
     char yListString[512];
     int c;
