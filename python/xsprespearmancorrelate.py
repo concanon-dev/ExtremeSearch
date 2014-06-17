@@ -31,7 +31,7 @@ if __name__ == '__main__':
         if len(x) < 1:
             raise Exception("xsprespearmancorrelate-F-003: Missing x parameter"); 
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprespearmancorrelate"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsprespearmancorrelate"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

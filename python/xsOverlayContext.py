@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         filePath = "../contexts/" + name + ".context"
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsOverlayContext"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsOverlayContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

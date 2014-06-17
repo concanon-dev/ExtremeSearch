@@ -29,7 +29,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsListUOM-F-001: Usage: xsListUOM FROM context [IN scope]")
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsListUOM"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

@@ -50,7 +50,7 @@ if __name__ == '__main__':
         if f != '':
             if rType == "Quad":
 
-                binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'
+                binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegressionFromFile'
                 if (platform.system() == 'Windows'):
                     binary = binary + ".exe"
                 if not os.path.isfile(binary):
@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 raise Exception("xsApplyNonLinearRegression-F-007: Missing X parameter");
 
             if rType == "Quad":
-                binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegression'
+                binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyQuadRegression'
                 subprocess.call([binary, '-0', coef0, '-1', coef1, '-2', coef2, '-x', xList])
 
         if platform.system() == 'Windows':

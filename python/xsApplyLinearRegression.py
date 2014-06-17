@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
         if f != '':
 
-            binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegressionFromFile'
+            binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegressionFromFile'
             if (platform.system() == 'Windows'):
                 binary = binary + ".exe"
             if not os.path.isfile(binary):
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             if len(xList) < 1:
                 raise Exception("xsApplyLinearRegression-F-007: Missing X parameter");
 
-            binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegression'
+            binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + '/xsApplyLinearRegression'
             subprocess.call([binary, '-a', a, '-b', b, '-x', xList])
 
         if platform.system() == 'Windows':

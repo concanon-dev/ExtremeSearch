@@ -33,7 +33,7 @@ if __name__ == '__main__':
         raise Exception("xsrepredict-F-003: Missing predict parameter (p=)")
 
     try:
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsrepredict"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsrepredict"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

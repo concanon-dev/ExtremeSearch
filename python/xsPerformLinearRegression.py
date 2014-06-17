@@ -73,7 +73,7 @@ if __name__ == '__main__':
                 preop += " b=\"%s\" " % by
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformLinearRegression"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformLinearRegression"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

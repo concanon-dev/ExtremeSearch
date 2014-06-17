@@ -25,7 +25,7 @@ if __name__ == '__main__':
         else:
             raise Exception("xsDeleteContext-F-001: Usage: xsDeleteContext Context [IN scope]");
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDeleteContext"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDeleteContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

@@ -55,7 +55,7 @@ if __name__ == '__main__':
         if min == '':
             raise Exception("xsCreateConcept-F-009: parameter 'min' not found")
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateConcept"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCreateConcept"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

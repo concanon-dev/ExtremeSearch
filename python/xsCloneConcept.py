@@ -48,7 +48,7 @@ if __name__ == '__main__':
         if newScope == '' or newContext == '' or oldScope == '' or oldContext == '' or concept == '':
             raise Exception("xsCloneConcept-F-001: Usage: xsCloneConcept oldConcept IN oldContext TO newConcept IN newContext");
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneConcept"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsCloneConcept"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

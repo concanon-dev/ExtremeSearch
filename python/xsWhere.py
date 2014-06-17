@@ -43,9 +43,9 @@ if __name__ == '__main__':
         if where == ' ':
             raise Exception("xsWhere-F-003: No query")
 
-        synonyms = "../lookups/" + synonyms
+        synonyms = os.path.dirname(sys.argv[0]) + "/etc/apps/xtreme/lookups/" + synonyms
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xsWhere" 
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsWhere" 
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

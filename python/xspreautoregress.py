@@ -31,7 +31,7 @@ if __name__ == '__main__':
         if len(x) < 1:
             raise Exception("xspreautoregress-F-003: Missing x parameter")
 
-        binary = os.path.dirname(sys.argv[0]) + "/"  + "/etc/apps/xtreme/bin/" +  platform.system() + "/" + platform.architecture()[0] + "/xspreautoregress"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xspreautoregress"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

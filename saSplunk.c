@@ -108,9 +108,6 @@ saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *a
     char path[1024];
     saContextTypePtr contextPtr = NULL;
 
-FILE *z = fopen("./zzz.txt", "a");
-fprintf(z, "%s %s %d %s %s\n", name, root, *scope, app, user);
-fclose(z);
     if (*scope == SA_SPLUNK_SCOPE_NONE)
         return(saSplunkContextFind(name, root, app, user, scope));
     else
