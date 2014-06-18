@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 
     char tempDir[512];
     sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, fileName);
-    FILE *f = saOpenFile(tempDir, "r");
+    FILE *f = fopen(tempDir, "r");
     if (f == NULL)
     {
         fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s\n", fileName);
