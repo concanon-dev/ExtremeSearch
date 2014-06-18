@@ -1,0 +1,70 @@
+
+proc createContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+    send "$splunk_home/bin/splunk search '| xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsCreateContext ($name) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsCreateContext ($name)" }
+    }
+}
+
+proc createUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+
+    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsCreateUDContext ($name)" }
+    }
+}
+
+proc deleteContext { splunk_home login passwd name scope response} {
+
+    send "$splunk_home/bin/splunk search '| xsDeleteContext $name IN $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsDeleteContext ($name) - TIMEOUT" }
+        "Context $name successfully deleted" { send_user "\nTEST PASS - xsDeleteContext ($name)" }
+        "$response" { send_user "\nTEST PASS - xsDeleteContext ($name)" }
+    }
+}
+
+proc cloneContext { splunk_home login passwd incontext inscope tocontext toscope response} {
+
+    send "$splunk_home/bin/splunk search '| xsCloneContext $incontext IN $inscope TO $tocontext IN $toscope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsCloneContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsCloneContext ($incontext $inscope $tocontext $toscope)" }
+    }
+}
+
+proc renameContext { splunk_home login passwd incontext inscope tocontext toscope response} {
+
+    send "$splunk_home/bin/splunk search '| xsRenameContext $incontext IN $inscope TO $tocontext IN $toscope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsRenameContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsRenameContext ($incontext $inscope $tocontext $toscope)" }
+    }
+}
+
+proc displayContext { splunk_home login passwd context scope response} {
+
+    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsDisplayContext ($context $scope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsDisplayContext ($context $scope)" }
+    }
+}
+
+proc listContexts { splunk_home login passwd scope response} {
+
+    send "$splunk_home/bin/splunk search '| xsListContexts $scope | sort context' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsListContexts ($scope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsListContexts ($scope)" }
+    }
+}

@@ -1,0 +1,37 @@
+
+proc createConcept { splunk_home login passwd context concept scope min max shape response} {
+    send "$splunk_home/bin/splunk search '| xsCreateConcept $concept IN $context WITH max=$max min=$min shape=$shape scope=$scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsCreateConcept ($context $concept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsCreateConcept ($context $concept)" }
+    }
+}
+
+proc cloneConcept { splunk_home login passwd incontext inscope inconcept tocontext toscope toconcept response} {
+    send "$splunk_home/bin/splunk search '| xsCloneConcept $inconcept FROM $incontext IN $inscope TO $toconcept FROM $tocontext IN $toscope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept)" }
+    }
+}
+
+proc deleteConcept { splunk_home login passwd context scope concept response} {
+    send "$splunk_home/bin/splunk search '| xsDeleteConcept $concept FROM $context IN $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsDeleteConcept ($context $scope $concept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsDeleteConcept ($context $scope $concept)" }
+    }
+}
+
+proc listConcepts { splunk_home login passwd context scope response} {
+    send "$splunk_home/bin/splunk search '| xsListConcepts FROM $context in $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsListConcepts ($context $scope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsListConcepts ($context $scope)" }
+    }
+}
+
