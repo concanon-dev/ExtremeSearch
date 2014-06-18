@@ -68,3 +68,13 @@ proc listContexts { splunk_home login passwd scope response} {
         "$response" { send_user "\nTEST PASS - xsListContexts ($scope)" }
     }
 }
+
+proc listUOM { splunk_home login passwd context scope response} {
+
+    send "$splunk_home/bin/splunk search '| xsListUOM FROM $context IN $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsListUOM ($context $scope) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsListUOM ($context $scope)" }
+    }
+}

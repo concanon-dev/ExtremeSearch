@@ -35,3 +35,11 @@ proc listConcepts { splunk_home login passwd context scope response} {
     }
 }
 
+proc displayConcept { splunk_home login passwd context scope concept response} {
+    send "$splunk_home/bin/splunk search '| xsDisplayConcept $concept FROM $context in $scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsDisplayConcept ($context $scope $concept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsDisplayConcept ($context $scope $concept)" }
+    }
+}
