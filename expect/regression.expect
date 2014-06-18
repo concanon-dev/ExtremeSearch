@@ -26,38 +26,38 @@ expect {
 }
 
 # Create Context (type=domain)
-send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext name=TEST terms=\"tiny,short,medium,tall,gigantic\" type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches scope=global' -auth $login:$passwd \r"
+send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext terms=\"tiny,short,medium,tall,gigantic\" name=TEST type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches scope=global' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)" }
     "TEST*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsCreateContext (type=domain)" }
 }
 
 # Create Context (type=average_centered)
-send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext name=TEST2 terms=\"tiny,short,medium,tall,gigantic\" type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches scope=global' -auth $login:$passwd \r"
+send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateContext terms=\"tiny,short,medium,tall,gigantic\" name=TEST2 type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches scope=global' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsCreateContext (type=domain)" }
     "TEST2*tiny*short*medium*tall*gigantic*" { send_user "\nTEST PASS - xsCreateContext (type=average_centered)" }
 }
 
 # Create UD Context (type=domain)
-send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext name=TESTUD terms=\"small,medium,big\" type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches' -auth $login:$passwd \r"
+send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext terms=\"small,medium,big\" name=TESTUD type=domain avg=0 count=0 max=100 min=0 stdev=0 uom=inches' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)" }
     "TESTUD*small*medium*big*" { send_user "\nTEST PASS - xsCreateUDContext (type=domain)" }
 }
 
 # Create UD Context (type=average_centered)
-send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext name=TESTUD2 terms=\"small,medium,big\" type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches' -auth $login:$passwd \r"
+send "$env(SPLUNK_HOME)/bin/splunk search '| xsCreateUDContext terms=\"small,medium,big\" name=TESTUD2 type=average_centered avg=0 count=0 max=100 min=0 stdev=1 uom=inches' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsCreateUDContext (type=average_centered)"; }
     "TESTUD2*small*medium*big*" { send_user "\nTEST PASS - xsCreateUDContext (type=average_centered)" }
 }
 
 # List Contexts (TEST, TEST2, TESTUD, TESTUD2)
-send "$env(SPLUNK_HOME)/bin/splunk search '| xsListContexts -s app' -auth $login:$passwd \r"
+send "$env(SPLUNK_HOME)/bin/splunk search '| xsListContexts global | sort context' -auth $login:$passwd \r"
 expect {
     timeout { send_user "\nTEST FAIL - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)"; }
-    "context*TEST*TEST*TESTUD*TESTUD*" { send_user "\nTEST PASS - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)" }
+    "ontext*TEST*TEST2*TESTUD*TESTUD2*" { send_user "\nTEST PASS - xsListContexts (TEST,TEST2,TESTUD,TESTUD2)" }
 }
 
 # Clone Context (TEST -> TEST3)
