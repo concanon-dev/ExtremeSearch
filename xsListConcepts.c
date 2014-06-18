@@ -24,7 +24,8 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern saContextTypePtr saSplunkContextLoad(char *, int *, char *, char *);
+extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -84,7 +85,7 @@ int main(int argc, char* argv[])
     }
 
     int scope = saSplunkGetScope(scopeString);
-    contextPtr = saSplunkContextLoad(contextString, &scope, p->app, p->user);
+    contextPtr = saSplunkContextLoad(contextString, saSplunkGetRoot(argv[0]), &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsListConcepts-F-111: can't open context %s\n", contextString);
