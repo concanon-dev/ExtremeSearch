@@ -166,7 +166,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (min >= max)
+    if (min > max)
     {
         fprintf(stderr, "xsCreateContext-F-125: min must be less than max\n");
         exit(0);
@@ -213,8 +213,15 @@ int main(int argc, char* argv[])
                                           shapeStr, endShapeStr, count, notes, uom);
     }
     else if (!strcmp(contextType, SA_CONTEXT_TYPE_DOMAIN))
+    {
+        if (min == max)
+        {
+            fprintf(stderr, "xsCreateContext-F-127: min must be less than max\n");
+            exit(EXIT_FAILURE);
+        }
         cPtr = saContextCreateDomain(name, min, max, conceptNames, numConcepts, shapeStr,
                                      endShapeStr, count, notes, uom);
+    }
     if (cPtr == NULL)
     {
         fprintf(stderr, "xsCreateContext-F-111: Failed to create a context of type %s\n",

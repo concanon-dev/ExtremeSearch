@@ -9,17 +9,17 @@ import splunk.Intersplunk as si
 
 if __name__ == '__main__':
 
-    avg = ''
-    count = ''
+    avg = '0'
+    count = '0'
     context_type = "domain"
     end_shape = 'curve'
-    max = ''
-    min = ''
+    max = '0'
+    min = '0'
     notes = ''
     scope = '3'
     settings = {}
     shape = 'pi'
-    stdev = ''
+    stdev = '0'
     uom = ''
     try:
         if len(sys.argv) >1:
@@ -68,17 +68,6 @@ if __name__ == '__main__':
                     raise Exception(errString) 
         else:
             raise Exception("xsCreateUDContext-F-001: Usage: xsCreateUDContext name=<string> terms=<conceptlist-option> (type=<contexttype-option>)? (<fuzzyvalues-option>)*")
-
-        if avg == '':
-            raise Exception("xsCreateUDContext-F-003: parameter 'avg' not found")
-        if count == '':
-            raise Exception("xsCreateUDContext-F-005: parameter 'count' not found")
-        if max == '':
-            raise Exception("xsCreateUDContext-F-007: parameter 'max' not found")
-        if min == '':
-            raise Exception("xsCreateUDContext-F-009: parameter 'min' not found")
-        if stdev == '':
-            raise Exception("xsCreateUDContext-F-011: parameter 'stdev' not found")
 
         if notes == '':
             notes = 'none'

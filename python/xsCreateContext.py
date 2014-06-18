@@ -9,17 +9,17 @@ import splunk.Intersplunk as si
 
 if __name__ == '__main__':
 
-    avg = ''
+    avg = '0'
     context_type = "domain"
-    count = ''
+    count = '0'
     end_shape = 'curve'
-    max = ''
-    min = ''
+    max = '0'
+    min = '0'
     notes = ''
     scope = '3'
     settings = {} 
     shape = 'pi'
-    stdev = ''
+    stdev = '0'
     uom = ''
 
     try:
@@ -82,17 +82,6 @@ if __name__ == '__main__':
                 min = res['min']
             if 'stdev' in res:
                 stdev = res['stdev']
-
-        if avg == '':
-            raise Exception("xsCreateContext-F-003: parameter 'avg' not found")
-        if count == '':
-            raise Exception("xsCreateContext-F-005: parameter 'count' not found")
-        if max == '':
-            raise Exception("xsCreateContext-F-007: parameter 'max' not found")
-        if min == '':
-            raise Exception("xsCreateContext-F-009: parameter 'min' not found")
-        if stdev == '':
-            raise Exception("xsCreateContext-F-011: parameter 'stdev' not found")
 
         if notes == '':
             notes = 'none'
