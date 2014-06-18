@@ -37,6 +37,7 @@ static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
 extern FILE *saOpenFile(char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -186,7 +187,7 @@ int main(int argc, char* argv[])
    }
 
    char tempDir[512];
-   sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, outfile);
+   sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
    FILE *f = saOpenFile(tempDir, "w");
    if (f != NULL)
        fputs("x,y,bf,bv,numRows,slope,intercept,errA,errB,R\n", f);

@@ -23,6 +23,7 @@ extern bool saGeoLiteCityLoadTable(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByCountryRegionCity(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByZipcode(char *);
 
+extern char *saSplunkGetRoot(char *);
 extern double saStatisticsHaversineDistance(double, double, double, double);
 
 extern char *strsep(char **, const char *);
@@ -41,7 +42,6 @@ int main(int argc, char *argv[])
     char lon1Field[128];
     char lat2Field[128];
     char lon2Field[128];
-    char *splunk_home = getenv("SPLUNK_HOME");
     char toFieldList[1024];
     char *toFields[4];
     double latLon1[2];
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     lat2Field[0] = '\0';
     lon2Field[0] = '\0';
     strcpy(distanceField, "distance");
-    sprintf(geoLiteCityFile, "%s/etc/apps/xtreme/lookups/GeoLiteCity-Location.csv", splunk_home);
+    sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/GeoLiteCity-Location.csv", saSplunkGetRoot(argv[0]));
     while ((c = getopt(argc, argv, "d:g:f:t:")) != -1)
     {
         switch (c)

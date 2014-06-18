@@ -32,6 +32,7 @@ extern char *optarg;
 extern int optind, optopt;
 
 extern FILE *saOpenFile(char *, char *);
+extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -86,7 +87,7 @@ int main(int argc, char* argv[])
     }
 
     char tempDir[512];
-    sprintf(tempDir, "%s/etc/apps/%s/lookups/%s.csv", getenv("SPLUNK_HOME"), p->app, fileName);
+    sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, fileName);
     FILE *f = saOpenFile(tempDir, "r");
     if (f == NULL)
     {

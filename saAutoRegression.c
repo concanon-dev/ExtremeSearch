@@ -10,12 +10,7 @@
 #include <stdlib.h>
 #include "saAutoRegression.h"
 
-/*
-   Gaussian elimination solver
-   Author: Rainer Hegger Last modified: Aug 14th, 1998
-   Modified (for personal style and context) by Paul Bourke
-*/
-int SolveLE(double **mat, double *vec, unsigned int n)
+int performLeastSquares(double **mat, double *vec, unsigned int n)
 {
     int i,j,k,maxi;
     double vswap,*mswap,*hvec,max,h,pivot,q;
@@ -67,8 +62,8 @@ int SolveLE(double **mat, double *vec, unsigned int n)
     return(0);
 }
 
-int ARMaxEntropy(double *inputseries, int length, int degree, double **ar, double *per,
-                 double *pef, double *h, double *g)
+int performMaxEntropy(double *inputseries, int length, int degree, double **ar, double *per,
+                      double *pef, double *h, double *g)
 {
     int j,n,nn,jj;
     double sn,sd;
@@ -150,10 +145,8 @@ int ARLeastSquare(double *inputseries, int length, int degree, double *coefficie
         }
     }
  
-    /* Solve the linear equations */
-    return(SolveLE(mat,coefficients,degree));
+    return(performLeastSquares(mat,coefficients,degree));
 }
-
 
 double *autoRegression(double *inputseries, int length, int degree, int method)
 {
@@ -176,30 +169,29 @@ double *autoRegression(double *inputseries, int length, int degree, int method)
     double mean = 0.0;
     for(t=0; t<length; t++)
         mean += inputseries[t];
-    mean /= (double)length;
+    mean = mean / (double)length;
     for(t=0; t<length; t++)
         w[t] = inputseries[t] - mean;
 
     /* Perform the appropriate AR calculation */
     if (method == SA_AUTOREGRESSION_MAXENTROPY)
     {
-        int errCode = ARMaxEntropy(w,length,degree,ar,per,pef,h,g);
+        int errCode = performMaxEntropy(w,length,degree,ar,per,pef,h,g);
         if (errCode != 0)
             return(NULL);
 
         for(i=1; i<=degree; i++)
             coef[i-1] = -ar[degree][i];
-
-    } else if (method == SA_AUTOREGRESSION_LEASTSQUARES) 
+    } 
+    else if (method == SA_AUTOREGRESSION_LEASTSQUARES) 
     {
         int errCode = ARLeastSquare(w,length,degree,coef); 
         if (errCode != 0)
             return(NULL);
-    } else
+    } 
+    else
         return(NULL);
 
     return(coef);
 }
-
-
 
