@@ -1,0 +1,28 @@
+
+proc applyAutoRegression { splunk_home login passwd index file response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsApplyAutoRegression FROM $file | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsApplyAutoRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsApplyAutoRegression" }
+    }
+}
+
+
+proc applyLinearRegression { splunk_home login passwd index file response} {
+    send "$splunk_home/bin/splunk search 'index=$index | ApplyLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsApplyLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsApplyLinearRegression" }
+    }
+}
+
+proc applyNonLinearRegression { splunk_home login passwd index file response} {
+    send "$splunk_home/bin/splunk search 'index=$index | ApplyNonLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsApplyNonLinearRegression" }
+    }
+}

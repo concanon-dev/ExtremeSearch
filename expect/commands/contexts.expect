@@ -18,6 +18,25 @@ proc createUDContext { splunk_home login passwd name scope terms uom type min ma
     }
 }
 
+proc updateContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+    send "$splunk_home/bin/splunk search '| xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsUpdateContext ($name) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsUpdateContext ($name)" }
+    }
+}
+
+proc updateUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+
+    send "$splunk_home/bin/splunk search '| xsUpdateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsUpdateUDContext ($name) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsUpdateUDContext ($name)" }
+    }
+}
+
 proc deleteContext { splunk_home login passwd name scope response} {
 
     send "$splunk_home/bin/splunk search '| xsDeleteContext $name IN $scope' -auth $login:$passwd \r"

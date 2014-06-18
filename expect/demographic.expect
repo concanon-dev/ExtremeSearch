@@ -1,0 +1,80 @@
+#!/usr/bin/expect
+set timeout 240
+log_user 0
+spawn bash
+
+set login admin
+set passwd admin
+log_file -a demographic.out
+
+send_user "\n\nDEMOGRAPHICS TESTS STARTED\n"
+
+send "uname -s\r"
+expect {
+    timeout { send_user "\nFAIL - Can't Detect OS Type"; exit 1 }
+    "CYGWIN*" { 
+        set env(SPLUNK_HOME) c:/PROGRA~1/Splunk 
+        send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
+        send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib\r"
+    }
+    "*Linux*" { 
+        set env(SPLUNK_HOME) /opt/splunk 
+    }
+    "*Darwin*" { 
+        set env(SPLUNK_HOME) /Applications/splunk 
+    }
+}
+
+source commands/contexts.expect
+source commands/concepts.expect
+source commands/where.expect
+source commands/correlation.expect
+source commands/perform.expect
+source commands/apply.expect
+source commands/distance.expect
+
+# Create private Height Context
+createContext $env(SPLUNK_HOME) $login $passwd Height private "tiny,short,medium,tall,gigantic" inches domain 0 100 0 0 0 "tiny*short*medium*tall*gigantic"
+
+# Basic Where Tests
+where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
+where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height short "count*-----"
+where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height medium "count*-----"
+where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tall "count*-----"
+where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height gigantic "count*-----"
+
+# Basic DisplayWhere Tests
+displayWhere_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
+
+# FindBestConcept Tests
+findBestConcept $env(SPLUNK_HOME) $login $passwd demographics Height private Height "2014"
+
+# FindMembership Tests
+findMembership $env(SPLUNK_HOME) $login $passwd demographics Height private Height "2014"
+
+# GetCompatability Tests
+getCompatibility $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
+
+# GetDistance Tests
+getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "2014"
+
+# Delete private Height Context
+#deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context Height successfully deleted"
+
+# Peform Commands
+performAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_Age_Auto Height Age "x*bf*bv*numRows*coef0*coef1*coef2"
+performLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_Linear Height Age "x*y*bf*bv*numRows*slope*intercept*errA*errB*R"
+performNonLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_NonLinear Height Age "*bf*bv*numRows*coef0*coef1*coef2"
+
+# Correlation Commands
+performCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age Age "x*y*bf*bv*numRows*R"
+performSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age "x*y*bf*bv*numRows*R"
+
+# Apply Commands
+#set timeout 240
+applyAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_Age_Auto "count*-----"
+applyLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_Linear "count*-----"
+applyNonLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_NonLinear "count*-----"
+
+send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
+

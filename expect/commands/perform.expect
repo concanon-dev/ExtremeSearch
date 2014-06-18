@@ -1,0 +1,28 @@
+
+proc performAutoRegression { splunk_home login passwd index file field byfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformAutoRegression $field BY $byfield OUTPUT $file' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPerformAutoRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPerformAutoRegression" }
+    }
+}
+
+
+proc performLinearRegression { splunk_home login passwd index file field overfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPerformLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPerformLinearRegression" }
+    }
+}
+
+proc performNonLinearRegression { splunk_home login passwd index file field overfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformNonLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPerformNonLinearRegression" }
+    }
+}

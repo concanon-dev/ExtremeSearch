@@ -43,3 +43,30 @@ proc displayConcept { splunk_home login passwd context scope concept response} {
         "$response" { send_user "\nTEST PASS - xsDisplayConcept ($context $scope $concept)" }
     }
 }
+
+proc findBestConcept { splunk_home login passwd index context scope field response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsFindBestConcept $field IN $context IN $scope | head 1' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsFindBestConcept ($context $scope $field)" }
+    }
+}
+
+proc findMembership { splunk_home login passwd index context scope field response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsFindMembership $field IN $context IN $scope | head 1' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsFindMembership ($context $scope $field)" }
+    }
+}
+
+proc getCompatibility { splunk_home login passwd index context scope field response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsGetCompatibility $field IN $context IN $scope | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsGetCompatibility ($context $scope $field)" }
+    }
+}
