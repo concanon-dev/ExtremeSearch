@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsFindMembership</label>
+        <label>xsGetCompatibility</label>
         <row>
                 <html>
                         <a class="btn btn-xtreme" href="xtreme_overview">
@@ -20,7 +20,7 @@
                                 <span
                                         class="head4">Command: </span>
                                 <span
-                                        class="cmd">xsFindMembership</span>
+                                        class="cmd">xsGetCompatibility</span>
                         </p>
                         <p>
                                 <span
@@ -32,29 +32,24 @@
                                 <span
                                         class="head4">Description: </span>
                                 <span
-                                        class="bodytext">For each event, lookup the value of a field
-                                        and return the membership values of each concept. A
-                                        column will be added to the event stream for each 
-                                        concept in the context.</span>
+                                        class="bodytext">For each event, generates the compatibility index (cix) of a field and returns the compatibility index for each data value and concept.</span>
                         </p>
                         <p>
                                 <span
                                         class="head4">Syntax: </span>
                                 <span
-                                        class="bodytext">xsFindMembership field [IN context [in scope]]</span>
+                                        class="bodytext">xsGetCompatibility field [IN context [in scope]]</span>
                         </p>
                         <p>
                                 <br />
                                 <span
                                         class="head4">Example: </span>
                                 <span
-                                        class="code">xsFindMembership AirTime</span>
+                                        class="code">... | xsGetCompatibility Height</span>
                         </p>
                         <p>
                                 <span
-                                        class="explanation">Looks up the field AirTime and adds the
-                                        membership value for each concept in the Context
-                                        AirTime as a field in each event.</span>
+                                        class="explanation">Generates the compatibility index for each Height value in each concept.</span>
                         </p>
                         <p>
                                 <span
@@ -68,7 +63,7 @@
                         </p>
                         <p>
                                 <span
-                                        class="explanation">The field in each event to look up in
+                                        class="explanation">The field in each event to generate the compatibility index in
                                         the Context.</span>
                         </p>
                         <p>
@@ -93,7 +88,7 @@
                                 <span
                                         class="head4">Result: </span>
                                 <span
-                                        class="bodytext">Each event has the membership value of
+                                        class="bodytext">Each event has the compatibility index (cix) value of
                                         'field' added for each concept in the specified
                                         Context. </span>
                         </p>

@@ -129,12 +129,17 @@
           <tr>
             <td> <a href="xsFindBestConcept">xsFindBestConcept</a> </td>
             <td>Conceptual Search</td>
-            <td>Returns the name of the concept that best fits (highest compatability) the field, as well as the associated compatibility index (CIX).  </td>
+            <td>Returns the name of the concept that best fits (highest compatibility) the field, as well as the associated compatibility index (CIX).  </td>
           </tr>
           <tr>
             <td> <a href="xsFindMembership">xsFindMembership</a> </td>
             <td>Conceptual Search</td>
             <td>Returns the membership value of a data value in each concept in a specified context, or returns the data value given a membership value in a specified context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsGetCompatibility">xsGetCompatibility</a> </td>
+            <td>Conceptual Search</td>
+            <td>Determine the compatibility index for the field in each concept in a context</td>
           </tr>
           <tr>
             <td> <a href="xsGetDistance">xsGetDistance</a> </td>
@@ -207,6 +212,16 @@
             <td> <a href="xsRenameContext">xsRenameContext</a> </td>
             <td>Conceptual Search</td>
             <td>Renames a Context.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsUpdateContext">xsUpdateContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Updates a context, which contains concepts based on a variety of methods of mapping qualitative semantics to the data. Note: This is a Splunk 'streaming' command.</td>
+          </tr>
+          <tr>
+            <td> <a href="xsUpdateUDContext">xsUpdateUDContext</a> </td>
+            <td>Conceptual Search</td>
+            <td>Updates a context, which contains concepts based on a variety of methods of mapping qualitative semantics to the data. This is a Splunk 'generating' command.</td>
           </tr>
           <tr>
             <td> <a href="xsWhere">xsWhere</a> </td>
