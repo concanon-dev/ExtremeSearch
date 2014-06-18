@@ -10,7 +10,7 @@ proc applyAutoRegression { splunk_home login passwd index file response} {
 
 
 proc applyLinearRegression { splunk_home login passwd index file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | ApplyLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsApplyLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsApplyLinearRegression - TIMEOUT" }
@@ -19,7 +19,7 @@ proc applyLinearRegression { splunk_home login passwd index file response} {
 }
 
 proc applyNonLinearRegression { splunk_home login passwd index file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | ApplyNonLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsApplyNonLinearRegression FROM $file | stats count' -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression - TIMEOUT" }
