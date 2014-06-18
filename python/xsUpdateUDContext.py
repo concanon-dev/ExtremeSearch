@@ -90,7 +90,7 @@ if __name__ == '__main__':
         results = si.readResults(None, settings, True)
 
         info_file = settings['infoPath']
-        binary = os.path.dirname(sys.argv[0]) + "/" + platform.system() + "/" + platform.architecture()[0] + "/xsCreateUDContext"
+        binary = os.path.dirname(sys.argv[0]) + "/" + platform.system() + "/" + platform.architecture()[0] + "/xsCreateContext"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):
