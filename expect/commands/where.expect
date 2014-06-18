@@ -14,8 +14,18 @@ proc displayWhere_basic_count { splunk_home login passwd index field concept res
     send "$splunk_home/bin/splunk search 'index=$index | xsDisplayWhere $field IS $concept | stats count' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsWhere($field IS $concept) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsWhere($field IS $concept)" }
+        timeout { send_user "\nTEST FAIL - xsDisplayWhere($field IS $concept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsDisplayWhere($field IS $concept)" }
+    }
+}
+
+proc getWhereCIX_basic_count { splunk_home login passwd index context concept field response} {
+
+    send "$splunk_home/bin/splunk search 'index=$index | xsGetWhereCIX $field IN $context IS $concept | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsGetWhereCIX($field IS $concept) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsGetWhereCIX($field IS $concept)" }
     }
 }
 

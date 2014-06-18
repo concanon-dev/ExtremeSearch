@@ -5,7 +5,7 @@ spawn bash
 
 set login admin
 set passwd admin
-log_file -a regression.out
+log_file -a test.out
 
 send_user "\n\nREGRESSION TESTS STARTED\n"
 
@@ -29,21 +29,14 @@ source commands/contexts.expect
 source commands/concepts.expect
 source commands/license.expect
 
-# COMMAND:    createContext { splunk_home login passwd name scope terms uom type min max count avg stdev response}
-# COMMAND:    createUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response}
-# COMMAND:    cloneContext { splunk_home login passwd inname inscope toname toscope response}
-# COMMAND:    renameContext { splunk_home login passwd inname inscope toname toscope response}
-# COMMAND:    deleteContext { splunk_home login passwd name scope response}
-# COMMAND:    listContexts { splunk_home login passwd scope response}
-
 
 # TEST SUITE: Create Data Driven Context Tests
-createContext $env(SPLUNK_HOME) $login $passwd TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd TEST2 app "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
@@ -170,10 +163,11 @@ deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "xsDeleteContext-F-
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST4 global "xsDeleteContext-F-107: Can't delete context: TEST4"
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST5 app "xsDeleteContext-F-107: Can't delete context: TEST5"
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST6 private "xsDeleteContext-F-107: Can't delete context: TEST6"
-createContext $env(SPLUNK_HOME) $login $passwd TEST1 global "tiny,short,medium,tall,gigantic" size domain 0 0 0 0 0 "xsCreateContext-F-125: min must be less than max"
-createContext $env(SPLUNK_HOME) $login $passwd TEST4 global "tiny,short,medium,tall,gigantic" size average_centered 0 20 0 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,medium,tall,gigantic" size domain 0 0 0 0 0 "xsCreateContext-F-125: min must be less than max"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 20 0 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
+
+createContextDomain $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
+createContextAverageCentered $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
+createUDContextDomain $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
+createUDContextAverageCentered $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
 
 
 close

@@ -28,13 +28,12 @@ expect {
 source commands/contexts.expect
 source commands/concepts.expect
 source commands/where.expect
-source commands/correlation.expect
 source commands/perform.expect
 source commands/apply.expect
 source commands/distance.expect
 
 # Create private Height Context
-createContext $env(SPLUNK_HOME) $login $passwd Height private "tiny,short,medium,tall,gigantic" inches domain 0 100 0 0 0 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics Height private "tiny,short,medium,tall,gigantic" inches domain 0 100 0 0 0 "tiny*short*medium*tall*gigantic"
 
 # Basic Where Tests
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
@@ -60,6 +59,12 @@ getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "2014"
 
 # Delete private Height Context
 #deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context Height successfully deleted"
+
+# DiscoverTrend Commands
+discoverTrend $env(SPLUNK_HOME) $login $passwd demographics Height Age Gender "x*y*bf*bv*concept*trend"
+
+# Predict Commands
+predict $env(SPLUNK_HOME) $login $passwd demographics 60 Age Height "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*PredictedValue"
 
 # Peform Commands
 performAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_Age_Auto Height Age "x*bf*bv*numRows*coef0*coef1*coef2"

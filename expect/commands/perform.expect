@@ -26,3 +26,42 @@ proc performNonLinearRegression { splunk_home login passwd index file field over
         "$response" { send_user "\nTEST PASS - xsPerformNonLinearRegression" }
     }
 }
+
+
+proc performCorrelation { splunk_home login passwd index field withfield byfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformCorrelation $field WITH $withfield BY $byfield' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPerformCorrelation - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPerformCorrelation" }
+    }
+}
+
+
+proc performSpearmanCorrelation { splunk_home login passwd index field withfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformSpearmanCorrelation $field WITH $withfield' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPerformSpearmanCorrelation" }
+    }
+}
+
+
+proc discoverTrend { splunk_home login passwd index field overfield byfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsDiscoverTrend($field OVER $overfield BY $byfield)" }
+    }
+}
+
+proc predict { splunk_home login passwd index quantity field whenfield response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsPredict $field WHEN $whenfield IS $quantity' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsPredit($field WHEN $whenfield IS $quantity)" }
+    }
+}
