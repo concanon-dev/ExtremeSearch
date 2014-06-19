@@ -3,6 +3,21 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xspreautoregress
+
+ Usage: xspreautoregress [-b fieldList] [-c numCoefs] [-i] [-m method] -x fieldList [-y fieldList]
+    -b the list of BY fields, separated by commas (defaults to none)
+    -c the number of coefficients to generate (defaults to SA_AUTOREGRESSION_DEFAULTNUMCOEFS)
+    -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
+    -m the method of auto regression to perform (maxentropy or leastsquares, defaults to maxentropy)
+    -x the list of X fields to perform auto regression against
+    -y the list of Y fields to perform auto regression against
+
+ Description:
+        For each X field and BY field grouping, generate an autoregression algorithm.
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <libgen.h>
 #include <math.h>
@@ -119,7 +134,7 @@ int main(int argc, char* argv[])
     if ((numBAxis != -1) && (numXAxis != numBAxis))
     {
         fprintf(stderr,
-                "xspreautoregress-F-111: found %d X and %d B parameters.  Values must be the same\n",
+                "xspreautoregress-F-111: found %d X and %d B parameters but the number of values must be the same\n",
                 numXAxis, numBAxis);
         exit(EXIT_FAILURE);
     }
@@ -172,7 +187,7 @@ int main(int argc, char* argv[])
         if (hasByClause && bFieldIndex[i] == -1)
         {
            if (mustMatchFields == true)
-               fprintf(stderr, "xprecorrelate-F-105: BY clause not found: %s\n", bList[i]);
+               fprintf(stderr, "xpreautoregress-F-105: BY clause not found: %s\n", bList[i]);
            missedOne = true;
         }
         if (xFieldIndex[i] == -1)
