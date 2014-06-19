@@ -152,11 +152,6 @@
             <td>Generates the compatibility index (cix) of a conceptual query.</td>
           </tr>
           <tr>
-            <td> <a href="xsLicense">xsLicense</a> </td>
-            <td>System</td>
-            <td>Installs, updates and activates a product license key.</td>
-          </tr>
-          <tr>
             <td> <a href="xsListContexts">xsListContexts</a> </td>
             <td>Conceptual Search</td>
             <td>List the contexts in private, app or global.</td>
