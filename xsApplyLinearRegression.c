@@ -1,8 +1,22 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsApplyLinearRegression
+
+ Usage: xsApplyLinearRegression -a double -b double -x fieldX
+
+        -a is coefficient a
+        -b is coefficient b
+        -x is the X field to apply Linear Regression algorithm
+
+ Description:
+        Apply linear regression against a set of events containing the specified fields. The algorithm is
+        derived from two coefficients (a, b) and one (X) field.
+
+        The algorithm is a*fieldX + b
 */
 #include <errno.h>
 #include <libgen.h>
@@ -26,7 +40,6 @@ static char *aList[SA_CONSTANTS_MAXAXIS];
 static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
 
-extern FILE *saOpenFile(char *, char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -70,7 +83,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsApplyLinearRegression-F-101: usage xsApplyLinearRegression -a double -b double -x fieldList)");
+        fprintf(stderr, "xsApplyLinearRegression-F-101: usage xsApplyLinearRegression -a double -b double -x fieldX)");
         exit(EXIT_FAILURE);
     }
 
@@ -82,7 +95,7 @@ int main(int argc, char* argv[])
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsApplyLinearRegression-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsApplyLinearRegression-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }

@@ -3,6 +3,21 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsAggregateQuadRegression
+
+ Usage: xsAggregateQuadRegression [-f output_file]
+
+ Description:
+        Aggregates (combines) quadratic regression algorithms that have the same X field, Y field, BY field
+        and BY value into a new algorithm. Takes input from the output of previous xsPerform commands. The
+        algorithms are matched by field and a weighted average (by count) is used to aggregate the results.
+        This can be used to aggregate the results of minor periods into more major periods. An effective
+        way to specify the input data stream is to pipe the output of inputlookup.
+
+        If -f is specified, write the output to 'output_file' as well.  This file is located in
+        saSplunkGetRoot(argv[0])/apps/<app>/lookups/output_file.csv.
+
 */
 #include <libgen.h>
 #include <math.h>
@@ -124,7 +139,6 @@ int main(int argc, char* argv[])
        else if (!saCSVCompareField(fieldList[i], "y"))
             yIndex = i;
    }
-// ADD CODE TO CHECK FOR MISSING HEADER
 
    int maxIndex = 0;
    while(!feof(stdin))
@@ -176,7 +190,7 @@ int main(int argc, char* argv[])
 
    char tempDir[512];
    sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = saOpenFile(tempDir, "w");
+   FILE *f = fopen(tempDir, "w");
 
    // write out the results
    if (f != NULL)

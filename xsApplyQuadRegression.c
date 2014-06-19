@@ -1,8 +1,23 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsApplyQuadRegression
+
+ Usage: xsApplyQuadRegression -0 double -1 double -2 double -x fieldX
+
+        -0 is coefficient 0
+        -1 is coefficient 1
+        -2 is coefficient 2
+        -x is the X field to apply Quad Regression algorithm
+
+ Description:
+        Apply quad regression against a set of events containing the specified fields. The algorithm is
+        derived from a series of 3 coefficients and one (X) field.
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <errno.h>
 #include <libgen.h>
@@ -74,7 +89,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsApplyQuadRegression-F-101: usage xsApplyQuadRegression -0 double -1 double -2 double -x fieldList)");
+        fprintf(stderr, "xsApplyQuadRegression-F-101: usage xsApplyQuadRegression -0 double -1 double -2 double -x fieldX)");
         exit(EXIT_FAILURE);
     }
 
@@ -86,7 +101,7 @@ int main(int argc, char* argv[])
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsApplyQuadRegression-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsApplyQuadRegression-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }

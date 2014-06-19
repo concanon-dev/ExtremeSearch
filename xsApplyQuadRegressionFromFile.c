@@ -1,8 +1,22 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsApplyQuadRegressionFromFile
+
+ Usage: xsApplyQuadRegressionFromFile -f input_file
+
+ Description:
+        Apply quad regression against a set of events containing the specified fields. The algorithms are
+        contained in a specified lookup file which contains one or more rows, each having an X field, a
+        BY field (bf), a BY value (bv) and a series of 3 coefficients (coef0, coef1, coef2).
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
+
+        The flag -f specifies the file to read.  This file is located in
+        saSplunkGetRoot(argv[0])/apps/<app>/lookups/output_file.csv.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -82,7 +96,7 @@ int main(int argc, char* argv[])
     } 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsApplyQuadRegressionFromFile-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsApplyQuadRegressionFromFile-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }

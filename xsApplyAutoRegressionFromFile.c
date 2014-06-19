@@ -1,8 +1,22 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsApplyAutoRegressionFromFile
+
+ Usage: xsApplyAutoRegressionFromFile -f input_file
+
+ Description:
+        Apply auto regression against a set of events containing the specified fields. The algorithms are
+        contained in a specified lookup file which contains one or more rows, each having an X field, a
+        BY field (bf), a BY value (bv) and a series of 3 coefficients (coef0, coef1, coef2).
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
+
+        The flag -f specifies the file to read.  This file is located in
+        saSplunkGetRoot(argv[0])/apps/<app>/lookups/output_file.csv.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -32,7 +46,6 @@ static char *byValueList[SA_CONSTANTS_MAXAXIS];
 extern char *optarg;
 extern int optind, optopt;
 
-extern FILE *saOpenFile(char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -78,12 +91,12 @@ int main(int argc, char* argv[])
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsApplyAutoRegression-F-105: Can't get info header\n");
+        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-105: Can't get info header\n");
         exit(EXIT_FAILURE);
     } 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsApplyAutoRegression-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsApplyAutoRegressionFromFile-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }

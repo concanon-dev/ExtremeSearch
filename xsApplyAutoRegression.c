@@ -3,6 +3,21 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsApplyAutoRegression
+
+ Usage: xsApplyAutoRegression -0 double -1 double -2 double -x fieldX
+
+        -0 is coefficient 0
+        -1 is coefficient 1
+        -2 is coefficient 2
+        -x is the X field to apply Auto Regression algorithm
+
+ Description:
+        Apply auto regression against a set of events containing the specified fields. The algorithm is
+        derived from a series of 3 coefficients and one (X) field. 
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <errno.h>
 #include <libgen.h>
@@ -74,7 +89,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsApplyAutoRegression-F-101: usage xsApplyAutoRegression -0 double -1 double -2 double -x fieldList)");
+        fprintf(stderr, "xsApplyAutoRegression-F-101: usage: xsApplyAutoRegression -0 double -1 double -2 double -x fieldList)");
         exit(EXIT_FAILURE);
     }
 
