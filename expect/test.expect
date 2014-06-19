@@ -158,9 +158,6 @@ sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd private "*"
 sleep 1
 
-# TEST SUITE: License
-license $env(SPLUNK_HOME) $login $passwd "key"
-
 # TEST SUITE: Context Expected Failures
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "xsDeleteContext-F-107: Can't delete context: TEST1"
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "xsDeleteContext-F-107: Can't delete context: TEST2"
