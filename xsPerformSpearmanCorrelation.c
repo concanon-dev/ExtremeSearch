@@ -1,8 +1,16 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsPerformSpearmanCorrelation
+
+ Usage: xsPerformSpearmanCorrelation [-f output_file]
+        -f the name of the file to write the output
+
+ Description:
+        Take the results from xsprespearmancorrelate to generate Pearons R correlation.
 */
 #include <libgen.h>
 #include <math.h>
@@ -32,7 +40,6 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern FILE *saOpenFile(char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -73,12 +80,12 @@ int main(int argc, char* argv[])
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsDisplayContext-F-105: Can't get info header\n");
+        fprintf(stderr, "xsPerformSpearmanCorrelation-F-105: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsDisplayContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsPerformSpearmanCorrelation-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -168,7 +175,7 @@ int main(int argc, char* argv[])
 
    char tempDir[512];
    sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = saOpenFile(tempDir, "w");
+   FILE *f = fopen(tempDir, "w");
    if (f != NULL)
        fputs("x,y,bf,bv,numRows,R\n", f);
    fputs("x,y,bf,bv,numRows,R\n", stdout);

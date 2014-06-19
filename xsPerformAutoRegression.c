@@ -3,6 +3,16 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsPerformAutoRegression
+
+ Usage: xsPerformAutoRegression [-f output_file]
+        -f the name of the file to write the output
+
+ Description:
+        Take the results from xspreautoregress to generate an auto regression algorithm.
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <libgen.h>
 #include <math.h>
@@ -68,7 +78,7 @@ int main(int argc, char* argv[])
     }
     if (argError == true)
     {
-        fprintf(stderr, "xsPerformAutoRegression-F-103: Usage: xsPerformAutoRegression\n");
+        fprintf(stderr, "xsPerformAutoRegression-F-103: Usage: xsPerformAutoRegression [-f output_file]\n");
         exit(0);
     }
 
@@ -176,7 +186,7 @@ int main(int argc, char* argv[])
 
    char tempDir[512];
    sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = saOpenFile(tempDir, "w");
+   FILE *f = fopen(tempDir, "w");
 
    // write out the results
    if (f != NULL)

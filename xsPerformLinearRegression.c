@@ -1,8 +1,18 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsPerformLinearRegression
+
+ Usage: xsPerformLinearRegression [-f output_file]
+        -f the name of the file to write the output
+
+ Description:
+        Take the results from xspreregress to generate a linear regression algorithm.
+
+        The algorithm is a*fieldX + b
 */
 #include <libgen.h>
 #include <math.h>

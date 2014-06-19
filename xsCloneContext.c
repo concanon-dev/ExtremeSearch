@@ -3,6 +3,17 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsCloneContext
+
+ Usage: xsCloneContext -o oldContext [-O oldScope] -n newContext [-N newScope]
+    -N scope of new context
+    -O scope of old context
+    -n new context
+    -o old context
+
+ Description:
+    Makes a full copy of a Context, including all concepts.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -81,7 +92,7 @@ int main(int argc, char* argv[])
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsCloneContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsCloneContext-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -89,14 +100,14 @@ int main(int argc, char* argv[])
     contextPtr = saSplunkContextLoad(oldName, root, &oldScope, p->app, p->user);
     if (contextPtr == NULL)
     {
-        fprintf(stderr, "xsCloneContext-F-107: Can't load context: %s\n", oldName);
+        fprintf(stderr, "xsCloneContext-F-109: Can't load context: %s\n", oldName);
         exit(EXIT_FAILURE);
     }
 
     strcpy(contextPtr->name, newName);
     if (saSplunkContextSave(contextPtr, root, newScope, p->app, p->user) == false)
     {
-        fprintf(stderr, "xsCloneContext-F-109: Can't save context: %s\n", newName);
+        fprintf(stderr, "xsCloneContext-F-111: Can't save context: %s\n", newName);
         exit(EXIT_FAILURE);
     }
     exit(0);

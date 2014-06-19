@@ -3,6 +3,19 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsCreateConcept
+
+ Usage: xsCreateConcept -c contextName -m min -n name -p shape -s scope -x max
+    -c name of the context 
+    -m min value for the concept
+    -n name of the concept
+    -p shape of the concept
+    -s scope of the context
+    -x max value for the concept
+
+ Description:
+    Creates a Concept for an existing Context with specified parameters.  
 */
 #include <libgen.h>
 #include <math.h>

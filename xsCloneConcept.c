@@ -3,6 +3,18 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsCloneConcept
+
+ Usage: xsCloneConcept -c concept -o oldContext [-O oldScope]  -n newContext [-N newScope]
+    -N scope of new context
+    -O scope of old context
+    -c concept name
+    -n new context
+    -o old context
+
+ Description:
+    Copies a concept from one context to another.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -76,7 +88,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsCloneConcept-F-103: Usage: xsCloneConcept concept FROM oldContext [ IN scope ] TO newContext [ IN scope ]\n");
+        fprintf(stderr, "xsCloneConcept-F-103: Usage: xsCloneConcept -c concept -o oldContext [-O oldScope]  -n newContext [-N newScope]\n");
         exit(EXIT_FAILURE);
     }
 

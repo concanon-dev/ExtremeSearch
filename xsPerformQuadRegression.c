@@ -3,6 +3,16 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsPerformQuadRegression
+
+ Usage: xsPerformQuadRegression [-f output_file]
+        -f the name of the file to write the output
+
+ Description:
+        Take the results from xsprequadregress to generate an quad regression algorithm.
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <libgen.h>
 #include <math.h>
@@ -34,7 +44,6 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern FILE *saOpenFile(char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -62,25 +71,25 @@ int main(int argc, char* argv[])
                 strcpy(outfile, optarg);
                 break;
             case '?':
-                fprintf(stderr, "xsregress-F-101: Unrecognised option: -%c\n", optopt);
+                fprintf(stderr, "xsQuadRegression-F-101: Unrecognised option: -%c\n", optopt);
                 argError = true;
         }
     }
     if (argError == true)
     {
-        fprintf(stderr, "xsregress-F-103: Usage: xsregress\n");
+        fprintf(stderr, "xsQuadRegression-F-103: Usage: xsQuadRegression [-f output_file]\n");
         exit(0);
     }
 
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsDisplayContext-F-105: Can't get info header\n");
+        fprintf(stderr, "xsQuadRegression-F-105: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsDisplayContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsQuadRegression-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -175,7 +184,7 @@ int main(int argc, char* argv[])
 
    char tempDir[512];
    sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = saOpenFile(tempDir, "w");
+   FILE *f = fopen(tempDir, "w");
    // write out the results
    if (f != NULL)
        fputs("x,y,bf,bv,numRows,coef0,coef1,coef2\n", f);

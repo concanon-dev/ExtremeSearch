@@ -46,7 +46,7 @@ if __name__ == '__main__':
                         y = y + "," + arg
                         yCount = yCount + 1
     else:
-        raise Exception("xsPerformCorrelation-F-001: Usage: xsPerformCorrelation (field)+ WITH (field)+ [BY field]")
+        raise Exception("xsPerformCorrelation-F-001: Usage: xsPerformCorrelation (field)+ WITH (field)+ [BY field] [OUTPUT file]")
 
     if xCount < 1:
         raise Exception("xsPerformCorrelation-F-003: Missing x parameter"); 
