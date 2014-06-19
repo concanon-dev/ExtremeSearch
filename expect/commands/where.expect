@@ -9,6 +9,16 @@ proc where_basic_count { splunk_home login passwd index field concept response} 
     }
 }
 
+proc where_cmd { splunk_home login passwd index cmd response} {
+
+    send "$splunk_home/bin/splunk search 'index=$index | xsWhere $cmd' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsWhere($cmd) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsWhere($cmd)" }
+    }
+}
+
 proc displayWhere_basic_count { splunk_home login passwd index field concept response} {
 
     send "$splunk_home/bin/splunk search 'index=$index | xsDisplayWhere $field IS $concept | stats count' -auth $login:$passwd \r"

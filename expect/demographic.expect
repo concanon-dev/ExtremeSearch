@@ -33,7 +33,7 @@ source commands/apply.expect
 source commands/distance.expect
 
 # Create private Height Context
-createContext $env(SPLUNK_HOME) $login $passwd demographics Height private "tiny,short,medium,tall,gigantic" inches domain 0 100 0 0 0 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics Height private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "Height*tiny*short*medium*tall*gigantic"
 
 # Basic Where Tests
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
@@ -42,20 +42,23 @@ where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height medium "c
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tall "count*-----"
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height gigantic "count*-----"
 
+# Other Where Tests
+where_cmd $env(SPLUNK_HOME) $login $passwd demographics "Height in Height IS very short | stats count" "count*-----"
+
 # Basic DisplayWhere Tests
 displayWhere_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
 
 # FindBestConcept Tests
-findBestConcept $env(SPLUNK_HOME) $login $passwd demographics Height private Height "2014"
+findBestConcept $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
 
 # FindMembership Tests
-findMembership $env(SPLUNK_HOME) $login $passwd demographics Height private Height "2014"
+findMembership $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
 
 # GetCompatability Tests
 getCompatibility $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
 
 # GetDistance Tests
-getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "2014"
+getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "count*-----"
 
 # Delete private Height Context
 #deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context Height successfully deleted"

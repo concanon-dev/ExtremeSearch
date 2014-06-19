@@ -31,15 +31,16 @@ source commands/license.expect
 
 
 # TEST SUITE: Create Data Driven Context Tests
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST1*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST2*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST3*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST4*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST5*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST6*tiny*short*medium*tall*gigantic"
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
+
 
 # TEST SUITE: Clone Context Tests
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST1 global TESTC1 private "*"
@@ -59,29 +60,29 @@ listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTC4*TE
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTC1*TESTC2"
 
 # TEST SUITE: Rename Context Tests
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC1 private TESTR1 global "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC1 private TESTR1 global "Context TESTC1 successfully renamed to TESTR1"
 sleep 1
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC2 private TESTR2 app "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC2 private TESTR2 app "Context TESTC2 successfully renamed to TESTR2"
 sleep 1
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC3 global TESTR3 private "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC3 global TESTR3 private "Context TESTC3 successfully renamed to TESTR3"
 sleep 1
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC4 app TESTR4 global "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC4 app TESTR4 global "Context TESTC4 successfully renamed to TESTR4"
 sleep 1
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC5 global TESTR5 app "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC5 global TESTR5 app "Context TESTC5 successfully renamed to TESTR5"
 sleep 1
-renameContext $env(SPLUNK_HOME) $login $passwd TESTC6 app TESTR6 private "*"
+renameContext $env(SPLUNK_HOME) $login $passwd TESTC6 app TESTR6 private "Context TESTC6 successfully renamed to TESTR6"
 sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTR1*TESTR4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTR2*TESTR5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTR3*TESTR6"
 
 # TEST SUITE: Create User Defined Context Tests
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 20 0 0 0 "small*medium*large"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "small,medium,large" size domain 0 20 0 0 0 "small*medium*large"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD3 private "small,medium,large" size domain 0 20 0 0 0 "small*medium*large"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD4 global "small,medium,large" size average_centered 0 20 0 0 1 "small*medium*large"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD5 app "small,medium,large" size average_centered 0 20 0 0 1 "small*medium*large"
-createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD6 private "small,medium,large" size average_centered 0 20 0 0 1 "small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 20 0 0 0 "TESTUD1*small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "small,medium,large" size domain 0 20 0 0 0 "TESTUD2*small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD3 private "small,medium,large" size domain 0 20 0 0 0 "TESTUD3*small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD4 global "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD4*small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD5 app "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD5*small*medium*large"
+createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD6 private "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD6*small*medium*large"
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TESTUD1*TESTUD4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TESTUD2*TESTUD5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TESTUD3*TESTUD6"
@@ -101,6 +102,10 @@ listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD1 global "Concept*small*medi
 listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD2 app "Concept*small*medium*large*xsmall*xlarge"
 displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xsmall "domain*xsmall"
 displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xlarge "domain*xlarge"
+
+# TEST SUITE: update Context Tests
+updateContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 80 0 0 0 "tiny*short*medium*tall*gigantic"
+updateUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 18 0 0 0 "small*medium*large"
 
 
 # TEST SUITE: Display Context Tests

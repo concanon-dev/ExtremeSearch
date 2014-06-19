@@ -56,8 +56,8 @@ proc createUDContextAverageCentered { splunk_home login passwd name scope terms 
     }
 }
 
-proc updateContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
-    send "$splunk_home/bin/splunk search '| xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+proc updateContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
+    send "$splunk_home/bin/splunk search 'index=$index | xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsUpdateContext ($name $scope $type) - TIMEOUT" }

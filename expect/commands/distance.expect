@@ -1,6 +1,6 @@
 
 proc getDistance { splunk_home login passwd index field zip response} {
-    send "$splunk_home/bin/splunk search 'index=$index | eval myZip=\"$zip\" | xsGetDistance FROM myZip TO $field | head 1' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | eval myZip=\"$zip\" | xsGetDistance FROM myZip TO $field | stats count' -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsGetDistance ($zip) - TIMEOUT" }
