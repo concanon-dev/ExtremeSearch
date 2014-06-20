@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     showRange = false;
     while ((c = getopt(argc, argv, "b:irx:y:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'b':
                 strcpy(fieldB, optarg);

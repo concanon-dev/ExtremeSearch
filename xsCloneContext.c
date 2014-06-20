@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     oldName[0] ='\0';
     while ((c = getopt(argc, argv, "N:O:n:o:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'n':
 	        strcpy(newName, optarg);

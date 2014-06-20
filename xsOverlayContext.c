@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     termSetFileName[0] ='\0';
     while ((c = getopt(argc, argv, "c:f:k:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'c':
                 strcpy(countName, optarg);

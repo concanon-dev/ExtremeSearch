@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     srcContextName[0] ='\0';
     while ((c = getopt(argc, argv, "d:s:0:1:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 's':
 	        strcpy(srcContextName, optarg);

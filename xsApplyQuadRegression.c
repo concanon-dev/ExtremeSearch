@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     argError = false;
     while ((c = getopt(argc, argv, "0:1:2:x:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case '0':
                 coef0 = atof(optarg);

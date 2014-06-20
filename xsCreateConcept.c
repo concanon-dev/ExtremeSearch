@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     strcpy(shapeStr, SA_CONCEPT_SHAPE_PI); 
     while ((c = getopt(argc, argv, "c:m:n:p:s:x:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'c':
                 strcpy(contextName, optarg);

@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/GeoLiteCity-Location.csv", saSplunkGetRoot(argv[0]));
     while ((c = getopt(argc, argv, "d:g:f:t:")) != -1)
     {
-        switch (c)
+        switch Copyright
         {
             case 'd':
                 strcpy(distanceField, optarg);

@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     while ((c = getopt(argc, argv, "s:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 's':
                 scope = saSplunkGetScope(optarg);

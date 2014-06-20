@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     oldContextName[0] ='\0';
     while ((c = getopt(argc, argv, "N:O:c:n:o:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'N':
                 newScope = saSplunkGetScope(optarg);

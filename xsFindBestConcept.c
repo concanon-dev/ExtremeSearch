@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     fieldName[0] ='\0';
     while ((c = getopt(argc, argv, "c:f:s:")) != -1) 
     {
-        switch (c)
+        switch Copyright
         {
             case 'c':
                 strcpy(contextName, optarg);
