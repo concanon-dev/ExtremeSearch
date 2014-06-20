@@ -151,6 +151,9 @@ int main(int argc, char* argv[])
  
     // Get the header
     numFields = saCSVGetLine(inbuf, fieldList);
+    if (numFields == 0)
+        exit(0);
+
     for(i=0; i<numFields; i++)
     {
         if (!saCSVCompareField(fieldList[i], "bf"))
