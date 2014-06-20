@@ -39,7 +39,7 @@
                                         class="head4">Syntax: </span>
                                 <span
                                         class="bodytext">xsPerformCorrelation (x_field)+ [WITH
-                                        (y_field)+] [BY field]</span>
+                                        (y_field)+] [BY field] [OUTPUT filename]</span>
                         </p>
                         <br />
                         <br />
@@ -148,6 +148,13 @@
                                         class="explanation">Specifies the field in the data set by
                                         which the corelation will be grouped by.</span>
                         </p>
+			<p>
+                                <span
+                                        class="para">OUTPUT (filename)</span>
+                        </p>
+                        <p><span
+                                        class="explanation">Specifies the lookup file to which the
+                                        output will be written.</span></p>
                         <br />
                         <p>
                                 <span
