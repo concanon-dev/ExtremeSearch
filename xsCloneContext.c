@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     oldName[0] ='\0';
     while ((c = getopt(argc, argv, "N:O:n:o:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'n':
 	        strcpy(newName, optarg);
@@ -110,5 +110,6 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsCloneContext-F-111: Can't save context: %s\n", newName);
         exit(EXIT_FAILURE);
     }
+    fprintf(stderr, "xsCloneContext: Context cloned successfully\n");
     exit(0);
 }

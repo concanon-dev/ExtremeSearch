@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     strcpy(scopeString, "none");
     while ((c = getopt(argc, argv, "c:p:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
 
             case 'c':

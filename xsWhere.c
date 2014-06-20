@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
     strcpy(cixFunction, FCIX_AVG);
     while ((c = getopt(argc, argv, "a:c:n:p:s:uw:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'a':
                 alfacut = atof(optarg);

@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     argError = false;
     while ((c = getopt(argc, argv, "a:b:x:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'a':
                 a = atof(optarg);

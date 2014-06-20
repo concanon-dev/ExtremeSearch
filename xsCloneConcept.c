@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     oldContextName[0] ='\0';
     while ((c = getopt(argc, argv, "N:O:c:n:o:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'N':
                 newScope = saSplunkGetScope(optarg);
@@ -147,5 +147,6 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsCloneConcept-F-111: Can't save context: %s\n", newContextName);
         exit(EXIT_FAILURE);
     }
+    fprintf(stderr, "Concept cloned successfully\n");
     exit(0);
 }

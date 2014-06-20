@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
     uom[0] = '\0';
     while ((c = getopt(argc, argv, "Ua:c:d:e:f:i:m:n:o:p:t:u:w:x:z:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'U':
                 update = true;

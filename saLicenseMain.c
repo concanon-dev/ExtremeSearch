@@ -146,7 +146,7 @@ int doMain(int argc, char *argv[])
            tString[0] = '\0';
        }
 
-        switch Copyright
+        switch(c)
         {
             // Activate Online
             case 'a':

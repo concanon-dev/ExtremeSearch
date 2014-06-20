@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     argError = true;
     while ((c = getopt(argc, argv, "w:")) != -1)
     {
-        switch Copyright
+        switch(c)
         {
             case 'w':
                 strcpy(where_line, optarg);

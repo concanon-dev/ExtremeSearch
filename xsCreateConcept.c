@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     strcpy(shapeStr, SA_CONCEPT_SHAPE_PI); 
     while ((c = getopt(argc, argv, "c:m:n:p:s:x:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'c':
                 strcpy(contextName, optarg);
@@ -118,12 +118,11 @@ int main(int argc, char* argv[])
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
-
     saContextTypePtr cPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (cPtr == NULL)
     {
-        cPtr = saContextInit(contextName, min, max, (double)0.0, (double)0.0, 0, 1,
-                             SA_CONTEXT_TYPE_DOMAIN, SA_CONTEXT_NOTES_SINGLE_TERM, "");
+        fprintf(stderr, "xsCreateConcept-F-117: can't load context %s\n", contextName);
+        exit(EXIT_FAILURE);
     }
 
     // make sure the min is < the max
@@ -135,8 +134,21 @@ int main(int argc, char* argv[])
 
     // if the new conceit changes the domain (lower min or higher max)
     //    recalculate all of the concepts over the new domain
-    if (cPtr->domainMin > min || cPtr->domainMax < max)
-        saContextRecreateConcepts(cPtr, min, max);
+    if (cPtr->domainMin > min)
+    {
+        fprintf(stderr, "xsCreateConcept-F-113: min must not be less then the domain min: %.4f\n",
+                cPtr->domainMin);
+        exit(EXIT_FAILURE);
+    }
+
+    if (cPtr->domainMax < max)
+    {
+        fprintf(stderr, "xsCreateConcept-F-115: max must be greater then the domain max: %.4f\n",
+                cPtr->domainMax);
+        exit(EXIT_FAILURE);
+    }
+    //    saContextRecreateConcepts(cPtr, min, max);
+
     saContextCreateConcept(cPtr, termName, shapeStr, min, max);
     if (saSplunkContextSave(cPtr, root, scope, p->app, p->user) == false)
     {

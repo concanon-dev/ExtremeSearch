@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     contextName[0] ='\0';
     while ((c = getopt(argc, argv, "c:s:t:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'c':
 	        strcpy(contextName, optarg); 

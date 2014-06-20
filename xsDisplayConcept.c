@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     synonyms.numWords = 0;
     while ((c = getopt(argc, argv, "c:l:p:s:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
 
             case 'c':

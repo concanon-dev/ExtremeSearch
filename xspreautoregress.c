@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     strcpy(method, "maxentropy");
     while ((c = getopt(argc, argv, "b:c:im:x:y:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'b':
                 strcpy(fieldB, optarg);

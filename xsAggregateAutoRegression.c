@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     // get arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
-        switch Copyright
+        switch(c) 
         {
             case 'f':
                 strcpy(outfile, optarg);

@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     bool argError = false;
     while ((c = getopt(argc, argv, "c:y:")) != -1) 
     {
-        switch Copyright
+        switch(c)
         {
             case 'c':
                 strcpy(contextListString, optarg);
