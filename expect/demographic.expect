@@ -15,7 +15,7 @@ expect {
     "CYGWIN*" { 
         set env(SPLUNK_HOME) c:/PROGRA~1/Splunk 
         send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
-        send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7Lib\r"
+        send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7/Lib\r"
     }
     "*Linux*" { 
         set env(SPLUNK_HOME) /opt/splunk 
@@ -32,6 +32,7 @@ source commands/perform.expect
 source commands/apply.expect
 source commands/aggregate.expect
 source commands/distance.expect
+
 
 # Create private Height Context
 createContext $env(SPLUNK_HOME) $login $passwd demographics Height private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "Height*tiny*short*medium*tall*gigantic"
