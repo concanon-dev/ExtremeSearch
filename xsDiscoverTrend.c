@@ -299,24 +299,33 @@ int main(int argc, char* argv[])
         //     write out the results (example):
         //     _time,ArrDelay,low,-0.5
         char *cName = findElementInList(Y[i], yList, contextList, numContexts);
-        int scope = SA_SPLUNK_SCOPE_NONE;
-        saContextTypePtr contextPtr = saSplunkContextLoad(cName, root, &scope, p->app, p->user);
-        if (contextPtr == NULL)
+        if (cName != NULL)
         {
-            fprintf(stderr, "xsDiscoverTrend-F-111: can't open context %s\n", cName);
-            exit(0);
+            int scope = SA_SPLUNK_SCOPE_NONE;
+            saContextTypePtr contextPtr = saSplunkContextLoad(cName, root, &scope, p->app, p->user);
+            if (contextPtr == NULL)
+            {
+                fprintf(stderr, "xsDiscoverTrend-F-111: can't open context %s\n", cName);
+                exit(0);
+            }
+            int j;
+            for(j=0; j<contextPtr->numConcepts; j++)
+            {
+                double lCix = saConceptLookup(contextPtr->concepts[j], lY);
+                double hCix = saConceptLookup(contextPtr->concepts[j], hY);
+                //
+                // Modified trend to give a much less diluted value
+                // double trend = (hCix-lCix)/(float)numRows[i];
+                double trend = (hCix-lCix);
+                fprintf(stdout, "%s,%s,%s,%s,%s,%.10f\n", X[i], Y[i], byF[i], byV[i], 
+                        contextPtr->concepts[j]->name, trend);
+            }
         }
-        int j;
-        for(j=0; j<contextPtr->numConcepts; j++)
+        else
         {
-            double lCix = saConceptLookup(contextPtr->concepts[j], lY);
-            double hCix = saConceptLookup(contextPtr->concepts[j], hY);
-            //
-            // Modified trend to give a much less diluted value
-            // double trend = (hCix-lCix)/(float)numRows[i];
-            double trend = (hCix-lCix);
-            fprintf(stdout, "%s,%s,%s,%s,%s,%.10f\n", X[i], Y[i], byF[i], byV[i], 
-                    contextPtr->concepts[j]->name, trend);
+FILE *zzz = fopen("./cname.txt", "a");
+fprintf(zzz, "had null i=%d max=%d\n", i, maxIndex);
+fclose(zzz);
         }
     }
 }
