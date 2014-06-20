@@ -5,13 +5,30 @@
  contains proprietary trade and business secrets.
 
  Program: xsCreateContext
-Ua:c:d:e:f:i:m:n:o:p:t:u:w:x:z:
- Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-p shape] [-t conceptlist] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" 
-
+ Usage: xsCreateContext [-U] [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-n context_name] [-o "notes"] [-p shape] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"concept1,concept2,concept3...\" 
+    -U updates a context
+    -a average of field values (used by average_centered only)
+    -c number of events used to create context
+    -d stdev of field values (used by average_centered only)
+    -e the shape of the end concepts (3 or more concepts only)
+    -f where to find the existing context (private/app/global) and where to save the created context
+    -i the path and file name of the infoPath.csv file
+    -m minimum of field values (used by domain only)
+    -n the name of the context
+    -o notes
+    -p the shape of the non-end concepts, or if # concepts == 1 or 2
+    -t the comma-separated list of concepts
+    -u units of measure for the context
+    -w the width (in std dev) of concepts (used by average_centered only)
+    -x maximum of field values (used by domain only)
+    -z the type of context (average_centered or domain)
+   
  Description:
     Creates a Context with the specified parameters.  The fields type, avg, count, stdev, min, and max 
     must be passed in as parameters.  If the type is 'domain', then the fields avg and stdev will be 
     ignored.  If the type is 'average_centered', then the fields count, min and max will be ignored.
+    If the -U switch is specified, then the newly created context is automatically merged with the 
+    existing version of the context.
 */
 #include <libgen.h>
 #include <math.h>
