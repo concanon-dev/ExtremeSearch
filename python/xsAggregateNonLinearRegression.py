@@ -22,7 +22,7 @@ if __name__ == '__main__':
         raise Exception("xsAggregateNonLinearRegression-F-001: Usage: xsAggregateNonLinearRegression [OUTPUT filename]")
 
     try:
-        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateNonLinearRegression"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateAutoRegression"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):
