@@ -1,6 +1,6 @@
 
 proc createContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope $type) - TIMEOUT" }

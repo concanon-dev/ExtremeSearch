@@ -1,0 +1,46 @@
+
+proc aggregateAutoRegression { splunk_home login passwd file1 file2 file3 response} {
+    send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateAutoRegression OUTPUT $file3 | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsAggregateAutoRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsAggregateAutoRegression" }
+    }
+}
+
+
+proc aggregateLinearRegression { splunk_home login passwd file1 file2 file3 response} {
+    send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateLinearRegression OUTPUT $file3 | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsAggregateLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsAggregateLinearRegression" }
+    }
+}
+
+proc aggregateNonLinearRegression { splunk_home login passwd file1 file2 file3 response} {
+    send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateNonLinearRegression OUTPUT $file3 | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsAggregateNonLinearRegression - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsAggregateNonLinearRegression" }
+    }
+}
+
+proc aggregateCorrelation { splunk_home login passwd file1 file2 file3 response} {
+    send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateCorrelation OUTPUT $file3 | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsAggregateCorrelation - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsAggregateCorrelation" }
+    }
+}
+
+proc aggregateSpearmanCorrelation { splunk_home login passwd file1 file2 file3 response} {
+    send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateSpearmanCorrelation OUTPUT $file3 | stats count' -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsAggregateSpearmanCorrelation - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsAggregateSpearmanCorrelation" }
+    }
+}

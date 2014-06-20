@@ -27,7 +27,6 @@ expect {
 
 source commands/contexts.expect
 source commands/concepts.expect
-source commands/license.expect
 
 
 # TEST SUITE: Create Data Driven Context Tests
@@ -104,7 +103,7 @@ displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xsmall "domain*xsmal
 displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xlarge "domain*xlarge"
 
 # TEST SUITE: update Context Tests
-updateContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 80 0 0 0 "tiny*short*medium*tall*gigantic"
+updateContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "tiny*short*medium*tall*gigantic"
 updateUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 18 0 0 0 "small*medium*large"
 
 
@@ -162,9 +161,6 @@ sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "xsDeleteContext-F-107: Can't delete context: TEST1"
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "xsDeleteContext-F-107: Can't delete context: TEST2"
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "xsDeleteContext-F-107: Can't delete context: TEST3"
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST4 global "xsDeleteContext-F-107: Can't delete context: TEST4"
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST5 app "xsDeleteContext-F-107: Can't delete context: TEST5"
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST6 private "xsDeleteContext-F-107: Can't delete context: TEST6"
 
 createContextDomain $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
 createContextAverageCentered $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"

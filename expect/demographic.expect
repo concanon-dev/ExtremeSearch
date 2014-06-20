@@ -30,10 +30,12 @@ source commands/concepts.expect
 source commands/where.expect
 source commands/perform.expect
 source commands/apply.expect
+source commands/aggregate.expect
 source commands/distance.expect
 
 # Create private Height Context
 createContext $env(SPLUNK_HOME) $login $passwd demographics Height private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "Height*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics HeightTest private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "HeightTest*tiny*short*medium*tall*gigantic"
 
 # Basic Where Tests
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
@@ -43,46 +45,63 @@ where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tall "cou
 where_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height gigantic "count*-----"
 
 # Other Where Tests
-where_cmd $env(SPLUNK_HOME) $login $passwd demographics "Height in Height IS very short | stats count" "count*-----"
+where_cmd $env(SPLUNK_HOME) $login $passwd demographics "Height in HeightTest IS very short | stats count" "count*-----"
 
 # Basic DisplayWhere Tests
 displayWhere_basic_count $env(SPLUNK_HOME) $login $passwd demographics Height tiny "count*-----"
 
+# WhereCIX Tests
+getWhereCIX_basic_count $env(SPLUNK_HOME) $login $passwd demographics HeightTest tiny Height "count*-----"
+
 # FindBestConcept Tests
-findBestConcept $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
+findBestConcept $env(SPLUNK_HOME) $login $passwd demographics HeightTest private Height "count*-----"
 
 # FindMembership Tests
-findMembership $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
-
+findMembership $env(SPLUNK_HOME) $login $passwd demographics HeightTest private Height "count*-----"
+sleep 10
 # GetCompatability Tests
-getCompatibility $env(SPLUNK_HOME) $login $passwd demographics Height private Height "count*-----"
+getCompatibility $env(SPLUNK_HOME) $login $passwd demographics HeightTest private Height "count*-----"
+sleep 10
 
 # GetDistance Tests
 getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "count*-----"
+sleep 10
 
-# Delete private Height Context
-#deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context Height successfully deleted"
 
 # DiscoverTrend Commands
 discoverTrend $env(SPLUNK_HOME) $login $passwd demographics Height Age Gender "x*y*bf*bv*concept*trend"
+sleep 10
+
+# Delete private Height Context
+#deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context HeightTest successfully deleted"
+#deleteContext $env(SPLUNK_HOME) $login $passwd HeightTest private "Context HeightTest successfully deleted"
 
 # Predict Commands
 predict $env(SPLUNK_HOME) $login $passwd demographics 60 Age Height "x*y*bf*bv*numRows*slope*intercept*errA*errB*R*PredictedValue"
 
 # Peform Commands
 performAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_Age_Auto Height Age "x*bf*bv*numRows*coef0*coef1*coef2"
+performAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_State_Auto Height State "x*bf*bv*numRows*coef0*coef1*coef2"
 performLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_Linear Height Age "x*y*bf*bv*numRows*slope*intercept*errA*errB*R"
 performNonLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_NonLinear Height Age "*bf*bv*numRows*coef0*coef1*coef2"
 
 # Correlation Commands
-performCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age Age "x*y*bf*bv*numRows*R"
-performSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age "x*y*bf*bv*numRows*R"
+performCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age Age Demo_Height_With_Age_By_Age_Correlation "x*y*bf*bv*numRows*R"
+performCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age State Demo_Height_With_Age_By_State_Correlation "x*y*bf*bv*numRows*R"
+performSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age Age Demo_Height_With_Age_By_Age_SpearmanCorrelation "x*y*bf*bv*numRows*R"
+performSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd demographics Height Age State Demo_Height_With_Age_By_State_SpearmanCorrelation "x*y*bf*bv*numRows*R"
 
 # Apply Commands
-#set timeout 240
 applyAutoRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_By_Age_Auto "count*-----"
 applyLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_Linear "count*-----"
 applyNonLinearRegression $env(SPLUNK_HOME) $login $passwd demographics Demo_Height_Over_Age_NonLinear "count*-----"
+
+# Aggregate Commands
+aggregateAutoRegression $env(SPLUNK_HOME) $login $passwd Demo_Height_By_Age_Auto.csv Demo_Height_By_State_Auto.csv Demo_Aggregate_Regression_Auto "count*-----"
+aggregateLinearRegression $env(SPLUNK_HOME) $login $passwd Demo_Height_Over_Age_Linear.csv Demo_Height_Over_Age_Linear.csv Demo_Aggregate_Regression_Linear "count*-----"
+aggregateNonLinearRegression $env(SPLUNK_HOME) $login $passwd Demo_Height_Over_Age_NonLinear.csv Demo_Height_Over_Age_NonLinear.csv Demo_Aggregate_Regression_NonLinear "count*-----"
+aggregateCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Age_Correlation.csv Demo_Height_With_Age_By_State_Correlation.csv Demo_Aggregate_Correlation "count*-----"
+aggregateSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Age_SpearmanCorrelation.csv Demo_Height_With_Age_By_State_SpearmanCorrelation.csv Demo_Aggregate_SpearmanCorrelation "count*-----"
 
 send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
 
