@@ -3,6 +3,21 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsprequadregress
+
+ Usage: xsprequadregress [-b fieldList] [-i] [-m method] [-r] -x fieldList -y fieldList
+    -b the list of BY fields, separated by commas (defaults to none)
+    -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
+    -m the method of auto regression to perform (maxentropy or leastsquares, defaults to maxentropy)
+    -r write out the lowest and highest values for each X and Y field in each BY group
+    -x the list of X fields to perform quad regression against
+    -y the list of Y fields to perform quad regression against
+
+ Description:
+        For each X/Y field pair and BY field grouping, generate a quadregression algorithm.
+
+        The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
 #include <libgen.h>
 #include <math.h>
@@ -121,7 +136,7 @@ int main(int argc, char* argv[])
     if ((numBAxis != -1) && (numXAxis != numBAxis))
     {
         fprintf(stderr,
-                "xsprequadregress-F-111: found %d X and %d B parameters.  Values must be the same\n",
+                "xsprequadregress-F-107: found %d X and %d B parameters.  Values must be the same\n",
                 numXAxis, numBAxis);
         exit(EXIT_FAILURE);
     }
@@ -183,19 +198,19 @@ int main(int argc, char* argv[])
         if (hasByClause && bFieldIndex[i] == -1)
         {
            if (mustMatchFields == true)
-               fprintf(stderr, "xprecorrelate-F-105: BY clause not found: %s\n", bList[i]);
+               fprintf(stderr, "xprequadregress-F-109: BY clause not found: %s\n", bList[i]);
            missedOne = true;
         }
         if (xFieldIndex[i] == -1)
         {
             if (mustMatchFields == true)
-                fprintf(stderr, "xsprequadregress-F-107: x not found: %s\n", xList[i]);
+                fprintf(stderr, "xsprequadregress-F-111: x not found: %s\n", xList[i]);
             missedOne = true;
         }
         if (yFieldIndex[i] == -1)
         {
             if (mustMatchFields == true)
-                fprintf(stderr, "xsprequadregress-F-109: y not found: %s\n", yList[i]);
+                fprintf(stderr, "xsprequadregress-F-113: y not found: %s\n", yList[i]);
             missedOne = true;
         }
     }

@@ -1,9 +1,3 @@
-/*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
- Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
-*/
 #include <libgen.h>
 #include <math.h>
 #include <stdbool.h>
@@ -100,7 +94,7 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xspreregress-F-103: Uage: xspreregress [-d] [-i] [-r] -x fieldList -y fieldList\n");
+                "xspreregress-F-103: Uage: xspreregress [-b fieldList] [-i] [-r] -x fieldList -y fieldList\n");
         exit(EXIT_FAILURE);
     }
 

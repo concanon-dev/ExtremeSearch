@@ -49,7 +49,6 @@ int main(int argc, char* argv[])
 
     if (!isLicensed())
         exit(EXIT_FAILURE);
-
     initSignalHandler(basename(argv[0]));  
     argError = false;
     contextName[0] ='\0';
@@ -84,23 +83,22 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsFindMembership-F-103: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
-
     if (saSplunkReadInfoPathFile(p) == false)
     {
         fprintf(stderr, "xsFindMembership-F-105: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
-
+    // Parse the first (header) line of input
+    numFields = saCSVGetLine(inbuf, fieldList);
+    if (numFields == 0)
+        exit(0);
     contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
         fprintf(stderr, "xsFindMembership-F-107: Can't load context: %s\n", contextName);
         exit(EXIT_FAILURE);
     }
-
-    // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
     numConcepts = contextPtr->numConcepts;
 
     // Write out the header fields separated by ","
@@ -114,10 +112,8 @@ int main(int argc, char* argv[])
         fputs(fieldList[i], stdout);
     }
 
-    // if this header does not have the fuzzy sets, then write out all of the termset headers
-    sprintf(tempbuf, "\"%s_%s\"", contextPtr->name, 
-            contextPtr->concepts[numConcepts-1]->name);
-
+    // if this header does not have the concept names, then write out all of the headers
+    sprintf(tempbuf, "\"%s_%s\"", contextPtr->name, contextPtr->concepts[numConcepts-1]->name);
     if (strcmp(fieldList[numFields-1], tempbuf))
     {
         int j;
@@ -151,8 +147,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        int fieldCount = saCSVGetLine(inbuf, fieldList);
+        if (!feof(stdin) && fieldCount > 0)
         {
             // If the column that we are extracting exists, 
             //    extract the value, look it up in each fuzzy set
@@ -193,7 +189,10 @@ int main(int argc, char* argv[])
             fputs("\n", stdout);
         }
         else
-            done = true;
+        {
+            if (feof(stdin))
+                done = true;
+        }
     }
     exit(0);
 }

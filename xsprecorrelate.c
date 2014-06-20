@@ -1,8 +1,20 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsprecorrelate
+
+ Usage: xsprecorrelate [-b fieldList] [-i] [-r] -x fieldList -y fieldList
+    -b the list of BY fields, separated by commas (defaults to none)
+    -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)
+    -x the list of X fields to correlate
+    -y the list of Y fields to pcorrelate
+
+ Description:
+        For each X/Y field pair and BY field grouping, generate Pearson's R correlation.  If no Y fields
+        are specified, then apply a matrix of correlations of all combinations of X by X fields.
 */
 #include <libgen.h>
 #include <math.h>
@@ -45,7 +57,6 @@ extern void saMatrixArgs(char *, char *, int);
 
 extern char *optarg;
 extern int optind, optopt;
-
 
 int main(int argc, char* argv[]) 
 {
@@ -95,7 +106,7 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xsprecorrelate-F-103: Uage: xsprecorrelate [-d] [-i] [-r] -x fieldList -y fieldList");
+                "xsprecorrelate-F-103: Uage: xsprecorrelate [-b fieldList] [-i] -x fieldList -y fieldList");
         exit(EXIT_FAILURE);
     }
     if (!ySpecified)

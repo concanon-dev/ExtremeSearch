@@ -6,13 +6,13 @@
 
  Program: xspreautoregress
 
- Usage: xspreautoregress [-b fieldList] [-c numCoefs] [-i] [-m method] -x fieldList [-y fieldList]
+ Usage: xspreautoregress [-b fieldList] [-c numCoefs] [-i] [-m method] [-r] -x fieldList
     -b the list of BY fields, separated by commas (defaults to none)
     -c the number of coefficients to generate (defaults to SA_AUTOREGRESSION_DEFAULTNUMCOEFS)
     -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
     -m the method of auto regression to perform (maxentropy or leastsquares, defaults to maxentropy)
+    -r write out the lowest and highest value for each X field in a BY group
     -x the list of X fields to perform auto regression against
-    -y the list of Y fields to perform auto regression against
 
  Description:
         For each X field and BY field grouping, generate an autoregression algorithm.
@@ -102,6 +102,9 @@ int main(int argc, char* argv[])
                 break;
             case 'm':
                 strcpy(method, optarg);
+                break;
+            case 'r':
+                showRange = true;
                 break;
             case 'x':
                 strcpy(fieldX, optarg);

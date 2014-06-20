@@ -1,8 +1,17 @@
 /*
- (c) 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.
  Reproduction or unauthorized use is prohibited. Unauthorized
- use is illegal. Violators will be prosecuted. This software 
- contains proprietary trade and business secrets.            
+ use is illegal. Violators will be prosecuted. This software
+ contains proprietary trade and business secrets.
+
+ Program: xsCreateContext
+Ua:c:d:e:f:i:m:n:o:p:t:u:w:x:z:
+ Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-p shape] [-t conceptlist] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" 
+
+ Description:
+    Creates a Context with the specified parameters.  The fields type, avg, count, stdev, min, and max 
+    must be passed in as parameters.  If the type is 'domain', then the fields avg and stdev will be 
+    ignored.  If the type is 'average_centered', then the fields count, min and max will be ignored.
 */
 #include <libgen.h>
 #include <math.h>
