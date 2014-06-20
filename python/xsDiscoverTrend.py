@@ -10,7 +10,7 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     c=''
-    time='_time'
+    timeField='_time'
     tmpby = ''
     tmpC = ''
     x=''
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         raise Exception("xsDiscoverTrend-F-007: Unequal number of parameters")
 
     if x == '':
-        x=time
+        x=timeField
 
     if c =='':
         c = tmpC
@@ -76,9 +76,9 @@ if __name__ == '__main__':
         if isgetinfo:
             if xCount == 0:
                 i = 1
-                x = time
+                x = timeField
                 while i < yCount:
-                    x = x + "," + time
+                    x = x + "," + timeField
                     i = i + 1
             reqsop = True
             preop = "xspreregress -r "
