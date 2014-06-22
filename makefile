@@ -95,10 +95,10 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 CFLAGS=-O2 -Wall
 LDFLAGS=-lm -g
-SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c  saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xspredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
+SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saDebug.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c  saLicensing.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saOpenFile.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c test.c test2.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsListContexts xsListConcepts xsListUOM xsMergeContexts xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xspredict xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
+EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsListContexts xsListConcepts xsListUOM xsMergeContexts xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xsPredict xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
 
 
 
@@ -185,8 +185,8 @@ xspreautoregress: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspreautoregress.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsprecorrelate: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprecorrelate.o $(OBJDIR)/saLinearCorrelation.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saInsertUniqueValue.o  $(OBJDIR)/saMatrixArgs.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
-xspredict: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspredict.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
+xsPredict: $(OBJECTS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsPredict.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xsprequadregress: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprequadregress.o $(OBJDIR)/saQuadRegression.o $(OBJDIR)/saInsertUniqueValue.o  $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(LICENSELIB) $(LDFLAGS)
 xspreregress: $(OBJECTS)
@@ -329,8 +329,8 @@ xspreautoregress.o:
 	$(GCC) -c xspreautoregress.c -o $(OBJDIR)/$@
 xsprecorrelate.o:
 	$(GCC) -c xsprecorrelate.c -o $(OBJDIR)/$@
-xspredict.o:
-	$(GCC) -c xspredict.c -o $(OBJDIR)/$@
+xsPredict.o:
+	$(GCC) -c xsPredict.c -o $(OBJDIR)/$@
 xsprequadregress.o:
 	$(GCC) -c xsprequadregress.c -o $(OBJDIR)/$@
 xspreregress.o:

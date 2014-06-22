@@ -3,6 +3,18 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsprespearmancorrelate
+
+ Usage: xsprespearmancorrelate [-b fieldList] [-i] -x fieldList -y fieldList
+    -b the list of BY fields, separated by commas (defaults to none)
+    -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)
+    -x the list of X fields to correlate
+    -y the list of Y fields to pcorrelate
+
+ Description:
+        For each X/Y field pair and BY field grouping, generate Pearson's R correlation.  If no Y fields
+        are specified, then apply a matrix of correlations of all combinations of X by X fields.
 */
 #include <libgen.h>
 #include <math.h>

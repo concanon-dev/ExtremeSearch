@@ -35,22 +35,22 @@ if __name__ == '__main__':
                     y = y + "," + arg
                 yCount = yCount + 1
     else:
-        raise Exception("xspredict-F-001: Usage: xspredict (field)+ WHEN field IS value")
+        raise Exception("xsPredict-F-001: Usage: xsPredict (field)+ WHEN field IS value")
 
     if len(tmpX) < 1:
-        raise Exception("xspredict-F-003: Missing x parameter")
+        raise Exception("xsPredict-F-003: Missing x parameter")
 
     if len(y) < 1:
-        raise Exception("xspredict-F-005: Missing y parameter")
+        raise Exception("xsPredict-F-005: Missing y parameter")
 
     if len(p) < 1:
-        raise Exception("xspredict-F-007: Missing p parameter")
+        raise Exception("xsPredict-F-007: Missing p parameter")
 
     if len(isKeyword) < 1:
-        raise Exception("xspredict-F-009: Missing IS keyqord")
+        raise Exception("xsPredict-F-009: Missing IS keyqord")
 
     if len(whenKeyword) < 1:
-        raise Exception("xspredict-F-011: Missing WHEN keyword")
+        raise Exception("xsPredict-F-011: Missing WHEN keyword")
 
     try:
         (isgetinfo, sys.argv) = si.isGetInfo(sys.argv)
@@ -63,12 +63,12 @@ if __name__ == '__main__':
                 x = x + "," + tmpX
                 i = i + 1
             reqsop = True
-            preop = "xspreregress "
+            preop = "xsPreregress "
             preop += " x=\"%s\" " % x
             preop += " y=\"%s\" " % y
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xspredict"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPredict"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

@@ -1,3 +1,22 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+ Program: xspreregress
+
+ Usage: xspreregress [-b fieldList] [-i] [-r] -x fieldList -y fieldList
+    -b the list of BY fields, separated by commas (defaults to none)
+    -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
+    -r write out the lowest and highest value for each X field in a BY group
+    -x the list of X fields to perform auto regression against
+    -y the list of Y fields to perform auto regression against
+
+ Description:
+    For each X field and BY field grouping, generate the slope (a) and intercept (b) of a linear regression
+    algorithm of the form y = slope * x + intercept
+*/
 #include <libgen.h>
 #include <math.h>
 #include <stdbool.h>
