@@ -13,7 +13,7 @@ if __name__ == '__main__':
     inKeyword = ''
     max = ''
     min = ''
-    scope = '0'
+    scope = 'none'
     shape = 'pi'
     termName = ''
     withKeyword = ''

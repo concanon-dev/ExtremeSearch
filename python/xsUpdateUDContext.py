@@ -16,7 +16,7 @@ if __name__ == '__main__':
     max = ''
     min = ''
     notes = ''
-    scope = '3'
+    scope = 'global'
     settings = {}
     shape = 'pi'
     stdev = ''

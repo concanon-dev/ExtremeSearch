@@ -9,7 +9,7 @@ import splunk.Intersplunk as si
 
 if __name__ == '__main__':
 
-    scope = '3'
+    scope = 'global'
     try:
         if len(sys.argv) < 1:
             raise Exception("xsListContexts-F-001: Usage: xsListContexts [scope]") 
