@@ -3,6 +3,35 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsWhere
+
+ Usage: xsWhere [-a alfacut] [-c cixFunction] [-n cixName] [-p scalar_percent] [-s synonymsFile] [-u] -w whereLine
+    -a the alfacut (default is 0.2)
+    -c the CIX function to use, either avg or weighted (default is avg)
+    -n the name of the CIX column (default is "WhereCix")
+    -p the percentage to use for sizing a scalar concept (default is +/- 5%)
+    -s the synonyms file (default is none)
+    -u turns on the useAlfa column (default is off)
+    -w the conceptual (semantic) query to run
+
+ Description:
+    Determine which events are compatible with a semantic query. An event is compatible with the query if
+    the compatibility index (xcix) is greater than the alfacut.  The default alfacut is 0.2. If an event
+    meets this condition, it is written to the output stream with the value of the xcix added as a field
+    named by cixname. The default is "WhereCIX". If not, the event is disposed. The xcix is generated
+    using one of two functions, avg or weighted. The avg function sums the membership values of eah query
+    and divides by the count. The weighted function is similar to a weighted average. The xcix is
+    calculated by putting a higher value on memberhip in terms that are closer to the beginning of the 
+    query, and then divides by the weighted count. Since the xcix is added to each event that meets the
+    alfacut, other commands can then be applied to generate more intelligent information.
+
+    If useAlfa is turned on, then a column called useAlfa is created.  If the CIX is >= alfacut, then 
+    useAlfa is written as a 1, else it is written as a 0.
+
+    Note that if the calling program is the same name as FCIX, then no rows will be filtered.  It is 
+    equivalent to alfacut=0.0.
+   
 */
 #include <errno.h>
 #include <libgen.h>
@@ -24,13 +53,14 @@
 
 #define FCIX "xsGetWhereCix"
 #define FCIX_AVG "avg"
+#define FCIX_NAME "WhereCix"
 #define FCIX_WEIGHTED "weighted"
 
 #define MAXROWSIZE (1024*1024)
 
 static bool calledXcix = false;
 static bool termSetFound[32];
-static char cixName[256] = FCIX;
+static char cixName[256];
 static char *fieldList[MAXROWSIZE / 32];
 static char headerbuf[MAXROWSIZE];
 static char *headerList[MAXROWSIZE / 31];
@@ -101,6 +131,7 @@ int main(int argc, char* argv[])
     synonymFileName[0] = '\0';
     synonyms.numWords = 0;
     strcpy(cixFunction, FCIX_AVG);
+    strcpy(cixName, FCIX_NAME);
     while ((c = getopt(argc, argv, "a:c:n:p:s:uw:")) != -1) 
     {
         switch(c)
@@ -133,7 +164,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsWhere-F-103: Usage: xsWhere -a alfacut -c cixFunction -n cixName -p scalar_percent -s synonymsFile -u useAlfa -w whereLine\n");
+        fprintf(stderr, "xsWhere-F-103: Usage: xsWhere [-a alfacut] [-c cixFunction] [-n cixName] [-p scalar_percent] [-s synonymsFile] [-u useAlfa] -w whereLine\n");
         exit(EXIT_FAILURE);
     }
 
@@ -171,6 +202,7 @@ int main(int argc, char* argv[])
             }
         }
     }
+
     // parse the where line
     saExpressionTypePtrArray expStack = generateExpStack();
     int stackSize = saParserParse(whereLine, tempbuf, expStack);

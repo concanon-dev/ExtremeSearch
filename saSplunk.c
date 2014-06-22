@@ -75,7 +75,6 @@ saContextTypePtr saSplunkContextFind(char *name, char *root, char *app, char *us
 
     if (app == NULL || user == NULL)
         return(NULL);
-
     *scope = SA_SPLUNK_SCOPE_PRIVATE;
     sprintf(path, "%s/users/%s/%s/contexts/%s.context", root, user, app, name);
     if (access(path, F_OK) == -1)

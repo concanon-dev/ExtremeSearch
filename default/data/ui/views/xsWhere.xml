@@ -40,7 +40,7 @@
                                         of the xcix added as a field named by cixname. The default
                                         is "WhereCIX". If not, the event is disposed. The xcix is
                                         generated using one of two functions, avg or weighted. The
-                                        avg function sums the membership values of eah query and
+                                        avg function sums the membership values of each query and
                                         divides by the count. The weighted function is similar to a
                                         weighted average. The xcix is calculated by putting a higher
                                         value on memberhip in terms that are closer to the beginning

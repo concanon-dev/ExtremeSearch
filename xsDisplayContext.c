@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsDisplayContext
+
+ Usage: xsDisplayContext -n context [-s scope]
+    -n the name of the context to display
+    -s the scope (private, app, global) to find the context (default is none)
+
+ Description:
+    Generates a table with the bucket values and membership values of every concept in a context
 */
 #include <errno.h>
 #include <libgen.h>
@@ -76,6 +85,7 @@ int main(int argc, char* argv[])
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
+
     contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {

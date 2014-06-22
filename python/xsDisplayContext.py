@@ -9,7 +9,7 @@ import splunk.Intersplunk as si
 
 if __name__ == '__main__':
 
-    scope = '3'
+    scope = ''
     try:
         if len(sys.argv) < 2:
             raise Exception("xsDisplayContext-F-001: Usage: xsDisplayContext context [IN scope]") 
