@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsDeleteContext
+
+ Usage: xsDeleteContext -c context [-s scope] 
+    -c name of the context to delete
+    -s scope of the context (private, app, global)
+
+ Description:
+    Deletes a context.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -71,16 +80,16 @@ int main(int argc, char* argv[])
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsDeleteContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsDeleteContext-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
 
     if(!saSplunkContextDelete(contextName, root, scope, p->app, p->user))
     {
-        fprintf(stderr, "xsDeleteContext-F-107: Can't delete context: %s\n", contextName);
+        fprintf(stderr, "xsDeleteContext-F-109: Can't delete context: %s\n", contextName);
         exit(EXIT_FAILURE);
     }
-    fprintf(stderr, "Context %s successfully deleted\n", contextName);
+    //fprintf(stderr, "Context %s successfully deleted\n", contextName);
     exit(0);
 }

@@ -3,6 +3,25 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsDeleteConcept
+
+ Usage: xsDeleteConcept -c contextList [-s scope] -t concept
+    -c a comma separated list of Contexts corresponding to the field(s) to be analyzed
+    -y a comma separated list of fields to be analyzed
+
+    The number of elements in y must be the same as the number of elements in c.
+
+ Description:
+    Discover any trend of y_field(s) over x_field(s) using linear regression. The trend is determined
+    across the context associated with the field. This context of the y_field is a prerequisite for the
+    command to run.  Trend is calculated as follows: Take the lowest X value and calculate the Y value,
+    take the the highest X value and calcuate the Y value. For each concept in the Y Context, calculate
+    the CIX for the low and high Y. The trend for each concept is (hi_Y_CIX - low_Y_CIX) / numRows.
+    For each concept, the following columns are written: x,y,bf,bv,concept,trend.
+
+    This command is similar to xsPerformLinearRegression in it's form and function.  However, it adds on
+    the trend analysis functionality as described above.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -88,7 +107,7 @@ int main(int argc, char* argv[])
     }
     if (argError == true)
     {
-        fprintf(stderr, "xsDiscoverTrend-F-103: Usage: xsDiscoverTrend -c contextList\n");
+        fprintf(stderr, "xsDiscoverTrend-F-103: Usage: xsDiscoverTrend -c contextList -y fieldList\n");
         exit(0);
     }
 
@@ -293,8 +312,8 @@ int main(int argc, char* argv[])
         // load the Context for Y
         // using linear regression, calculate the lowest Y from lowest X
         // using linear regression, calculate the highest Y from highest X
-        // for each set in the fuzzy Term Set
-        //     lookup the the lowest and highest Y in the set
+        // for each concept in the Context
+        //     lookup the the lowest and highest Y in the concept
         //     subtract the lowcix from the highcix
         //     write out the results (example):
         //     _time,ArrDelay,low,-0.5

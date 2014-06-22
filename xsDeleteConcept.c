@@ -3,6 +3,16 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsDeleteConcept
+
+ Usage: xsDeleteConcept -c context [-s scope] -t concept
+    -c name of the context containing the concept to delete
+    -s scope of the context (private, app, global)
+    -t the concept to delete
+
+ Description:
+    Deletes a concept from a context.
 */
 #include <errno.h>
 #include <libgen.h>

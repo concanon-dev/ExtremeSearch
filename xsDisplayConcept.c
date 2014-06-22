@@ -3,6 +3,28 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsDisplayConcept
+
+ Usage: xsDisplayConcept -c context -l conceptList -s scopeList -t synonymsFile
+    -c the name of the context containing the concept(s)
+    -l a semicolon separated list of comma-separated hedges and concepts
+    -s a semicolon separated list of scope values
+    -t the name of the synonyms file for use when applying hedges 
+
+ Description:
+    Generates a table with the bucket values and one or more concepts (after appying any specified hedges).
+
+    The conceptList might look something like this:
+
+    tall;not,very,tall;somehwat,tall
+
+    After the hedges (and any synonyms are applied), this would generate 3 different concept columns
+    "tall", "not very tall", and "somewhat tall".
+
+    The number of elements in the conceptList must be the same as the number of elements in the scopeList.
+    If the scope element is empty, then the context containing the specified concept is searched for using
+    the knowledge object scope  model (private, app, global). 
 */
 #include <errno.h>
 #include <libgen.h>

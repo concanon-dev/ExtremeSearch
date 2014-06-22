@@ -14,7 +14,7 @@
     -o old context
 
  Description:
-    Copies a concept from one context to another.
+    Clones a concept by copying it from one context to another.
 */
 #include <errno.h>
 #include <libgen.h>

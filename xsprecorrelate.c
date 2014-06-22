@@ -52,7 +52,7 @@ static double *yAxis[SA_CONSTANTS_MAXAXIS];
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
-extern int saLinearCorrelation(double [], double [], int, int, double *);
+extern bool saLinearCorrelation(double [], double [], int, int, double *);
 extern void saMatrixArgs(char *, char *, int);
 
 extern char *optarg;
@@ -304,10 +304,9 @@ int main(int argc, char* argv[])
                 }
                 fprintf(stdout, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], 
                         bList[i], bValues[j]);
-
-                int status = saLinearCorrelation(tempXDoubles, tempYDoubles, 0, numTempDoubles,
+                bool status = saLinearCorrelation(tempXDoubles, tempYDoubles, 0, numTempDoubles,
                                                  &r2);
-                if (totalRows[i] > 0 && status == 0)
+                if (totalRows[i] > 0 && status == true)
                     fprintf(stdout, ",%.10f\n", r2);
                 else
                     fputs(",0.0\n", stdout);
@@ -318,9 +317,9 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            int status = saLinearCorrelation(xAxis[i], yAxis[i], 0, totalRows[i], &r2);
+            bool status = saLinearCorrelation(xAxis[i], yAxis[i], 0, totalRows[i], &r2);
             fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
-            if (totalRows[i] > 0 && status == 0)
+            if (totalRows[i] > 0 && status == true)
                 fprintf(stdout, ",%.10f\n", r2);
             else
                 fputs(",0.0\n", stdout);

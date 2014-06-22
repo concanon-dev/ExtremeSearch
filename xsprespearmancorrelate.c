@@ -40,7 +40,6 @@ static double *yAxis[SA_CONSTANTS_MAXAXIS];
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
-extern int saLinearCorrelation(double [], double [], int, int, double *);
 extern void saMatrixArgs(char *, char *, int);
 extern void saSpearmanCorrelation(double [], double [], int, double *);
 
