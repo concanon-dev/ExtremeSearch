@@ -3,6 +3,18 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsFindMembership
+
+ Usage: xsFindMembership -c contextName -f fieldName [-s scope]
+    -c name of the context to search
+    -f name of the field with the value to lookup
+    -s the scope (private, app, global) to find the context (defaults to none)
+
+ Description:
+    For each event, lookup the value of a field and return the membership (CIX) values of each concept. A
+    column will be added to the event stream for each concept in the context.  The column name will be 
+    "context_concept".
 */
 #include <errno.h>
 #include <libgen.h>
@@ -117,7 +129,7 @@ int main(int argc, char* argv[])
     if (strcmp(fieldList[numFields-1], tempbuf))
     {
         int j;
-        // Write out each term set as a new header
+        // Write out each context_concept as a new header
         for(j=0; j<numConcepts; j++)
         {
             fprintf(stdout, ",\"%s_%s\"", contextPtr->name, contextPtr->concepts[j]->name);

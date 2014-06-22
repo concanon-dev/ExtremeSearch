@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsListConcepts
+
+ Usage: xsListConcepts -c context -s scope
+    -c the context containing the concepts
+    -s the cope containing the context (default is none)
+
+ Description:
+    List the concepts from a context in a scope (private, app or global)
 */
 #include <errno.h>
 #include <libgen.h>
@@ -55,7 +64,7 @@ int main(int argc, char* argv[])
             case 'c':
                 strcpy(contextString, optarg);
                 break;
-            case 'p':
+            case 's':
                 strcpy(scopeString, optarg);
                 break;
             case '?':
@@ -65,7 +74,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsListConcepts-F-103: Usage: xsListConcepts -c context -p scope");
+        fprintf(stderr, "xsListConcepts-F-103: Usage: xsListConcepts -c context -s scope");
         exit(EXIT_FAILURE);
     }
 
@@ -73,13 +82,13 @@ int main(int argc, char* argv[])
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsListConcepts-F-123: can't get header\n");
+        fprintf(stderr, "xsListConcepts-F-105: can't get header\n");
         exit(0);
     }
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsListConcepts-F-125: Can't read search results file %s\n",
+        fprintf(stderr, "xsListConcepts-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -88,7 +97,7 @@ int main(int argc, char* argv[])
     contextPtr = saSplunkContextLoad(contextString, saSplunkGetRoot(argv[0]), &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
-        fprintf(stderr, "xsListConcepts-F-111: can't open context %s\n", contextString);
+        fprintf(stderr, "xsListConcepts-F-109: can't open context %s\n", contextString);
         exit(0);
     }
     fputs("\"Concept\"\n", stdout);

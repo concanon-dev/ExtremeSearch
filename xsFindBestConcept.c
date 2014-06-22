@@ -3,6 +3,18 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsFindBestConcept
+
+ Usage: xsFindBestConcept -c contextName -f fieldName [-s scope]
+    -c name of the context to search
+    -f name of the field with the value to lookup
+    -s the scope (private, app, global) to find the context (defaults to none)
+
+ Description:
+    For each event, lookup the value of a field and return the most relevant (highest compatible) concept
+    in a context as well as the compatibility index (CIX).  The field "BestConcept" will contain the concept.
+    The field "BestCIX" will contain the associated compatibility index.
 */
 #include <errno.h>
 #include <libgen.h>

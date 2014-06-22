@@ -3,6 +3,17 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsGetCompatibility
+
+ Usage: xsGetCompatibility -c contextName -f fieldName [-s scope]
+    -c name of the context to search
+    -f name of the field with the value to lookup
+    -s the scope (private, app, global) to find the context (defaults to none)
+
+ Description:
+    For each event, generates the compatibility index (cix) of a field and writes 3 columns, the field, the
+    concept and the CIX.  This is a transform command.
 */
 #include <errno.h>
 #include <libgen.h>

@@ -35,7 +35,7 @@ if __name__ == '__main__':
         if not os.path.isfile(binary):
             raise Exception("xsListUOM-F-000: Can't find binary file " + binary)
 
-        subprocess.call([binary, '-c', context, '-p', scope ])
+        subprocess.call([binary, '-c', context, '-s', scope ])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

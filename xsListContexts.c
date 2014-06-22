@@ -1,3 +1,17 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+ Program: xsListContexts
+
+ Usage: xsListContexts [-s scope]
+    -s the scope containing the contexts to list (defaults to global)
+
+ Description:
+    List the contexts in a scope (private, app or global)
+*/
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +23,7 @@
 extern char *optarg;
 extern int optind, optopt;
 
-extern void saSplunkGetContextPath(char *, char *, int, char *, char *);
+extern bool saSplunkGetContextPath(char *, char *, int, char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
@@ -20,7 +34,7 @@ int main(int argc, char *argv[])
 {
     bool argError;
     int c;
-    int scope = -1;
+    int scope = SA_SPLUNK_SCOPE_GLOBAL;
     
     if (!isLicensed())
         exit(EXIT_FAILURE);
@@ -39,12 +53,10 @@ int main(int argc, char *argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsListContexts-F-103: Usage: xsListContexts -s scope");
+        fprintf(stderr, "xsListContexts-F-103: Usage: xsListContexts [-s scope]");
         exit(EXIT_FAILURE);
     }
 
-    if (scope == -1)
-        scope = saSplunkGetScope(NULL);
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -61,6 +73,10 @@ int main(int argc, char *argv[])
 
     char path[1024];
     char *root = saSplunkGetRoot(argv[0]);
-    saSplunkGetContextPath(path, root, scope, p->app, p->user);
+    if (saSplunkGetContextPath(path, root, scope, p->app, p->user) == false)
+    {
+        fprintf(stderr, "xsListContexts-F-109: failed to get context path\n");
+        exit(EXIT_FAILURE);
+    }
     saListDir(path, ".context", true, stdout, "context");
 }

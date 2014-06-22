@@ -1,3 +1,21 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+ Program: xsGetDistance
+
+ Usage: xsGetDistance [-d distanceField] -f fromFieldList [-g geoLiteCityFile] -t toFieldList
+    -d the name of the field to write out distance (defaults to "distance")
+    -f the "from" location field
+    -g the GeoLiteCity database file (defaults to .../apps/xtreme/lookups/GeoLiteCity-Location.csv)
+    -t the "to" location field
+
+ Description:
+    Determine the haversine distance in miles between two locations.  These locations can be specified by
+    city/region/country, lat/long or zip code.  The distance field is added to each event.
+*/
 #include <libgen.h>
 #include <math.h>
 #include <stdbool.h>

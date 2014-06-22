@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsListUOM
+
+ Usage: xsListUOM -c context [-s scope]
+    -c the name of the context
+    -s the scope containing the contexts to list (defaults to global)
+
+ Description:
+    List the Unit of Measurement (UOM) from a context in a scope (private, app or global)
 */
 #include <errno.h>
 #include <libgen.h>
@@ -47,7 +56,7 @@ int main(int argc, char* argv[])
     initSignalHandler(basename(argv[0]));
     argError = false;
     contextString[0] ='\0';
-    strcpy(scopeString, "none");
+    strcpy(scopeString, "global");
     while ((c = getopt(argc, argv, "c:p:")) != -1) 
     {
         switch(c)
@@ -56,7 +65,7 @@ int main(int argc, char* argv[])
             case 'c':
                 strcpy(contextString, optarg);
                 break;
-            case 'p':
+            case 's':
                 strcpy(scopeString, optarg);
                 break;
             case '?':
@@ -66,7 +75,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsListUOM-F-103: Usage: xsListUOM -c context -p scope");
+        fprintf(stderr, "xsListUOM-F-103: Usage: xsListUOM -c context [-s scope]");
         exit(EXIT_FAILURE);
     }
 
