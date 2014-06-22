@@ -1,5 +1,5 @@
 <dashboard>
-        <label>xsCloneContext</label>
+        <label>xsMergeContexts</label>
         <row>
                 <html>
                         <a class="btn btn-xtreme" href="xtreme_overview">
@@ -18,7 +18,7 @@
                         <p>
                                 <br />
                                 <span class="head4">Command: </span>
-                                <span class="cmd">xsCloneContext</span>
+                                <span class="cmd">xsMergeContexts</span>
                         </p>
                         <p>
                                 <span class="head4">Category: </span>
@@ -26,56 +26,78 @@
                         </p>
                         <p>
                                 <span class="head4">Description: </span>
-                                <span class="bodytext">Makes a full copy of a Context, including
-                                        all concepts.</span>
+                                <span class="bodytext">Merges two contexts into a new context.  The contexts
+                                must have the same number and name of concepts and be of the same context type.
+                                The merge occurs in a weighted fashion, meaning the number of events that
+                                contributed to each context is taken into account when deciding how to 
+                                create the new context.  If the context type is 'average_centered', the avg
+                                and stdev are weighted.  If the context type is 'domain', the min and max
+                                are weighted.  If the weight of both contexts are 0, then they are of equal 
+                                weight and the new context count is set to 0.  If only one context is set to 0,
+                                the contexts will be of equal weight and the new context count will be set to 0.
+                                </span>
                         </p>
                         <p>
                                 <span class="head4">Syntax: </span>
-                                <span class="bodytext">xsCloneContext oldContext [in scope] to
-                                        newContext [in scope]</span>
+                                <span class="bodytext">xsMergeContexts contextA [in scopeA] and
+                                        contextB [in scopeB] into contextC [in scopeC]</span>
                         </p>
                         <p>
                                 <br />
                                 <span class="head4">Example: </span>
-                                <span class="code">| xsCloneContext AirTime in global to myAirTime in private</span>
+                                <span class="code">| xsMergeContexts lastWeekTxn AND thisWeekTxn INTO
+                                        weeklyTxn in app</span>
                         </p>
                         <p>
-                                <span class="explanation">Clones the Context called 'AirTime' from
-                          the global scope to a context called myAirTime in the private scope.</span>
+                                <span class="explanation">Merges the lastWeekTxn context and thisweekTxn
+                                        context into weeklyTxn in the current app</span>
                         </p>
                         <p>
                                 <span class="head4">Parameters: </span>
-                                <span class="bodytext">oldContext, oldScope, newContext, newScope</span>
+                                <span class="bodytext">contextA, contextB, contextC, scopeA, scopeB, scopeC</span>
                         </p>
                         <p>
-                                <span class="para">oldContext</span>
+                                <span class="para">contextA</span>
                         </p>
                         <p>
-                                <span class="explanation">The name of the existing Context.</span>
+                                <span class="explanation">The name of the first Context to merge.</span>
                         </p>
                         <p>
-                                <span class="para">oldScope</span>
+                                <span class="para">contextB</span>
                         </p>
                         <p>
-                                <span class="explanation">The scope of the existing Context.</span>
+                                <span class="explanation">The name of the second Context to merge.</span>
                         </p>
                         <p>
-                                <span class="para">newContext</span>
+                                <span class="para">contextC</span>
                         </p>
                         <p>
-                                <span class="explanation">The name of the new Context.</span>
+                                <span class="explanation">The name of the merged Context.</span>
                         </p>
                         <p>
-                                <span class="para">newScope</span>
+                                <span class="para">scopeA</span>
                         </p>
                         <p>
-                                <span class="explanation">The scope of the new Context.</span>
+                                <span class="explanation">The scope of the first Context 
+                                (default is search the private/app/global scope)</span>
+                        </p>
+                        <p>
+                                <span class="para">scopeB</span>
+                        </p><p>
+                                <span class="explanation">The scope of the second Context
+                                (default is search the private/app/global scope).</span>
+                        </p>
+                        <p>
+                                <span class="para">scopeC</span>
+                        </p><p>
+                                <span class="explanation">The scope of the merged Context
+                                (default is private).</span>
                         </p>
                         <p>
                                 <span class="head4">Result: </span>
-                                <span class="bodytext">The context is cloned. See <a
-                                      href="xsRenameContext">xsRenameContext</a> for
-                                      details about renaming a context. </span>
+                                <span class="bodytext">The context is merged. See <a
+                                      href="xsUpdateContext">xsUpdateContext</a> for
+                                      details about updating a context. </span>
                         </p>
                         <p>
                                 <span class="head4">Learn more: </span>
@@ -85,7 +107,7 @@
                                           Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20131127.3</p>
+                        <p><br />Version 20140622.2</p>
                 </html>
         </row>
 </dashboard>
