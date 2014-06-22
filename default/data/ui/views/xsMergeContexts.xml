@@ -1,0 +1,91 @@
+<dashboard>
+        <label>xsCloneContext</label>
+        <row>
+                <html>
+                        <a class="btn btn-xtreme" href="xtreme_overview">
+                            <span class="icon-play"></span>  Overview
+                        </a>
+                        <a class="btn btn-xtreme" href="command_reference">
+                            <span class="icon-play"></span>  Command Reference
+                        </a>
+                        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=documentation" target="_blank">
+                            <span class="icon-play"></span>  Documentation
+                        </a>
+                        <a class="btn btn-xtreme" href="http://www.sciantaanalytics.com/?q=support_pages" target="_blank">
+                            <span class="icon-play"></span>  Support
+                        </a>
+			<!--<span class="insetrt">Scianta Analytics Help</span>-->
+                        <p>
+                                <br />
+                                <span class="head4">Command: </span>
+                                <span class="cmd">xsCloneContext</span>
+                        </p>
+                        <p>
+                                <span class="head4">Category: </span>
+                                <span class="bodytext">Conceptual Search</span>
+                        </p>
+                        <p>
+                                <span class="head4">Description: </span>
+                                <span class="bodytext">Makes a full copy of a Context, including
+                                        all concepts.</span>
+                        </p>
+                        <p>
+                                <span class="head4">Syntax: </span>
+                                <span class="bodytext">xsCloneContext oldContext [in scope] to
+                                        newContext [in scope]</span>
+                        </p>
+                        <p>
+                                <br />
+                                <span class="head4">Example: </span>
+                                <span class="code">| xsCloneContext AirTime in global to myAirTime in private</span>
+                        </p>
+                        <p>
+                                <span class="explanation">Clones the Context called 'AirTime' from
+                          the global scope to a context called myAirTime in the private scope.</span>
+                        </p>
+                        <p>
+                                <span class="head4">Parameters: </span>
+                                <span class="bodytext">oldContext, oldScope, newContext, newScope</span>
+                        </p>
+                        <p>
+                                <span class="para">oldContext</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The name of the existing Context.</span>
+                        </p>
+                        <p>
+                                <span class="para">oldScope</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The scope of the existing Context.</span>
+                        </p>
+                        <p>
+                                <span class="para">newContext</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The name of the new Context.</span>
+                        </p>
+                        <p>
+                                <span class="para">newScope</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The scope of the new Context.</span>
+                        </p>
+                        <p>
+                                <span class="head4">Result: </span>
+                                <span class="bodytext">The context is cloned. See <a
+                                      href="xsRenameContext">xsRenameContext</a> for
+                                      details about renaming a context. </span>
+                        </p>
+                        <p>
+                                <span class="head4">Learn more: </span>
+                                <span class="bodytext">
+                                        <a href="http://www.sciantaanalytics.com?q=es_documentation"
+                                          target="_blank">Scianta Analytics Extreme Search for
+                                          Splunk documentation</a>
+                                </span>
+                        </p>
+                        <p><br />Version 20131127.3</p>
+                </html>
+        </row>
+</dashboard>
