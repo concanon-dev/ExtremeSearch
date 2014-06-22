@@ -166,6 +166,11 @@
             <td>Conceptual Search</td>
             <td>List the Unit of Measurement (UOM) from a context in private, app or global.</td>
           </tr>
+          <tr>
+            <td> <a href="xsMergeContexts">xsMergeContexts</a> </td>
+            <td>Conceptual Search</td>
+            <td>Merge two contexts into a new context.</td>
+          </tr>
           <!--
           <tr>
             <td> <a href="xsOverlayContext">xsOverlayContext</a> </td>
