@@ -10,8 +10,8 @@ import splunk.Intersplunk as si
 if __name__ == '__main__':
 
     dest=''
-    destScope='0'
-    srcScope='0'
+    destScope=''
+    srcScope=''
     src=''    
     inKeyword = ''
     in2Keyword = ''

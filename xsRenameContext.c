@@ -3,6 +3,17 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+ Program: xsRenameContext
+
+ Usage: xsRenameContext -s srcContext [-0 srcScope] -d destContext [-1 destScope]
+    -0 scope of source context
+    -1 scope of destination context
+    -d destination context
+    -s source context
+
+ Description:
+    Renames a Context.  If a destScope is not specified, then the value defaults to the srcScope.
 */
 #include <errno.h>
 #include <libgen.h>
@@ -35,7 +46,7 @@ int main(int argc, char* argv[])
     char *root = saSplunkGetRoot(argv[0]);
     char srcContextName[256];
     int c;
-    int destScope = saSplunkGetScope(NULL);
+    int destScope = -1;
     int srcScope = saSplunkGetScope(NULL);
 
     if (!isLicensed())
@@ -68,7 +79,7 @@ int main(int argc, char* argv[])
     }
     if (argError)
     {
-        fprintf(stderr, "xsRenameContext-F-103: Usage: xsRenameContext -d destContextName -s contextName -0 srcSscope -1 destScope\n");
+        fprintf(stderr, "xsRenameContext-F-103: Usage: xsRenameContext -d destContextName -s contextName [-0 srcSscope] [-1 destScope]\n");
         exit(EXIT_FAILURE);
     }
 
@@ -81,7 +92,7 @@ int main(int argc, char* argv[])
 
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsRenameContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsRenameContext-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -89,13 +100,15 @@ int main(int argc, char* argv[])
     if(!saSplunkContextRename(srcContextName, root, srcScope, p->app, p->user,
                               destContextName, root, destScope, p->app, p->user))
     {
-        fprintf(stderr, "xsRenameContext-F-107: Can't rename context: %s\n", srcContextName);
+        fprintf(stderr, "xsRenameContext-F-109: Can't rename context: %s\n", srcContextName);
         exit(EXIT_FAILURE);
     }
+    if (destScope == -1)
+        destScope = srcScope;
     saContextTypePtr cPtr = saSplunkContextLoad(destContextName, root, &destScope, p->app, p->user);
     if (cPtr == NULL)
     {
-        fprintf(stderr, "xsRenameContext-F-109: Can't open context: %s\n", destContextName);
+        fprintf(stderr, "xsRenameContext-F-111: Can't open context: %s\n", destContextName);
         exit(EXIT_FAILURE);
     }
     cPtr->name = destContextName;

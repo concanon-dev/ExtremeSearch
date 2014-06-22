@@ -32,7 +32,8 @@
                                 <span
                                         class="head4">Description: </span>
                                 <span
-                                        class="bodytext">Renames a Context.</span>
+                                        class="bodytext">Renames a Context.  If the destination scope is not
+                                        defined, then it will be set to the value of the source scope.</span>
                         </p>
                         <p>
                                 <span
