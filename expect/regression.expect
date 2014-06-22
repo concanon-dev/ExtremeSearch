@@ -79,9 +79,9 @@ createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xsmall global 0 5 pi "TES
 createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xlarge global 16 20 pi "TESTUD1*small*medium*large*xsmall*xlarge"
 cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall TESTUD2 app xsmall "Concept cloned successfully"
 cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge TESTUD2 app xlarge "Concept cloned successfully"
-deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall "*"
+deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall "Concept deleted successfully"
 sleep 1
-deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge "*"
+deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge "Concept deleted successfully"
 sleep 1
 listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD1 global "Concept*small*medium*large"
 listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD2 app "Concept*small*medium*large*xsmall*xlarge"
@@ -136,22 +136,23 @@ deleteContext $env(SPLUNK_HOME) $login $passwd TESTR3 private "Context TESTR3 su
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR4 global "Context TESTR4 successfully deleted"
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR5 app "Context TESTR5 successfully deleted"
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR6 private "Context TESTR6 successfully deleted"
-listContexts $env(SPLUNK_HOME) $login $passwd global "*"
+listContexts $env(SPLUNK_HOME) $login $passwd global "context*-------"
 sleep 1
-listContexts $env(SPLUNK_HOME) $login $passwd app "*"
+listContexts $env(SPLUNK_HOME) $login $passwd app "context*-------"
 sleep 1
-listContexts $env(SPLUNK_HOME) $login $passwd private "*"
+listContexts $env(SPLUNK_HOME) $login $passwd private "context*-------"
 sleep 1
 
 # TEST SUITE: Context Expected Failures
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "xsDeleteContext-F-107: Can't delete context: TEST1"
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "xsDeleteContext-F-107: Can't delete context: TEST2"
-deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "xsDeleteContext-F-107: Can't delete context: TEST3"
+deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "xsDeleteContext-F-109: Can't delete context: TEST1"
+deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "xsDeleteContext-F-109: Can't delete context: TEST2"
+deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "xsDeleteContext-F-109: Can't delete context: TEST3"
 
 createContextDomain $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
 createContextAverageCentered $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
 createUDContextDomain $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
 createUDContextAverageCentered $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
 
+send_user "\n\nREGRESSION TESTS COMPLETED\n"
 
 close

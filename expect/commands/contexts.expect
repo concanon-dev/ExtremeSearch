@@ -1,6 +1,6 @@
 
 proc createContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd -output table \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope $type) - TIMEOUT" }
@@ -9,7 +9,7 @@ proc createContext { splunk_home login passwd index name scope terms uom type mi
 }
 
 proc createContextDomain { splunk_home login passwd index name scope terms uom type min max count response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope domain) - TIMEOUT" }
@@ -18,7 +18,7 @@ proc createContextDomain { splunk_home login passwd index name scope terms uom t
 }
 
 proc createContextAverageCentered { splunk_home login passwd index name scope terms uom type avg stdev response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope average_centered) - TIMEOUT" }
@@ -28,7 +28,7 @@ proc createContextAverageCentered { splunk_home login passwd index name scope te
 
 proc createUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
 
-    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope $type) - TIMEOUT" }
@@ -38,7 +38,7 @@ proc createUDContext { splunk_home login passwd name scope terms uom type min ma
 
 proc createUDContextDomain { splunk_home login passwd name scope terms uom type min max count response} {
 
-    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope domain) - TIMEOUT" }
@@ -48,7 +48,7 @@ proc createUDContextDomain { splunk_home login passwd name scope terms uom type 
 
 proc createUDContextAverageCentered { splunk_home login passwd name scope terms uom type avg stdev response} {
 
-    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope average_centered) - TIMEOUT" }
@@ -57,7 +57,7 @@ proc createUDContextAverageCentered { splunk_home login passwd name scope terms 
 }
 
 proc updateContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsUpdateContext ($name $scope $type) - TIMEOUT" }
@@ -67,7 +67,7 @@ proc updateContext { splunk_home login passwd index name scope terms uom type mi
 
 proc updateUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
 
-    send "$splunk_home/bin/splunk search '| xsUpdateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsUpdateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsUpdateUDContext ($name $scope $type) - TIMEOUT" }
@@ -108,7 +108,7 @@ proc renameContext { splunk_home login passwd incontext inscope tocontext toscop
 
 proc displayContext { splunk_home login passwd context scope response} {
 
-    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsDisplayContext ($context $scope) - TIMEOUT" }

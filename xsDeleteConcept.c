@@ -129,6 +129,6 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsDeleteConcept-F-117: Can't save context %s\n", contextPtr->name);
         exit(0);
     }
-    fprintf(stderr, "Context deleted successfully\n");
+    fprintf(stderr, "Concept deleted successfully\n");
     exit(0);
 }
