@@ -75,6 +75,16 @@ proc updateUDContext { splunk_home login passwd name scope terms uom type min ma
     }
 }
 
+proc mergeContexts { splunk_home login passwd context1 scope1 context2 scope2 context3 scope3 response} {
+
+    send "$splunk_home/bin/splunk search '| xsMergeContexts $context1 IN $scope1 AND $context2 IN $scope2 INTO $context3 IN $scope3' -maxout 1 header true -auth $login:$passwd \r"
+
+    expect {
+        timeout { send_user "\nTEST FAIL - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3) - TIMEOUT" }
+        "$response" { send_user "\nTEST PASS - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3)" }
+    }
+}
+
 proc deleteContext { splunk_home login passwd name scope response} {
 
     send "$splunk_home/bin/splunk search '| xsDeleteContext $name IN $scope' -auth $login:$passwd \r"

@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-set timeout 60
+set timeout 240
 log_user 0
 spawn bash
 
@@ -31,14 +31,19 @@ source commands/concepts.expect
 
 # TEST SUITE: Create Data Driven Context Tests
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST1*tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST2*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 6 26 0 0 0 "TEST2*tiny*short*medium*tall*gigantic"
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST3*tiny*short*medium*tall*gigantic"
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST4*tiny*short*medium*tall*gigantic"
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST5*tiny*short*medium*tall*gigantic"
-createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST6*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 2 "TEST6*tiny*short*medium*tall*gigantic"
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
+
+# TEST SUITE: Merge Context Tests
+#mergeContexts $env(SPLUNK_HOME) $login $passwd TEST1 global TEST2 app TESTM12 global "TESTM12*tiny*short*medium*tall*gigantic"
+#mergeContexts $env(SPLUNK_HOME) $login $passwd TEST5 global TEST6 app TESTM56  global "TESTM56*tiny*short*medium*tall*gigantic"
+#listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTM12*TESTM56"
 
 
 # TEST SUITE: Clone Context Tests
