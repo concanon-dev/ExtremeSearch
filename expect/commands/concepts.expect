@@ -45,28 +45,31 @@ proc displayConcept { splunk_home login passwd context scope concept response} {
 }
 
 proc findBestConcept { splunk_home login passwd index context scope field response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsFindBestConcept $field IN $context IN $scope | stats count' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsFindBestConcept $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table  \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - ERROR" }
         "$response" { send_user "\nTEST PASS - xsFindBestConcept ($context $scope $field)" }
     }
 }
 
 proc findMembership { splunk_home login passwd index context scope field response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsFindMembership $field IN $context IN $scope | stats count' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsFindMembership $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - ERROR" }
         "$response" { send_user "\nTEST PASS - xsFindMembership ($context $scope $field)" }
     }
 }
 
 proc getCompatibility { splunk_home login passwd index context scope field response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsGetCompatibility $field IN $context IN $scope | stats count' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsGetCompatibility $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - ERROR" }
         "$response" { send_user "\nTEST PASS - xsGetCompatibility ($context $scope $field)" }
     }
 }

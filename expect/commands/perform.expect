@@ -1,9 +1,10 @@
 
 proc performAutoRegression { splunk_home login passwd index file field byfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPerformAutoRegression $field BY $byfield OUTPUT $file' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformAutoRegression $field BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPerformAutoRegression - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPerformAutoRegression - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformAutoRegression - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPerformAutoRegression" }
     }
@@ -11,20 +12,22 @@ proc performAutoRegression { splunk_home login passwd index file field byfield r
 
 
 proc performLinearRegression { splunk_home login passwd index file field overfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPerformLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPerformLinearRegression - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPerformLinearRegression - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformLinearRegression - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPerformLinearRegression" }
     }
 }
 
 proc performNonLinearRegression { splunk_home login passwd index file field overfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPerformNonLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformNonLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPerformNonLinearRegression - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformNonLinearRegression - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPerformNonLinearRegression" }
     }
@@ -32,10 +35,11 @@ proc performNonLinearRegression { splunk_home login passwd index file field over
 
 
 proc performCorrelation { splunk_home login passwd index field withfield byfield file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPerformCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPerformCorrelation - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPerformCorrelation - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformCorrelation - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPerformCorrelation" }
     }
@@ -43,10 +47,11 @@ proc performCorrelation { splunk_home login passwd index field withfield byfield
 
 
 proc performSpearmanCorrelation { splunk_home login passwd index field withfield byfield file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPerformSpearmanCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPerformSpearmanCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPerformSpearmanCorrelation" }
     }
@@ -54,20 +59,22 @@ proc performSpearmanCorrelation { splunk_home login passwd index field withfield
 
 
 proc discoverTrend { splunk_home login passwd index field overfield byfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd -maxout 1 -header true -output table \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsDiscoverTrend($field OVER $overfield BY $byfield)" }
     }
 }
 
 proc predict { splunk_home login passwd index quantity field whenfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsPredict $field WHEN $whenfield IS $quantity' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search 'index=$index | xsPredict $field WHEN $whenfield IS $quantity' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - TIMEOUT" }
+        "ERROR" { send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - ERROR" }
         "Getinfo probe failed" { send_user "\nTEST FAIL - xsPredict($field WHEN $whenfield IS $quantity - Getinfo probe" }
         "$response" { send_user "\nTEST PASS - xsPredit($field WHEN $whenfield IS $quantity)" }
     }

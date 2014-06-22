@@ -42,35 +42,23 @@ listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
 
 
 # TEST SUITE: Clone Context Tests
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST1 global TESTC1 private "*"
-sleep 1
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST2 app TESTC2 private "*"
-sleep 1
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST3 private TESTC3 global "*"
-sleep 1
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST4 global TESTC4 app "*"
-sleep 1
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST5 app TESTC5 global "*"
-sleep 1
-cloneContext $env(SPLUNK_HOME) $login $passwd TEST6 private TESTC6 app "*"
-sleep 1
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST1 global TESTC1 private "Context cloned successfully"
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST2 app TESTC2 private "Context cloned successfully"
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST3 private TESTC3 global "Context cloned successfully"
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST4 global TESTC4 app "Context cloned successfully"
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST5 app TESTC5 global "Context cloned successfully"
+cloneContext $env(SPLUNK_HOME) $login $passwd TEST6 private TESTC6 app "Context cloned successfully"
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTC3*TESTC5"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTC4*TESTC6"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTC1*TESTC2"
 
 # TEST SUITE: Rename Context Tests
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC1 private TESTR1 global "Context TESTC1 successfully renamed to TESTR1"
-sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC2 private TESTR2 app "Context TESTC2 successfully renamed to TESTR2"
-sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC3 global TESTR3 private "Context TESTC3 successfully renamed to TESTR3"
-sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC4 app TESTR4 global "Context TESTC4 successfully renamed to TESTR4"
-sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC5 global TESTR5 app "Context TESTC5 successfully renamed to TESTR5"
-sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC6 app TESTR6 private "Context TESTC6 successfully renamed to TESTR6"
-sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTR1*TESTR4"
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTR2*TESTR5"
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTR3*TESTR6"
@@ -89,10 +77,8 @@ listContexts $env(SPLUNK_HOME) $login $passwd private "context*TESTUD3*TESTUD6"
 # TEST SUITE: Create/Clone/Delete Concepts Tests
 createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xsmall global 0 5 pi "TESTUD1*small*medium*large*xsmall"
 createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xlarge global 16 20 pi "TESTUD1*small*medium*large*xsmall*xlarge"
-cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall TESTUD2 app xsmall "*"
-sleep 1
-cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge TESTUD2 app xlarge "*"
-sleep 1
+cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall TESTUD2 app xsmall "Concept cloned successfully"
+cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge TESTUD2 app xlarge "Concept cloned successfully"
 deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall "*"
 sleep 1
 deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge "*"

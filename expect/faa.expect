@@ -40,33 +40,33 @@ createContext $env(SPLUNK_HOME) $login $passwd faa ArrDelay private "unusual,ear
 createContext $env(SPLUNK_HOME) $login $passwd faa ArrDelayTest private "unusual,early,ontime,late,unacceptable" minutes domain -60 60 0 0 0 "ArrDelayTest*unusual*early*ontime*late*unacceptable"
 
 # Basic Where Tests
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime minimal "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime short "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime medium "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime long "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime extended "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay unusual "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay early "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay ontime "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay late "count*-----"
-where_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay unacceptable "count*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime minimal "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime short "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime medium "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime long "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime extended "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay unusual "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay early "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay ontime "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay late "ActualElapsedTime*-----"
+where_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay unacceptable "ActualElapsedTime*-----"
 
 # Other Where Tests
-where_cmd $env(SPLUNK_HOME) $login $passwd faa "ArrTime in ArrTimeTest IS very short | stats count" "count*-----"
-where_cmd $env(SPLUNK_HOME) $login $passwd faa "ArrDelay in ArrDelayTest IS very early | stats count" "count*-----"
+where_cmd $env(SPLUNK_HOME) $login $passwd faa "ArrTime in ArrTimeTest IS very short" "ActualElapsedTime*-----"
+where_cmd $env(SPLUNK_HOME) $login $passwd faa "ArrDelay in ArrDelayTest IS very early" "ActualElapsedTime*-----"
 
 # Basic DisplayWhere Tests
-displayWhere_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrTime short "count*-----"
-displayWhere_basic_count $env(SPLUNK_HOME) $login $passwd faa ArrDelay early "count*-----"
+displayWhere_basic $env(SPLUNK_HOME) $login $passwd faa ArrTime short "set*index*cix*-----"
+displayWhere_basic $env(SPLUNK_HOME) $login $passwd faa ArrDelay early "set*index*cix*-----"
 
 # FindBestConcept Tests
-findBestConcept $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "count*-----"
+findBestConcept $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "ActualElapsedTime*-----"
 
 # FindMembership Tests
-findMembership $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "count*-----"
+findMembership $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "ActualElapsedTime*-----"
 
 # GetCompatability Tests
-getCompatibility $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "count*-----"
+getCompatibility $env(SPLUNK_HOME) $login $passwd faa ArrTimeTest private ArrTime "ArrTime*Concept*CIX*-----"
 
 # DiscoverTrend Commands
 discoverTrend $env(SPLUNK_HOME) $login $passwd faa ArrDelay _time Carrier "x*y*bf*bv*concept*trend"
@@ -94,16 +94,16 @@ performSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd faa ArrTime ArrDelay
 
 # Apply Commands
 #set timeout 240
-applyAutoRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_By_Carrier_Auto "count*-----"
-applyLinearRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_Over_ArrDelay_Linear "count*-----"
-applyNonLinearRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_Over_ArrDelay_NonLinear "count*-----"
+applyAutoRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_By_Carrier_Auto "ArrTime*-----"
+applyLinearRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_Over_ArrDelay_Linear "ArrTime*-----"
+applyNonLinearRegression $env(SPLUNK_HOME) $login $passwd faa FAA_ArrTime_Over_ArrDelay_NonLinear "ArrTime*-----"
 
 # Aggregate Commands
-aggregateAutoRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_By_Carrier_Auto.csv FAA_ArrTime_By_DayOfWeek.csv FAA_Aggregate_Regression_Auto "count*-----"
-aggregateLinearRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_Over_ArrDelay_Linear.csv FAA_ArrTime_Over_ArrDelay_Linear.csv FAA_Aggregate_Regression_Linear "count*-----"
-aggregateNonLinearRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_Over_ArrDelay_NonLinear.csv FAA_ArrTime_Over_ArrDelay_NonLinear.csv FAA_Aggregate_Regression_NonLinear "count*-----"
-aggregateCorrelation $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_With_ArrDelay_By_DayOfWeek_Correlation.csv FAA_ArrTime_With_ArrDelay_By_Carrier_Correlation.csv FAA_Aggregate_Correlation "count*-----"
-aggregateSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_With_ArrDelay_By_DayOfWeek_SpearmanCorrelation.csv FAA_ArrTime_With_ArrDelay_By_Carrier_SpearmanCorrelation.csv FAA_Aggregate_SpearmanCorrelation "count*-----"
+aggregateAutoRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_By_Carrier_Auto.csv FAA_ArrTime_By_DayOfWeek.csv FAA_Aggregate_Regression_Auto "x*bf*bv*numRows*coef0*coef1*coef2"
+aggregateLinearRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_Over_ArrDelay_Linear.csv FAA_ArrTime_Over_ArrDelay_Linear.csv FAA_Aggregate_Regression_Linear "x*y*bf*bv*numRows*slope*intercept*errA*errB*R"
+aggregateNonLinearRegression $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_Over_ArrDelay_NonLinear.csv FAA_ArrTime_Over_ArrDelay_NonLinear.csv FAA_Aggregate_Regression_NonLinear "x*bf*bv*numRows*coef0*coef1*coef2"
+aggregateCorrelation $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_With_ArrDelay_By_DayOfWeek_Correlation.csv FAA_ArrTime_With_ArrDelay_By_Carrier_Correlation.csv FAA_Aggregate_Correlation "x*bf*bv*numRows*R"
+aggregateSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd FAA_ArrTime_With_ArrDelay_By_DayOfWeek_SpearmanCorrelation.csv FAA_ArrTime_With_ArrDelay_By_Carrier_SpearmanCorrelation.csv FAA_Aggregate_SpearmanCorrelation "x*bf*bv*numRows*R"
 
 send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
 
