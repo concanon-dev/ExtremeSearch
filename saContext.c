@@ -212,9 +212,27 @@ saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *
         if (strcmp(c1->concepts[i]->name, c2->concepts[i]->name))
             return(NULL);
 
-    // get the weights
-    int c1Count = c1->count != 0 ? c1->count : 1;
-    int c2Count = c2->count != 0 ? c2->count : 1;
+    // Get the weights
+    // If the counts are both 0, then make them both 1
+    // If either count is 0, make them both equal to the non-zero amount
+    int c1Count = c1->count;
+    int c2Count = c2->count;
+    int c3Count = c1->count + c2Count;
+    if (c1Count == 0 && c2Count == 0)
+    {
+        c1Count = 1;
+        c2Count = 1;
+    }
+    else if (c1Count == 0)
+    {
+        c1Count = c2Count;
+        c3Count = 0;
+    }
+    else if (c2Count == 0)
+    {
+        c2Count = c1Count;
+        c3Count = 0;
+    }
     double c1Weight = (double)c1Count/(double)(c1Count + c2Count);
     double c2Weight = (double)c2Count/(double)(c1Count + c2Count);
 
@@ -243,17 +261,15 @@ saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *
         double avg = c1->avg * c1Weight + c2->avg * c2Weight;
         double sdev = c1->sdev * c1Weight + c2->sdev * c2Weight;
         return(saContextCreateAvgCentered(c3Name, avg, sdev, conceptNames, c1->numConcepts,
-                                          shapeStr, endShapeStr, c1->count + c2->count,
-                                          c1->notes, c1->uom));
+                                          shapeStr, endShapeStr, c3Count, c1->notes, c1->uom));
     }
     else if (!strcmp(c1->type, SA_CONTEXT_TYPE_DOMAIN))
     {
         // adjust the fields by weight
         double domainMin = c1->domainMin * c1Weight + c2->domainMin * c2Weight;
         double domainMax = c1->domainMax * c1Weight + c2->domainMax * c2Weight;
-        return(saContextCreateDomain(c3Name, domainMin, domainMax, conceptNames, 
-                                     c1->numConcepts, shapeStr, endShapeStr, 
-                                     c1->count + c2->count, c1->notes, c1->uom));
+        return(saContextCreateDomain(c3Name, domainMin, domainMax, conceptNames, c1->numConcepts, 
+                                     shapeStr, endShapeStr, c3Count, c1->notes, c1->uom));
     }
     return(NULL);
 }

@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     argError = false;
     contextString[0] ='\0';
     strcpy(scopeString, "global");
-    while ((c = getopt(argc, argv, "c:p:")) != -1) 
+    while ((c = getopt(argc, argv, "c:s:")) != -1) 
     {
         switch(c)
         {
