@@ -118,7 +118,7 @@ proc renameContext { splunk_home login passwd incontext inscope tocontext toscop
 
 proc displayContext { splunk_home login passwd context scope response} {
 
-    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -maxout 1 header true -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -maxout 1 -header true -output table -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsDisplayContext ($context $scope) - TIMEOUT" }
@@ -128,7 +128,7 @@ proc displayContext { splunk_home login passwd context scope response} {
 
 proc listContexts { splunk_home login passwd scope response} {
 
-    send "$splunk_home/bin/splunk search '| xsListContexts $scope | sort context' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsListContexts $scope | sort context' -header true -output table -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsListContexts ($scope) - TIMEOUT" }
@@ -138,7 +138,7 @@ proc listContexts { splunk_home login passwd scope response} {
 
 proc listUOM { splunk_home login passwd context scope response} {
 
-    send "$splunk_home/bin/splunk search '| xsListUOM FROM $context IN $scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsListUOM FROM $context IN $scope' -header true -output table -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsListUOM ($context $scope) - TIMEOUT" }

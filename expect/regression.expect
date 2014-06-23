@@ -31,14 +31,23 @@ source commands/concepts.expect
 
 # TEST SUITE: Create Data Driven Context Tests
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST1*tiny*short*medium*tall*gigantic"
+sleep 1
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST2 app "tiny,short,medium,tall,gigantic" inches domain 6 26 0 0 0 "TEST2*tiny*short*medium*tall*gigantic"
+sleep 1
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST3 private "tiny,short,medium,tall,gigantic" inches domain 0 20 0 0 0 "TEST3*tiny*short*medium*tall*gigantic"
+sleep 1
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST4*tiny*short*medium*tall*gigantic"
+sleep 1
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST5 app "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 1 "TEST5*tiny*short*medium*tall*gigantic"
+sleep 1
 createContext $env(SPLUNK_HOME) $login $passwd demographics TEST6 private "tiny,short,medium,tall,gigantic" inches average_centered 0 20 0 0 2 "TEST6*tiny*short*medium*tall*gigantic"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
+sleep 1
 
 # TEST SUITE: Merge Context Tests
 #mergeContexts $env(SPLUNK_HOME) $login $passwd TEST1 global TEST2 app TESTM12 global "TESTM12*tiny*short*medium*tall*gigantic"
@@ -48,114 +57,189 @@ listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
 
 # TEST SUITE: Clone Context Tests
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST1 global TESTC1 private "Context cloned successfully"
+sleep 1
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST2 app TESTC2 private "Context cloned successfully"
+sleep 1
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST3 private TESTC3 global "Context cloned successfully"
+sleep 1
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST4 global TESTC4 app "Context cloned successfully"
+sleep 1
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST5 app TESTC5 global "Context cloned successfully"
+sleep 1
 cloneContext $env(SPLUNK_HOME) $login $passwd TEST6 private TESTC6 app "Context cloned successfully"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTC3*TESTC5"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTC4*TESTC6"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTC1*TESTC2"
+sleep 1
 
 # TEST SUITE: Rename Context Tests
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC1 private TESTR1 global "Context TESTC1 successfully renamed to TESTR1"
+sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC2 private TESTR2 app "Context TESTC2 successfully renamed to TESTR2"
+sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC3 global TESTR3 private "Context TESTC3 successfully renamed to TESTR3"
+sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC4 app TESTR4 global "Context TESTC4 successfully renamed to TESTR4"
+sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC5 global TESTR5 app "Context TESTC5 successfully renamed to TESTR5"
+sleep 1
 renameContext $env(SPLUNK_HOME) $login $passwd TESTC6 app TESTR6 private "Context TESTC6 successfully renamed to TESTR6"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTR1*TESTR4"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TEST2*TEST5*TESTR2*TESTR5"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6*TESTR3*TESTR6"
+sleep 1
 
 # TEST SUITE: Create User Defined Context Tests
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 20 0 0 0 "TESTUD1*small*medium*large"
+sleep 1
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "small,medium,large" size domain 0 20 0 0 0 "TESTUD2*small*medium*large"
+sleep 1
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD3 private "small,medium,large" size domain 0 20 0 0 0 "TESTUD3*small*medium*large"
+sleep 1
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD4 global "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD4*small*medium*large"
+sleep 1
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD5 app "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD5*small*medium*large"
+sleep 1
 createUDContext $env(SPLUNK_HOME) $login $passwd TESTUD6 private "small,medium,large" size average_centered 0 20 0 0 1 "TESTUD6*small*medium*large"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd global "context*TESTUD1*TESTUD4"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd app "context*TESTUD2*TESTUD5"
+sleep 1
 listContexts $env(SPLUNK_HOME) $login $passwd private "context*TESTUD3*TESTUD6"
+sleep 1
 
 # TEST SUITE: Create/Clone/Delete Concepts Tests
 createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xsmall global 0 5 pi "TESTUD1*small*medium*large*xsmall"
+sleep 1
 createConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 xlarge global 16 20 pi "TESTUD1*small*medium*large*xsmall*xlarge"
+sleep 1
 cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall TESTUD2 app xsmall "Concept cloned successfully"
+sleep 1
 cloneConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge TESTUD2 app xlarge "Concept cloned successfully"
+sleep 1
 deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xsmall "Concept deleted successfully"
 sleep 1
 deleteConcept $env(SPLUNK_HOME) $login $passwd TESTUD1 global xlarge "Concept deleted successfully"
 sleep 1
 listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD1 global "Concept*small*medium*large"
+sleep 1
 listConcepts $env(SPLUNK_HOME) $login $passwd TESTUD2 app "Concept*small*medium*large*xsmall*xlarge"
+sleep 1
 displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xsmall "domain*xsmall"
+sleep 1
 displayConcept $env(SPLUNK_HOME) $login $passwd TESTUD2 app xlarge "domain*xlarge"
+sleep 1
 
 # TEST SUITE: update Context Tests
 updateContext $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "tiny*short*medium*tall*gigantic"
+sleep 1
 updateUDContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "small,medium,large" size domain 0 18 0 0 0 "small*medium*large"
+sleep 1
 
 
 # TEST SUITE: Display Context Tests
 displayContext $env(SPLUNK_HOME) $login $passwd TEST1 global "TEST1*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TEST2 app "TEST2*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TEST3 private "TEST3*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TEST4 global "TEST4*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TEST5 app "TEST5*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TEST6 private "TEST6*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "TESTUD1*small*medium*large"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "TESTUD2*small*medium*large*xsmall*xlarge"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD3 private "TESTUD3*small*medium*large"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD4 global "TESTUD4*small*medium*large"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD5 app "TESTUD5*small*medium*large"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTUD6 private "TESTUD6*small*medium*large"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR1 global "TESTR1*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR2 app "TESTR2*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR3 private "TESTR3*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR4 global "TESTR4*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR5 app "TESTR5*tiny*short*medium*tall*gigantic"
+sleep 1
 displayContext $env(SPLUNK_HOME) $login $passwd TESTR6 private "TESTR6*tiny*short*medium*tall*gigantic"
+sleep 1
 
 # TEST SUITE: List UOM
 listUOM $env(SPLUNK_HOME) $login $passwd TEST1 global "UOM*inches"
+sleep 1
 listUOM $env(SPLUNK_HOME) $login $passwd TESTUD1 global "UOM*size"
+sleep 1
 
 # TEST SUITE: Delete All Context
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "Context TEST1 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "Context TEST2 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "Context TEST3 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST4 global "Context TEST4 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST5 app "Context TEST5 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST6 private "Context TEST6 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD1 global "Context TESTUD1 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD2 app "Context TESTUD2 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD3 private "Context TESTUD3 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD4 global "Context TESTUD4 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD5 app "Context TESTUD5 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTUD6 private "Context TESTUD6 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR1 global "Context TESTR1 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR2 app "Context TESTR2 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR3 private "Context TESTR3 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR4 global "Context TESTR4 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR5 app "Context TESTR5 successfully deleted"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TESTR6 private "Context TESTR6 successfully deleted"
-listContexts $env(SPLUNK_HOME) $login $passwd global "context*-------"
-sleep 1
-listContexts $env(SPLUNK_HOME) $login $passwd app "context*-------"
-sleep 1
-listContexts $env(SPLUNK_HOME) $login $passwd private "context*-------"
 sleep 1
 
 # TEST SUITE: Context Expected Failures
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST1 global "xsDeleteContext-F-109: Can't delete context: TEST1"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST2 app "xsDeleteContext-F-109: Can't delete context: TEST2"
+sleep 1
 deleteContext $env(SPLUNK_HOME) $login $passwd TEST3 private "xsDeleteContext-F-109: Can't delete context: TEST3"
+sleep 1
 
 createContextDomain $env(SPLUNK_HOME) $login $passwd demographics TEST1 global "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
+sleep 1
 createContextAverageCentered $env(SPLUNK_HOME) $login $passwd demographics TEST4 global "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
+sleep 1
 createUDContextDomain $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
+sleep 1
 createUDContextAverageCentered $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
 
 send_user "\n\nREGRESSION TESTS COMPLETED\n"

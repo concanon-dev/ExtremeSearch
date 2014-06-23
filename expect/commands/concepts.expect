@@ -27,7 +27,7 @@ proc deleteConcept { splunk_home login passwd context scope concept response} {
 }
 
 proc listConcepts { splunk_home login passwd context scope response} {
-    send "$splunk_home/bin/splunk search '| xsListConcepts FROM $context in $scope' -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsListConcepts FROM $context in $scope' -header true -output table -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsListConcepts ($context $scope) - TIMEOUT" }
@@ -36,7 +36,7 @@ proc listConcepts { splunk_home login passwd context scope response} {
 }
 
 proc displayConcept { splunk_home login passwd context scope concept response} {
-    send "$splunk_home/bin/splunk search '| xsDisplayConcept $concept FROM $context in $scope' -maxout 1 -header true -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsDisplayConcept $concept FROM $context in $scope' -maxout 1 -header true -output table -auth $login:$passwd \r"
 
     expect {
         timeout { send_user "\nTEST FAIL - xsDisplayConcept ($context $scope $concept) - TIMEOUT" }
