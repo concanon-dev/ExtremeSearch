@@ -20,7 +20,6 @@
 extern char *saCSVExtractField(char *);
 extern saContextTypePtr saContextLoad(FILE *);
 extern int saContextSave(FILE *, saContextTypePtr);
-extern FILE *saOpenFile(char *, char *);
 
 bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *user)
 {
@@ -167,7 +166,6 @@ bool saSplunkContextSave(saContextTypePtr contextPtr, char *root, int scope, cha
 
     sprintf(file, "/%s.context", contextPtr->name);
     strcat(path, file);
-    // FILE *f = saOpenFile(path, "w");
     FILE *f = fopen(path, "w");
     if (f == NULL)
         return(false);
