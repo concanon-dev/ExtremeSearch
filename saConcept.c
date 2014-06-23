@@ -3,6 +3,23 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saConcept
+
+Description:
+    All of the functions necessary to manipulate the "concept" data structure.
+
+Functions:
+    saConceptCopy
+    saConceptCreateCurveDecrease
+    saConceptCreateCurveIncrease
+    saConceptCreateLinearDecrease
+    saConceptCreateLinearIncrease
+    saConceptCreatePI
+    saConceptCreateTrapezoid
+    saConceptCreateTriangle
+    saConceptInit
+    saConceptLookup
 */
 #include <math.h>
 #include <stddef.h>

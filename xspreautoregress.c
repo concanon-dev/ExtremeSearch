@@ -57,7 +57,7 @@ extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
-extern double *autoRegression(double *, int, int, int);
+extern double *saAutoRegressionRegress(double *, int, int, int);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -303,7 +303,7 @@ int main(int argc, char* argv[])
                             bValues[j]);
                 else
                     fprintf(stdout, "%d,%s,%s,%s", numTempDoubles, xList[i], bList[i], bValues[j]);
-                double *coef = autoRegression(tempXDoubles, numTempDoubles, numCoefs, mode);
+                double *coef = saAutoRegressionRegress(tempXDoubles, numTempDoubles, numCoefs, mode);
                 if (totalRows[i] > 0 && coef != NULL)
                 {
                     fprintf(stdout, ",%.10f,%.10f,%.10f", coef[0], coef[1], coef[2]);
@@ -324,7 +324,7 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            double *coef = autoRegression(xAxis[i], totalRows[i], numCoefs, mode);
+            double *coef = saAutoRegressionRegress(xAxis[i], totalRows[i], numCoefs, mode);
             if (strlen(fieldY) != 0)
                 fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
             else

@@ -3,6 +3,19 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saContextCreate
+
+Description:
+    All of the functions necessary to create concepts held in the "context" data structure.
+
+Functions:
+    External:
+    saContextCreateAvgCentered
+    saContextCreateConcept
+    saContextCreateConcepts
+    saContextCreateDomain
+    saContextRecreateConcepts
 */
 #include <math.h>
 #include <stdlib.h>

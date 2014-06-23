@@ -3,6 +3,14 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: insertUniqueValue
+
+Description: insert a unique value in an array (used by xspre* commands)
+
+Functions:
+    insertUniqueValue
+
 */
 #include <stdbool.h>
 #include <stdlib.h>

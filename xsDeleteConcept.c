@@ -37,8 +37,6 @@ extern int saSplunkGetScope(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
-FILE *saOpenFile(char *, char *);
-
 int main(int argc, char* argv[]) 
 {
     saContextTypePtr contextPtr;

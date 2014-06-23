@@ -3,6 +3,20 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saAutoRegression
+
+Description:
+    Contains all of the functions necessary to perform a least squares and maxentropy
+
+Functions:
+    External:
+    saAutoRegressionRegress 
+
+    Internal:
+    calculateLeastSquares
+    performLeastSquare
+    performMaxEntropy
 */
 #include <math.h>
 #include <stdbool.h>
@@ -10,7 +24,7 @@
 #include <stdlib.h>
 #include "saAutoRegression.h"
 
-int performLeastSquares(double **mat, double *vec, unsigned int n)
+int calculateLeastSquares(double **mat, double *vec, unsigned int n)
 {
     int i,j,k,maxi;
     double vswap,*mswap,*hvec,max,h,pivot,q;
@@ -110,7 +124,7 @@ int performMaxEntropy(double *inputseries, int length, int degree, double **ar, 
     return(0);
 }
 
-int ARLeastSquare(double *inputseries, int length, int degree, double *coefficients)
+int performLeastSquare(double *inputseries, int length, int degree, double *coefficients)
 {
     int i,j,k,hj,hi;
 
@@ -145,10 +159,10 @@ int ARLeastSquare(double *inputseries, int length, int degree, double *coefficie
         }
     }
  
-    return(performLeastSquares(mat,coefficients,degree));
+    return(calculateLeastSquares(mat,coefficients,degree));
 }
 
-double *autoRegression(double *inputseries, int length, int degree, int method)
+double *saAutoRegressionRegress(double *inputseries, int length, int degree, int method)
 {
     int i, t;
 
@@ -185,7 +199,7 @@ double *autoRegression(double *inputseries, int length, int degree, int method)
     } 
     else if (method == SA_AUTOREGRESSION_LEASTSQUARES) 
     {
-        int errCode = ARLeastSquare(w,length,degree,coef); 
+        int errCode = performLeastSquare(w,length,degree,coef); 
         if (errCode != 0)
             return(NULL);
     } 

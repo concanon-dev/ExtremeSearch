@@ -46,7 +46,6 @@ static char *byValueList[SA_CONSTANTS_MAXAXIS];
 extern char *optarg;
 extern int optind, optopt;
 
-extern FILE *saOpenFile(char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);

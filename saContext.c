@@ -3,6 +3,31 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saContext
+
+Description:
+    All of the functions necessary to manipulate the "context" data structure, including reading from/writing
+    to a file.
+
+Functions:
+    External:
+    saContextDisplay
+    saContextDisplayWithHeader
+    saContextInit
+    saContextLoad
+    saContextLookup
+    saContextMerge
+    saContextSave
+
+    Internal:
+    eatTimestamp
+    getAttribute
+    getLine
+    getTimestamp
+    getValue
+    trim
+
 */
 #include <math.h>
 #include <stdbool.h>

@@ -57,7 +57,6 @@ extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 void saContextDisplay(saContextTypePtr);
-FILE *saOpenFile(char *, char *);
 
 static saSynonymTableType synonyms;
 
@@ -121,7 +120,7 @@ int main(int argc, char* argv[])
     // load the synonym file if it exists
     if (strlen(synonymFileName)>0)
     {
-        FILE *sFile = saOpenFile(synonymFileName, "r");
+        FILE *sFile = fopen(synonymFileName, "r");
         if (sFile == NULL)
             synonymFileName[0] = '\0';
         else

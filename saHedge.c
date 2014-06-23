@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saHedge
+
+Description: Functions to manipulate hedges
+
+Functions:
+    saHedgeApply
+    saHedgeLoadLookup
+    saHedgeLookup
 */
 #include <math.h>
 #include <stdbool.h>

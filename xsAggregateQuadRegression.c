@@ -49,7 +49,6 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern FILE *saOpenFile(char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);

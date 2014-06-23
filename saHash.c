@@ -3,6 +3,19 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saHash
+
+Description: Module to manage hash tables.
+
+Functions:
+    External:
+    saHashCreate
+    saHashCreateDefault
+    saHashHash
+    saHashNewKVPair
+    saHashSet
+    saHashGet
 */
 #include <limits.h>
 #include <stdio.h>
@@ -50,14 +63,14 @@ int saHashHash(saHashtableTypePtr hashtable, char *key)
     while(hashval < ULONG_MAX && i < strlen(key))
     {
     	hashval = hashval << 8;
-    	hashval += key[ i ];
+    	hashval += key[i];
     	i++;
     }
     return(hashval % hashtable->size);
 }
 
 /* Create a key-value pair. */
-saHashentryTypePtr saHashNewpair(char *key, void *value) 
+saHashentryTypePtr saHashNewKVPair(char *key, void *value) 
 {
     saHashentryTypePtr newpair;
 
@@ -97,8 +110,8 @@ void saHashSet(saHashtableTypePtr hashtable, char *key, char *value )
     }
     else
     {
-        /* Nope, could't find it.  Time to grow a pair. */
-        newpair = saHashNewpair(key, value);
+        /* pair does not exist, so create one */
+        newpair = saHashNewKVPair(key, value);
 
     	/* We're at the start of the linked list in this bin. */
     	if (next == hashtable->table[bin])

@@ -3,6 +3,22 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saCSV
+
+Description:
+    Provide all functions necessary to read in CSV-formatted data.
+
+Functions:
+    External:
+    saCSVCompareField
+    saCSVConvertToDouble
+    saCSVFGetHeaderLine
+    saCSVFGetLine
+    saCSVGetHeaderLine
+    saCSVGetLine
+    saCSVExtractField
+    saCSVParseFieldList
 */
 #include <stdbool.h>
 #include <stdio.h>

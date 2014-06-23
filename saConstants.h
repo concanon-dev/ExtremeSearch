@@ -4,9 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __xconstants__
-#define __xconstants__
-#include "saDebug.h"
+#ifndef _SA_CONSTANTS_H
+#define _SA_CONSTANTS_H
 
 #define SA_CONSTANTS_BADLATLON 200.0
 

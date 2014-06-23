@@ -62,8 +62,6 @@ static saSynonymTableType synonyms;
 
 static char *root;
 
-extern FILE *saOpenFile(char *, char *);
-
 extern char *optarg;
 extern int optind, optopt;
 
@@ -168,7 +166,7 @@ int main(int argc, char* argv[])
     // load the synonym file if it exists
     if (strlen(synonymFileName)>0)
     {
-        FILE *sFile = saOpenFile(synonymFileName, "r");
+        FILE *sFile = fopen(synonymFileName, "r");
         if (sFile == NULL)
             synonymFileName[0] = '\0';
         else
