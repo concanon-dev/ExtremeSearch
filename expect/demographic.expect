@@ -67,6 +67,7 @@ getCompatibility $env(SPLUNK_HOME) $login $passwd demographics HeightTest privat
 getDistance $env(SPLUNK_HOME) $login $passwd demographics Zip 80126 "Age*---"
 
 # DiscoverTrend Commands
+discoverTrend $env(SPLUNK_HOME) $login $passwd demographics Height Age "" "x*y*bf*bv*concept*trend"
 discoverTrend $env(SPLUNK_HOME) $login $passwd demographics Height Age Gender "x*y*bf*bv*concept*trend"
 
 # Delete private Height Context

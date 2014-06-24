@@ -59,7 +59,12 @@ proc performSpearmanCorrelation { splunk_home login passwd index field withfield
 
 
 proc discoverTrend { splunk_home login passwd index field overfield byfield response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd -maxout 1 -header true -output table \r"
+    set bylength [string length $byfield]
+    if [ expr $bylength == 0] {
+        send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield ' -auth $login:$passwd -maxout 1 -header true -output table \r"
+    } else {
+        send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd -maxout 1 -header true -output table \r"
+    }
 
     expect {
         timeout { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" }
