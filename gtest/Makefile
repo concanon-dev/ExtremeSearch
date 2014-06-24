@@ -60,7 +60,7 @@ CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = saParser_unittest
+TESTS = saParser_unittest saSplunk_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -105,6 +105,11 @@ gtest_main.a : gtest-all.o gtest_main.o
 saParser_unittest.o : $(USER_DIR)/saParser_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saParser_unittest.cc
 
+saSplunk_unittest.o : $(USER_DIR)/saSplunk_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saSplunk_unittest.cc
+
 saParser_unittest : saParser_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
+saSplunk_unittest : saSplunk_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o 
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
