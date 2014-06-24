@@ -29,7 +29,6 @@
 #include "saAutoRegression.h"
 #include "saConstants.h"
 #include "saCSV.h"
-#include "saLicensing.h"
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -75,9 +74,6 @@ int main(int argc, char* argv[])
     int c;
     int mode;
     int numCoefs = SA_AUTOREGRESSION_DEFAULTNUMCOEFS;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     fieldY[0] = '\0';
