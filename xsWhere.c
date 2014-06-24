@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
     bool foundAnyField;
     bool useAlfa = false;
     char cixFunction[80];
-    char synonymFileName[80];
+    char synonymFileName[512];
     float alfacut=SA_CONTEXT_DEFAULT_ALFACUT;
     float scalar_percent=SA_CONTEXT_SCALAR_PERCENT;
     int c;
