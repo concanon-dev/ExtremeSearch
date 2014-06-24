@@ -297,7 +297,7 @@ int main(int argc, char* argv[])
         fprintf(stdout, "%d", i);
         int j;
         for(j=0; j<numSets; j++)
-            fprintf(stdout, ",%1.10f", concept[j]->vector[i]);
+            fprintf(stdout, ",%1.10f,%1.10f", concept[j]->vector[i], concept[j]->indexVector[i]);
         fputs("\n", stdout);
     }
 
