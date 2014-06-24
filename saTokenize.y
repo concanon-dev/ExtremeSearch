@@ -43,8 +43,8 @@ int tokenCount = 0;
 %%
 container:
     is_modifiers
-    | is_modifiers and is_modifiers
-    | is_modifiers or is_modifiers
+    | container and container
+    | container or container
     ;
 
 is_modifiers:
@@ -52,6 +52,8 @@ is_modifiers:
     | left_paren is_modifiers field right_paren
     | is_concept field
     | left_paren is_concept field right_paren
+    | is_modifiers and is_modifiers
+    | is_modifiers or is_modifiers
     ;
 
 is_concept:
