@@ -27,7 +27,8 @@ require([
     var myResults = mySearch.data("results", {count:0}); //get all the results
     var chartTicks = [];
 
-        require(["https://raw.github.com/novus/nvd3/master/nv.d3.min.js"],function() {
+        // use rawgit.com instead of raw.github.com
+        require(["https://rawgit.com/novus/nvd3/master/nv.d3.min.js"],function() {
 
     /* These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
     nv.addGraph(function() {

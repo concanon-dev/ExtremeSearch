@@ -47,12 +47,12 @@ extern char *optarg;
 extern int optind, optopt;
 
 extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
-extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern char *saSplunkGetRoot(char *);
 extern int saSplunkGetScope(char *);
+extern bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -117,22 +117,29 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // get the header information
+    saSplunkInfoPtr p = saSplunkLoadHeader();
+    if (p == NULL)
+    {
+        fprintf(stderr, "xsDisplayConcept-F-123: can't get header\n");
+        exit(0);
+    }
+    if (saSplunkReadInfoPathFile(p) == false)
+    {
+        fprintf(stderr, "xsDisplayConcept-F-125: Can't read search results file %s\n",
+                p->infoPath == NULL ? "NULL" : p->infoPath);
+        exit(EXIT_FAILURE);
+    }
+
     // load the synonym file if it exists
     if (strlen(synonymFileName)>0)
     {
-        FILE *sFile = fopen(synonymFileName, "r");
-        if (sFile == NULL)
-            synonymFileName[0] = '\0';
-        else
+        int sScope;
+        if (saSplunkHedgeLoad(synonymFileName, root, p->app, p->user, &sScope, &synonyms) == false)
         {
-            bool loaded = saHedgeLoadLookup(sFile, &synonyms);
-            fclose(sFile);
-            if (loaded == false)
-            {
-                fprintf(stderr, "xsDisplayConcept-F-117: Error in loading synonyms file: %s\n",
-                        synonymFileName);
-                exit(0);
-            }
+            fprintf(stderr, "xsDisplayConcept-F-117: Error in loading synonyms file: %s\n",
+                    synonymFileName);
+            exit(0);
         }
     }
     
@@ -156,20 +163,6 @@ int main(int argc, char* argv[])
     {
         fprintf(stderr, "xsDisplayContext-F-121: No concepts found\n");
         exit(0);
-    }
-
-    // get the header information
-    saSplunkInfoPtr p = saSplunkLoadHeader();
-    if (p == NULL)
-    {
-        fprintf(stderr, "xsDisplayConcept-F-123: can't get header\n");
-        exit(0);
-    }
-    if (saSplunkReadInfoPathFile(p) == false)
-    {
-        fprintf(stderr, "xsDisplayConcept-F-125: Can't read search results file %s\n",
-                p->infoPath == NULL ? "NULL" : p->infoPath);
-        exit(EXIT_FAILURE);
     }
 
     // for each specified set, generate the fuzzy set

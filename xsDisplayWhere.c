@@ -76,13 +76,13 @@ static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, flo
                                double *);
 extern void walkExpressionStack(saExpressionTypePtrArray, int);    
 
-extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
 extern double saConceptLookup(saConceptTypePtr, double);
-extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
+extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 extern int saParserParse(char *, char [], saExpressionTypePtrArray);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern char *saSplunkGetRoot(char *);
+extern bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -166,19 +166,12 @@ int main(int argc, char* argv[])
     // load the synonym file if it exists
     if (strlen(synonymFileName)>0)
     {
-        FILE *sFile = fopen(synonymFileName, "r");
-        if (sFile == NULL)
-            synonymFileName[0] = '\0';
-        else
+        int sScope;
+        if (saSplunkHedgeLoad(synonymFileName, root, p->app, p->user, &sScope, &synonyms) == false)
         {
-            bool loaded = saHedgeLoadLookup(sFile, &synonyms);
-            fclose(sFile); 
-            if (loaded == false)
-            {
-                fprintf(stderr, "xsDisplayWhere-F-109: Error in loading synonyms file: %s\n",
-                        synonymFileName);
-                exit(0);
-            }
+            fprintf(stderr, "xsDisplayWhere-F-109: Error in loading synonyms file: %s\n",
+                    synonymFileName);
+            exit(0);
         }
     }
 

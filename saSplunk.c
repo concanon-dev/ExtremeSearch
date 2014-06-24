@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include "saContext.h"
 #include "saCSV.h"
+#include "saHedge.h"
 #include "saSplunk.h"
 
 #define MAXROWSIZE 1024*500
@@ -20,6 +21,7 @@
 extern char *saCSVExtractField(char *);
 extern saContextTypePtr saContextLoad(FILE *);
 extern int saContextSave(FILE *, saContextTypePtr);
+extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 
 bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *user)
 {
@@ -294,6 +296,38 @@ saSplunkInfoPtr saSplunkLoadInfo(char *infoPath)
     return(p);
 }
 
+bool saSplunkHedgeLoad(char *name, char *root, char *app, char *user, int *scope, saSynonymTableTypePtr synonyms)
+{
+    char path[1024];
+
+    if (app == NULL || user == NULL)
+        return(false);
+
+    *scope = SA_SPLUNK_SCOPE_PRIVATE;
+    sprintf(path, "%s/users/%s/%s/lookups/%s.csv", root, user, app, name);
+    if (access(path, F_OK) == -1)
+    {
+        *scope = SA_SPLUNK_SCOPE_APP;
+        sprintf(path, "%s/apps/%s/lookups/%s.csv", root, app, name);
+        if (access(path, F_OK) == -1)
+        {
+            *scope = SA_SPLUNK_SCOPE_GLOBAL;
+            sprintf(path, "%s/apps/xtreme/lookups/%s.csv", root, name);
+            if (access(path, F_OK) == -1)
+                return(false);
+        }
+    }
+    FILE *f = fopen(path, "r");
+    if (f == NULL)
+    {
+        *scope = SA_SPLUNK_SCOPE_NONE;
+        return(false);
+    }
+    bool worked = saHedgeLoadLookup(f, synonyms);
+    fclose(f);
+
+    return(worked);
+}
 /*
 int main(int argc, char *argv[])
 {

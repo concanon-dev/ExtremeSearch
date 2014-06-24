@@ -15,7 +15,7 @@ if __name__ == '__main__':
         cixname='WhereCIX'
         cixtype='avg'
         scalar='0.025'
-        synonyms='synonyms.csv'
+        synonyms='synonyms'
         usealfa=0
         where=' '
 
@@ -47,8 +47,6 @@ if __name__ == '__main__':
 
         if where == ' ':
             raise Exception("xsGetWhereCix-F-003: No query")
-
-        synonyms = os.path.dirname(sys.argv[0]) + "/etc/apps/xtreme/lookups/" + synonyms
 
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsGetWhereCix"
         if (platform.system() == 'Windows'):

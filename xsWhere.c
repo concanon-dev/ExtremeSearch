@@ -95,9 +95,9 @@ extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);
 extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
 saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
 extern double saConceptLookup(saConceptTypePtr, double);
-extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
 extern saSplunkInfoPtr saSplunkLoadHeader();
 extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
@@ -182,23 +182,15 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-
     // load the synonym file if it exists
     if (strlen(synonymFileName)>0)
     {
-        FILE *sFile = fopen(synonymFileName, "r");
-        if (sFile == NULL)
-            synonymFileName[0] = '\0';
-        else
+        int sScope;
+        if (saSplunkHedgeLoad(synonymFileName, root, p->app, p->user, &sScope, &synonyms) == false)
         {
-            bool loaded = saHedgeLoadLookup(sFile, &synonyms);
-            fclose(sFile); 
-            if (loaded == false)
-            {
-                fprintf(stderr, "xsWhere-F-119: Error in loading synonyms file: %s\n",
-                        synonymFileName);
-                exit(0);
-            }
+            fprintf(stderr, "xsWhere-F-119: Error in loading synonyms file: %s\n",
+                    synonymFileName);
+            exit(0);
         }
     }
 

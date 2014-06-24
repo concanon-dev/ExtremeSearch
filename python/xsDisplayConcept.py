@@ -17,7 +17,7 @@ if __name__ == '__main__':
     scope = ''
     setSeparator = ";"
     setString = ''
-    synonyms = 'synonyms.csv'
+    synonyms = 'synonyms'
     context = ''
     usingKeyword = ''
     try:
