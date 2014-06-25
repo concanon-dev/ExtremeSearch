@@ -103,6 +103,38 @@ TEST(ParserTest, AND_Clause) {
     EXPECT_STREQ(expStack[12]->field, "and");
 }
 
+TEST(ParserTest, AND_AND_Clause) {
+
+    char whereLine[MAXROWSIZE / 32] = "Height is tiny and Height is short and Height is medium";
+    char tempbuf[MAXROWSIZE];
+    saExpressionTypePtrArray expStack = generateExpStack();
+    int stackSize = saParserParse(whereLine, tempbuf, expStack);
+
+    EXPECT_EQ(stackSize, 11);
+    EXPECT_EQ(expStack[0]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[0]->field, "Height");
+    EXPECT_EQ(expStack[1]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[1]->field, "tiny");
+    EXPECT_EQ(expStack[2]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[2]->field, "is");
+    EXPECT_EQ(expStack[3]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[3]->field, "Height");
+    EXPECT_EQ(expStack[4]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[4]->field, "short");
+    EXPECT_EQ(expStack[5]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[5]->field, "is");
+    EXPECT_EQ(expStack[6]->type, SA_TOKEN_AND);
+    EXPECT_STREQ(expStack[6]->field, "and");
+    EXPECT_EQ(expStack[7]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[7]->field, "Height");
+    EXPECT_EQ(expStack[8]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[8]->field, "medium");
+    EXPECT_EQ(expStack[9]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[9]->field, "is");
+    EXPECT_EQ(expStack[10]->type, SA_TOKEN_AND);
+    EXPECT_STREQ(expStack[10]->field, "and");
+}
+
 TEST(ParserTest, OR_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "(Height in MaleHeight is tiny) or (Height in MaleHeight is short)";
