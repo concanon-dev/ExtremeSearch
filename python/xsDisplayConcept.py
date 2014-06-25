@@ -70,8 +70,6 @@ if __name__ == '__main__':
         if addScope == 1:
             scope = scope + "none"
 
-        synonyms = "../lookups/" + synonyms
-
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayConcept"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
