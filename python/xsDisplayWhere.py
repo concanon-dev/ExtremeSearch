@@ -14,7 +14,7 @@ if __name__ == '__main__':
         alfacut='0.2'
         cixname='WhereCIX'
         cixtype='avg'
-        synonyms = 'synonyms.csv'
+        synonyms = 'synonyms'
         where=' '
 
         if len(sys.argv) >1:
