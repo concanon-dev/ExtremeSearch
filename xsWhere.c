@@ -261,9 +261,9 @@ int main(int argc, char* argv[])
     }
 
     // print out the stack to a file
-    // FILE *qqqq = fopen("./zzz.txt", "a");
-    // walkExpressionStack(qqqq, expStack, stackSize);
-    // fclose(qqqq);
+    FILE *qqqq = fopen("./zzz.txt", "a");
+    walkExpressionStack(qqqq, expStack, stackSize);
+    fclose(qqqq);
 
     // Write out the header fields separated by ","
     for(i=0; i<numHeaderFields;i++)
@@ -411,6 +411,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
     char tempName[1024];
     double cix_sum = 0;
 
+FILE *q = fopen("./zzz.txt", "a");
     results[0] = false;
     results[1] = false;
     int cix_count = 0;
@@ -484,8 +485,8 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 contextName = (char *)expStack[stackIndex-1]->field;
                 sprintf(tempName, "%s_%d", contextName, stackIndex-1);
             }
-
-            // Find the fuzzy set in the cache or load it from the file
+fprintf(q, "tempName=%s\n", tempName);
+            // Find the concept in the cache or load it from the file
             concept = (saConceptTypePtr)saHashGet(conceptTable, tempName);
             if (concept == NULL)
             {
@@ -548,6 +549,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 }
                 else
                 {
+fprintf(q, "loading context %s\n", contextName);
                     int scope = SA_SPLUNK_SCOPE_NONE;
                     t = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
                     if (t == NULL)
@@ -580,6 +582,7 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                     stackIndex++;
             
             double cix = saConceptLookup(concept, fieldValue);
+fprintf(q, "fieldValue=%.4f cix=%.4f\n", fieldValue, cix);
             if (!strcmp(cixFunction, FCIX_WEIGHTED))
             {
                 cix_sum += (cix*(stackSize-stackIndex));
@@ -594,11 +597,14 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                 matches = true;
             else 
                 matches = false;
+fprintf(q, "cix_sum=%.4f matches=%d\n", cix_sum, matches);
             stackIndex++;
             results[resultsIndex++] = matches;
         }
     }
     *cix_avg = cix_sum / (double)cix_count;
+fprintf(q, "tot sum=%.4f count=%d av=%.4f\n", cix_sum, cix_count, *cix_avg);
+fclose(q);
     return(results[0]);
 }
 

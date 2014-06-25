@@ -39,8 +39,6 @@ if __name__ == '__main__':
         if where == ' ':
             raise Exception("xsDisplayWhere-F-003: No query")
 
-        synonyms = "../lookups/" + synonyms
-
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsDisplayWhere" 
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
