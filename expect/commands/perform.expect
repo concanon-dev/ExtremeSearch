@@ -142,19 +142,19 @@ proc discoverTrend { splunk_home login passwd index field overfield byfield resp
         }
 
         expect {
-            timeout { 
+            timeout {
                 send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" 
                 incr errors
             }
-            "ERROR" { 
+            "ERROR" {
                 send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - ERROR" 
                 incr errors
             }
-            "Getinfo probe failed" { 
+            "Getinfo probe failed" {
                 send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - Getinfo probe" 
                 incr errors
             }
-            "$response" { 
+            "$response" {
                 send_user "\nTEST PASS - xsDiscoverTrend($field OVER $overfield BY $byfield)" 
             }
         }

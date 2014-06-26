@@ -15,7 +15,6 @@ proc getDistance { splunk_home login passwd index field zip response} {
             }
             "$response" { 
                 send_user "\nTEST PASS - xsGetDistance ($zip)" 
-                incr errors
             }
         }
     }]
