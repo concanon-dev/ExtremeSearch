@@ -338,7 +338,7 @@ lex.yy.c: saTokenize.l saTokenize.tab.h
 
 xsrelease: all
 	@if [ "$(version)" == "" ]; then \
-		echo "Usage: make xsrelease version=x_y_z where x_y_z is the current version" \
+		echo "Usage: make xsrelease version=x_y_z where x_y_z is the current version"; \
 	else \
 		echo "Make Extreme Search Release $(VERSION) for platform $(OSTYPE)"; \
 		$(shell mkdir -p $(BINDIR)) \
