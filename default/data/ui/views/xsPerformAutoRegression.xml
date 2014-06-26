@@ -41,7 +41,7 @@
                                         class="head4">Syntax: </span>
                                 <span
                                         class="bodytext">xsPerformAutoRegression (x_field)+ [BY
-                                        field] [USING (maxentropy | leastsquares)] [OUTPUT filename]
+                                        field] [OUTPUT filename]
                                 </span>
                         </p>
                         <br />
@@ -49,11 +49,11 @@
                         <span
                                 class="head4">Example: </span>
                         <span
-                                class="code">xsPerformAutoRegression AirTime BY Carrier USING
-                                maxentropy OUTPUT ArrDelay_auto</span>
+                                class="code">xsPerformAutoRegression AirTime BY Carrier
+                                OUTPUT ArrDelay_auto</span>
                         <p>
                                 <span
-                                        class="explanation">Performs a leastsquares regression where
+                                        class="explanation">Performs an auto regression where
                                         x=AirTime by Carrier and sends the output to the lookup file
                                         ArrDelay_auto.csv.</span>
                         </p>
@@ -94,8 +94,8 @@
                                 <span
                                         class="head4">Parameters: </span>
                                 <span
-                                        class="bodytext"> (x_field)+ BY fieldname USING (maxentropy
-                                        | leastsquares†) OUTPUT filename</span>
+                                        class="bodytext"> (x_field)+ BY fieldname 
+                                        OUTPUT filename</span>
                         </p>
                         <p>
                                 <span
@@ -131,14 +131,6 @@
                         </p>
                         <p>
                                 <span
-                                        class="para">USING (maxentropy | leastsquares)</span>
-                        </p>
-                        <p>
-                                <span
-                                        class="explanation">Defines the type of regression to be
-                                        performed. The default is leastsquares</span>. </p>
-                        <p>
-                                <span
                                         class="para">OUTPUT (filename)</span>
                         </p>
                         <p><span
@@ -165,7 +157,7 @@
                                                 Splunk documentation</a>
                                 </span>
                         </p>
-                        <p> Version 20130715.3 </p>
+                        <p> Version 20140626.4 </p>
                 </html>
         </row>
 </dashboard>

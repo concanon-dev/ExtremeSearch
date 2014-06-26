@@ -6,16 +6,14 @@
 
  Program: xspreautoregress
 
- Usage: xspreautoregress [-b fieldList] [-c numCoefs] [-i] [-m method] [-r] -x fieldList
+ Usage: xspreautoregress [-b fieldList] [-i] [-r] -x fieldList
     -b the list of BY fields, separated by commas (defaults to none)
-    -c the number of coefficients to generate (defaults to SA_AUTOREGRESSION_DEFAULTNUMCOEFS)
     -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
-    -m the method of auto regression to perform (maxentropy or leastsquares, defaults to maxentropy)
     -r write out the lowest and highest value for each X field in a BY group
     -x the list of X fields to perform auto regression against
 
  Description:
-        For each X field and BY field grouping, generate an autoregression algorithm.
+        For each X field and BY field grouping, generate an autoregression algorithm using maxentropy.
 
         The algorithm is coef0*fieldX*fieldX + coef1*fieldX + coef2
 */
@@ -27,7 +25,6 @@
 #include <string.h>
 #include <unistd.h>
 #include "saAutoRegression.h"
-#include "saConstants.h"
 #include "saCSV.h"
 #include "saSignal.h"
 
@@ -56,7 +53,7 @@ extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
-extern double *saAutoRegressionRegress(double *, int, int, int);
+extern double *saAutoRegression(double *, int, double *);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -70,10 +67,9 @@ int main(int argc, char* argv[])
     char fieldB[SA_CONSTANTS_MAXSTRING];
     char fieldX[SA_CONSTANTS_MAXSTRING];
     char fieldY[SA_CONSTANTS_MAXSTRING];
-    char method[SA_CONSTANTS_MAXSTRING];
+    double coefs[SA_AUTOREGRESSION_NUMCOEFS];
+
     int c;
-    int mode;
-    int numCoefs = SA_AUTOREGRESSION_DEFAULTNUMCOEFS;
 
     initSignalHandler(basename(argv[0]));
     fieldY[0] = '\0';
@@ -81,8 +77,7 @@ int main(int argc, char* argv[])
     hasByClause = false;
     mustMatchFields = true;
     showRange = false;
-    strcpy(method, "maxentropy");
-    while ((c = getopt(argc, argv, "b:c:im:x:y:")) != -1) 
+    while ((c = getopt(argc, argv, "b:irx:y:")) != -1) 
     {
         switch(c)
         {
@@ -90,14 +85,8 @@ int main(int argc, char* argv[])
                 strcpy(fieldB, optarg);
                 hasByClause = true;
                 break;
-            case 'c':
-                numCoefs = atoi(optarg);
-                break;
             case 'i':
                 mustMatchFields = false;
-                break;
-            case 'm':
-                strcpy(method, optarg);
                 break;
             case 'r':
                 showRange = true;
@@ -116,14 +105,9 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xspreautoregress-F-103: Uage: xspreautoregress [-b field] [-c numCoefs] [-i] [-m method] -x fieldList [-y fieldList]");
+                "xspreautoregress-F-103: Uage: xspreautoregress [-b field] [-i] [-r] -x fieldList [-y fieldList]");
         exit(EXIT_FAILURE);
     }
-
-    if (!strcmp(method, "leastsquares"))
-        mode = SA_AUTOREGRESSION_LEASTSQUARES;
-    else
-        mode = SA_AUTOREGRESSION_MAXENTROPY;
 
     int numBAxis = -1;
     if (hasByClause)
@@ -299,10 +283,10 @@ int main(int argc, char* argv[])
                             bValues[j]);
                 else
                     fprintf(stdout, "%d,%s,%s,%s", numTempDoubles, xList[i], bList[i], bValues[j]);
-                double *coef = saAutoRegressionRegress(tempXDoubles, numTempDoubles, numCoefs, mode);
-                if (totalRows[i] > 0 && coef != NULL)
+                bool worked = saAutoRegression(tempXDoubles, numTempDoubles, coefs);
+                if (totalRows[i] > 0 && worked == true)
                 {
-                    fprintf(stdout, ",%.10f,%.10f,%.10f", coef[0], coef[1], coef[2]);
+                    fprintf(stdout, ",%.10f,%.10f,%.10f", coefs[0], coefs[1], coefs[2]);
                     if (showRange == true)
                         fprintf(stdout, ",%.10f,%.10f", xAxisLow[i], xAxisHigh[i]);
                 }
@@ -320,14 +304,14 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            double *coef = saAutoRegressionRegress(xAxis[i], totalRows[i], numCoefs, mode);
+            saAutoRegression(xAxis[i], totalRows[i], coefs);
             if (strlen(fieldY) != 0)
                 fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
             else
                 fprintf(stdout, "%d,%s,*,*", totalRows[i], xList[i]);
             if (totalRows[i] > 0)
             {
-                fprintf(stdout, ",%.10f,%.10f,%.10f", coef[0], coef[1], coef[2]);
+                fprintf(stdout, ",%.10f,%.10f,%.10f", coefs[0], coefs[1], coefs[2]);
                 if (showRange == true)
                     fprintf(stdout, ",%.10f,%.10f", xAxisLow[i], xAxisHigh[i]);
             }

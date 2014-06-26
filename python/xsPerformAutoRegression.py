@@ -13,26 +13,18 @@ if __name__ == '__main__':
     tmpby=''
     x=''
     xCount=0
-    using=''
     byKeyword=''
     outputKeyword=''
-    usingKeyword=''
-    using="maxentropy"
     if len(sys.argv) >1:
         for arg in sys.argv[1:]:
             if arg.lower() == "output":
                 outputKeyword="output"
-            elif arg.lower() == "using":
-                usingKeyword="using"
             elif not arg.startswith("__"):
                 if arg.lower() == "by":
                     byKeyword = "by"
                 elif byKeyword == "by":
                     tmpby = arg
                     byKeyword = ''
-                elif usingKeyword == "using":
-                    using = arg.lower()
-                    usingKeyword = ''
                 elif outputKeyword == "output":
                     outfile = arg
                 elif len(x) < 1:
@@ -42,7 +34,7 @@ if __name__ == '__main__':
                     x = x + "," + arg
                     xCount = xCount + 1
     else:
-        raise Exception("xsPerformAutoRegression-F-001: Usage: xsPerformAutoRegression (field)+ [BY field] [USING (maxentropy | leastsquares)]]")
+        raise Exception("xsPerformAutoRegression-F-001: Usage: xsPerformAutoRegression (field)+ [BY field] [OUTPUT file]")
 
     if xCount < 1:
         raise Exception("xsPerformAutoRegression-F-003: Missing x parameter"); 
@@ -54,8 +46,6 @@ if __name__ == '__main__':
             reqsop = True
             preop = "xspreautoregress "
             preop += " x=\"%s\" " % x
-            if using != '':
-                preop += " u=\"%s\" " % using
             if tmpby != '':
                 by = tmpby
                 i=1
