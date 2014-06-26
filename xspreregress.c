@@ -27,7 +27,7 @@
 #include "saConstants.h"
 #include "saCSV.h"
 #include "saLinearRegression.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -59,8 +59,8 @@ extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
-extern saLinearRegressionTypePtr createLR(double [], double [], int numPoints);
-extern void getRegressionLine(saLinearRegressionTypePtr);
+extern saLinearRegressionTypePtr saLinearRegressionCreateLR(double [], double [], int numPoints);
+extern void saLinearRegressionGetLine(saLinearRegressionTypePtr);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -76,9 +76,6 @@ int main(int argc, char* argv[])
     char fieldX[SA_CONSTANTS_MAXSTRING];
     char fieldY[SA_CONSTANTS_MAXSTRING];
     int c;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;
@@ -335,9 +332,9 @@ int main(int argc, char* argv[])
                 fprintf(stdout, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], 
                         bList[i], bValues[j]);
 
-                saLinearRegressionTypePtr lrPtr = createLR(tempXDoubles, tempYDoubles, 
-                                                           numTempDoubles);
-                getRegressionLine(lrPtr);
+                saLinearRegressionTypePtr lrPtr = saLinearRegressionCreateLR(tempXDoubles, tempYDoubles, 
+                                                                             numTempDoubles);
+                saLinearRegressionGetLine(lrPtr);
                 if (totalRows[i] > 0)
                 {
                     fprintf(stdout, ",%.10f,%.10f,%.10f,%.10f,%.10f", lrPtr->coefA, lrPtr->coefB,
@@ -361,8 +358,8 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            saLinearRegressionTypePtr lrPtr = createLR(xAxis[i], yAxis[i], totalRows[i]);
-            getRegressionLine(lrPtr);
+            saLinearRegressionTypePtr lrPtr = saLinearRegressionCreateLR(xAxis[i], yAxis[i], totalRows[i]);
+            saLinearRegressionGetLine(lrPtr);
 
             fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
 

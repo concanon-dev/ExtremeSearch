@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saSpearmanCorrelation
+
+Description:
+    Perform Spearman's Correlation of two arrays and return Spearman's R
+
+Functions:
+    saSpearmanCorrelation
+
 */
 #include <stdio.h>
 #include <stdlib.h>

@@ -46,7 +46,7 @@
 #include "saExpression.h"
 #include "saHash.h"
 #include "saHedge.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 #include "saToken.h"
@@ -77,7 +77,6 @@ static saSynonymTableType synonyms;
 
 static char *root;
 
-extern int saParserParse(char *, char [], saExpressionTypePtrArray);
 extern char *saSplunkGetRoot(char *);
 
 extern char *optarg;
@@ -88,9 +87,11 @@ extern void *saHashGet(saHashtableTypePtr, char *);
 extern void saHashSet(saHashtableTypePtr, char *, char *);
 
 extern saExpressionTypePtrArray generateExpStack(void);
+extern int saParserParse(char *, char [], saExpressionTypePtrArray);
+extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
+
 static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
                                double *);
-extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
 
 extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
 saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
@@ -114,9 +115,6 @@ int main(int argc, char* argv[])
     int c;
     int cixIndex = -1;
     int numFields;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     root = saSplunkGetRoot(argv[0]);

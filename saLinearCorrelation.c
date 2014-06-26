@@ -3,6 +3,15 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saLinearCorrelation
+
+Description:
+    Perform Linear Correlation of an array of X and Y values, returning the Pearson's R value.`
+
+Functions:
+    saLinearCorrelation
+
 */
 #include <math.h>
 #include <stdbool.h>

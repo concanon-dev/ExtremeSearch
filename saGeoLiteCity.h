@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software
  contains proprietary trade and business secrets.
 */
-#ifndef __geolitecity__
-#define __geolitecity__
+#ifndef _SA_GEOLITECITY_H
+#define _SA_GEOLITECITY_H
 
 typedef struct saGeoLiteCity
 {

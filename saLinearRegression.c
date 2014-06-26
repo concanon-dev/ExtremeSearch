@@ -1,3 +1,24 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+Module: saLinearRegression
+
+Description:
+    Perform Linear Regression to generate an algorithm of the type y = A*x + B.  Return A, B, std estimate of 
+    error as a structure. 
+
+Functions:
+    External:
+    saLinearRegressioncreateLR
+    saLinearRegressionGetLine
+
+    Internal:
+    computeResiduals
+
+*/
 #include <stdlib.h>
 #include <math.h>
 
@@ -12,7 +33,7 @@
 
 void computeResiduals(saLinearRegressionTypePtr, double, double, double, double);
 
-saLinearRegressionTypePtr createLR(double X[], double Y[], int numPoints)
+saLinearRegressionTypePtr saLinearRegressionCreateLR(double X[], double Y[], int numPoints)
 {
     saLinearRegressionTypePtr lrPtr = malloc(sizeof(saLinearRegressionType));
     lrPtr->numPoints = numPoints;
@@ -27,13 +48,13 @@ saLinearRegressionTypePtr createLR(double X[], double Y[], int numPoints)
 }
 
    /***
-   * getRegressionLine(). Computes the regression properties and
+   * saLinearRegressionGetLine(). Computes the regression properties and
    * returns the slope and the x-intercept for the equation. This
    * way of returning the regression equation allows us to add
    * an addData() method later to incrementally compute the linear
    * regression line (which will be important in the behavior model).
    ***/
-void getRegressionLine(saLinearRegressionTypePtr lrPtr)
+void saLinearRegressionGetLine(saLinearRegressionTypePtr lrPtr)
 {
     //
     //---------------------------------------------------------------

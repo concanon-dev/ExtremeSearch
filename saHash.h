@@ -4,8 +4,9 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __hash
-#define __hash true
+#ifndef _SA_HASH_H
+#define _SA_HASH_H true
+
 #define SA_HASHTABLE_DEFAULTSIZE 193
 #define SA_HASHTABLE_MAXKEYLEN 256
 

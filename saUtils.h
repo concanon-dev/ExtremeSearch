@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef SAUTILS_H
-#define SAUTILS_H
+#ifndef _SA_UTILS_H
+#define _SA_UTILS_H
 
 char *strsep (char **stringp, const char *delim);
 

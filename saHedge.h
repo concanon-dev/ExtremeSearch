@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __sahedges
-#define __sahedges
+#ifndef _SA_HEDGES_H
+#define _SA_HEDGES_H
 
 #define SA_HEDGE_ERROR -1
 #define SA_HEDGE__NOISE 0

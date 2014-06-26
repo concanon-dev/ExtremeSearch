@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __SACONTEXT
-#define	__SACONTEXT
+#ifndef _SA_CONTEXT_H
+#define	_SA_CONTEXT_H
 
 #include "saConcept.h"
 

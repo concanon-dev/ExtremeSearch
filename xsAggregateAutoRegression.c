@@ -26,7 +26,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -58,10 +58,6 @@ int getIndex(int, int, int);
 int main(int argc, char* argv[]) 
 {
     char outfile[256];
-
-    // confirm the license
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     // initialize system
     initSignalHandler(basename(argv[0]));

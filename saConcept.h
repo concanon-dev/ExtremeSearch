@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __saConcept__
-#define __saConcept__
+#ifndef _SA_CONCEPT_H
+#define _SA_CONCEPT_H
 
 // List the types of shapes for semantic terms
 #define SA_CONCEPT_SHAPE_CURVE "curve"

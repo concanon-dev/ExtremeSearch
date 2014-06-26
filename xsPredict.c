@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXNUMCOLS];
@@ -43,9 +43,6 @@ char *getField(char *);
 int main(int argc, char* argv[]) 
 {
     double p;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     int c;

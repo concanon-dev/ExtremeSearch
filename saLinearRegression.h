@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software
  contains proprietary trade and business secrets.
 */
-#ifndef _regress_
-#define _regress_
+#ifndef _SA_LINEAR_REGRESSION_H
+#define _SA_LINEAR_REGRESSION_H
 
 typedef struct saLinearRegression
 {

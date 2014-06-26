@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software
  contains proprietary trade and business secrets.
 */
-#ifndef __saExpression
-#define __saExpression
+#ifndef _SA_EXPRESSION_H
+#define _SA_EXPRESSION_H
 
 typedef struct saExpressionTypeStruct 
 {

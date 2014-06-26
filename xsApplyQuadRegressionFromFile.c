@@ -28,7 +28,7 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -63,9 +63,6 @@ int main(int argc, char* argv[])
     int numFileHeader = 0;
     int numFileRows = 0;
     int regressIndex = -1;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));  
     argError = false;

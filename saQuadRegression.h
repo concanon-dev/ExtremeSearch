@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software
  contains proprietary trade and business secrets.
 */
-#ifndef _saQuadRegress
-#define _saQuadRegress
+#ifndef _SA_QUADREGRESSION_H
+#define _SA_QUADREGRESSION_H
 #define SA_QUADREGRESSION_MAXCOEFFICIENTS 3
 
 typedef struct dataRecordStructType

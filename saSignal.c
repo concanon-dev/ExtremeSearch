@@ -3,6 +3,20 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saSignal
+
+Description:
+    Catch the signals registered in the initialization routine and provide handlers.  Currently, the only
+    signal caught/handled is SIGSEGV (Segmentation Violation).  This signal is fatal and we don't want 
+    any program to just die ungracefully.  So, we catch it, dump the stack to a safe place, write an
+    error message to stderr, the exit gracefully.
+
+Functions:
+    dumpStack
+    initSignalHandler
+    setProgramName
+    sigHandler
 */
 #ifndef _UNICODE
 #include <execinfo.h>
@@ -16,6 +30,9 @@
 #include <unistd.h>
 
 static char programName[256];
+
+void setProgramName(char *);
+void sighandler(int);
 
 void dumpStack()
 {
@@ -42,6 +59,17 @@ void dumpStack()
 #endif
 }
 
+void initSignalHandler(char *str)
+{
+    setProgramName(str);
+    signal(SIGSEGV, sighandler);
+}
+
+void setProgramName(char *str)
+{
+    strcpy(programName, str);
+}
+
 void sighandler(int signum)
 {
     char signalName[256];
@@ -58,15 +86,3 @@ void sighandler(int signum)
     signal(signum, SIG_DFL);
     kill(getpid(), signum);
 }
-
-void setProgramName(char *str)
-{
-    strcpy(programName, str);
-}
-
-void initSignalHandler(char *str)
-{
-    setProgramName(str);
-    signal(SIGSEGV, sighandler);
-}
-

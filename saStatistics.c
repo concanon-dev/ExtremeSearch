@@ -3,6 +3,28 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saStatistics
+
+Description:
+    Provide functions to perform statistics and other data utility functions on arrays of doubles.
+
+Functions:
+    saStatisticsAvg
+    saStatisticsDataSort
+    saStatisticsFreq
+    saStatisticsGenerateIntervals
+    saStatisticsGetInterval
+    saStatisticsHaversineDistance
+    saStatisticsMax
+    saStatisticsMean
+    saStatisticsMedian
+    saStatisticsMin
+    saStatisticsRange
+    saStatisticsSDev
+    saStatisticsSkew
+    saStatisticsVar
+
 */
 #include <math.h>
 #include <stdbool.h>
@@ -20,6 +42,8 @@
 static void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
 static void saStatisticsGetInterval(double, double[], double[], int, int *);
 static void saStatisticsDataSort(double[], int, int);
+static bool saStatisticsRange(double[], int, int, double *, double *, double *);
+static bool saStatisticsVar(double[], int, int, double *);
 
 bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
 {
@@ -33,184 +57,6 @@ bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
          sum += data[i];
 
     *avg = sum / (double)count;
-    return(true);
-}
-
-bool saStatisticsMin(double data[], int startIndex, int count, double *min) 
-{
-    int i;
-    *min = MAX;
-
-    if (count <= 0)
-        return (false);
-
-    for (i=startIndex; i<count; i++)
-        if (data[i] < *min) 
-            *min = data[i];
-
-    return (true);
-}
-
-bool saStatisticsMax(double data[], int startIndex, int count, double *max) 
-{
-    int i;
-    *max = MIN;
-
-    if (count <= 0)
-        return(false);
-
-    for (i=0; i<count; i++)
-        if (data[i] > *max) 
-            *max = data[i];
-
-    return(true);
-}
-
-bool saStatisticsMean(double data[], int startIndex, int count, double *minRange, 
-                      double *maxRange, double *mean)
-{
-    double max = MIN;
-    double min = MAX;
-    double sum = 0;
-    int i;
-
-    if (count <= 0)
-        return(false);
-
-    for (i=startIndex; i<count; i++) 
-    {
-        sum += data[i];
-        if (data[i] > max) 
-            max = data[i];
-        if (data[i] < min) 
-            min = data[i];
-    }
-    *minRange = min;
-    *maxRange = max;
-    *mean = (sum / (double) count);
-    return(true);
-}
-
-bool saStatisticsRange(double data[], int startIndex, int count, double *minRange, 
-                       double *maxRange, double *range)
-{
-    double max = MIN;
-    double min = MAX;
-    int i;
-
-    if (count <=0)
-        return(false);
-
-    for (i=startIndex; i < count; i++) 
-    {
-        if (data[i] > max)
-            max = data[i];
-        if (data[i] < min) 
-            min = data[i];
-    }
-    *minRange = min;
-    *maxRange = max;
-    *range = max - min;
-    return(true);
-}
-
-bool saStatisticsVar(double data[], int startIndex, int count, double *var)
-{
-    double mean;
-    double sum = 0.0;
-    int i;
-
-    if (saStatisticsAvg(data, startIndex, count, &mean) == false)
-        return(false);
-
-    for (i=startIndex; i<count; i++)
-        sum += pow((data[i] - mean), 2);
-    *var = sum / (double) count;
-    return(true);
-}
-
-bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
-{
-    double var;
-
-    if (saStatisticsVar(data, startIndex, count, &var) == false)
-        return(false);
-
-    *sdev = sqrt(var);
-    return (true);
-}
-
-bool saStatisticsSkew(double data[], int startIndex, int count, double *skew) 
-{
-    double avg;
-    double diff;
-    double sdev;
-    double sum = 0.0;
-    int i;
-
-    if (count <= 0) 
-        return(false);
-
-    if (saStatisticsAvg(data, startIndex, count, &avg) == false)
-        return(false);
-    if (saStatisticsSdev(data, startIndex, count, &sdev) == false)
-        return(false);
-    if (sdev == 0.0) 
-        return(false);
-
-    for (i=startIndex; i<count; i++) 
-    {
-        diff = (data[i] - avg) / sdev;
-        sum += (diff * diff * diff);
-    }
-    *skew = sum / (double)count;
-    return(true);
-}
-
-bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSize, double *median)
-{
-    int midPoint;
-
-    if (count <= 0)
-        return(false);
-    *medianSize = 1;
-    if (count == 1)
-    {
-        *median = data[startIndex];
-        return(true);
-    }
-    saStatisticsDataSort(data, startIndex, count);
-
-    if (fmod(count, 2) == 0) 
-    {
-        midPoint = startIndex + (count / 2);
-        *median = (data[midPoint] + data[midPoint + 1]) / 2;
-    } 
-    else 
-    {
-        midPoint = startIndex + (count / 2);
-        *median = data[midPoint];
-    }
-    //
-    //---------------------------------------------------
-    //--Now examine the values to the left and right
-    //---------------------------------------------------
-    //
-    int i;
-    for (i=midPoint+1; i<count; i++) 
-    {
-        if (data[i] == *median) 
-            *medianSize += 1;
-        else 
-            break;
-    }
-    for (i=midPoint-1; i>=count; i--) 
-    {
-        if (data[i] == *median) 
-            *medianSize += 1;
-        else 
-            break;
-    }
     return(true);
 }
 
@@ -320,3 +166,182 @@ double saStatisticsHaversineDistance(double lat1, double lon1, double lat2, doub
     d = d / KM_TO_MILES;
     return(d);
 }
+
+bool saStatisticsMax(double data[], int startIndex, int count, double *max) 
+{
+    int i;
+    *max = MIN;
+
+    if (count <= 0)
+        return(false);
+
+    for (i=0; i<count; i++)
+        if (data[i] > *max) 
+            *max = data[i];
+
+    return(true);
+}
+
+bool saStatisticsMean(double data[], int startIndex, int count, double *minRange, 
+                      double *maxRange, double *mean)
+{
+    double max = MIN;
+    double min = MAX;
+    double sum = 0;
+    int i;
+
+    if (count <= 0)
+        return(false);
+
+    for (i=startIndex; i<count; i++) 
+    {
+        sum += data[i];
+        if (data[i] > max) 
+            max = data[i];
+        if (data[i] < min) 
+            min = data[i];
+    }
+    *minRange = min;
+    *maxRange = max;
+    *mean = (sum / (double) count);
+    return(true);
+}
+
+bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSize, double *median)
+{
+    int midPoint;
+
+    if (count <= 0)
+        return(false);
+    *medianSize = 1;
+    if (count == 1)
+    {
+        *median = data[startIndex];
+        return(true);
+    }
+    saStatisticsDataSort(data, startIndex, count);
+
+    if (fmod(count, 2) == 0) 
+    {
+        midPoint = startIndex + (count / 2);
+        *median = (data[midPoint] + data[midPoint + 1]) / 2;
+    } 
+    else 
+    {
+        midPoint = startIndex + (count / 2);
+        *median = data[midPoint];
+    }
+    //
+    //---------------------------------------------------
+    //--Now examine the values to the left and right
+    //---------------------------------------------------
+    //
+    int i;
+    for (i=midPoint+1; i<count; i++) 
+    {
+        if (data[i] == *median) 
+            *medianSize += 1;
+        else 
+            break;
+    }
+    for (i=midPoint-1; i>=count; i--) 
+    {
+        if (data[i] == *median) 
+            *medianSize += 1;
+        else 
+            break;
+    }
+    return(true);
+}
+
+bool saStatisticsMin(double data[], int startIndex, int count, double *min) 
+{
+    int i;
+    *min = MAX;
+
+    if (count <= 0)
+        return (false);
+
+    for (i=startIndex; i<count; i++)
+        if (data[i] < *min) 
+            *min = data[i];
+
+    return (true);
+}
+
+bool saStatisticsRange(double data[], int startIndex, int count, double *minRange, 
+                       double *maxRange, double *range)
+{
+    double max = MIN;
+    double min = MAX;
+    int i;
+
+    if (count <=0)
+        return(false);
+
+    for (i=startIndex; i < count; i++) 
+    {
+        if (data[i] > max)
+            max = data[i];
+        if (data[i] < min) 
+            min = data[i];
+    }
+    *minRange = min;
+    *maxRange = max;
+    *range = max - min;
+    return(true);
+}
+
+bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
+{
+    double var;
+
+    if (saStatisticsVar(data, startIndex, count, &var) == false)
+        return(false);
+
+    *sdev = sqrt(var);
+    return (true);
+}
+
+bool saStatisticsSkew(double data[], int startIndex, int count, double *skew) 
+{
+    double avg;
+    double diff;
+    double sdev;
+    double sum = 0.0;
+    int i;
+
+    if (count <= 0) 
+        return(false);
+
+    if (saStatisticsAvg(data, startIndex, count, &avg) == false)
+        return(false);
+    if (saStatisticsSdev(data, startIndex, count, &sdev) == false)
+        return(false);
+    if (sdev == 0.0) 
+        return(false);
+
+    for (i=startIndex; i<count; i++) 
+    {
+        diff = (data[i] - avg) / sdev;
+        sum += (diff * diff * diff);
+    }
+    *skew = sum / (double)count;
+    return(true);
+}
+
+bool saStatisticsVar(double data[], int startIndex, int count, double *var)
+{
+    double mean;
+    double sum = 0.0;
+    int i;
+
+    if (saStatisticsAvg(data, startIndex, count, &mean) == false)
+        return(false);
+
+    for (i=startIndex; i<count; i++)
+        sum += pow((data[i] - mean), 2);
+    *var = sum / (double) count;
+    return(true);
+}
+

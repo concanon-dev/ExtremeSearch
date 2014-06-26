@@ -5,8 +5,8 @@
  contains proprietary trade and business secrets.            
 */
 
-#ifndef SASIGNAL_H
-#define	SASIGNAL_H
+#ifndef _SA_SIGNAL_H
+#define	_SA_SIGNAL_H
 
 extern void initSignalHandler(char *str);
 

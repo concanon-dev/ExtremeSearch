@@ -3,7 +3,29 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saSplunk
+
+Description:
+    Provide a layer of abstraction between the search commands and teh context/concept/hedge routines.  There 
+    are also utilities to perform Splunk-specific tasks such as determining the user, the app,, the location
+    of a context or synonyms file and other Splunk-specific information.
+
+Functions:
+    saSplunkGetContextPath
+    saSplunkContextDelete
+    saSplunkContextFind
+    saSplunkContextLoad
+    saSplunkContextRename
+    saSplunkContextSave
+    saSplunkGetRoot
+    saSplunkGetScope
+    saSplunkHedgeLoad
+    saSplunkLoadHeader
+    saSplunkLoadInfo
+    saSplunkReadInfoPathFile
 */
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -328,14 +350,3 @@ bool saSplunkHedgeLoad(char *name, char *root, char *app, char *user, int *scope
 
     return(worked);
 }
-/*
-int main(int argc, char *argv[])
-{
-    saSplunkInfoPtr p = saSplunkLoadHeader();
-    if (saSplunkReadInfoPathFile(p) == false)
-    {
-        fprintf(stderr, "FALSE\n");
-        exit(0);
-    }
-}
-*/

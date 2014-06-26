@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "saLicensing.h"
+
 #include "saSplunk.h"
 
 extern char *optarg;
@@ -36,9 +36,6 @@ int main(int argc, char *argv[])
     int c;
     int scope = SA_SPLUNK_SCOPE_GLOBAL;
     
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
-
     while ((c = getopt(argc, argv, "s:")) != -1) 
     {
         switch(c)

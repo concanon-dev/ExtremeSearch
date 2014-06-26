@@ -27,7 +27,7 @@
 #include "saConstants.h"
 #include "saContext.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -59,8 +59,6 @@ int main(int argc, char* argv[])
     int numConcepts;
     int scope = saSplunkGetScope(NULL);
 
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
     initSignalHandler(basename(argv[0]));  
     argError = false;
     contextName[0] ='\0';

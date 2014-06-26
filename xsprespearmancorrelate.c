@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -69,9 +69,6 @@ int main(int argc, char* argv[])
     char fieldX[SA_CONSTANTS_MAXSTRING];
     char fieldY[SA_CONSTANTS_MAXSTRING];
     int c;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;

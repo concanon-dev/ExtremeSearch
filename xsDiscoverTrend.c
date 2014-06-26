@@ -33,7 +33,7 @@
 #include <unistd.h>
 #include "saContext.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 #include "saUtils.h"
@@ -83,9 +83,6 @@ int main(int argc, char* argv[])
     char *yList[32];
     char yListString[512];
     int c;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     contextListString[0] = '\0';

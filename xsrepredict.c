@@ -12,7 +12,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 
 #define MAXROWSIZE 256
@@ -37,9 +37,6 @@ char *getField(char *);
 int main(int argc, char* argv[]) 
 {
     double p;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     int c;

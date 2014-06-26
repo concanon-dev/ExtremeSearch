@@ -1,3 +1,18 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+Module: saListDir
+
+Description:
+    Write a list of files contained in a directory, based on a filter, to a FILE stream
+
+Functions:
+    saListDir
+
+*/
 #include <dirent.h>
 #include <stdbool.h>
 #include <stdio.h>

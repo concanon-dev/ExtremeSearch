@@ -26,7 +26,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "saContext.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -59,8 +59,6 @@ int main(int argc, char* argv[])
     int scopeB = saSplunkGetScope(NULL);
     int scopeC = saSplunkGetScope("global");
 
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
     initSignalHandler(basename(argv[0]));
 
     argError = false;

@@ -3,6 +3,25 @@
  Reproduction or unauthorized use is prohibited. Unauthorized
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
+
+Module: saParser
+
+Description:
+     Perform all parsing functions associated with a conceptual query string.  In general, a query string
+     will be passed in and an Expression Stack will be returned.  This stack is then walked to apply the
+     query against data.  The order of these calls is:
+
+     generateExpStack() to create a new stack
+     saParserParse() to parse a string into an expression stack
+
+     If you wish to view the stack, a utility function walkExpressionStack() is provided
+
+     A main method has been provided for testing purposes.  Use -D_MAIN_ to have this function included.
+
+Functions:
+     generateExpStack
+     saParserParse
+     walkExpressionStack
 */
 #include <ctype.h>
 #include <libgen.h>

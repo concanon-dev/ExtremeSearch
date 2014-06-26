@@ -28,7 +28,7 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saQuadRegression.h"
 #include "saSignal.h"
 
@@ -62,8 +62,8 @@ extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
-extern dataRecordTypePtr initDataRecord(int, double *, double *, double *);
-extern int quadRegression(dataRecordTypePtr, int, int, int);
+extern dataRecordTypePtr saQuadRegressionInitDataRecord(int, double *, double *, double *);
+extern int saQuadRegressionRegress(dataRecordTypePtr, int, int, int);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -79,9 +79,6 @@ int main(int argc, char* argv[])
     char fieldX[SA_CONSTANTS_MAXSTRING];
     char fieldY[SA_CONSTANTS_MAXSTRING];
     int c;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;
@@ -335,9 +332,9 @@ int main(int argc, char* argv[])
                 }
                 fprintf(stdout, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], 
                         bList[i], bValues[j]);
-                dataRecordTypePtr p = initDataRecord(numTempDoubles, tempXDoubles, tempYDoubles, 
-                                                     NULL);
-                int status = quadRegression(p, numTempDoubles, 0, numTempDoubles); 
+                dataRecordTypePtr p = saQuadRegressionInitDataRecord(numTempDoubles, tempXDoubles, tempYDoubles, 
+                                                                     NULL);
+                int status = saQuadRegressionRegress(p, numTempDoubles, 0, numTempDoubles); 
                                                                          // length, offset, periods
                 if (totalRows[i] > 0)
                 {
@@ -360,8 +357,8 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            dataRecordTypePtr p = initDataRecord(totalRows[i], xAxis[i], yAxis[i], NULL);
-            int status = quadRegression(p, totalRows[i], 0, totalRows[i]);
+            dataRecordTypePtr p = saQuadRegressionInitDataRecord(totalRows[i], xAxis[i], yAxis[i], NULL);
+            int status = saQuadRegressionRegress(p, totalRows[i], 0, totalRows[i]);
                                                                          // length, offset, periods
             fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
             if (totalRows[i] > 0)

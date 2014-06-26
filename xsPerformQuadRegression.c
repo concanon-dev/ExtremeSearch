@@ -22,7 +22,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "saCSV.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -55,9 +55,6 @@ void printLine(char *[], int);
 int main(int argc, char* argv[]) 
 {
     char outfile[256];
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     outfile[0] = '\0';

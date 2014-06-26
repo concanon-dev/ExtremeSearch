@@ -36,7 +36,7 @@
 #include <unistd.h>
 #include "saContext.h"
 #include "saHedge.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 #include "saUtils.h"
@@ -78,9 +78,6 @@ int main(int argc, char* argv[])
     char *setStringList[32];
     char synonymFileName[128];
     int i, c;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;

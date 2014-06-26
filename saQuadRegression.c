@@ -1,3 +1,26 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+Module: saQuadRegression
+
+Description:
+    Perform Quadratic Regression to generate an algorithm of the form y = coef0*x*x + coef1*x + coef2.  The
+    coef's are returned along with std estimate of error.
+
+Functions:
+    External:
+    saQuadRegressionInitDataRecord
+    saQuadRegressionRegress
+
+    Internal:
+    checkTheOffset
+    checkThePeriod
+    matrix3Inverse
+    rateOfChange
+*/
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -21,7 +44,28 @@ bool checkThePeriod(int offset, int periods, int size)
    return(false);
 }
 
-dataRecordTypePtr initDataRecord(int size, double *X, double *Y, double *Z)
+void matrix3Inverse()
+{
+    double det = 0;
+    det = a[0][0]*a[1][1]*a[2][2] +
+          a[1][0]*a[2][1]*a[0][2] +
+          a[2][0]*a[0][1]*a[1][2] -
+          a[0][2]*a[1][1]*a[2][0] -
+          a[1][2]*a[2][1]*a[0][0] -
+          a[2][2]*a[0][1]*a[1][0];
+
+    c[0][0] = (a[1][1]*a[2][2] - a[1][2]*a[2][1]) / det;
+    c[1][0] = (a[1][0]*a[2][2] - a[1][2]*a[2][0]) / det;
+    c[2][0] = (a[1][0]*a[2][1] - a[1][1]*a[2][0]) / det;
+    c[0][1] = (a[0][1]*a[2][2] - a[0][2]*a[2][1]) / det;
+    c[1][1] = (a[0][0]*a[2][2] - a[0][2]*a[2][0]) / det;
+    c[2][1] = (a[0][0]*a[2][1] - a[0][1]*a[2][0]) / det;
+    c[0][2] = (a[0][1]*a[1][2] - a[0][2]*a[1][1]) / det;
+    c[1][2] = (a[0][0]*a[1][2] - a[0][2]*a[1][0]) / det;
+    c[2][2] = (a[0][0]*a[1][1] - a[0][1]*a[1][0]) / det;
+}
+
+dataRecordTypePtr saQuadRegressionInitDataRecord(int size, double *X, double *Y, double *Z)
 {
     bool zExists = false;
     dataRecordTypePtr p = malloc(sizeof(dataRecordType));
@@ -51,30 +95,9 @@ dataRecordTypePtr initDataRecord(int size, double *X, double *Y, double *Z)
     return(p);
 }
 
-void matrix3Inverse()
-{
-    double det = 0;
-    det = a[0][0]*a[1][1]*a[2][2] +
-          a[1][0]*a[2][1]*a[0][2] +
-          a[2][0]*a[0][1]*a[1][2] -
-          a[0][2]*a[1][1]*a[2][0] -
-          a[1][2]*a[2][1]*a[0][0] -
-          a[2][2]*a[0][1]*a[1][0];
-
-    c[0][0] = (a[1][1]*a[2][2] - a[1][2]*a[2][1]) / det;
-    c[1][0] = (a[1][0]*a[2][2] - a[1][2]*a[2][0]) / det;
-    c[2][0] = (a[1][0]*a[2][1] - a[1][1]*a[2][0]) / det;
-    c[0][1] = (a[0][1]*a[2][2] - a[0][2]*a[2][1]) / det;
-    c[1][1] = (a[0][0]*a[2][2] - a[0][2]*a[2][0]) / det;
-    c[2][1] = (a[0][0]*a[2][1] - a[0][1]*a[2][0]) / det;
-    c[0][2] = (a[0][1]*a[1][2] - a[0][2]*a[1][1]) / det;
-    c[1][2] = (a[0][0]*a[1][2] - a[0][2]*a[1][0]) / det;
-    c[2][2] = (a[0][0]*a[1][1] - a[0][1]*a[1][0]) / det;
-}
-
 //double *predict(dataRecordTypePtr p, int length, int offset, int periods, int futurePeriods,
 // int *errCode)
-int quadRegression(dataRecordTypePtr p, int length, int offset, int periods)
+int saQuadRegressionRegress(dataRecordTypePtr p, int length, int offset, int periods)
 {
     int limit;
     int myOffset;

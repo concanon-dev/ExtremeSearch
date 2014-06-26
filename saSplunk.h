@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.            
 */
-#ifndef __sasplunk
-#define __sasplunk TRUE
+#ifndef _SA_SPLUNK_H
+#define _SA_SPLUNK_H
 
 #include <libgen.h>
 

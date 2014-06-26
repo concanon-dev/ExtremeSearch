@@ -32,7 +32,7 @@ a:c:n:p:s:w:
 #include "saExpression.h"
 #include "saHash.h"
 #include "saHedge.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 #include "saToken.h"
@@ -98,9 +98,6 @@ int main(int argc, char* argv[])
     int c;
     int cixIndex = -1;
     int numFields;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     root = saSplunkGetRoot(argv[0]);

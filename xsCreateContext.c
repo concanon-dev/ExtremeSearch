@@ -38,7 +38,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "saContext.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -93,9 +93,6 @@ int main(int argc, char* argv[])
     int count;
     int fileScope = SA_SPLUNK_SCOPE_GLOBAL;
     int numConcepts = 0;
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
     argError = false;

@@ -27,7 +27,7 @@
 #include "saCSV.h"
 #include "saGeoLiteCity.h"
 #include "saHash.h"
-#include "saLicensing.h"
+
 #include "saSignal.h"
 
 static void lookupByCityRegionCountry(char *, char *, char *, double []);
@@ -68,9 +68,6 @@ int main(int argc, char *argv[])
     int fromFieldIndex[3];
     int numFromFields, numToFields = 0;
     int toFieldIndex[3];
-
-    if (!isLicensed())
-        exit(EXIT_FAILURE);
 
     initSignalHandler(basename(argv[0]));
 

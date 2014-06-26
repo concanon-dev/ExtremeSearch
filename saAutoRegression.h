@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software 
  contains proprietary trade and business secrets.      
 */
-#ifndef _saAutoRegress
-#define _saAutoRegress
+#ifndef _SA_AUTOREGRESS_H
+#define _SA_AUTOREGRESS_H
 
 #define SA_AUTOREGRESSION_DEFAULTNUMCOEFS 3
 #define SA_AUTOREGRESSION_MAXNUMCOEFS 16

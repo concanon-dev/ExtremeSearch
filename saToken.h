@@ -4,8 +4,8 @@
  use is illegal. Violators will be prosecuted. This software
  contains proprietary trade and business secrets.
 */
-#ifndef __satoken
-#define __satoken
+#ifndef _SA_TOKEN_H
+#define _SA_TOKEN_H
 
 #define MAXMODIFIERS 16
 
