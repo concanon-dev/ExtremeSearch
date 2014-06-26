@@ -35,8 +35,6 @@ source commands/perform.expect
 source commands/apply.expect
 source commands/aggregate.expect
 source commands/distance.expect
-source commands/errors.expect
-
 
 # Create private Height Context
 createContext $env(SPLUNK_HOME) $login $passwd $index Height private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "Height*tiny*short*medium*tall*gigantic"
