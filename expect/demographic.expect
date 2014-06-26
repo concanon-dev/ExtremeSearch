@@ -72,7 +72,7 @@ getDistance $env(SPLUNK_HOME) $login $passwd $index Zip 80126 "Age*---"
 
 # DiscoverTrend Commands
 discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age "" "x*y*bf*bv*concept*trend"
-discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age Gender "x*y*bf*bv*concept*trend"
+#discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age Gender "x*y*bf*bv*concept*trend"
 
 # Delete private Height Context
 #deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context HeightTest successfully deleted"
