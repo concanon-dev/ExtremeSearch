@@ -1,13 +1,25 @@
 
 proc performAutoRegression { splunk_home login passwd index file field byfield response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPerformAutoRegression $field BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPerformAutoRegression $field BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPerformAutoRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPerformAutoRegression - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformAutoRegression - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPerformAutoRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPerformAutoRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPerformAutoRegression - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPerformAutoRegression - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPerformAutoRegression" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -15,14 +27,26 @@ proc performAutoRegression { splunk_home login passwd index file field byfield r
 
 
 proc performLinearRegression { splunk_home login passwd index file field overfield response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPerformLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPerformLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPerformLinearRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPerformLinearRegression - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformLinearRegression - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPerformLinearRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPerformLinearRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPerformLinearRegression - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPerformLinearRegression - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPerformLinearRegression" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -30,13 +54,24 @@ proc performLinearRegression { splunk_home login passwd index file field overfie
 
 proc performNonLinearRegression { splunk_home login passwd index file field overfield response} {
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPerformNonLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPerformNonLinearRegression $field OVER $overfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPerformNonLinearRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPerformNonLinearRegression - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformNonLinearRegression - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPerformNonLinearRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPerformNonLinearRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPerformNonLinearRegression - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPerformNonLinearRegression - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPerformNonLinearRegression" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -44,14 +79,26 @@ proc performNonLinearRegression { splunk_home login passwd index file field over
 
 
 proc performCorrelation { splunk_home login passwd index field withfield byfield file response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPerformCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPerformCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPerformCorrelation - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPerformCorrelation - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformCorrelation - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPerformCorrelation" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPerformCorrelation - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPerformCorrelation - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPerformCorrelation - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPerformCorrelation" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -60,13 +107,24 @@ proc performCorrelation { splunk_home login passwd index field withfield byfield
 
 proc performSpearmanCorrelation { splunk_home login passwd index field withfield byfield file response} {
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPerformSpearmanCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPerformSpearmanCorrelation $field WITH $withfield BY $byfield OUTPUT $file' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPerformSpearmanCorrelation" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPerformSpearmanCorrelation - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPerformSpearmanCorrelation" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -74,33 +132,57 @@ proc performSpearmanCorrelation { splunk_home login passwd index field withfield
 
 
 proc discoverTrend { splunk_home login passwd index field overfield byfield response} {
+    global errors
     set tt [time {
         set bylength [string length $byfield]
         if [ expr $bylength == 0] {
-            send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield ' -auth $login:$passwd -maxout 1 -header true -output table \r"
+            send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
         } else {
-            send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd -maxout 1 -header true -output table \r"
+            send "$splunk_home/bin/splunk search 'index=$index | xsDiscoverTrend $field OVER $overfield BY $byfield' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
         }
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsDiscoverTrend($field OVER $overfield BY $byfield)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsDiscoverTrend($field OVER $overfield BY $byfield) - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsDiscoverTrend($field OVER $overfield BY $byfield)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc predict { splunk_home login passwd index quantity field whenfield response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsPredict $field WHEN $whenfield IS $quantity' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsPredict $field WHEN $whenfield IS $quantity' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - ERROR" }
-            "Getinfo probe failed" { send_user "\nTEST FAIL - xsPredict($field WHEN $whenfield IS $quantity - Getinfo probe" }
-            "$response" { send_user "\nTEST PASS - xsPredit($field WHEN $whenfield IS $quantity)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsPredit($field WHEN $whenfield IS $quantity) - ERROR" 
+                incr errors
+            }
+            "Getinfo probe failed" { 
+                send_user "\nTEST FAIL - xsPredict($field WHEN $whenfield IS $quantity - Getinfo probe" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsPredit($field WHEN $whenfield IS $quantity)" 
+            }
         }
     }]
     send_user "\n$tt"

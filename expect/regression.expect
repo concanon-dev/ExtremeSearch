@@ -5,6 +5,7 @@ spawn bash
 
 set login admin
 set passwd admin
+set errors 0
 log_file -a regression.out
 
 send_user "\n\nREGRESSION TESTS STARTED\n"
@@ -27,7 +28,6 @@ expect {
 
 source commands/contexts.expect
 source commands/concepts.expect
-source commands/errors.expect
 
 
 # TEST SUITE: Create Data Driven Context Tests
@@ -243,8 +243,7 @@ createUDContextDomain $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,m
 sleep 1
 createUDContextAverageCentered $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
 
-report_errors
-
+send_user "\n\nFailures: ($errors)"
 send_user "\n\nREGRESSION TESTS COMPLETED\n"
 
 close

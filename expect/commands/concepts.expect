@@ -1,83 +1,140 @@
 
 proc createConcept { splunk_home login passwd context concept scope min max shape response} {
+    global errors
     send "$splunk_home/bin/splunk search '| xsCreateConcept $concept IN $context WITH max=$max min=$min shape=$shape scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateConcept ($context $concept) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateConcept ($context $concept)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateConcept ($context $concept) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateConcept ($context $concept)" 
+        }
     }
 }
 
 proc cloneConcept { splunk_home login passwd incontext inscope inconcept tocontext toscope toconcept response} {
+    global errors
     send "$splunk_home/bin/splunk search '| xsCloneConcept $inconcept FROM $incontext IN $inscope TO $toconcept FROM $tocontext IN $toscope' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCloneConcept ($incontext $inscope $inconcept $tocontext $toscope $toconcept)" 
+        }
     }
 }
 
 proc deleteConcept { splunk_home login passwd context scope concept response} {
+    global errors
     send "$splunk_home/bin/splunk search '| xsDeleteConcept $concept FROM $context IN $scope' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsDeleteConcept ($context $scope $concept) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsDeleteConcept ($context $scope $concept)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsDeleteConcept ($context $scope $concept) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsDeleteConcept ($context $scope $concept)" 
+        }
     }
 }
 
 proc listConcepts { splunk_home login passwd context scope response} {
-    send "$splunk_home/bin/splunk search '| xsListConcepts FROM $context in $scope' -header true -output table -auth $login:$passwd \r"
+    global errors
+    send "$splunk_home/bin/splunk search '| xsListConcepts FROM $context in $scope' -header true -output table -preview false -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsListConcepts ($context $scope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsListConcepts ($context $scope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsListConcepts ($context $scope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsListConcepts ($context $scope)" 
+        }
     }
 }
 
 proc displayConcept { splunk_home login passwd context scope concept response} {
-    send "$splunk_home/bin/splunk search '| xsDisplayConcept $concept FROM $context in $scope' -maxout 1 -header true -output table -auth $login:$passwd \r"
+    global errors
+    send "$splunk_home/bin/splunk search '| xsDisplayConcept $concept FROM $context in $scope' -maxout 1 -header true -output table -preview false -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsDisplayConcept ($context $scope $concept) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsDisplayConcept ($context $scope $concept)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsDisplayConcept ($context $scope $concept) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsDisplayConcept ($context $scope $concept)" 
+        }
     }
 }
 
 proc findBestConcept { splunk_home login passwd index context scope field response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsFindBestConcept $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table  \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsFindBestConcept $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table  -preview false \r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsFindBestConcept ($context $scope $field)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsFindBestConcept ($context $scope $field) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsFindBestConcept ($context $scope $field)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc findMembership { splunk_home login passwd index context scope field response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsFindMembership $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsFindMembership $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table -preview false \r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsFindMembership ($context $scope $field)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsFindMembership ($context $scope $field) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsFindMembership ($context $scope $field)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc getCompatibility { splunk_home login passwd index context scope field response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsGetCompatibility $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsGetCompatibility $field IN $context IN $scope' -auth $login:$passwd -maxout 1 -header true -output table -preview false \r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsGetCompatibility ($context $scope $field)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetCompatibility ($context $scope $field) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetCompatibility ($context $scope $field)" 
+            }
         }
     }]
     send_user "\n$tt"

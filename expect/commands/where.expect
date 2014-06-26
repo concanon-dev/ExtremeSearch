@@ -1,55 +1,91 @@
 
 proc where_basic { splunk_home login passwd index field concept response} {
+    global errors
     set tt [time {
 
-        send "$splunk_home/bin/splunk search 'index=$index | xsWhere $field IS $concept' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsWhere $field IS $concept' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsWhere($field IS $concept) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsWhere($field IS $concept) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsWhere($field IS $concept)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsWhere($field IS $concept) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsWhere($field IS $concept) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsWhere($field IS $concept)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc where_cmd { splunk_home login passwd index cmd response} {
+    global errors
 
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | xsWhere $cmd' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsWhere $cmd' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsWhere($cmd) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsWhere($cmd) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsWhere($cmd)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsWhere($cmd) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsWhere($cmd) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsWhere($cmd)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc displayWhere_basic { splunk_home login passwd index field concept response} {
+    global errors
     set tt [time {
 
-        send "$splunk_home/bin/splunk search 'index=$index | xsDisplayWhere $field IS $concept' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsDisplayWhere $field IS $concept' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsDisplayWhere($field IS $concept) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsDisplayWhere($field IS $concept) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsDisplayWhere($field IS $concept)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsDisplayWhere($field IS $concept) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsDisplayWhere($field IS $concept) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsDisplayWhere($field IS $concept)" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc getWhereCIX_basic { splunk_home login passwd index context concept field response} {
+    global errors
     set tt [time {
 
-        send "$splunk_home/bin/splunk search 'index=$index | xsGetWhereCIX $field IN $context IS $concept' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | xsGetWhereCIX $field IN $context IS $concept' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsGetWhereCIX($field IS $concept) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsGetWhereCIX($field IS $concept) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsGetWhereCIX($field IS $concept)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsGetWhereCIX($field IS $concept) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetWhereCIX($field IS $concept) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetWhereCIX($field IS $concept)" 
+            }
         }
     }]
     send_user "\n$tt"

@@ -6,6 +6,8 @@ spawn bash
 set login admin
 set passwd admin
 set index demographics
+set iter 5
+set errors 0
 log_file -a demographic.out
 
 send_user "\n\nDEMOGRAPHICS TESTS STARTED\n"
@@ -33,6 +35,7 @@ source commands/perform.expect
 source commands/apply.expect
 source commands/aggregate.expect
 source commands/distance.expect
+source commands/errors.expect
 
 
 # Create private Height Context
@@ -69,7 +72,7 @@ getDistance $env(SPLUNK_HOME) $login $passwd $index Zip 80126 "Age*---"
 
 # DiscoverTrend Commands
 discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age "" "x*y*bf*bv*concept*trend"
-#discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age Gender "x*y*bf*bv*concept*trend"
+discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age Gender "x*y*bf*bv*concept*trend"
 
 # Delete private Height Context
 #deleteContext $env(SPLUNK_HOME) $login $passwd Height private "Context HeightTest successfully deleted"
@@ -102,5 +105,7 @@ aggregateNonLinearRegression $env(SPLUNK_HOME) $login $passwd Demo_Height_Over_A
 aggregateCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Age_Correlation.csv Demo_Height_With_Age_By_State_Correlation.csv Demo_Aggregate_Correlation "x*bf*bv*numRows*R"
 aggregateSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Age_SpearmanCorrelation.csv Demo_Height_With_Age_By_State_SpearmanCorrelation.csv Demo_Aggregate_SpearmanCorrelation "x*bf*bv*numRows*R"
 
+send_user "\n\nFailures: ($errors)"
 send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
 
+close

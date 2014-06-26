@@ -1,147 +1,239 @@
 
 proc createContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd -maxout 1 -header true -output table \r"
+    global errors
+    send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -auth $login:$passwd -maxout 1 -header true -output table -preview false \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope $type) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateContext ($name $scope $type)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateContext ($name $scope $type) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateContext ($name $scope $type)" 
+        }
     }
 }
 
 proc createContextDomain { splunk_home login passwd index name scope terms uom type min max count response} {
+    global errors
     send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope domain) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateContext ($name $scope domain)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateContext ($name $scope domain) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateContext ($name $scope domain)" 
+        }
     }
 }
 
 proc createContextAverageCentered { splunk_home login passwd index name scope terms uom type avg stdev response} {
+    global errors
     send "$splunk_home/bin/splunk search 'index=$index | xsCreateContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateContext ($name $scope average_centered) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateContext ($name $scope average_centered)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateContext ($name $scope average_centered) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateContext ($name $scope average_centered)" 
+        }
     }
 }
 
 proc createUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope $type) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateUDContext ($name $scope $type)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateUDContext ($name $scope $type) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateUDContext ($name $scope $type)" 
+        }
     }
 }
 
 proc createUDContextDomain { splunk_home login passwd name scope terms uom type min max count response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type count=$count max=$max min=$min uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope domain) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateUDContext ($name $scope domain)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateUDContext ($name $scope domain) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateUDContext ($name $scope domain)" 
+        }
     }
 }
 
 proc createUDContextAverageCentered { splunk_home login passwd name scope terms uom type avg stdev response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsCreateUDContext terms=\"$terms\" name=$name type=$type avg=$avg stdev=$stdev uom=$uom scope=$scope' -maxout 1 -header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCreateUDContext ($name $scope average_centered) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCreateUDContext ($name $scope average_centered)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCreateUDContext ($name $scope average_centered) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCreateUDContext ($name $scope average_centered)" 
+        }
     }
 }
 
 proc updateContext { splunk_home login passwd index name scope terms uom type min max count avg stdev response} {
+    global errors
     send "$splunk_home/bin/splunk search 'index=$index | xsUpdateContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsUpdateContext ($name $scope $type) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsUpdateContext ($name $scope $type)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsUpdateContext ($name $scope $type) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsUpdateContext ($name $scope $type)" 
+        }
     }
 }
 
 proc updateUDContext { splunk_home login passwd name scope terms uom type min max count avg stdev response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsUpdateUDContext terms=\"$terms\" name=$name type=$type avg=$avg count=$count max=$max min=$min stdev=$stdev uom=$uom scope=$scope' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsUpdateUDContext ($name $scope $type) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsUpdateUDContext ($name $scope $type)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsUpdateUDContext ($name $scope $type) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsUpdateUDContext ($name $scope $type)" 
+        }
     }
 }
 
 proc mergeContexts { splunk_home login passwd context1 scope1 context2 scope2 context3 scope3 response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsMergeContexts $context1 IN $scope1 AND $context2 IN $scope2 INTO $context3 IN $scope3' -maxout 1 header true -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsMergeContexts ($context1 $scope1 $context2 $scope2 $context3 $scope3)" 
+        }
     }
 }
 
 proc deleteContext { splunk_home login passwd name scope response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsDeleteContext $name IN $scope' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsDeleteContext ($name $scope) - TIMEOUT" }
-        "Context $name successfully deleted" { send_user "\nTEST PASS - xsDeleteContext ($name)" }
-        "$response" { send_user "\nTEST PASS - xsDeleteContext ($name $scope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsDeleteContext ($name $scope) - TIMEOUT" 
+            incr errors
+        }
+        "Context $name successfully deleted" { 
+            send_user "\nTEST PASS - xsDeleteContext ($name)" 
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsDeleteContext ($name $scope)" 
+        }
     }
 }
 
 proc cloneContext { splunk_home login passwd incontext inscope tocontext toscope response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsCloneContext $incontext IN $inscope TO $tocontext IN $toscope' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsCloneContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsCloneContext ($incontext $inscope $tocontext $toscope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsCloneContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsCloneContext ($incontext $inscope $tocontext $toscope)" 
+        }
     }
 }
 
 proc renameContext { splunk_home login passwd incontext inscope tocontext toscope response} {
+    global errors
 
     send "$splunk_home/bin/splunk search '| xsRenameContext $incontext IN $inscope TO $tocontext IN $toscope' -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsRenameContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsRenameContext ($incontext $inscope $tocontext $toscope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsRenameContext ($incontext $inscope $tocontext $toscope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsRenameContext ($incontext $inscope $tocontext $toscope)" 
+        }
     }
 }
 
 proc displayContext { splunk_home login passwd context scope response} {
+    global errors
 
-    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -maxout 1 -header true -output table -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsDisplayContext $context IN $scope' -maxout 1 -header true -output table -preview false -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsDisplayContext ($context $scope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsDisplayContext ($context $scope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsDisplayContext ($context $scope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsDisplayContext ($context $scope)" 
+        }
     }
 }
 
 proc listContexts { splunk_home login passwd scope response} {
+    global errors
 
-    send "$splunk_home/bin/splunk search '| xsListContexts $scope | sort context' -header true -output table -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsListContexts $scope | sort context' -header true -output table -preview false -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsListContexts ($scope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsListContexts ($scope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsListContexts ($scope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsListContexts ($scope)" 
+        }
     }
 }
 
 proc listUOM { splunk_home login passwd context scope response} {
+    global errors
 
-    send "$splunk_home/bin/splunk search '| xsListUOM FROM $context IN $scope' -header true -output table -auth $login:$passwd \r"
+    send "$splunk_home/bin/splunk search '| xsListUOM FROM $context IN $scope' -header true -output table -preview false -auth $login:$passwd \r"
 
     expect {
-        timeout { send_user "\nTEST FAIL - xsListUOM ($context $scope) - TIMEOUT" }
-        "$response" { send_user "\nTEST PASS - xsListUOM ($context $scope)" }
+        timeout { 
+            send_user "\nTEST FAIL - xsListUOM ($context $scope) - TIMEOUT" 
+            incr errors
+        }
+        "$response" { 
+            send_user "\nTEST PASS - xsListUOM ($context $scope)" 
+        }
     }
 }

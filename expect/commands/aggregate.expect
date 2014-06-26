@@ -1,12 +1,21 @@
 
 proc aggregateAutoRegression { splunk_home login passwd file1 file2 file3 response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateAutoRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateAutoRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsAggregateAutoRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsAggregateAutoRegression - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsAggregateAutoRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsAggregateAutoRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsAggregateAutoRegression - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsAggregateAutoRegression" 
+            }
         }
     }]
     send_user "\n$tt"
@@ -14,52 +23,88 @@ proc aggregateAutoRegression { splunk_home login passwd file1 file2 file3 respon
 
 
 proc aggregateLinearRegression { splunk_home login passwd file1 file2 file3 response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateLinearRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateLinearRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsAggregateLinearRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsAggregateLinearRegression - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsAggregateLinearRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsAggregateLinearRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsAggregateLinearRegression - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsAggregateLinearRegression" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc aggregateNonLinearRegression { splunk_home login passwd file1 file2 file3 response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateNonLinearRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateNonLinearRegression OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsAggregateNonLinearRegression - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsAggregateNonLinearRegression - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsAggregateNonLinearRegression" }
+            timeout { 
+                send_user "\nTEST FAIL - xsAggregateNonLinearRegression - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsAggregateNonLinearRegression - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsAggregateNonLinearRegression" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc aggregateCorrelation { splunk_home login passwd file1 file2 file3 response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateCorrelation OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateCorrelation OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsAggregateCorrelation - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsAggregateCorrelation - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsAggregateCorrelation" }
+            timeout { 
+                send_user "\nTEST FAIL - xsAggregateCorrelation - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsAggregateCorrelation - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsAggregateCorrelation" 
+            }
         }
     }]
     send_user "\n$tt"
 }
 
 proc aggregateSpearmanCorrelation { splunk_home login passwd file1 file2 file3 response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateSpearmanCorrelation OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+        send "$splunk_home/bin/splunk search 'inputlookup $file1 | inputlookup append=t $file2 | xsAggregateSpearmanCorrelation OUTPUT $file3 ' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsAggregateSpearmanCorrelation - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsAggregateSpearmanCorrelation - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsAggregateSpearmanCorrelation" }
+            timeout { 
+                send_user "\nTEST FAIL - xsAggregateSpearmanCorrelation - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsAggregateSpearmanCorrelation - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsAggregateSpearmanCorrelation" 
+            }
         }
     }]
     send_user "\n$tt"

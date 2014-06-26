@@ -1,12 +1,22 @@
 
 proc getDistance { splunk_home login passwd index field zip response} {
+    global errors
     set tt [time {
-        send "$splunk_home/bin/splunk search 'index=$index | eval myZip=\"$zip\" | xsGetDistance FROM myZip TO $field' -auth $login:$passwd -maxout 1 -header true -output table \r"
+        send "$splunk_home/bin/splunk search 'index=$index | eval myZip=\"$zip\" | xsGetDistance FROM myZip TO $field' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
-            timeout { send_user "\nTEST FAIL - xsGetDistance ($zip) - TIMEOUT" }
-            "ERROR" { send_user "\nTEST FAIL - xsGetDistance ($zip) - ERROR" }
-            "$response" { send_user "\nTEST PASS - xsGetDistance ($zip)" }
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($zip)" 
+                incr errors
+            }
         }
     }]
     send_user "\n$tt"
