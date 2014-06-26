@@ -27,6 +27,7 @@ expect {
 
 source commands/contexts.expect
 source commands/concepts.expect
+source commands/errors.expect
 
 
 # TEST SUITE: Create Data Driven Context Tests
@@ -241,6 +242,8 @@ sleep 1
 createUDContextDomain $env(SPLUNK_HOME) $login $passwd TESTUD2 app "tiny,short,medium,tall,gigantic" size domain 0 0 0 "xsCreateContext-F-127: min must be less than max"
 sleep 1
 createUDContextAverageCentered $env(SPLUNK_HOME) $login $passwd TESTUD4 app "tiny,short,medium,tall,gigantic" size average_centered 0 0 "xsCreateContext-F-113: For an average_centered context, sdev must be > 0"
+
+report_errors
 
 send_user "\n\nREGRESSION TESTS COMPLETED\n"
 

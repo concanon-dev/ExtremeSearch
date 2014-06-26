@@ -1,0 +1,10 @@
+set errors 0
+
+proc record_error { } {
+    errors = errors + 1
+}
+
+proc report_errors { } {
+  send_user "Failures (" $errors ")"
+}
+

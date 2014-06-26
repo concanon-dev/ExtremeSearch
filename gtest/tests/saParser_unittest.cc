@@ -15,7 +15,7 @@ int saParserParse(char *, char [], saExpressionTypePtrArray);
 saExpressionTypePtrArray generateExpStack(void);
 }
 
-TEST(ParserTest, IS_Clause) {
+TEST(saParserParse, IS_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "Height is Tall";
     char tempbuf[MAXROWSIZE];
@@ -30,7 +30,7 @@ TEST(ParserTest, IS_Clause) {
     EXPECT_STREQ(expStack[2]->field, "is");
 }
 
-TEST(ParserTest, IS_Clause_With_Hedge) {
+TEST(saParserParse, IS_Clause_With_Hedge) {
 
     char whereLine[MAXROWSIZE / 32] = "Height is very Tall";
     char tempbuf[MAXROWSIZE];
@@ -47,7 +47,7 @@ TEST(ParserTest, IS_Clause_With_Hedge) {
     EXPECT_STREQ(expStack[3]->field, "is");
 }
 
-TEST(ParserTest, IN_Clause) {
+TEST(saParserParse, IN_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "Height in MaleHeight is Tall";
     char tempbuf[MAXROWSIZE];
@@ -67,7 +67,7 @@ TEST(ParserTest, IN_Clause) {
     EXPECT_STREQ(expStack[4]->field, "is");
 }
 
-TEST(ParserTest, AND_Clause) {
+TEST(saParserParse, AND_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "(Height in MaleHeight is not tiny) and (Height in MaleHeight is not short)";
     char tempbuf[MAXROWSIZE];
@@ -103,7 +103,7 @@ TEST(ParserTest, AND_Clause) {
     EXPECT_STREQ(expStack[12]->field, "and");
 }
 
-TEST(ParserTest, AND_AND_Clause) {
+TEST(saParserParse, AND_AND_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "Height is tiny and Height is short and Height is medium";
     char tempbuf[MAXROWSIZE];
@@ -135,7 +135,7 @@ TEST(ParserTest, AND_AND_Clause) {
     EXPECT_STREQ(expStack[10]->field, "and");
 }
 
-TEST(ParserTest, OR_Clause) {
+TEST(saParserParse, OR_Clause) {
 
     char whereLine[MAXROWSIZE / 32] = "(Height in MaleHeight is tiny) or (Height in MaleHeight is short)";
     char tempbuf[MAXROWSIZE];
@@ -168,7 +168,7 @@ TEST(ParserTest, OR_Clause) {
 }
 
 /*
-TEST(ParserTest, BY_Clause) {
+TEST(saParserParse, BY_Clause) {
     char whereLine[MAXROWSIZE / 32] = "Height by Gender is Tall";
     char tempbuf[MAXROWSIZE];
     saExpressionTypePtrArray expStack = generateExpStack();
@@ -188,7 +188,7 @@ TEST(ParserTest, BY_Clause) {
 }
 */
 /*
-TEST(ParserTest, IN_Clause_and_BY_Clause) {
+TEST(saParserParse, IN_Clause_and_BY_Clause) {
     char whereLine[MAXROWSIZE / 32] = "Height in MaleHeight by Age is Tall";
     char tempbuf[MAXROWSIZE];
     saExpressionTypePtrArray expStack = generateExpStack();

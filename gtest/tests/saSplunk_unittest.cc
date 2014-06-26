@@ -31,7 +31,7 @@ bool saSplunkHedgeLoad(char *name, char *root, char *app, char *user, int *scope
 saSplunkInfoPtr saSplunkLoadInfo(char *infoPath);
 }
 
-TEST(SASplunkTest, saSplunkGetContextPath) {
+TEST(saSplunk, saSplunkGetContextPath) {
     char root[128] = "etc";
     char app[128] = "xtreme";
     char user[128] = "admin";
@@ -55,7 +55,7 @@ TEST(SASplunkTest, saSplunkGetContextPath) {
     EXPECT_STREQ("etc/users/admin/xtreme/contexts", path);
 }
 
-TEST(SASplunkTest, saSplunkContextFind) {
+TEST(saSplunk, saSplunkContextFind) {
     char contextName[128] = "TEST";
     char root[128] = "etc";
     char app[128] = "xtreme";
@@ -66,7 +66,7 @@ TEST(SASplunkTest, saSplunkContextFind) {
     EXPECT_STREQ("TEST", contextPtr->name);
 }
 
-TEST(SASplunkTest, saSplunkContextSave) {
+TEST(saSplunk, saSplunkContextSave) {
 
     char contextName[128] = "TEST";
     char root[128] = "etc";
@@ -89,7 +89,7 @@ TEST(SASplunkTest, saSplunkContextSave) {
 
 }
 
-TEST(SASplunkTest, saSplunkContextRename) {
+TEST(saSplunk, saSplunkContextRename) {
     char name[128] = "TEST";
     char newName[128] = "TESTCOPY";
     char root[128] = "etc";
@@ -106,7 +106,7 @@ TEST(SASplunkTest, saSplunkContextRename) {
                                         newName, newRoot, newScope, newApp, newUser);
     EXPECT_EQ(true, result);
 }
-TEST(SASplunkTest, saSplunkContextDelete) {
+TEST(saSplunk, saSplunkContextDelete) {
     char name[128] = "TESTCOPY";
     char root[128] = "etc";
     char app[128] = "xtreme";
@@ -117,7 +117,7 @@ TEST(SASplunkTest, saSplunkContextDelete) {
     EXPECT_EQ(true, result);
 }
 
-TEST(SASplunkTest, saSplunkGetRoot) {
+TEST(saSplunk, saSplunkGetRoot) {
  
     char root[128] = "etc";
     char *newRoot = saSplunkGetRoot(root);
@@ -125,7 +125,7 @@ TEST(SASplunkTest, saSplunkGetRoot) {
     EXPECT_STREQ(".", newRoot);
 }
 
-TEST(SASplunkTest, saSplunkGetScope) {
+TEST(saSplunk, saSplunkGetScope) {
     char globalScope[128] = "global";
     char appScope[128] = "app";
     char privateScope[128] = "private";
@@ -141,21 +141,21 @@ TEST(SASplunkTest, saSplunkGetScope) {
     EXPECT_EQ(0, scopeInt);
 }
 
-TEST(SASplunkTest, saSplunkLoadHeader) {
+TEST(saSplunk, saSplunkLoadHeader) {
 }
 
-TEST(SASplunkTest, saSplunkReadInfoPathFile) {
+TEST(saSplunk, saSplunkReadInfoPathFile) {
     // Essentially tested with test below - saSplunkLoadInnfo
 }
 
-TEST(SASplunkTest, saSplunkLoadInfo) {
+TEST(saSplunk, saSplunkLoadInfo) {
     char infoFile[128] = "infoPath.csv";
     saSplunkInfoPtr iPtr = saSplunkLoadInfo(infoFile);
     EXPECT_STREQ("admin", iPtr->user);
     EXPECT_STREQ("test", iPtr->app);
 }
 
-TEST(SASplunkTest, saSplunkHedgeLoad) {
+TEST(saSplunk, saSplunkHedgeLoad) {
     char name[128] = "synonyms";
     char root[128] = "etc";
     char app[128] = "xtreme";
@@ -167,7 +167,7 @@ TEST(SASplunkTest, saSplunkHedgeLoad) {
     EXPECT_EQ(true, result);
 }
 
-TEST(SASplunkTest, saSplunkContextLoad) {
+TEST(saSplunk, saSplunkContextLoad) {
 
     char contextName[128] = "TEST";
     char root[128] = "etc";

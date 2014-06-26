@@ -353,7 +353,6 @@ xsrelease: all
 		$(shell mkdir -p $(RELEASEDIR)/lookups) \
 		$(shell mkdir -p $(RELEASEDIR)/metadata) \
 		$(shell mkdir -p $(RELEASEDIR)/contexts) \
-		$(shell mkdir -p $(RELEASEDIR)/datagen) \
 		$(shell grep -v "^version=" default/app.conf > xxx) \
 		$(shell echo "version=$(VERSION)" >> xxx) \
 		$(shell mv xxx default/app.conf) \
@@ -367,8 +366,7 @@ xsrelease: all
 		$(shell cp -r metadata/* $(RELEASEDIR)/metadata/) \
 		$(shell cp python/* $(RELEASEDIR)/bin/) \
 		$(shell cp contexts/* $(RELEASEDIR)/contexts) \
-		$(shell cp -r datagen/* $(RELEASEDIR)/datagen) \
-		$(shell cp pngfiles/ess_400_$(LTYPE).png release/xtreme/appserver/static/images/ess_400.png) \
+		$(shell cp pngfiles/ess_400_s.png release/xtreme/appserver/static/images/ess_400.png) \
 		$(COMPRESSCMD) ; \
 	fi
 

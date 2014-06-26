@@ -1,31 +1,40 @@
 
 proc applyAutoRegression { splunk_home login passwd index file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsApplyAutoRegression FROM $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
+    set tt [time {
+        send "$splunk_home/bin/splunk search 'index=$index | xsApplyAutoRegression FROM $file' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
-    expect {
-        timeout { send_user "\nTEST FAIL - xsApplyAutoRegression - TIMEOUT" }
-        "ERROR" { send_user "\nTEST FAIL - xsApplyAutoRegression - ERROR" }
-        "$response" { send_user "\nTEST PASS - xsApplyAutoRegression" }
-    }
+        expect {
+            timeout { send_user "\nTEST FAIL - xsApplyAutoRegression - TIMEOUT" }
+            "ERROR" { send_user "\nTEST FAIL - xsApplyAutoRegression - ERROR" }
+            "$response" { send_user "\nTEST PASS - xsApplyAutoRegression" }
+        }
+    }]
+    send_user "\n$tt"
 }
 
 
 proc applyLinearRegression { splunk_home login passwd index file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsApplyLinearRegression FROM $file ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+    set tt [time {
+        send "$splunk_home/bin/splunk search 'index=$index | xsApplyLinearRegression FROM $file ' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
-    expect {
-        timeout { send_user "\nTEST FAIL - xsApplyLinearRegression - TIMEOUT" }
-        "ERROR" { send_user "\nTEST FAIL - xsApplyLinearRegression - ERROR" }
-        "$response" { send_user "\nTEST PASS - xsApplyLinearRegression" }
-    }
+        expect {
+            timeout { send_user "\nTEST FAIL - xsApplyLinearRegression - TIMEOUT" }
+            "ERROR" { send_user "\nTEST FAIL - xsApplyLinearRegression - ERROR" }
+            "$response" { send_user "\nTEST PASS - xsApplyLinearRegression" }
+        }
+    }]
+    send_user "\n$tt"
 }
 
 proc applyNonLinearRegression { splunk_home login passwd index file response} {
-    send "$splunk_home/bin/splunk search 'index=$index | xsApplyNonLinearRegression FROM $file ' -auth $login:$passwd -maxout 1 -header true -output table\r"
+    set tt [time {
+        send "$splunk_home/bin/splunk search 'index=$index | xsApplyNonLinearRegression FROM $file ' -auth $login:$passwd -maxout 1 -header true -output table\r"
 
-    expect {
-        timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression - TIMEOUT" }
-        "ERROR" { send_user "\nTEST FAIL - xsApplyNonLinearRegression - ERROR" }
-        "$response" { send_user "\nTEST PASS - xsApplyNonLinearRegression" }
-    }
+        expect {
+            timeout { send_user "\nTEST FAIL - xsApplyNonLinearRegression - TIMEOUT" }
+            "ERROR" { send_user "\nTEST FAIL - xsApplyNonLinearRegression - ERROR" }
+            "$response" { send_user "\nTEST PASS - xsApplyNonLinearRegression" }
+        }
+    }]
+    send_user "\n$tt"
 }
