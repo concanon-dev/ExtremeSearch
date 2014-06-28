@@ -90,7 +90,7 @@ TEST(saContext, saConceptCreateCurveIncrease) {
     EXPECT_EQ((max+min)/2, conceptPtr->points[1]);
     EXPECT_EQ(19, conceptPtr->points[2]);
 }
-
+/*
 TEST(saContext, saConceptCreateLinearDecrease) {
     char termName[128] = "TESTTERM";
     double domainMin = 0;
@@ -101,7 +101,7 @@ TEST(saContext, saConceptCreateLinearDecrease) {
     EXPECT_EQ(1, conceptPtr->points[0]);
     EXPECT_EQ(19, conceptPtr->points[1]);
 }
-
+*/
 TEST(saContext, saConceptCreateLinearIncrease) {
     char termName[128] = "TESTTERM";
     double domainMin = 0;
@@ -126,7 +126,7 @@ TEST(saContext, saConceptCreatePI) {
     double rightInflection = max - segmentSize;
     EXPECT_EQ(1, conceptPtr->points[0]);
     EXPECT_EQ(leftInflection, conceptPtr->points[1]);
-    EXPECT_EQ(19, conceptPtr->points[2]);
+    EXPECT_EQ((max+min)/2, conceptPtr->points[2]);
     EXPECT_EQ(rightInflection, conceptPtr->points[3]);
     EXPECT_EQ(19, conceptPtr->points[4]);
 }
@@ -137,6 +137,12 @@ TEST(saContext, saConceptCreateTrapezoid) {
     double min = 1;
     double max = 19;
     saConceptTypePtr conceptPtr = saConceptCreateTrapezoid(termName, domainMin, domainMax, min, max);
+    double termSize = max - min;
+    double trapSize = termSize * SA_CONCEPT_TRAPEZOID_SIZE;
+    EXPECT_EQ(min, conceptPtr->points[0]);
+    EXPECT_EQ(min+trapSize, conceptPtr->points[1]);
+    EXPECT_EQ(max-trapSize, conceptPtr->points[2]);
+    EXPECT_EQ(max, conceptPtr->points[3]);
 }
 TEST(saContext, saConceptCreateTriangle) {
     char termName[128] = "TESTTERM";
@@ -145,4 +151,7 @@ TEST(saContext, saConceptCreateTriangle) {
     double min = 1;
     double max = 19;
     saConceptTypePtr conceptPtr = saConceptCreateTriangle(termName, domainMin, domainMax, min, max, (max+min)/2);
+    EXPECT_EQ(min, conceptPtr->points[0]);
+    EXPECT_EQ((max+min)/2, conceptPtr->points[1]);
+    EXPECT_EQ(max, conceptPtr->points[2]);
 }
