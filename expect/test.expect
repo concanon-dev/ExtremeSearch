@@ -1,0 +1,62 @@
+#!/usr/bin/expect
+set timeout 480
+log_user 0
+spawn bash
+
+set login admin
+set passwd splunk
+set index bigdemo
+log_file -a test.out
+
+
+send "uname -s\r"
+expect {
+    timeout { send_user "\nFAIL - Can't Detect OS Type"; exit 1 }
+    "CYGWIN*" { 
+        set env(SPLUNK_HOME) c:/PROGRA~1/Splunk 
+        send "export PYTHONHOME=c:/PROGRA~1/Splunk/Python-2.7\r"
+        send "export PYTHONLIB=c:/PROGRA~1/Splunk/Python-2.7/Lib\r"
+    }
+    "*Linux*" { 
+        set env(SPLUNK_HOME) /opt/splunk 
+    }
+    "*Darwin*" { 
+        set env(SPLUNK_HOME) /Applications/splunk 
+    }
+}
+
+source commands/contexts.expect
+source commands/concepts.expect
+source commands/where.expect
+source commands/perform.expect
+source commands/apply.expect
+source commands/aggregate.expect
+source commands/distance.expect
+
+
+# Create private Height Context
+createContext $env(SPLUNK_HOME) $login $passwd $index Height private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "Height*tiny*short*medium*tall*gigantic"
+createContext $env(SPLUNK_HOME) $login $passwd $index HeightTest private "tiny,short,medium,tall,gigantic" inches domain 55 80 0 0 0 "HeightTest*tiny*short*medium*tall*gigantic"
+
+
+# Basic Where Tests
+#where_basic $env(SPLUNK_HOME) $login $passwd $index Height tiny "Age*---"
+send_user "\n\nIgnore First command sent\n"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height medium "Age*---"
+
+send_user "\n\nWHERE TESTS STARTED\n"
+where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height tiny "Age*---"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height tiny "Age*---"
+where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height short "Age*---"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height short "Age*---"
+where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height medium "Age*---"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height medium "Age*---"
+where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height tall "Age*---"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height tall "Age*---"
+where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height gigantic "Age*---"
+where_basic $env(SPLUNK_HOME) $login $passwd $index Height gigantic "Age*---"
+
+
+send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
+
+
