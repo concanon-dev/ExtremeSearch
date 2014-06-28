@@ -28,7 +28,8 @@ Functions:
 #include <string.h>
 #include "saConcept.h"
 
-static saConceptTypePtr saConceptInit(char *, double, double);
+//static saConceptTypePtr saConceptInit(char *, double, double);
+saConceptTypePtr saConceptInit(char *, double, double);
 
 void saConceptCopy(saConceptTypePtr newTerm, saConceptTypePtr oldTerm)
 {

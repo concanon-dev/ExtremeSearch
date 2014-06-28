@@ -5,7 +5,7 @@ spawn bash
 
 set login admin
 set passwd splunk
-set index bigdemo
+set index demographics
 log_file -a test.out
 
 
