@@ -44,7 +44,7 @@ createContext $env(SPLUNK_HOME) $login $passwd $index HeightTest private "tiny,s
 send_user "\n\nIgnore First command sent\n"
 where_basic $env(SPLUNK_HOME) $login $passwd $index Height medium "Age*---"
 
-send_user "\n\nWHERE TESTS STARTED\n"
+send_user "\n\nWHERE TESTS STARTED ($index)\n"
 where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height tiny "Age*---"
 where_basic $env(SPLUNK_HOME) $login $passwd $index Height tiny "Age*---"
 where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height short "Age*---"
@@ -57,6 +57,6 @@ where_basic_splunk $env(SPLUNK_HOME) $login $passwd $index Height gigantic "Age*
 where_basic $env(SPLUNK_HOME) $login $passwd $index Height gigantic "Age*---"
 
 
-send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
+send_user "\n\nDEMOGRAPHICS TESTS ENDED($index)\n"
 
 
