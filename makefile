@@ -91,7 +91,7 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 
 CFLAGS=-Ofast -Wall
-LDFLAGS=-lm -g
+LDFLAGS=-lm -g -s -Wl,--gc-sections
 SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c csvtest.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
@@ -217,11 +217,11 @@ saCSV.o:
 saGeoLiteCity.o:
 	$(GCC) -c saGeoLiteCity.c -o $(OBJDIR)/$@
 saHash.o:
-	$(GCC) -c saHash.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saHash.c -o $(OBJDIR)/$@
 saHedge.o:
-	$(GCC) -c saHedge.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saHedge.c -o $(OBJDIR)/$@
 saInsertUniqueValue.o:
-	$(GCC) -c saInsertUniqueValue.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saInsertUniqueValue.c -o $(OBJDIR)/$@
 saLinearCorrelation.o:
 	$(GCC) -c saLinearCorrelation.c -o $(OBJDIR)/$@
 saLinearRegression.o:
@@ -231,7 +231,7 @@ saListDir.o:
 saMatrixArgs.o:
 	$(GCC) -c saMatrixArgs.c -o $(OBJDIR)/$@
 saParser.o:
-	$(GCC) -c saParser.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saParser.c -o $(OBJDIR)/$@
 saQuadRegression.o:
 	$(GCC) -c saQuadRegression.c -o $(OBJDIR)/$@
 saSignal.o:
@@ -239,7 +239,7 @@ saSignal.o:
 saConcept.o:
 	$(GCC) -c saConcept.c -o $(OBJDIR)/$@
 saSplunk.o:
-	$(GCC) -c saSplunk.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saSplunk.c -o $(OBJDIR)/$@
 saSpearmanCorrelation.o:
 	$(GCC) -c saSpearmanCorrelation.c -o $(OBJDIR)/$@
 saStatistics.o:
@@ -285,9 +285,9 @@ xsDisplayContext.o:
 xsDisplayConcept.o:
 	$(GCC) -c xsDisplayConcept.c -o $(OBJDIR)/$@
 xsDisplayWhere.o:
-	$(GCC) -c xsDisplayWhere.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsDisplayWhere.c -o $(OBJDIR)/$@
 xsFindBestConcept.o:
-	$(GCC) -c xsFindBestConcept.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsFindBestConcept.c -o $(OBJDIR)/$@
 xsFindMembership.o:
 	$(GCC) -c xsFindMembership.c -o $(OBJDIR)/$@
 xsGetCompatibility.o:
@@ -317,7 +317,7 @@ xsRenameContext.o:
 xsWhere.o:
 	$(GCC) -O3 -c xsWhere.c -o $(OBJDIR)/$@
 xsWhere3.o:
-	$(GCC) -c xsWhere3.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsWhere3.c -o $(OBJDIR)/$@
 xspreautoregress.o:
 	$(GCC) -c xspreautoregress.c -o $(OBJDIR)/$@
 xsprecorrelate.o:

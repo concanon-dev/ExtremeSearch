@@ -62,9 +62,9 @@ void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
 // Expression Management functions
 int buildExpressionStack(saExpressionTypePtr, saExpressionTypePtrArray, int);
-saExpressionTypePtrArray generateExpStack(void);
+inline saExpressionTypePtrArray generateExpStack(void);
 int saParserParse(char *, char [], saExpressionTypePtrArray);
-saExpressionTypePtr parseExpression(int);
+inline saExpressionTypePtr parseExpression(int);
 void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);
 
 // Global Token Variables
@@ -130,7 +130,7 @@ int saParserParse(char *where_line, char errMsg[], saExpressionTypePtrArray expS
 }
 
 
-saExpressionTypePtrArray generateExpStack()
+inline saExpressionTypePtrArray generateExpStack()
 {
     return(malloc(sizeof(saExpressionTypePtr) * MAXCHARS));
 }
@@ -187,7 +187,7 @@ inline saTokenTypePtr lookAtNextToken()
 }
 
 
-saExpressionTypePtr parseExpression(precedence)
+inline saExpressionTypePtr parseExpression(precedence)
 {
     saExpressionTypePtr left = NULL;
 

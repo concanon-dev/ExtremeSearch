@@ -44,9 +44,9 @@ static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 static char *headerList[SA_CONSTANTS_MAXROWSIZE / 32];
 
-extern saHashtableTypePtr saHashCreateDefault();
-extern void *saHashGet(saHashtableTypePtr, char *);
-extern void saHashSet(saHashtableTypePtr, char *, char *);
+extern inline saHashtableTypePtr saHashCreateDefault();
+extern inline void *saHashGet(saHashtableTypePtr, char *);
+extern inline void saHashSet(saHashtableTypePtr, char *, char *);
 
 extern void saContextLookup(saContextTypePtr, double, double *);;;;
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);

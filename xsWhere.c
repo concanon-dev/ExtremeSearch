@@ -80,32 +80,32 @@ static saSynonymTableType synonyms;
 
 static char *root;
 
-extern char *saSplunkGetRoot(char *);
+extern inline char *saSplunkGetRoot(char *);
 
 extern char *optarg;
 extern int optind, optopt;
 
-extern saHashtableTypePtr saHashCreateDefault();
-extern void *saHashGet(saHashtableTypePtr, char *);
-extern void saHashSet(saHashtableTypePtr, char *, char *);
+extern inline saHashtableTypePtr saHashCreateDefault();
+extern inline void *saHashGet(saHashtableTypePtr, char *);
+extern inline void saHashSet(saHashtableTypePtr, char *, char *);
 
-extern saExpressionTypePtrArray generateExpStack(void);
-extern int loadExpStack(FILE *, saExpressionTypePtrArray);
-extern int saParserParse(char *, char [], saExpressionTypePtrArray);
-extern void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
-extern void writeExpressionStack(FILE *, saExpressionTypePtrArray, int);
+extern inline saExpressionTypePtrArray generateExpStack(void);
+extern inline int loadExpStack(FILE *, saExpressionTypePtrArray);
+extern inline int saParserParse(char *, char [], saExpressionTypePtrArray);
+extern inline void walkExpressionStack(FILE *, saExpressionTypePtrArray, int);    
+extern inline void writeExpressionStack(FILE *, saExpressionTypePtrArray, int);
 
-static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
+inline static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
                                double *);
 
-extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
 saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
-extern double saConceptLookup(saConceptTypePtr, double);
-extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
-extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
-extern bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
+extern inline double saConceptLookup(saConceptTypePtr, double);
+extern inline char *saHedgeLookup(saSynonymTableTypePtr, char *);
+extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern inline bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 int main(int argc, char* argv[]) 
 {
@@ -424,7 +424,7 @@ int removeStackElement(saExpressionTypePtrArray expStack, int stackSize, int fie
     return(stackSize-1);
 }
 
-bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArray expStack,
+inline bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArray expStack,
                         int stackSize, float alfacut, float scalar_percent, char cixFunction[],
                         double *cix_avg)
 {

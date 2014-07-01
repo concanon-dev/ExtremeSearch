@@ -40,12 +40,12 @@ Functions:
 
 #define MAXROWSIZE 1024*500
 
-extern char *saCSVExtractField(char *);
+extern inline char *saCSVExtractField(char *);
 extern saContextTypePtr saContextLoad(FILE *);
 extern int saContextSave(FILE *, saContextTypePtr);
-extern bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
+extern inline bool saHedgeLoadLookup(FILE *, saSynonymTableTypePtr);
 
-bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *user)
+inline bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *user)
 {
     if (path == NULL)
         return(false);
@@ -72,7 +72,7 @@ bool saSplunkGetContextPath(char *path, char *root, int scope, char *app, char *
     return(true);
 }
 
-bool saSplunkContextDelete(char *name, char *root, int scope, char *app, char *user)
+inline bool saSplunkContextDelete(char *name, char *root, int scope, char *app, char *user)
 {
 
     char file[1024];
@@ -91,7 +91,7 @@ bool saSplunkContextDelete(char *name, char *root, int scope, char *app, char *u
     return(false);
 }
 
-saContextTypePtr saSplunkContextFind(char *name, char *root, char *app, char *user, int *scope)
+inline saContextTypePtr saSplunkContextFind(char *name, char *root, char *app, char *user, int *scope)
 {
     saContextTypePtr contextPtr = NULL;
     char path[1024];
@@ -124,7 +124,7 @@ saContextTypePtr saSplunkContextFind(char *name, char *root, char *app, char *us
     return(contextPtr);    
 }
 
-saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *app, char *user)
+inline saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *app, char *user)
 {
     char file[1024];
     char path[1024];
@@ -149,7 +149,7 @@ saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *a
 }
 
 
-bool saSplunkContextRename(char *name, char *root, int scope, char *app, char *user,
+inline bool saSplunkContextRename(char *name, char *root, int scope, char *app, char *user,
                            char *newName, char *newRoot, int newScope, char *newApp, char *newUser)
 {
     char file[1024];
@@ -174,7 +174,7 @@ bool saSplunkContextRename(char *name, char *root, int scope, char *app, char *u
     return(false);
 }
 
-bool saSplunkContextSave(saContextTypePtr contextPtr, char *root, int scope, char *app, char *user)
+inline bool saSplunkContextSave(saContextTypePtr contextPtr, char *root, int scope, char *app, char *user)
 {
     char file[1024];
     char path[1024];
@@ -199,7 +199,7 @@ bool saSplunkContextSave(saContextTypePtr contextPtr, char *root, int scope, cha
     return(true);
 }
 
-char *saSplunkGetRoot(char *root)
+inline char *saSplunkGetRoot(char *root)
 {
     char *newRoot = root;
     int i=0;
@@ -213,7 +213,7 @@ char *saSplunkGetRoot(char *root)
     return(newRoot);
 }
 
-int saSplunkGetScope(char *scopeStr)
+inline int saSplunkGetScope(char *scopeStr)
 {
     if (scopeStr == NULL)
         return(SA_SPLUNK_SCOPE_NONE);
@@ -236,7 +236,7 @@ int saSplunkGetScope(char *scopeStr)
     return(SA_SPLUNK_SCOPE_GLOBAL);
 }
 
-saSplunkInfoPtr saSplunkLoadHeader()
+inline saSplunkInfoPtr saSplunkLoadHeader()
 {
     char *fields[128];
     char inbuf[MAXROWSIZE];
@@ -261,7 +261,7 @@ saSplunkInfoPtr saSplunkLoadHeader()
     return(p);
 }
 
-bool saSplunkReadInfoPathFile(saSplunkInfoPtr p)
+inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr p)
 {
     char *fields[128];
     char inbuf[MAXROWSIZE];
@@ -309,7 +309,7 @@ bool saSplunkReadInfoPathFile(saSplunkInfoPtr p)
     return(true);
 }
 
-saSplunkInfoPtr saSplunkLoadInfo(char *infoPath)
+inline saSplunkInfoPtr saSplunkLoadInfo(char *infoPath)
 {
     saSplunkInfoPtr p = (saSplunkInfoPtr)malloc(sizeof(saSplunkInfoType));
     strcpy(p->infoPath, infoPath);
@@ -318,7 +318,7 @@ saSplunkInfoPtr saSplunkLoadInfo(char *infoPath)
     return(p);
 }
 
-bool saSplunkHedgeLoad(char *name, char *root, char *app, char *user, int *scope, saSynonymTableTypePtr synonyms)
+inline bool saSplunkHedgeLoad(char *name, char *root, char *app, char *user, int *scope, saSynonymTableTypePtr synonyms)
 {
     char path[1024];
 

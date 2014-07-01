@@ -16,7 +16,7 @@ Functions:
 #include <stdlib.h>
 #include <string.h>
 
-char *insertUniqueValue(char *values[], char *field, int *numUniqueValues)
+inline char *insertUniqueValue(char *values[], char *field, int *numUniqueValues)
 {
     int i=0;
     bool found = false;

@@ -27,7 +27,7 @@ static char headerBuf[1024];
 
 extern void saConceptCopy(saConceptTypePtr, saConceptTypePtr);
 
-saConceptTypePtr saHedgeApply(int hedge, saConceptTypePtr concept)
+inline saConceptTypePtr saHedgeApply(int hedge, saConceptTypePtr concept)
 {
     saConceptTypePtr newConcept = malloc(sizeof(saConceptType));
     double     x, dExpVal = 0.0;
@@ -270,7 +270,7 @@ saConceptTypePtr saHedgeApply(int hedge, saConceptTypePtr concept)
     return(newConcept);
 }
 
-bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
+inline bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
 {
     int i;
     int numFields;
@@ -328,7 +328,7 @@ bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
     return(true);
 }
  
-char *saHedgeLookup(saSynonymTableTypePtr synonymPtr, char *newWord)
+inline char *saHedgeLookup(saSynonymTableTypePtr synonymPtr, char *newWord)
 {
     bool found = false;
 

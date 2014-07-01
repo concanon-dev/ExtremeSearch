@@ -65,26 +65,26 @@ static char *root;
 extern char *optarg;
 extern int optind, optopt;
 
-extern saHashtableTypePtr saHashCreateDefault();
-extern void *saHashGet(saHashtableTypePtr, char *);
-extern void saHashSet(saHashtableTypePtr, char *, char *);
+extern inline saHashtableTypePtr saHashCreateDefault();
+extern inline void *saHashGet(saHashtableTypePtr, char *);
+extern inline void saHashSet(saHashtableTypePtr, char *, char *);
 
-extern saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
+extern inline saConceptTypePtr saConceptCreatePI(char *, double, double, double, double, double);
 
-extern saExpressionTypePtrArray generateExpStack(void);
-static bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
+extern inline saExpressionTypePtrArray generateExpStack(void);
+static inline bool runExpressionStack(char *[], int, saExpressionTypePtrArray, int, float, float, char [],
                                double *);
-extern void walkExpressionStack(saExpressionTypePtrArray, int);    
+extern inline void walkExpressionStack(saExpressionTypePtrArray, int);    
 
-extern double saConceptLookup(saConceptTypePtr, double);
-extern saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
-extern char *saHedgeLookup(saSynonymTableTypePtr, char *);
-extern int saParserParse(char *, char [], saExpressionTypePtrArray);
-extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
-extern char *saSplunkGetRoot(char *);
-extern bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline double saConceptLookup(saConceptTypePtr, double);
+extern inline saConceptTypePtr saHedgeApply(int, saConceptTypePtr);
+extern inline char *saHedgeLookup(saSynonymTableTypePtr, char *);
+extern inline int saParserParse(char *, char [], saExpressionTypePtrArray);
+extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern inline char *saSplunkGetRoot(char *);
+extern inline bool saSplunkHedgeLoad(char *, char *, char *, char *, int *, saSynonymTableTypePtr);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 int main(int argc, char* argv[]) 
 {

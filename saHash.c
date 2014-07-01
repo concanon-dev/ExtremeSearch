@@ -24,7 +24,7 @@ Functions:
 #include "saHash.h"
 
 /* Create a new hashtable. */
-saHashtableTypePtr saHashCreate(int size) 
+inline saHashtableTypePtr saHashCreate(int size) 
 {
     saHashtableTypePtr hashtable = NULL;
     int i;
@@ -48,13 +48,13 @@ saHashtableTypePtr saHashCreate(int size)
     return(hashtable);	
 }
 
-saHashtableTypePtr saHashCreateDefault()
+inline saHashtableTypePtr saHashCreateDefault()
 {
     return(saHashCreate(SA_HASHTABLE_DEFAULTSIZE));
 }
 
 /* Hash a string for a particular hash table. */
-int saHashHash(saHashtableTypePtr hashtable, char *key) 
+inline int saHashHash(saHashtableTypePtr hashtable, char *key) 
 {
     unsigned long int hashval = 0;
     int i = 0;
@@ -70,7 +70,7 @@ int saHashHash(saHashtableTypePtr hashtable, char *key)
 }
 
 /* Create a key-value pair. */
-saHashentryTypePtr saHashNewKVPair(char *key, void *value) 
+inline saHashentryTypePtr saHashNewKVPair(char *key, void *value) 
 {
     saHashentryTypePtr newpair;
 
@@ -85,7 +85,7 @@ saHashentryTypePtr saHashNewKVPair(char *key, void *value)
 }
 
 /* Insert a key-value pair into a hash table. */
-void saHashSet(saHashtableTypePtr hashtable, char *key, char *value ) 
+inline void saHashSet(saHashtableTypePtr hashtable, char *key, char *value ) 
 {
     int bin = 0;
     saHashentryTypePtr newpair = NULL;
@@ -134,7 +134,7 @@ void saHashSet(saHashtableTypePtr hashtable, char *key, char *value )
 }
 
 /* Retrieve a key-value pair from a hash table. */
-void *saHashGet(saHashtableTypePtr hashtable, char *key) 
+inline void *saHashGet(saHashtableTypePtr hashtable, char *key) 
 {
     int bin = 0;
     saHashentryTypePtr pair;
