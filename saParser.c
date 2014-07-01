@@ -38,25 +38,25 @@ Functions:
 
 /* Generate Expressions, given a specific token */
 // Infix Tokens
- saExpressionTypePtr andExpression(saExpressionTypePtr, saTokenTypePtr);
- saExpressionTypePtr inExpression(saExpressionTypePtr, saTokenTypePtr);
- saExpressionTypePtr byExpression(saExpressionTypePtr, saTokenTypePtr);
- saExpressionTypePtr isExpression(saExpressionTypePtr, saTokenTypePtr);
- saExpressionTypePtr orExpression(saExpressionTypePtr, saTokenTypePtr);
+inline saExpressionTypePtr andExpression(saExpressionTypePtr, saTokenTypePtr);
+inline saExpressionTypePtr inExpression(saExpressionTypePtr, saTokenTypePtr);
+inline saExpressionTypePtr byExpression(saExpressionTypePtr, saTokenTypePtr);
+inline saExpressionTypePtr isExpression(saExpressionTypePtr, saTokenTypePtr);
+inline saExpressionTypePtr orExpression(saExpressionTypePtr, saTokenTypePtr);
 
 // Name Tokens
- saExpressionTypePtr fieldExpression(saTokenTypePtr); 
- saExpressionTypePtr conceptExpression(saTokenTypePtr);
- saExpressionTypePtr contextExpression(saTokenTypePtr);
- saExpressionTypePtr parenExpression(saTokenTypePtr);
+inline saExpressionTypePtr fieldExpression(saTokenTypePtr); 
+inline saExpressionTypePtr conceptExpression(saTokenTypePtr);
+inline saExpressionTypePtr contextExpression(saTokenTypePtr);
+inline saExpressionTypePtr parenExpression(saTokenTypePtr);
 
 // Prefix (unary) Tokens
- saExpressionTypePtr modifierOperatorExpression(saTokenTypePtr);
- saExpressionTypePtr notOperatorExpression(saTokenTypePtr);
+inline saExpressionTypePtr modifierOperatorExpression(saTokenTypePtr);
+inline saExpressionTypePtr notOperatorExpression(saTokenTypePtr);
 
 // Token Management functions
- saTokenTypePtr getNextToken(int);
- saTokenTypePtr lookAtNextToken();
+inline saTokenTypePtr getNextToken(int);
+inline saTokenTypePtr lookAtNextToken();
 bool reclassify();
 void tokenizer(char *, saTokenTypePtr *, int *, char *);
 
@@ -135,7 +135,7 @@ saExpressionTypePtrArray generateExpStack()
     return(malloc(sizeof(saExpressionTypePtr) * MAXCHARS));
 }
 
- saTokenTypePtr getNextToken(int token_type)
+inline saTokenTypePtr getNextToken(int token_type)
 {
     // Check to see if there is a specific token expected next
     if (token_type != SA_TOKEN_NO_TOKEN)
@@ -181,7 +181,7 @@ int loadExpStack(FILE *f, saExpressionTypePtrArray expStack)
     return(stackIndex);
 }
 
- saTokenTypePtr lookAtNextToken()
+inline saTokenTypePtr lookAtNextToken()
 {
     return(global_tokenStack[global_tokenIndex]);
 }
@@ -266,7 +266,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return;
 }
 
- saExpressionTypePtr andExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
+inline saExpressionTypePtr andExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
 {
     saExpressionTypePtr right = parseExpression(SA_PRECEDENCE_AND);
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
@@ -277,7 +277,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr orExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
+inline saExpressionTypePtr orExpression(saExpressionTypePtr left, saTokenTypePtr currToken) 
 {
     saExpressionTypePtr right = parseExpression(SA_PRECEDENCE_OR);
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
@@ -289,7 +289,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
 }
 
 
- saExpressionTypePtr inExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
+inline saExpressionTypePtr inExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->left = left;
@@ -300,7 +300,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr byExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
+inline saExpressionTypePtr byExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->left = left;
@@ -311,7 +311,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr isExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
+inline saExpressionTypePtr isExpression(saExpressionTypePtr left, saTokenTypePtr currToken)
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->left = left;
@@ -322,14 +322,14 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr parenExpression(saTokenTypePtr currToken)
+inline saExpressionTypePtr parenExpression(saTokenTypePtr currToken)
 {
     saExpressionTypePtr exp = parseExpression(0);
     getNextToken(SA_TOKEN_RIGHT_PAREN);
     return(exp);
 }
 
- saExpressionTypePtr fieldExpression(saTokenTypePtr currToken) 
+inline saExpressionTypePtr fieldExpression(saTokenTypePtr currToken) 
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->field = currToken->token;
@@ -339,19 +339,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr conceptExpression(saTokenTypePtr currToken) 
-{
-    saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
-    exp->field = currToken->token;
-    exp->type = currToken->token_type;
-    exp->left = NULL;
-    exp->right = NULL;
-    exp->intvalue = -1;
-    exp->valueptr = 0;
-    return(exp);
-}
-
- saExpressionTypePtr contextExpression(saTokenTypePtr currToken)
+inline saExpressionTypePtr conceptExpression(saTokenTypePtr currToken) 
 {
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
     exp->field = currToken->token;
@@ -363,7 +351,19 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr modifierOperatorExpression(saTokenTypePtr currToken) 
+inline saExpressionTypePtr contextExpression(saTokenTypePtr currToken)
+{
+    saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
+    exp->field = currToken->token;
+    exp->type = currToken->token_type;
+    exp->left = NULL;
+    exp->right = NULL;
+    exp->intvalue = -1;
+    exp->valueptr = 0;
+    return(exp);
+}
+
+inline saExpressionTypePtr modifierOperatorExpression(saTokenTypePtr currToken) 
 {
     saExpressionTypePtr right = parseExpression(currToken->token_precedence);
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
@@ -374,7 +374,7 @@ void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackI
     return(exp);
 }
 
- saExpressionTypePtr notOperatorExpression(saTokenTypePtr currToken) 
+inline saExpressionTypePtr notOperatorExpression(saTokenTypePtr currToken) 
 {
     saExpressionTypePtr right = parseExpression(currToken->token_precedence);
     saExpressionTypePtr exp = malloc(sizeof(saExpressionType));
