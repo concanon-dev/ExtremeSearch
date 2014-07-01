@@ -206,7 +206,15 @@ int main(int argc, char* argv[])
     // check to see if already parsed
     char stackFile[2048];
     strcpy(stackFile, p->infoPath);
-    char *endStr = strrchr(stackFile, '/');
+    char *endStr = NULL;
+    char *walkStr = stackFile;
+    while(*walkStr != '\0')
+    {
+          if (*walkStr == '/')
+              endStr = walkStr;
+          walkStr++;
+    }
+    //char *endStr = strrchr(stackFile, '/');
     strcpy(endStr, "/stack.txt");
     FILE *sFile = fopen(stackFile, "r");
     if (sFile == NULL)
