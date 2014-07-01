@@ -10,7 +10,7 @@ set iter 5
 set errors 0
 log_file -a demographic.out
 
-send_user "\n\nDEMOGRAPHICS TESTS STARTED\n"
+send_user "\n\nDEMOGRAPHICS TESTS STARTED ($index)\n"
 
 send "uname -s\r"
 expect {
@@ -104,6 +104,6 @@ aggregateCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Ag
 aggregateSpearmanCorrelation $env(SPLUNK_HOME) $login $passwd Demo_Height_With_Age_By_Age_SpearmanCorrelation.csv Demo_Height_With_Age_By_State_SpearmanCorrelation.csv Demo_Aggregate_SpearmanCorrelation "x*bf*bv*numRows*R"
 
 send_user "\n\nFailures: ($errors)"
-send_user "\n\nDEMOGRAPHICS TESTS ENDED\n"
+send_user "\n\nDEMOGRAPHICS TESTS ENDED ($index)\n"
 
 close
