@@ -151,6 +151,36 @@ saTokenTypePtr getNextToken(int token_type)
     return(global_tokenStack[global_tokenIndex++]);
 }
 
+int loadExpStack(FILE *f, saExpressionTypePtrArray expStack)
+{
+    char inBuf[257];
+
+    fgets(inBuf, 256, f);
+    inBuf[strlen(inBuf)-1] = '\0';
+    int stackIndex = atoi(inBuf);
+    int i;
+    for(i=0; i<stackIndex; i++)
+    {
+        if (fgets(inBuf, 256, f) != NULL)
+        {
+            inBuf[strlen(inBuf)-1] = '\0';
+            expStack[i] = malloc(sizeof(saExpressionType));
+            char *s = inBuf;
+            char *t = strchr(s, ',');
+            *t = '\0';
+            t++; 
+            char *u = strchr(t, ',');
+            *u = '\0';
+            u++;
+            expStack[i]->field = malloc(strlen(s)+1);
+            strcpy(expStack[i]->field, s);
+            expStack[i]->type = atoi(t);
+            expStack[i]->intvalue = atoi(u);
+        }
+    }
+    return(stackIndex);
+}
+
 saTokenTypePtr lookAtNextToken()
 {
     return(global_tokenStack[global_tokenIndex]);
@@ -222,6 +252,16 @@ void walkExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackIn
     int i;
     for(i=0; i<stackIndex; i++)
         fprintf(f, "stack[%d]=%s type=%d\n", i, expStack[i]->field, expStack[i]->type);
+
+    return;
+}
+
+void writeExpressionStack(FILE *f, saExpressionTypePtrArray expStack, int stackIndex)
+{
+    fprintf(f, "%d\n", stackIndex);
+    int i;
+    for(i=0; i<stackIndex; i++)
+        fprintf(f, "%s,%d,%d\n", expStack[i]->field, expStack[i]->type, expStack[i]->intvalue);
 
     return;
 }

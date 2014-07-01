@@ -43,7 +43,6 @@
 #include <unistd.h>
 #include "saContext.h"
 #include "saCSV.h"
-#include "csv3.h"
 #include "saExpression.h"
 #include "saHash.h"
 #include "saHedge.h"
@@ -58,8 +57,6 @@
 #define FCIX_WEIGHTED "weighted"
 
 #define MAXROWSIZE (1024*1024)
-
-static saCSVType csv;
 
 static bool calledXcix = false;
 static bool termSetFound[32];
@@ -197,8 +194,6 @@ int main(int argc, char* argv[])
         }
     }
 
-    saCSVOpen(&csv, stdin);
-
     // parse the where line
     saExpressionTypePtrArray expStack = generateExpStack();
     int stackSize = 0;
@@ -229,7 +224,7 @@ int main(int argc, char* argv[])
 
     // Parse the first (header) line of input
     foundAnyField = false;
-    if ((numHeaderFields = saCSV3GetLine(&csv, headerbuf, headerList)) == 0)
+    if ((numHeaderFields = saCSVGetLine(headerbuf, headerList)) == 0)
         exit(0);
 
     int i;
@@ -301,8 +296,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(done == false)
     {
-        int zzz = saCSV3GetLine(&csv, inbuf, fieldList);
-        if (saCSVEOF(&csv) == false)
+        int zzz = saCSVGetLine(inbuf, fieldList);
+        if (!feof(stdin))
         {
             bool writeRow;
 

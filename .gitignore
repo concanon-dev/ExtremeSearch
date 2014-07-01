@@ -1,6 +1,7 @@
 bin/
 obj/
 release/
+test/
 # MacOS generated files #
 #########################
 */.DS_Store

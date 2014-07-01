@@ -90,9 +90,9 @@ winobjs.GNU/Linux :=
 WINOBJS := ${winobjs.${OSTYPE}}
 
 
-CFLAGS=-Ofast -Wall
+CFLAGS=-O2 -Wall
 LDFLAGS=-lm -g
-SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c csvtest.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
+SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinearRegression xsAggregateQuadRegression xsAggregateSpearmanCorrelation xsApplyAutoRegression xsApplyAutoRegressionFromFile xsApplyLinearRegression xsApplyLinearRegressionFromFile xsApplyQuadRegression xsApplyQuadRegressionFromFile xsCloneContext xsCloneConcept xsCreateContext xsCreateConcept xsDeleteContext xsDeleteConcept xsDiscoverTrend xsDisplayContext xsDisplayConcept xsDisplayWhere xsFindBestConcept xsFindMembership xsGetCompatibility xsGetDistance xsGetWhereCix xsListContexts xsListConcepts xsListUOM xsMergeContexts xsPerformAutoRegression xsPerformCorrelation xsPerformLinearRegression xsPerformQuadRegression xsPerformSpearmanCorrelation xsRenameContext xsWhere xspreautoregress xsprecorrelate xsPredict xsprequadregress xspreregress xsprespearmancorrelate xsrepredict
@@ -176,10 +176,8 @@ xsPerformSpearmanCorrelation: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsPerformSpearmanCorrelation.o $(OBJDIR)/saCSV.o $(OBJDIR)/saContext.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saSignal.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o   $(LICENSELIB) $(LDFLAGS)
 xsRenameContext: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsRenameContext.o $(OBJDIR)/saContext.o $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o  $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
-#xsWhere: $(OBJECTS)
-#	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o  $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o   $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xsWhere: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saSignal.o   $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o   $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o   $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xspreautoregress: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspreautoregress.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
 xsprecorrelate: $(OBJECTS)
@@ -198,8 +196,6 @@ xsrepredict: $(OBJECTS)
 #
 # Individual C files
 #
-csvtest.o:
-        $(GCC) -c csvtest.c -o $(OBJDIR)/$@
 saTokenize.tab.o: saTokenize.tab.c saTokenize.tab.h lex.yy.c
 	$(GCC) -c  saTokenize.tab.c -o $(OBJDIR)/saTokenize.tab.o
 lex.yy.o: 
@@ -316,8 +312,6 @@ xsRenameContext.o:
 	$(GCC) -c xsRenameContext.c -o $(OBJDIR)/$@
 xsWhere.o:
 	$(GCC) -c xsWhere.c -o $(OBJDIR)/$@
-xsWhere3.o:
-	$(GCC) -c xsWhere3.c -o $(OBJDIR)/$@
 xspreautoregress.o:
 	$(GCC) -c xspreautoregress.c -o $(OBJDIR)/$@
 xsprecorrelate.o:
