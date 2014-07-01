@@ -206,11 +206,9 @@ int main(int argc, char* argv[])
     // check to see if already parsed
     char stackFile[2048];
     strcpy(stackFile, p->infoPath);
-#ifdef _WIN32
-    char *endStr = strrchr(stackFile, '\');
-#else
-    char *endStr = strrchr(stackFile, '/');
-#endif
+    char *endStr = stackFile + strlen(stackFile) - 1;
+    while(*endStr != 47 && *endStr != 92)
+          endStr--;
     strcpy(endStr+1, "stack.txt");
     FILE *sFile = fopen(stackFile, "r");
     if (sFile == NULL)
