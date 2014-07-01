@@ -90,7 +90,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "saTokenize.y"
+#line 7 "saTokenize.y"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -136,7 +136,7 @@ int tokenCount = 0;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 28 "saTokenize.y"
+#line 34 "saTokenize.y"
 {
     //saTokenType ti;
     char *sval;
@@ -445,9 +445,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    47,    51,    52,    53,    54,    55,
-      56,    60,    64,    65,    69,    74,    78,    85,    91,    97,
-     103,   109,   116
+       0,    51,    51,    52,    53,    57,    58,    59,    60,    61,
+      62,    66,    70,    71,    75,    80,    84,    91,    97,   103,
+     109,   115,   122
 };
 #endif
 
@@ -1369,14 +1369,14 @@ yyreduce:
   switch (yyn)
     {
         case 15:
-#line 75 "saTokenize.y"
+#line 81 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_FIELD, SA_PRECEDENCE_FIELD);
     ;}
     break;
 
   case 16:
-#line 79 "saTokenize.y"
+#line 85 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (2)].sval), SA_TOKEN_NOT, SA_PRECEDENCE_PREFIX);
         addToken((yyvsp[(2) - (2)].sval), SA_TOKEN_FIELD, SA_PRECEDENCE_FIELD);
@@ -1384,42 +1384,42 @@ yyreduce:
     break;
 
   case 17:
-#line 86 "saTokenize.y"
+#line 92 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_IN, SA_PRECEDENCE_IN);
     ;}
     break;
 
   case 18:
-#line 92 "saTokenize.y"
+#line 98 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_IS, SA_PRECEDENCE_IS);
     ;}
     break;
 
   case 19:
-#line 98 "saTokenize.y"
+#line 104 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_AND, SA_PRECEDENCE_AND);
     ;}
     break;
 
   case 20:
-#line 104 "saTokenize.y"
+#line 110 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_OR, SA_PRECEDENCE_OR);
     ;}
     break;
 
   case 21:
-#line 110 "saTokenize.y"
+#line 116 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_LEFT_PAREN, SA_PRECEDENCE_FIELD);
     ;}
     break;
 
   case 22:
-#line 117 "saTokenize.y"
+#line 123 "saTokenize.y"
     {
         addToken((yyvsp[(1) - (1)].sval), SA_TOKEN_RIGHT_PAREN, SA_PRECEDENCE_FIELD);
     ;}
@@ -1641,7 +1641,7 @@ yyreturn:
 }
 
 
-#line 122 "saTokenize.y"
+#line 128 "saTokenize.y"
 
 
 void addToken(char *tk, int tk_type, int tk_precedence) {

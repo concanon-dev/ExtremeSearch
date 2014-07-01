@@ -463,13 +463,19 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "saTokenize.l"
-#line 2 "saTokenize.l"
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+*/
+#line 8 "saTokenize.l"
 #include "saToken.h"
 #include "saTokenize.tab.h"
 int line_num = 1;
 int col_num = 0;
 void setStringSource(char *line);
-#line 473 "lex.yy.c"
+#line 479 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -651,9 +657,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 9 "saTokenize.l"
+#line 15 "saTokenize.l"
 
-#line 657 "lex.yy.c"
+#line 663 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -738,76 +744,76 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "saTokenize.l"
+#line 16 "saTokenize.l"
 {col_num += 1;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "saTokenize.l"
+#line 17 "saTokenize.l"
 ;
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 12 "saTokenize.l"
+#line 18 "saTokenize.l"
 { ++line_num; col_num = 0; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "saTokenize.l"
+#line 19 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 1; return (TOKEN_LEFT_PAREN); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "saTokenize.l"
+#line 20 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 1; return (TOKEN_RIGHT_PAREN); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "saTokenize.l"
+#line 21 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 3; return (TOKEN_AND); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "saTokenize.l"
+#line 22 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 3; return (TOKEN_AND); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "saTokenize.l"
+#line 23 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 3; return (TOKEN_AND); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "saTokenize.l"
+#line 24 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 2; return (TOKEN_OR);  }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "saTokenize.l"
+#line 25 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 3; return (TOKEN_NOT); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "saTokenize.l"
+#line 26 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 2; return (TOKEN_IN); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "saTokenize.l"
+#line 27 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += 2; return (TOKEN_IS); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 22 "saTokenize.l"
+#line 28 "saTokenize.l"
 { yylval.sval = strdup(yytext); col_num += strlen(yytext); return (TOKEN_FIELD); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 24 "saTokenize.l"
+#line 30 "saTokenize.l"
 ECHO;
 	YY_BREAK
-#line 811 "lex.yy.c"
+#line 817 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1804,7 +1810,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 24 "saTokenize.l"
+#line 30 "saTokenize.l"
 
 
 int yywrap() {

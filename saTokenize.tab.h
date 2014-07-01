@@ -64,7 +64,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 28 "saTokenize.y"
+#line 34 "saTokenize.y"
 {
     //saTokenType ti;
     char *sval;

@@ -199,7 +199,7 @@ xsrepredict: $(OBJECTS)
 # Individual C files
 #
 csvtest.o:
-        $(GCC) -c csvtest.c -o $(OBJDIR)/$@
+	$(GCC) -c csvtest.c -o $(OBJDIR)/$@
 saTokenize.tab.o: saTokenize.tab.c saTokenize.tab.h lex.yy.c
 	$(GCC) -c  saTokenize.tab.c -o $(OBJDIR)/saTokenize.tab.o
 lex.yy.o: 
