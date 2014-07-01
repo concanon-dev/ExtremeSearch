@@ -576,7 +576,6 @@ bool runExpressionStack(char *fieldList[], int numFields, saExpressionTypePtrArr
                     if (t == NULL)
                     {
                         fprintf(stderr, "xsWhere-F-111: can't open context %s\n", contextName);
-                        fprintf(stderr, "root=%s app=%s user=%s\n", root, p->app, p->user);
                         exit(0);
                     }
                 
