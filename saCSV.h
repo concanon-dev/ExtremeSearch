@@ -9,13 +9,13 @@
 
 #include <stdbool.h>
 
-extern int saCSVCompareField(char *, char []);
-extern bool saCSVConvertToDouble(char *, double *);
-extern char *saCSVExtractField(char *);
-extern int saCSVFGetHeaderLine(FILE *, char [], char *[]);
-extern int saCSVFGetLine(FILE *, char [], char *[]);
-extern int saCSVGetHeaderLine(char [], char *[]);
-extern int saCSVGetLine(char [], char *[]);
-extern int saCSVParseFieldList(char *[], char *);
+extern inline int saCSVCompareField(char *, char []);
+extern inline bool saCSVConvertToDouble(char *, double *);
+extern inline char *saCSVExtractField(char *);
+extern inline int saCSVFGetHeaderLine(FILE *, char [], char *[]);
+extern inline int saCSVFGetLine(FILE *, char [], char *[]);
+extern inline int saCSVGetHeaderLine(char [], char *[]);
+extern inline int saCSVGetLine(char [], char *[]);
+extern inline int saCSVParseFieldList(char *[], char *);
 
 #endif

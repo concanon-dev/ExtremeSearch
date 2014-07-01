@@ -13,7 +13,7 @@ static saCSVType csv;
 #define QUOTED_FIELD 2
 
 
-int get(saCSVTypePtr csvPtr)
+inline int get(saCSVTypePtr csvPtr)
 {
     int c;
 
@@ -32,25 +32,25 @@ int get(saCSVTypePtr csvPtr)
     return(c);
 }
 
-bool saCSVEOF(saCSVTypePtr csvPtr)
+inline bool saCSVEOF(saCSVTypePtr csvPtr)
 {
     if (csvPtr->size <= 0)
         return(true);
     return(false);
 }
 
-void unget(saCSVTypePtr csvPtr)
+inline void unget(saCSVTypePtr csvPtr)
 {
     csvPtr->pointer--;
 }
 
 
-int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
+inline int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
 {
     return(saCSV3FGetLine(csvPtr, inbuf, fields));
 }
 
-int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
+inline int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
 {
     char separator = ',';
 
@@ -169,7 +169,7 @@ int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
     return(numFields);
 }
 
-void saCSVOpen(saCSVTypePtr csvPtr, FILE *f)
+inline void saCSVOpen(saCSVTypePtr csvPtr, FILE *f)
 {
     csvPtr->csvFile = f;
     csvPtr->pointer = 0;

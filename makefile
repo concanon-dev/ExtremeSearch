@@ -199,7 +199,7 @@ xsrepredict: $(OBJECTS)
 # Individual C files
 #
 csvtest.o:
-	$(GCC) -c csvtest.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c csvtest.c -o $(OBJDIR)/$@
 saTokenize.tab.o: saTokenize.tab.c saTokenize.tab.h lex.yy.c
 	$(GCC) -c  saTokenize.tab.c -o $(OBJDIR)/saTokenize.tab.o
 lex.yy.o: 
@@ -213,7 +213,7 @@ saContext.o:
 saContextCreate.o:
 	$(GCC) -c saContextCreate.c -o $(OBJDIR)/$@
 saCSV.o:
-	$(GCC) -c saCSV.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saCSV.c -o $(OBJDIR)/$@
 saGeoLiteCity.o:
 	$(GCC) -c saGeoLiteCity.c -o $(OBJDIR)/$@
 saHash.o:

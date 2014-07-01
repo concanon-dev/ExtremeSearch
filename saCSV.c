@@ -31,7 +31,7 @@ Functions:
 #define NORMAL_FIELD 1
 #define QUOTED_FIELD 2
 
-int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
+inline int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
 {
     char separator = ',';
 
@@ -150,12 +150,12 @@ int saCSVFGetLine(FILE *f, char inbuf[], char *fields[])
     return(numFields);
 }
 
-int saCSVGetLine(char inbuf[], char *fields[])
+inline int saCSVGetLine(char inbuf[], char *fields[])
 {
     return(saCSVFGetLine(stdin, inbuf, fields));
 }
 
-int saCSVFGetHeaderLine(FILE *f, char inbuf[], char *fields[])
+inline int saCSVFGetHeaderLine(FILE *f, char inbuf[], char *fields[])
 {
     int numFields = 0;
     inbuf[0] = '\0';
@@ -192,12 +192,12 @@ int saCSVFGetHeaderLine(FILE *f, char inbuf[], char *fields[])
     return(numFields);
 }
 
-int saCSVGetHeaderLine(char inbuf[], char *fields[])
+inline int saCSVGetHeaderLine(char inbuf[], char *fields[])
 {
     return(saCSVFGetHeaderLine(stdin, inbuf, fields));
 }
 
-int saCSVCompareField(char *quotedStr, char str[])
+inline int saCSVCompareField(char *quotedStr, char str[])
 {
     if (*quotedStr != '"')
         return(strcmp(quotedStr, str));
@@ -209,7 +209,7 @@ int saCSVCompareField(char *quotedStr, char str[])
     return(strcmp(temp, str));
 }
 
-bool saCSVConvertToDouble(char *s, double *d)
+inline bool saCSVConvertToDouble(char *s, double *d)
 {
     char *endptr;
 
@@ -219,7 +219,7 @@ bool saCSVConvertToDouble(char *s, double *d)
     return(true);
 }
 
-char *saCSVExtractField(char *quotedStr)
+inline char *saCSVExtractField(char *quotedStr)
 {
     if (*quotedStr != '"')
         return(quotedStr);
@@ -231,7 +231,7 @@ char *saCSVExtractField(char *quotedStr)
     return(newStr);
 }
 
-int saCSVParseFieldList(char *fieldList[], char *fields)
+inline int saCSVParseFieldList(char *fieldList[], char *fields)
 {
     int count = 0;
     fieldList[count++] = fields;

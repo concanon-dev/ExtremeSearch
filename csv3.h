@@ -17,7 +17,7 @@ typedef saCSVType *saCSVTypePtr;
 
 #endif
 
-extern bool saCSVEOF(saCSVTypePtr);
-extern int saCSV3GetLine(saCSVTypePtr, char [], char *[]);
-extern int saCSV3FGetLine(saCSVTypePtr, char [], char *[]);
-extern void saCSVOpen(saCSVTypePtr, FILE *);
+extern inline bool saCSVEOF(saCSVTypePtr);
+extern inline int saCSV3GetLine(saCSVTypePtr, char [], char *[]);
+extern inline int saCSV3FGetLine(saCSVTypePtr, char [], char *[]);
+extern inline void saCSVOpen(saCSVTypePtr, FILE *);
