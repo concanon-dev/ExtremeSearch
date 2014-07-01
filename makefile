@@ -315,7 +315,7 @@ xsPerformSpearmanCorrelation.o:
 xsRenameContext.o:
 	$(GCC) -c xsRenameContext.c -o $(OBJDIR)/$@
 xsWhere.o:
-	$(GCC) -c xsWhere.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsWhere.c -o $(OBJDIR)/$@
 xsWhere3.o:
 	$(GCC) -c xsWhere3.c -o $(OBJDIR)/$@
 xspreautoregress.o:
