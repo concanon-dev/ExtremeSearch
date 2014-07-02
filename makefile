@@ -242,27 +242,27 @@ saSpearmanCorrelation.o:
 saStatistics.o:
 	$(GCC) -c saStatistics.c -o $(OBJDIR)/$@
 xsAggregateAutoRegression.o:
-	$(GCC) -c xsAggregateAutoRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsAggregateAutoRegression.c -o $(OBJDIR)/$@
 xsAggregateCorrelation.o:
-	$(GCC) -c xsAggregateCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsAggregateCorrelation.c -o $(OBJDIR)/$@
 xsAggregateLinearRegression.o:
-	$(GCC) -c xsAggregateLinearRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsAggregateLinearRegression.c -o $(OBJDIR)/$@
 xsAggregateQuadRegression.o:
-	$(GCC) -c xsAggregateQuadRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsAggregateQuadRegression.c -o $(OBJDIR)/$@
 xsAggregateSpearmanCorrelation.o:
-	$(GCC) -c xsAggregateSpearmanCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsAggregateSpearmanCorrelation.c -o $(OBJDIR)/$@
 xsApplyAutoRegression.o:
-	$(GCC) -c xsApplyAutoRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyAutoRegression.c -o $(OBJDIR)/$@
 xsApplyAutoRegressionFromFile.o:
-	$(GCC) -c xsApplyAutoRegressionFromFile.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyAutoRegressionFromFile.c -o $(OBJDIR)/$@
 xsApplyLinearRegression.o:
-	$(GCC) -c xsApplyLinearRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyLinearRegression.c -o $(OBJDIR)/$@
 xsApplyLinearRegressionFromFile.o:
-	$(GCC) -c xsApplyLinearRegressionFromFile.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyLinearRegressionFromFile.c -o $(OBJDIR)/$@
 xsApplyQuadRegression.o:
-	$(GCC) -c xsApplyQuadRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyQuadRegression.c -o $(OBJDIR)/$@
 xsApplyQuadRegressionFromFile.o:
-	$(GCC) -c xsApplyQuadRegressionFromFile.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsApplyQuadRegressionFromFile.c -o $(OBJDIR)/$@
 xsCloneContext.o:
 	$(GCC) -c xsCloneContext.c -o $(OBJDIR)/$@
 xsCloneConcept.o:
@@ -276,7 +276,7 @@ xsDeleteContext.o:
 xsDeleteConcept.o:
 	$(GCC) -c xsDeleteConcept.c -o $(OBJDIR)/$@
 xsDiscoverTrend.o:
-	$(GCC) -c xsDiscoverTrend.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsDiscoverTrend.c -o $(OBJDIR)/$@
 xsDisplayContext.o:
 	$(GCC) -c xsDisplayContext.c -o $(OBJDIR)/$@
 xsDisplayConcept.o:
@@ -286,11 +286,11 @@ xsDisplayWhere.o:
 xsFindBestConcept.o:
 	$(GCC) -O3 -c xsFindBestConcept.c -o $(OBJDIR)/$@
 xsFindMembership.o:
-	$(GCC) -c xsFindMembership.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsFindMembership.c -o $(OBJDIR)/$@
 xsGetCompatibility.o:
-	$(GCC) -c xsGetCompatibility.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsGetCompatibility.c -o $(OBJDIR)/$@
 xsGetDistance.o:
-	$(GCC) -c xsGetDistance.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsGetDistance.c -o $(OBJDIR)/$@
 xsListContexts.o:
 	$(GCC) -c xsListContexts.c -o $(OBJDIR)/$@
 xsListConcepts.o:
@@ -300,15 +300,15 @@ xsListUOM.o:
 xsMergeContexts.o:
 	$(GCC) -c xsMergeContexts.c -o $(OBJDIR)/$@
 xsPerformAutoRegression.o:
-	$(GCC) -c xsPerformAutoRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPerformAutoRegression.c -o $(OBJDIR)/$@
 xsPerformCorrelation.o:
-	$(GCC) -c xsPerformCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPerformCorrelation.c -o $(OBJDIR)/$@
 xsPerformLinearRegression.o:
-	$(GCC) -c xsPerformLinearRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPerformLinearRegression.c -o $(OBJDIR)/$@
 xsPerformQuadRegression.o:
-	$(GCC) -c xsPerformQuadRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPerformQuadRegression.c -o $(OBJDIR)/$@
 xsPerformSpearmanCorrelation.o:
-	$(GCC) -c xsPerformSpearmanCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPerformSpearmanCorrelation.c -o $(OBJDIR)/$@
 xsRenameContext.o:
 	$(GCC) -c xsRenameContext.c -o $(OBJDIR)/$@
 xsWhere.o:
@@ -316,19 +316,19 @@ xsWhere.o:
 xsWhere3.o:
 	$(GCC) -O3 -c xsWhere3.c -o $(OBJDIR)/$@
 xspreautoregress.o:
-	$(GCC) -c xspreautoregress.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xspreautoregress.c -o $(OBJDIR)/$@
 xsprecorrelate.o:
-	$(GCC) -c xsprecorrelate.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsprecorrelate.c -o $(OBJDIR)/$@
 xsPredict.o:
-	$(GCC) -c xsPredict.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsPredict.c -o $(OBJDIR)/$@
 xsprequadregress.o:
-	$(GCC) -c xsprequadregress.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsprequadregress.c -o $(OBJDIR)/$@
 xspreregress.o:
-	$(GCC) -c xspreregress.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xspreregress.c -o $(OBJDIR)/$@
 xsprespearmancorrelate.o:
-	$(GCC) -c xsprespearmancorrelate.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsprespearmancorrelate.c -o $(OBJDIR)/$@
 xsrepredict.o:
-	$(GCC) -c xsrepredict.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c xsrepredict.c -o $(OBJDIR)/$@
 # strsep only for cgwin
 strsep.o:
 	$(GCC) -c strsep.c -o $(OBJDIR)/$@
