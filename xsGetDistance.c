@@ -23,11 +23,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 #include "saGeoLiteCity.h"
 #include "saHash.h"
-
 #include "saSignal.h"
 
 static void lookupByCityRegionCountry(char *, char *, char *, double []);
@@ -36,6 +36,8 @@ static void lookupByZipCode(char *, double *);
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char *headerList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
+
+static saCSVType csv;
 
 extern bool saGeoLiteCityLoadTable(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByCountryRegionCity(char *);
@@ -76,7 +78,7 @@ int main(int argc, char *argv[])
     lat2Field[0] = '\0';
     lon2Field[0] = '\0';
     strcpy(distanceField, "distance");
-    sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/GeoLiteCity-Location.csv", saSplunkGetRoot(argv[0]));
+    sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/locations.csv", saSplunkGetRoot(argv[0]));
     while ((c = getopt(argc, argv, "d:g:f:t:")) != -1)
     {
         switch(c)
@@ -120,8 +122,11 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
+    // open input to read CSV stream
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numHeaderFields = saCSVGetLine(inbuf, headerList);
+    int numHeaderFields = saCSV3GetLine(&csv, inbuf, headerList);
     if (!numHeaderFields)
         exit(0);
 
@@ -186,8 +191,8 @@ int main(int argc, char *argv[])
     bool done = false;
     while(done == false)
     {
-        int fieldCount = saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        int fieldCount = saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             double distance = -1;
             latLon1[0] = latLon1[1] = latLon2[0] = latLon2[1] = SA_CONSTANTS_BADLATLON;
@@ -248,14 +253,14 @@ int main(int argc, char *argv[])
 
             // write out the values of each field
             if (distanceIndex == -1)
-                fprintf(stdout, "%.10f,", distance);
+                fprintf(stdout, "%.4f,", distance);
 
             for(i=0; i<numHeaderFields;i++)
             {
                 if (i)
                     fputs(",", stdout);
                 if (i == distanceIndex)
-                    fprintf(stdout, "%.10f", distance);
+                    fprintf(stdout, "%.4f", distance);
                 else
                     fputs(fieldList[i], stdout);
             }
