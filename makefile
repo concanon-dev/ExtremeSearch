@@ -1,4 +1,4 @@
-#!/usr/bin/make -f
+
 # Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
 # Reproduction or unauthorized use is prohibited. Unauthorized
 # use is illegal. Violators will be prosecuted. This software 
@@ -62,8 +62,8 @@ COMPRESSCMD := ${compresscmd.${OSTYPE}}
 #gcc.Cygwin := x86_64-w64-mingw32-gcc -D _UNICODE
 gcc.Cygwin := $(PROCESSOR)-w64-mingw32-gcc -D _UNICODE
 gcc.CYGWIN_NT-6.1 := $(PROCESSOR)-w64-mingw32-gcc -D _UNICODE
-gcc.darwin :=gcc -g -fgnu89-inline
-gcc.Darwin :=gcc -g -fgnu89-inline
+gcc.darwin :=gcc -g -fgnu89-inline -no-cpp-precomp
+gcc.Darwin :=gcc -g -fgnu89-inline -no-cpp-precomp
 gcc.linux := gcc -g
 gcc.Linux := gcc -g
 gcc.GNU/Linux := gcc -g
@@ -91,7 +91,9 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 
 CFLAGS=-Ofast -Wall
-LDFLAGS=-lm -g -s -Wl,--gc-sections
+#LDFLAGS=-lm -g 
+#LDFLAGS=-lm -g -s -Wl,--gc-sections
+LDFLAGS=-lm -g -dead_strip
 SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c csvtest.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
