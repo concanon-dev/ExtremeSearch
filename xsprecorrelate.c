@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include "saConstants.h"
 #include "saCSV.h"
-
+#include "csv3.h"
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -48,6 +48,8 @@ static int numTempDoubles;
 static int numUniqueBValues;
 static double *xAxis[SA_CONSTANTS_MAXAXIS];
 static double *yAxis[SA_CONSTANTS_MAXAXIS];
+
+static saCSVType csv;
 
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);

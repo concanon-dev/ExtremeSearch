@@ -1,10 +1,27 @@
+/*
+ Copyright 2012-2014 Scianta Analytics LLC   All Rights Reserved.  
+ Reproduction or unauthorized use is prohibited. Unauthorized
+ use is illegal. Violators will be prosecuted. This software 
+ contains proprietary trade and business secrets.            
+
+Module: saCSV3
+
+Description:
+    Provide all functions necessary to read in CSV-formatted data.
+
+Functions:
+    External:
+
+    Internal:
+*/
+#define _CSV3_C
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "csv3.h"
 
-static saCSVType csv;
+//static saCSVType csv;
 
 #define SA_CSV_MAXSTRING 1024
 
@@ -44,11 +61,6 @@ inline void unget(saCSVTypePtr csvPtr)
     csvPtr->pointer--;
 }
 
-
-inline int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
-{
-    return(saCSV3FGetLine(csvPtr, inbuf, fields));
-}
 
 inline int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
 {
@@ -167,6 +179,11 @@ inline int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
           }
     }
     return(numFields);
+}
+
+inline int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
+{
+    return(saCSV3FGetLine(csvPtr, inbuf, fields));
 }
 
 inline void saCSVOpen(saCSVTypePtr csvPtr, FILE *f)

@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include "saAutoRegression.h"
 #include "saCSV.h"
+#include "csv3.h"
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -48,6 +49,7 @@ static double *xAxis[SA_CONSTANTS_MAXAXIS];
 static double xAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 
+static saCSVType csv;
 
 extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
@@ -134,8 +136,11 @@ int main(int argc, char* argv[])
         xAxisHigh[i] = 2.22507e-308;
     }
 
+    // Open the input stream as CSV
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numFields = saCSVGetLine(inbuf, fieldList);
+    int numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the x and by fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -196,8 +201,8 @@ int main(int argc, char* argv[])
         bool done = false;
         while(done == false)
         {
-            saCSVGetLine(inbuf, fieldList);
-            if (!feof(stdin))
+            saCSV3GetLine(&csv, inbuf, fieldList);
+            if (!saCSVEOF(&csv))
             {
                 for(i=0; i<numXAxis; i++)
                 {

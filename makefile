@@ -91,7 +91,8 @@ WINOBJS := ${winobjs.${OSTYPE}}
 
 
 CFLAGS=-Ofast -Wall
-LDFLAGS=-lm -g -s -Wl,--gc-sections
+#LDFLAGS=-lm -g -s -Wl,--gc-sections
+LDFLAGS=-lm -g -Wl,
 SOURCES= fix-intersplunk.c saAutoRegression.c saContext.c saContextCreate.c saCSV.c saGeoLiteCity.c saHash.c saHedge.c saInsertUniqueValue.c saLinearCorrelation.c saLinearRegression.c saListDir.c saMatrixArgs.c saParser.c saQuadRegression.c saSignal.c saConcept.c saSplunk.c saSpearmanCorrelation.c saStatistics.c xsAggregateAutoRegression.c xsAggregateCorrelation.c xsAggregateLinearRegression.c xsAggregateQuadRegression.c xsAggregateSpearmanCorrelation.c xsApplyAutoRegression.c xsApplyAutoRegressionFromFile.c xsApplyLinearRegression.c xsApplyLinearRegressionFromFile.c xsApplyQuadRegression.c xsApplyQuadRegressionFromFile.c xsCloneContext.c xsCloneConcept.c xsCreateContext.c xsCreateConcept.c xsDeleteContext.c xsDeleteConcept.c xsDiscoverTrend.c xsDisplayContext.c xsDisplayConcept.c xsDisplayWhere.c xsFindBestConcept.c xsFindMembership.c xsGetCompatibility.c xsGetDistance.c xsListContexts.c xsListConcepts.c xsListUOM.c xsMergeContexts.c xsPerformAutoRegression.c xsPerformCorrelation.c xsPerformLinearRegression.c xsPerformQuadRegression.c xsPerformSpearmanCorrelation.c xsRenameContext.c csvtest.c xsWhere.c xspreautoregress.c xsprecorrelate.c xsPredict.c xsprequadregress.c xspreregress.c xsprespearmancorrelate.c xsrepredict.c strsep.c saTokenize.tab.o lex.yy.o
 
 OBJECTS=$(SOURCES:.c=.o)
@@ -179,7 +180,7 @@ xsRenameContext: $(OBJECTS)
 xsWhere: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsWhere.o $(OBJDIR)/saParser.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saContext.o  $(OBJDIR)/saHash.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saHedge.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saSignal.o   $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
 xspreautoregress: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspreautoregress.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xspreautoregress.o $(OBJDIR)/saAutoRegression.o $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
 xsprecorrelate: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprecorrelate.o $(OBJDIR)/saLinearCorrelation.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saInsertUniqueValue.o  $(OBJDIR)/saMatrixArgs.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
 xsPredict: $(OBJECTS)
