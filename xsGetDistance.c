@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 #include "saGeoLiteCity.h"
@@ -35,6 +36,8 @@ static void lookupByZipCode(char *, double *);
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char *headerList[SA_CONSTANTS_MAXROWSIZE / 31];
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
+
+static saCSVType csv;
 
 extern bool saGeoLiteCityLoadTable(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByCountryRegionCity(char *);
@@ -119,8 +122,11 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
+    // open input to read CSV stream
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numHeaderFields = saCSVGetLine(inbuf, headerList);
+    int numHeaderFields = saCSV3GetLine(&csv, inbuf, headerList);
     if (!numHeaderFields)
         exit(0);
 
@@ -185,8 +191,8 @@ int main(int argc, char *argv[])
     bool done = false;
     while(done == false)
     {
-        int fieldCount = saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        int fieldCount = saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             double distance = -1;
             latLon1[0] = latLon1[1] = latLon2[0] = latLon2[1] = SA_CONSTANTS_BADLATLON;
