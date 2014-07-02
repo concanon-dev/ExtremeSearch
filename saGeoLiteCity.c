@@ -35,7 +35,7 @@ extern void saHashSet(saHashtableTypePtr, char *, char *);
 
 static saHashtableTypePtr cityTable;
 static saGeoLiteCityTypePtr zipcodes[100000];
-static void *cache;
+static saGeoLiteCityType cache[350000];
 
 bool convertZipcodeToInt(char *zipcode, int *zipint)
 {
@@ -105,7 +105,7 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     FILE *f = fopen(geoLiteCityFile, "r");
     if (f == NULL)
         return(false);
-    void *cache = (void *)malloc(sizeof(saGeoLiteCityType)*450000);
+    //void *cache = (void *)malloc(sizeof(saGeoLiteCityType)*350000);
     int numHeaderFields;
     bool isComment = true;
     while(isComment == true)
@@ -119,17 +119,17 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     }
     for(i=0; i<numHeaderFields; i++)
     {
-        if (!saCSVCompareField(headerList[i], "city"))
+        if (!saCSVCompareField(headerList[i], "City"))
             cityIndex = i;
-        else if (!saCSVCompareField(headerList[i], "country"))
+        else if (!saCSVCompareField(headerList[i], "CountryCode"))
             countryIndex = i;
-        else if (!saCSVCompareField(headerList[i], "latitude"))
+        else if (!saCSVCompareField(headerList[i], "Latitude"))
             latIndex = i;
-        else if (!saCSVCompareField(headerList[i], "longitude"))
+        else if (!saCSVCompareField(headerList[i], "Longitude"))
             lonIndex = i;
-        else if (!saCSVCompareField(headerList[i], "region"))
+        else if (!saCSVCompareField(headerList[i], "Region"))
             regionIndex = i;
-        else if (!saCSVCompareField(headerList[i], "postalCode"))
+        else if (!saCSVCompareField(headerList[i], "PostalCode"))
             zipcodeIndex = i;
     }
     if (cityIndex == -1 || countryIndex == -1 || latIndex == -1 || lonIndex == -1
@@ -139,7 +139,7 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
         return(false);
     }
 
-    saGeoLiteCityTypePtr p = cache;
+    saGeoLiteCityTypePtr p = &cache[0];
     bool done = false;
     while(!done)
     {
@@ -154,7 +154,8 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
                 p->lat = SA_CONSTANTS_BADLATLON;
             if (saCSVConvertToDouble(fieldList[lonIndex], &(p->lon)) == false)
                 p->lon = SA_CONSTANTS_BADLATLON;
-            sprintf(tempName, "%s|%s|%s", p->country, p->region, p->city);
+            sprintf(tempName, "%s|%s|%s", p->country, p->region, 
+                    p->city);
             saHashSet(cityTable, tempName, (void *)p);
             if (!strcmp(p->country, "US") || !strcmp(p->country, "PR") 
                 || !strcmp(p->country, "VI"))

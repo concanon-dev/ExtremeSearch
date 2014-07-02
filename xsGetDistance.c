@@ -27,7 +27,6 @@
 #include "saCSV.h"
 #include "saGeoLiteCity.h"
 #include "saHash.h"
-
 #include "saSignal.h"
 
 static void lookupByCityRegionCountry(char *, char *, char *, double []);
@@ -76,7 +75,7 @@ int main(int argc, char *argv[])
     lat2Field[0] = '\0';
     lon2Field[0] = '\0';
     strcpy(distanceField, "distance");
-    sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/GeoLiteCity-Location.csv", saSplunkGetRoot(argv[0]));
+    sprintf(geoLiteCityFile, "%s/apps/xtreme/lookups/locations.csv", saSplunkGetRoot(argv[0]));
     while ((c = getopt(argc, argv, "d:g:f:t:")) != -1)
     {
         switch(c)
@@ -248,14 +247,14 @@ int main(int argc, char *argv[])
 
             // write out the values of each field
             if (distanceIndex == -1)
-                fprintf(stdout, "%.10f,", distance);
+                fprintf(stdout, "%.4f,", distance);
 
             for(i=0; i<numHeaderFields;i++)
             {
                 if (i)
                     fputs(",", stdout);
                 if (i == distanceIndex)
-                    fprintf(stdout, "%.10f", distance);
+                    fprintf(stdout, "%.4f", distance);
                 else
                     fputs(fieldList[i], stdout);
             }
