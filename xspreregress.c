@@ -231,7 +231,7 @@ int main(int argc, char* argv[])
         while(done == false)
         {
             int numCols = saCSV3GetLine(&csv, inbuf, fieldList);
-            if (saCSVEOF(&csv))
+            if (saCSVEOF(&csv) == false)
             {
                 for(i=0; i<numXAxis; i++)
                 {
