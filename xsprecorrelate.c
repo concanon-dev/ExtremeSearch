@@ -51,7 +51,6 @@ static double *yAxis[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
 
-extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 extern bool saLinearCorrelation(double [], double [], int, int, double *);
@@ -143,8 +142,11 @@ int main(int argc, char* argv[])
         yFieldIndex[i] = -1;
     }
 
+    // open the input stream for CSV
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numFields = saCSVGetLine(inbuf, fieldList);
+    int numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the x and y fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -218,8 +220,8 @@ int main(int argc, char* argv[])
         bool done = false;
         while(done == false)
         {
-            saCSVGetLine(inbuf, fieldList);
-            if (!feof(stdin))
+            saCSV3GetLine(&csv, inbuf, fieldList);
+            if (saCSVEOF(&csv) == false)
             {
                 for(i=0; i<numXAxis; i++)
                 {
