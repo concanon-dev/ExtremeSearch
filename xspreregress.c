@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 #include "saLinearRegression.h"
@@ -55,7 +56,8 @@ static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 static double yAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
-extern int saCSVGetLine(char [], char *[]);
+static saCSVType csv;
+
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
@@ -150,8 +152,11 @@ int main(int argc, char* argv[])
         yAxisHigh[i] = 2.22507e-308;
     }
 
+    // open input stream for CSV
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numFields = saCSVGetLine(inbuf, fieldList);
+    int numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the x and y fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -225,8 +230,8 @@ int main(int argc, char* argv[])
         bool done = false;
         while(done == false)
         {
-            int numCols = saCSVGetLine(inbuf, fieldList);
-            if (!feof(stdin))
+            int numCols = saCSV3GetLine(&csv, inbuf, fieldList);
+            if (saCSVEOF(&csv))
             {
                 for(i=0; i<numXAxis; i++)
                 {

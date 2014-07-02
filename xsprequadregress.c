@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
-
 #include "saQuadRegression.h"
 #include "saSignal.h"
 
@@ -57,8 +57,8 @@ static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 static double yAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
+static saCSVType csv;
 
-extern int saCSVGetLine(char [], char *[]);
 extern char *insertUniqueValue(char *[], char *, int *);
 extern int saCSVParseFieldList(char *[], char *);
 
@@ -67,7 +67,6 @@ extern int saQuadRegressionRegress(dataRecordTypePtr, int, int, int);
 
 extern char *optarg;
 extern int optind, optopt;
-
 
 int main(int argc, char* argv[]) 
 {
@@ -153,8 +152,11 @@ int main(int argc, char* argv[])
         yAxisHigh[i] = 2.22507e-308;
     }
 
+    // open stream to read CSV
+    saCSVOpen(&csv, stdin);
+
     // Get Header line
-    int numFields = saCSVGetLine(inbuf, fieldList);
+    int numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the x and y fields in the header list
     for(i=0; i<numXAxis; i++)
@@ -228,8 +230,8 @@ int main(int argc, char* argv[])
         bool done = false;
         while(done == false)
         {
-            saCSVGetLine(inbuf, fieldList);
-            if (!feof(stdin))
+            saCSV3GetLine(&csv, inbuf, fieldList);
+            if (saCSVEOF(&csv) == false)
             {
                 for(i=0; i<numXAxis; i++)
                 {
