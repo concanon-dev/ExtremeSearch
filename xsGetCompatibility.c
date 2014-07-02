@@ -35,11 +35,11 @@ static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 
 extern void saContextLookup(saContextTypePtr, double, double *);;;;
-extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
-extern char *saSplunkGetRoot(char *);
-extern int saSplunkGetScope(char *);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
+extern inline char *saSplunkGetRoot(char *);
+extern inline int saSplunkGetScope(char *);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 extern char *optarg;
 extern int optind, optopt;

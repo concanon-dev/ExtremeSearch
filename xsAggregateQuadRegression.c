@@ -223,7 +223,7 @@ char *getField(char *field)
        return(field);
 }
 
-int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
+inline int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
 {
    sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
            fieldList[byVIndex]);
@@ -245,7 +245,7 @@ int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
    return(i);
 }
 
-void printLine(char *fieldList[], int numFields)
+inline void printLine(char *fieldList[], int numFields)
 {
    FILE *x = fopen("./x", "a");
    int i;

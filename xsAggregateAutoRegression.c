@@ -48,12 +48,12 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern char *saSplunkGetRoot(char *);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline char *saSplunkGetRoot(char *);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
-char *getField(char *);
-int getIndex(int, int, int);
+inline char *getField(char *);
+inline int getIndex(int, int, int);
 
 int main(int argc, char* argv[]) 
 {
@@ -210,7 +210,7 @@ int main(int argc, char* argv[])
 }
 
 // return the contents of a field, without quotes if they exist
-char *getField(char *field)
+inline char *getField(char *field)
 {
    if (*field == '"')
    {
@@ -223,7 +223,7 @@ char *getField(char *field)
 }
 
 // find the row that corresponds to the x,bf,bv tuple
-int getIndex(int xIndex, int byFIndex, int byVIndex)
+inline int getIndex(int xIndex, int byFIndex, int byVIndex)
 {
    sprintf(tempbuf, "%s,%s,%s", fieldList[xIndex], fieldList[byFIndex], fieldList[byVIndex]);
    bool found = false;

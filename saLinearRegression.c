@@ -31,7 +31,7 @@ Functions:
  * of the regression coefficients.
  **/
 
-void computeResiduals(saLinearRegressionTypePtr, double, double, double, double);
+inline void computeResiduals(saLinearRegressionTypePtr, double, double, double, double);
 
 saLinearRegressionTypePtr saLinearRegressionCreateLR(double X[], double Y[], int numPoints)
 {
@@ -119,7 +119,7 @@ void saLinearRegressionGetLine(saLinearRegressionTypePtr lrPtr)
    * Pearson's r for the x and y streams as well as the standard error of
    * estimate for the slop and the intercept.
    ***/
-void computeResiduals(saLinearRegressionTypePtr lrPtr, double xbar, double ybar, double yybar,
+inline void computeResiduals(saLinearRegressionTypePtr lrPtr, double xbar, double ybar, double yybar,
                       double xxbar)
 {
       int df = lrPtr->numPoints - 2; //--degrees of freedom

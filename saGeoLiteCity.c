@@ -29,9 +29,9 @@ Functions:
 #include "saGeoLiteCity.h"
 #include "saHash.h"
 
-extern saHashtableTypePtr saHashCreate(int size);
-extern void *saHashGet(saHashtableTypePtr, char *);
-extern void saHashSet(saHashtableTypePtr, char *, char *);
+extern inline saHashtableTypePtr saHashCreate(int size);
+extern inline void *saHashGet(saHashtableTypePtr, char *);
+extern inline void saHashSet(saHashtableTypePtr, char *, char *);
 
 static saHashtableTypePtr cityTable;
 static saGeoLiteCityTypePtr zipcodes[100000];

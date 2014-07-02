@@ -66,14 +66,14 @@ static int numIndexes = 0;
 
 extern double saConceptLookup(saConceptTypePtr, double);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
-extern char *saSplunkGetRoot(char *);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline char *saSplunkGetRoot(char *);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
-char *findElementInList(char *, char *[], char *[], int listLength);
-char *getField(char *);
-int getIndex(int, int, int, int);
-void printLine(char *[], int);
+char inline *findElementInList(char *, char *[], char *[], int listLength);
+char inline *getField(char *);
+int inline getIndex(int, int, int, int);
+void inline printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
@@ -346,7 +346,7 @@ fclose(zzz);
     }
 }
 
-char *findElementInList(char *str, char *list1[], char *list2[], int listLength)
+inline char *findElementInList(char *str, char *list1[], char *list2[], int listLength)
 {
     int i=0;
     while(i<listLength)
@@ -358,7 +358,7 @@ char *findElementInList(char *str, char *list1[], char *list2[], int listLength)
     return(NULL);
 }
  
-char *getField(char *field)
+inline char *getField(char *field)
 {
    if (*field == '"')
    {
@@ -370,7 +370,7 @@ char *getField(char *field)
        return(field);
 }
 
-int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
+inline int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
 {
 
    sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
@@ -393,7 +393,7 @@ int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
    return(i);
 }
 
-void printLine(char *fieldList[], int numFields)
+inline void printLine(char *fieldList[], int numFields)
 {
    FILE *x = fopen("./x", "a");
    int i;

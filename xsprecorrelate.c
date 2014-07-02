@@ -51,10 +51,10 @@ static double *yAxis[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
 
-extern char *insertUniqueValue(char *[], char *, int *);
-extern int saCSVParseFieldList(char *[], char *);
-extern bool saLinearCorrelation(double [], double [], int, int, double *);
-extern void saMatrixArgs(char *, char *, int);
+extern inline char *insertUniqueValue(char *[], char *, int *);
+extern inline int saCSVParseFieldList(char *[], char *);
+extern inline bool saLinearCorrelation(double [], double [], int, int, double *);
+extern inline void saMatrixArgs(char *, char *, int);
 
 extern char *optarg;
 extern int optind, optopt;

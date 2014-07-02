@@ -39,13 +39,13 @@ Functions:
 #define R (6372.8)
 #define TO_RAD (3.1415926536 / 180)
 
-static void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
-static void saStatisticsGetInterval(double, double[], double[], int, int *);
-static void saStatisticsDataSort(double[], int, int);
-static bool saStatisticsRange(double[], int, int, double *, double *, double *);
-static bool saStatisticsVar(double[], int, int, double *);
+static inline void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
+static inline void saStatisticsGetInterval(double, double[], double[], int, int *);
+static inline void saStatisticsDataSort(double[], int, int);
+static inline bool saStatisticsRange(double[], int, int, double *, double *, double *);
+static inline bool saStatisticsVar(double[], int, int, double *);
 
-bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
+inline bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
 {
     double sum = 0;
     int i;
@@ -60,7 +60,7 @@ bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
     return(true);
 }
 
-void saStatisticsDataSort(double data[], int startIndex, int count)
+inline void saStatisticsDataSort(double data[], int startIndex, int count)
 {
     bool isSorted;
     double temp;
@@ -85,7 +85,7 @@ void saStatisticsDataSort(double data[], int startIndex, int count)
         }
 }
 
-bool saStatisticsFreq(double data[], int startIndex, int count, int frequency[], int bucketCount,
+inline bool saStatisticsFreq(double data[], int startIndex, int count, int frequency[], int bucketCount,
                       double bucketMin[], double bucketMax[])
 {
     double maxRange;
@@ -121,7 +121,7 @@ bool saStatisticsFreq(double data[], int startIndex, int count, int frequency[],
     return(true);
 }
 
-void saStatisticsGenerateIntervals(double minRange, double maxRange, double partitionSize,
+inline void saStatisticsGenerateIntervals(double minRange, double maxRange, double partitionSize,
                                    int bucketCount, double bucketMin[], double bucketMax[])
 {
     double tempMax;
@@ -137,7 +137,7 @@ void saStatisticsGenerateIntervals(double minRange, double maxRange, double part
     }
 }
 
-void saStatisticsGetInterval(double data, double minBucket[], double maxBucket[], 
+inline void saStatisticsGetInterval(double data, double minBucket[], double maxBucket[], 
                             int bucketCount, int *interval)
 {
     int i;
@@ -151,7 +151,7 @@ void saStatisticsGetInterval(double data, double minBucket[], double maxBucket[]
     *interval = bucketCount - 1;
 }
 
-double saStatisticsHaversineDistance(double lat1, double lon1, double lat2, double lon2)
+inline double saStatisticsHaversineDistance(double lat1, double lon1, double lat2, double lon2)
 {
     double dx, dy, dz;
     lon1 = (lon1 - lon2) * TO_RAD;
@@ -167,7 +167,7 @@ double saStatisticsHaversineDistance(double lat1, double lon1, double lat2, doub
     return(d);
 }
 
-bool saStatisticsMax(double data[], int startIndex, int count, double *max) 
+inline bool saStatisticsMax(double data[], int startIndex, int count, double *max) 
 {
     int i;
     *max = MIN;
@@ -182,7 +182,7 @@ bool saStatisticsMax(double data[], int startIndex, int count, double *max)
     return(true);
 }
 
-bool saStatisticsMean(double data[], int startIndex, int count, double *minRange, 
+inline bool saStatisticsMean(double data[], int startIndex, int count, double *minRange, 
                       double *maxRange, double *mean)
 {
     double max = MIN;
@@ -207,7 +207,7 @@ bool saStatisticsMean(double data[], int startIndex, int count, double *minRange
     return(true);
 }
 
-bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSize, double *median)
+inline bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSize, double *median)
 {
     int midPoint;
 
@@ -254,7 +254,7 @@ bool saStatisticsMedian(double data[], int startIndex, int count, int *medianSiz
     return(true);
 }
 
-bool saStatisticsMin(double data[], int startIndex, int count, double *min) 
+inline bool saStatisticsMin(double data[], int startIndex, int count, double *min) 
 {
     int i;
     *min = MAX;
@@ -269,7 +269,7 @@ bool saStatisticsMin(double data[], int startIndex, int count, double *min)
     return (true);
 }
 
-bool saStatisticsRange(double data[], int startIndex, int count, double *minRange, 
+inline bool saStatisticsRange(double data[], int startIndex, int count, double *minRange, 
                        double *maxRange, double *range)
 {
     double max = MIN;
@@ -292,7 +292,7 @@ bool saStatisticsRange(double data[], int startIndex, int count, double *minRang
     return(true);
 }
 
-bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
+inline bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
 {
     double var;
 
@@ -303,7 +303,7 @@ bool saStatisticsSdev(double data[], int startIndex, int count, double *sdev)
     return (true);
 }
 
-bool saStatisticsSkew(double data[], int startIndex, int count, double *skew) 
+inline bool saStatisticsSkew(double data[], int startIndex, int count, double *skew) 
 {
     double avg;
     double diff;
@@ -330,7 +330,7 @@ bool saStatisticsSkew(double data[], int startIndex, int count, double *skew)
     return(true);
 }
 
-bool saStatisticsVar(double data[], int startIndex, int count, double *var)
+inline bool saStatisticsVar(double data[], int startIndex, int count, double *var)
 {
     double mean;
     double sum = 0.0;

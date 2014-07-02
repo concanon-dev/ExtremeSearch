@@ -18,7 +18,7 @@ Functions:
 #include <string.h>
 #include <unistd.h>
 
-void saMatrixArgs(char *x, char *y, int size)
+inline void saMatrixArgs(char *x, char *y, int size)
 {
     char *tmp;
     char *xList[size];

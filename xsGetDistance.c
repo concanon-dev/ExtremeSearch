@@ -41,8 +41,8 @@ extern bool saGeoLiteCityLoadTable(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByCountryRegionCity(char *);
 extern saGeoLiteCityTypePtr saGeoLiteCityGetByZipcode(char *);
 
-extern char *saSplunkGetRoot(char *);
-extern double saStatisticsHaversineDistance(double, double, double, double);
+extern inline char *saSplunkGetRoot(char *);
+extern inline double saStatisticsHaversineDistance(double, double, double, double);
 
 extern char *strsep(char **, const char *);
 

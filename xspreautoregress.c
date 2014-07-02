@@ -51,9 +51,9 @@ static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
 
-extern int saCSVGetLine(char [], char *[]);
-extern char *insertUniqueValue(char *[], char *, int *);
-extern int saCSVParseFieldList(char *[], char *);
+extern inline int saCSVGetLine(char [], char *[]);
+extern inline char *insertUniqueValue(char *[], char *, int *);
+extern inline int saCSVParseFieldList(char *[], char *);
 
 extern double *saAutoRegression(double *, int, double *);
 

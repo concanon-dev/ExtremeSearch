@@ -50,13 +50,13 @@ static int numRows[MAXROWSIZE];
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
 
-extern char *saSplunkGetRoot(char *);
-extern saSplunkInfoPtr saSplunkLoadHeader();
-extern bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
+extern inline char *saSplunkGetRoot(char *);
+extern inline saSplunkInfoPtr saSplunkLoadHeader();
+extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
-char *getField(char *);
-int getIndex(int, int, int, int);
-void printLine(char *[], int);
+inline char *getField(char *);
+inline int getIndex(int, int, int, int);
+inline void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
@@ -222,7 +222,7 @@ int main(int argc, char* argv[])
        fclose(f);
 }
 
-char *getField(char *field)
+inline char *getField(char *field)
 {
    if (*field == '"')
    {
@@ -234,7 +234,7 @@ char *getField(char *field)
        return(field);
 }
 
-int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
+inline int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
 {
    sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
            fieldList[byVIndex]);
@@ -256,7 +256,7 @@ int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
    return(i);
 }
 
-void printLine(char *fieldList[], int numFields)
+inline void printLine(char *fieldList[], int numFields)
 {
    FILE *x = fopen("./x", "a");
    int i;
