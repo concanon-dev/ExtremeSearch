@@ -32,9 +32,9 @@ TEST(saParserParse, loadExpStack) {
 #else
     char *endStr = strrchr(stackFile, '/');
 #endif
-    printf("stackFile=%s", stackFile);
-    printf("endStr=%s", endStr);
-    exit(0);
+    //printf("stackFile=%s", stackFile);
+    //printf("endStr=%s", endStr);
+    //exit(0);
     strcpy(endStr+1, "stack.txt");
     FILE *sFile = fopen(stackFile, "r");
     if (sFile == NULL)

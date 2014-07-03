@@ -34,7 +34,7 @@ static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 
-extern void saContextLookup(saContextTypePtr, double, double *);;;;
+extern inline void saContextLookup(saContextTypePtr, double, double *);;;;
 extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern inline char *saSplunkGetRoot(char *);
 extern inline int saSplunkGetScope(char *);

@@ -29,7 +29,7 @@ Functions:
 static double a[3][3];
 static double c[3][3];
 
-bool checkTheOffset(int size, int offset)
+inline bool checkTheOffset(int size, int offset)
 {
    int thisOffset=size-(abs(offset)+1);
    if (thisOffset>=0) 
@@ -37,14 +37,14 @@ bool checkTheOffset(int size, int offset)
    return(false);
 }
 
-bool checkThePeriod(int offset, int periods, int size)
+inline bool checkThePeriod(int offset, int periods, int size)
 {
    if ((offset+periods) <= size)
        return(true);
    return(false);
 }
 
-void matrix3Inverse()
+inline void matrix3Inverse()
 {
     double det = 0;
     det = a[0][0]*a[1][1]*a[2][2] +
@@ -65,7 +65,7 @@ void matrix3Inverse()
     c[2][2] = (a[0][0]*a[1][1] - a[0][1]*a[1][0]) / det;
 }
 
-dataRecordTypePtr saQuadRegressionInitDataRecord(int size, double *X, double *Y, double *Z)
+inline dataRecordTypePtr saQuadRegressionInitDataRecord(int size, double *X, double *Y, double *Z)
 {
     bool zExists = false;
     dataRecordTypePtr p = malloc(sizeof(dataRecordType));
@@ -97,7 +97,7 @@ dataRecordTypePtr saQuadRegressionInitDataRecord(int size, double *X, double *Y,
 
 //double *predict(dataRecordTypePtr p, int length, int offset, int periods, int futurePeriods,
 // int *errCode)
-int saQuadRegressionRegress(dataRecordTypePtr p, int length, int offset, int periods)
+inline int saQuadRegressionRegress(dataRecordTypePtr p, int length, int offset, int periods)
 {
     int limit;
     int myOffset;
@@ -162,7 +162,7 @@ int saQuadRegressionRegress(dataRecordTypePtr p, int length, int offset, int per
     return(0);
 }
 
-double rateOfChange(dataRecordTypePtr p, int length, int offset, int periods, int *errCode) 
+inline double rateOfChange(dataRecordTypePtr p, int length, int offset, int periods, int *errCode) 
 {
     int limit;
     int myOffset;

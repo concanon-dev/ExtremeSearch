@@ -40,19 +40,19 @@ Functions:
 #define MAXBUFLEN 80
 #define MAXBUFSIZE (1024 * 32)
 
-char *eatTimestamp(char **);
-char *getAttribute(char **, char);
-char *getLine(FILE *);
-char *getValue(char **);
-char *trim(char *);
-time_t getTimestamp(char *);
+inline char *eatTimestamp(char **);
+inline char *getAttribute(char **, char);
+inline char *getLine(FILE *);
+inline char *getValue(char **);
+inline char *trim(char *);
+inline time_t getTimestamp(char *);
 
 extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char *[], int, char *,
                                                    char *, int, char *, char *);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *, char *);
 
-saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, 
+inline saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, 
                                double sdev, int count, int numConcepts, char *type, 
                                char *notes, char *uom)
 {
@@ -78,7 +78,7 @@ saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, d
     return(p);
 }
 
-saContextTypePtr saContextLoad(FILE *infile)
+inline saContextTypePtr saContextLoad(FILE *infile)
 {
     saContextTypePtr contextPtr;
     bool done;
@@ -220,7 +220,7 @@ saContextTypePtr saContextLoad(FILE *infile)
     return(contextPtr);
 }
 
-saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *c3Name)
+inline saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *c3Name)
 {
     int i;
 
@@ -299,9 +299,7 @@ saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *
     return(NULL);
 }
 
-
-
-char *eatTimestamp(char **cursor)
+inline char *eatTimestamp(char **cursor)
 {
 
     char *s = strstr(*cursor, SA_CONTEXT_TIMESTAMP_SEPARATOR);
@@ -311,7 +309,7 @@ char *eatTimestamp(char **cursor)
     return(s);
 }
 
-char *getLine(FILE *infile)
+inline char *getLine(FILE *infile)
 {
     if (feof(infile))
         return(NULL);
@@ -322,7 +320,7 @@ char *getLine(FILE *infile)
     return(inBuf);
 }
 
-char *getAttribute(char **cursor, char separator)
+inline char *getAttribute(char **cursor, char separator)
 {
     char *ptr = *cursor;
     char *s = *cursor;
@@ -346,7 +344,7 @@ char *getAttribute(char **cursor, char separator)
     return(s);
 }
 
-char *getValue(char **cursor)
+inline char *getValue(char **cursor)
 {
     char *ptr = *cursor;
     char *s = *cursor;
@@ -373,7 +371,7 @@ char *getValue(char **cursor)
 }
 
 
-bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
+inline bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
 {
     char timeStr[MAXBUFLEN+1];
     time_t ct = getTimestamp(timeStr);
@@ -420,7 +418,7 @@ bool saContextSave(FILE *outfile, saContextTypePtr contextPtr)
     return(true);
 }
 
-time_t getTimestamp(char *buf)
+inline time_t getTimestamp(char *buf)
 {
     time_t rawtime;
     struct tm * timeinfo;
@@ -432,14 +430,14 @@ time_t getTimestamp(char *buf)
     return(rawtime);
 }
 
-char *trim(char *str)
+inline char *trim(char *str)
 {
     while(*str == ' ' && *str != '\0')
         str++;
     return(str);
 }
 
-void saContextDisplayWithHeader(saContextTypePtr contextPtr, char *name)
+inline void saContextDisplayWithHeader(saContextTypePtr contextPtr, char *name)
 {
     char output[2048];
     char val[32];
@@ -460,13 +458,13 @@ void saContextDisplayWithHeader(saContextTypePtr contextPtr, char *name)
     return;
 }
 
-void saContextDisplay(saContextTypePtr contextPtr)
+inline void saContextDisplay(saContextTypePtr contextPtr)
 {
     saContextDisplayWithHeader(contextPtr, contextPtr->name);
 }
 
 
-void saContextLookup(saContextTypePtr contextPtr, double value, double *results)
+inline void saContextLookup(saContextTypePtr contextPtr, double value, double *results)
 {
     double bucket_size = (contextPtr->domainMax - contextPtr->domainMin) 
                           / (float) SA_CONCEPT_VECTORSIZE;

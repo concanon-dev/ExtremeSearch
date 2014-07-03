@@ -19,7 +19,7 @@ Functions:
 #include <stdlib.h>
 #include <string.h>
 
-void saListDir(char *dir, char *filter, bool stripFilter, FILE *outfile, char *header)
+inline void saListDir(char *dir, char *filter, bool stripFilter, FILE *outfile, char *header)
 {
     if (dir == NULL || *dir == '\0')
         return;

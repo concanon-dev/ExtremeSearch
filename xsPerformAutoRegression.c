@@ -50,7 +50,7 @@ extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
 
 inline char *getField(char *);
 inline int getIndex(int, int, int);
-void printLine(char *[], int);
+inline void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {

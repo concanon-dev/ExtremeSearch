@@ -204,15 +204,15 @@ lex.yy.o:
 fix-intersplunk.o:
 	$(GCC) -c fix-intersplunk.c -o $(OBJDIR)/$@
 saAutoRegression.o:
-	$(GCC) -c saAutoRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saAutoRegression.c -o $(OBJDIR)/$@
 saContext.o:
-	$(GCC) -c saContext.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saContext.c -o $(OBJDIR)/$@
 saContextCreate.o:
-	$(GCC) -c saContextCreate.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saContextCreate.c -o $(OBJDIR)/$@
 saCSV.o:
 	$(GCC) -O3 -c saCSV.c -o $(OBJDIR)/$@
 saGeoLiteCity.o:
-	$(GCC) -c saGeoLiteCity.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saGeoLiteCity.c -o $(OBJDIR)/$@
 saHash.o:
 	$(GCC) -O3 -c saHash.c -o $(OBJDIR)/$@
 saHedge.o:
@@ -220,17 +220,17 @@ saHedge.o:
 saInsertUniqueValue.o:
 	$(GCC) -O3 -c saInsertUniqueValue.c -o $(OBJDIR)/$@
 saLinearCorrelation.o:
-	$(GCC) -c saLinearCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saLinearCorrelation.c -o $(OBJDIR)/$@
 saLinearRegression.o:
-	$(GCC) -c saLinearRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saLinearRegression.c -o $(OBJDIR)/$@
 saListDir.o:
-	$(GCC) -c saListDir.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saListDir.c -o $(OBJDIR)/$@
 saMatrixArgs.o:
-	$(GCC) -c saMatrixArgs.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saMatrixArgs.c -o $(OBJDIR)/$@
 saParser.o:
 	$(GCC) -O3 -c saParser.c -o $(OBJDIR)/$@
 saQuadRegression.o:
-	$(GCC) -c saQuadRegression.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saQuadRegression.c -o $(OBJDIR)/$@
 saSignal.o:
 	$(GCC) -c saSignal.c -o $(OBJDIR)/$@
 saConcept.o:
@@ -238,9 +238,9 @@ saConcept.o:
 saSplunk.o:
 	$(GCC) -O3 -c saSplunk.c -o $(OBJDIR)/$@
 saSpearmanCorrelation.o:
-	$(GCC) -c saSpearmanCorrelation.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saSpearmanCorrelation.c -o $(OBJDIR)/$@
 saStatistics.o:
-	$(GCC) -c saStatistics.c -o $(OBJDIR)/$@
+	$(GCC) -O3 -c saStatistics.c -o $(OBJDIR)/$@
 xsAggregateAutoRegression.o:
 	$(GCC) -O3 -c xsAggregateAutoRegression.c -o $(OBJDIR)/$@
 xsAggregateCorrelation.o:

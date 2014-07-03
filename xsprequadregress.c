@@ -59,8 +59,8 @@ static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
 
-extern char *insertUniqueValue(char *[], char *, int *);
-extern int saCSVParseFieldList(char *[], char *);
+extern inline char *insertUniqueValue(char *[], char *, int *);
+extern inline int saCSVParseFieldList(char *[], char *);
 
 extern dataRecordTypePtr saQuadRegressionInitDataRecord(int, double *, double *, double *);
 extern int saQuadRegressionRegress(dataRecordTypePtr, int, int, int);

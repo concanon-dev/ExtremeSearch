@@ -35,7 +35,7 @@ static char *Y[SA_CONSTANTS_MAXNUMCOLS];
 static char *indexString[SA_CONSTANTS_MAXNUMCOLS];
 static int numIndexes = 0;
 
-int getIndex(int, int, int, int);
+inline int getIndex(int, int, int, int);
 inline void printLine(char *[], int);
 inline char *getField(char *);
 

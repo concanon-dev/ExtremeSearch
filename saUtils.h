@@ -6,8 +6,8 @@
 */
 #ifndef _SA_UTILS_H
 #define _SA_UTILS_H
-
+#ifdef _WIN32 
 char *strsep (char **stringp, const char *delim);
-
+#endif
 #endif  /* SAUTILS_H */
 
