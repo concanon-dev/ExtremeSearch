@@ -115,7 +115,7 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     while(isComment == true)
     {
         headerbuf[0] = '\0';
-        numHeaderFields = saCSV3FGetLine(&csv, headerbuf, headerList);
+        numHeaderFields = saCSV3GetLine(&csv, headerbuf, headerList);
         if (headerbuf[0] == '#' || headerbuf[0] == '\0')
             isComment = true;
         else

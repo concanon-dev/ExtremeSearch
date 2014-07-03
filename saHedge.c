@@ -286,7 +286,7 @@ inline bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
     {
         if (saCSVEOF(&csv) == false)
         {
-            numFields = saCSV3FGetLine(&csv, headerBuf, fieldList);
+            numFields = saCSV3GetLine(&csv, headerBuf, fieldList);
             if (*fieldList[0] != '#')
                 foundHeader = true;
         }

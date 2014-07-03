@@ -62,7 +62,7 @@ inline void unget(saCSVTypePtr csvPtr)
 }
 
 
-inline int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
+inline int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
 {
     char separator = ',';
 
@@ -179,11 +179,6 @@ inline int saCSV3FGetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
           }
     }
     return(numFields);
-}
-
-inline int saCSV3GetLine(saCSVTypePtr csvPtr, char inbuf[], char *fields[])
-{
-    return(saCSV3FGetLine(csvPtr, inbuf, fields));
 }
 
 inline void saCSVOpen(saCSVTypePtr csvPtr, FILE *f)
