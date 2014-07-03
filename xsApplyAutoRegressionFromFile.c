@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 
@@ -42,6 +43,8 @@ static double c2List[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
 static char *byFieldList[SA_CONSTANTS_MAXAXIS];
 static char *byValueList[SA_CONSTANTS_MAXAXIS];
+
+static saCSVType csv;
 
 extern char *optarg;
 extern int optind, optopt;
@@ -106,12 +109,13 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s\n", fileName);
         exit(EXIT_FAILURE);
     }
-    numFileHeader = saCSVFGetLine(f, fileInBuf[numFileRows++], fileFieldList);
+    saCSVOpen(&csv, f);
+    numFileHeader = saCSV3GetLine(&csv, fileInBuf[numFileRows++], fileFieldList);
     bool done = false;
     while (!done)
     {
-        saCSVFGetLine(f, fileInBuf[numFileRows], fileDataList);
-        if (!feof(f))
+        saCSV3GetLine(&csv, fileInBuf[numFileRows], fileDataList);
+        if (saCSVEOF(&csv) == false)
         {
             int j;
             for(j=0; j<numFileHeader; j++)
@@ -136,8 +140,10 @@ int main(int argc, char* argv[])
     }
     fclose(f);
 
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the Regress column, if it already exists
     i = 0;
@@ -181,8 +187,8 @@ int main(int argc, char* argv[])
     done = false;
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             // initialize the regression value
             double regress = 0.00;

@@ -24,6 +24,7 @@ Functions:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 #include "saGeoLiteCity.h"
@@ -36,6 +37,8 @@ extern inline void saHashSet(saHashtableTypePtr, char *, char *);
 static saHashtableTypePtr cityTable;
 static saGeoLiteCityTypePtr zipcodes[100000];
 static saGeoLiteCityType cache[350000];
+
+static saCSVType csv;
 
 bool convertZipcodeToInt(char *zipcode, int *zipint)
 {
@@ -106,12 +109,13 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     if (f == NULL)
         return(false);
     //void *cache = (void *)malloc(sizeof(saGeoLiteCityType)*350000);
+    saCSVOpen(&csv, f);
     int numHeaderFields;
     bool isComment = true;
     while(isComment == true)
     {
         headerbuf[0] = '\0';
-        numHeaderFields = saCSVFGetLine(f, headerbuf, headerList);
+        numHeaderFields = saCSV3FGetLine(&csv, headerbuf, headerList);
         if (headerbuf[0] == '#' || headerbuf[0] == '\0')
             isComment = true;
         else
@@ -143,8 +147,8 @@ bool saGeoLiteCityLoadTable(char *geoLiteCityFile)
     bool done = false;
     while(!done)
     {
-        int zzz = saCSVFGetLine(f, inbuf, fieldList);
-        if (!feof(f))
+        int zzz = saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             strcpy(p->city, fieldList[cityIndex]);
             strcpy(p->country, fieldList[countryIndex]);

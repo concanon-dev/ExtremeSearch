@@ -18,12 +18,15 @@ Functions:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "csv3.h"
 #include "saCSV.h"
 #include "saHedge.h"
 #include "saConcept.h"
 
 static char *fieldList[256];
 static char headerBuf[1024];
+
+static saCSVType csv;
 
 extern void saConceptCopy(saConceptTypePtr, saConceptTypePtr);
 
@@ -277,12 +280,13 @@ inline bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
     int hedgeIndex = -1;
     int wordIndex = -1;
 
+    saCSVOpen(&csv, infile);
     bool foundHeader = false;
     while(foundHeader == false)
     {
-        if (!feof(infile))
+        if (saCSVEOF(&csv) == false)
         {
-            numFields = saCSVFGetLine(infile, headerBuf, fieldList);
+            numFields = saCSV3FGetLine(&csv, headerBuf, fieldList);
             if (*fieldList[0] != '#')
                 foundHeader = true;
         }
@@ -305,11 +309,11 @@ inline bool saHedgeLoadLookup(FILE *infile, saSynonymTableTypePtr synonymPtr)
         return(false);
 
     int numRows = 0;
-    while(!feof(infile))
+    while(saCSVEOF(&csv) == false)
     {
         char *thisRow = synonymPtr->charbuf + numRows * (SA_HEDGE_MAXWORDSIZE+2) * 2; 
-        numFields = saCSVFGetLine(infile, thisRow, fieldList);
-        if (!feof(infile))
+        numFields = saCSV3GetLine(&csv, thisRow, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             if (*fieldList[0] != '#')
             {

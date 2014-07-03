@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 
@@ -104,8 +105,11 @@ int main(int argc, char* argv[])
 
     int numXAxis = saCSVParseFieldList(xList, fieldX);
 
+    // open stream to read CSV
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the Regress column, if it already exists
     int i = 0;
@@ -146,8 +150,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             // initialize regression value
             regress = 0.00;
