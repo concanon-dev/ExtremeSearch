@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
     while (!done)
     {
         saCSV3GetLine(&csv, fileInBuf[numFileRows], fileDataList);
-        if (!feof(f))
+        if (saCSVEOF(&csv) == false)
         {
             int j;
             for(j=0; j<numFileHeader; j++)
@@ -187,7 +187,7 @@ int main(int argc, char* argv[])
     while(!done)
     {
         saCSV3GetLine(&csv, inbuf, fieldList);
-        if (!feof(stdin))
+        if (saCSVEOF(&csv) == false)
         {
             // initialize the regression value
             double regress = 0.00;
