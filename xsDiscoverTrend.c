@@ -213,7 +213,7 @@ int main(int argc, char* argv[])
     {
         int index = -1;
         numFields = saCSV3GetLine(&csv, inbuf, fieldList);
-        if (!feof(stdin))
+        if (saCSVEOF(&csv) == false)
         {
             index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
             if (byF[index] == NULL)
