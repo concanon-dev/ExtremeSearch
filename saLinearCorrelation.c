@@ -19,8 +19,8 @@ Functions:
 #include <stdio.h>
 #include <string.h>
 
-extern bool saStatisticsAvg(double[], int, int, double *);
-extern bool saStatisticsSdev(double[], int, int, double *);
+extern inline bool saStatisticsAvg(double[], int, int, double *);
+extern inline bool saStatisticsSdev(double[], int, int, double *);
 
 bool saLinearCorrelation(double X[], double Y[], int startIndex, int termCnt, double *R)
 {

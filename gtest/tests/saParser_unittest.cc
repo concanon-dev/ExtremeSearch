@@ -13,6 +13,46 @@
 extern "C" {
 int saParserParse(char *, char [], saExpressionTypePtrArray);
 saExpressionTypePtrArray generateExpStack(void);
+int loadExpStack(FILE *f, saExpressionTypePtrArray expStack);
+}
+
+TEST(saParserParse, loadExpStack) {
+
+    saExpressionTypePtrArray expStack = generateExpStack();
+    int stackSize = 0;
+    char stackFile[2048];
+    char infoPath[128] = "etc\\";
+    static char tempbuf[MAXROWSIZE];
+    char whereLine[MAXROWSIZE / 32] = "Height is Tall";
+    strcpy(stackFile, infoPath);
+
+#ifdef _WIN32
+    printf("WIN32\n");
+    char *endStr = strrchr(stackFile, '\\');
+#else
+    char *endStr = strrchr(stackFile, '/');
+#endif
+    printf("stackFile=%s", stackFile);
+    printf("endStr=%s", endStr);
+    exit(0);
+    strcpy(endStr+1, "stack.txt");
+    FILE *sFile = fopen(stackFile, "r");
+    if (sFile == NULL)
+    { 
+        stackSize = saParserParse(whereLine, tempbuf, expStack);
+        if (stackSize < 0) {
+            fprintf(stderr, "xsWhere-F-105: grammer: %s\n", tempbuf);
+            exit(EXIT_FAILURE);
+        }
+        FILE *abcd = fopen(stackFile, "w");
+        //writeExpressionStack(abcd, expStack, stackSize);
+        fclose(abcd);
+    }
+    else
+    {
+        stackSize = loadExpStack(sFile,  expStack);
+        fclose(sFile);
+    }
 }
 
 TEST(saParserParse, IS_Clause) {
