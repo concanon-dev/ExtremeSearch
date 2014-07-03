@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saCSV.h"
 
@@ -39,6 +40,8 @@ static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 static char *aList[SA_CONSTANTS_MAXAXIS];
 static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
+
+static saCSVType csv;
 
 extern inline saSplunkInfoPtr saSplunkLoadHeader();
 extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
@@ -99,8 +102,11 @@ int main(int argc, char* argv[])
 
     int numXAxis = saCSVParseFieldList(xList, fieldX);
 
+    // open stream for CSV
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
 
     // Find the SA_CONSTANTS_PREDICTION_COLUMN column, if it already exists
     int i = 0;
@@ -141,8 +147,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVOpen(&csv) == false)
         {
             // initialize regression value
             regress = 0.00;
