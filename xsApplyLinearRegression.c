@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
     while(!done)
     {
         saCSV3GetLine(&csv, inbuf, fieldList);
-        if (saCSVOpen(&csv) == false)
+        if (saCSVEOF(&csv) == false)
         {
             // initialize regression value
             regress = 0.00;
