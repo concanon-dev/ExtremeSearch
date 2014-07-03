@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saContext.h"
 #include "saCSV.h"
 
@@ -63,6 +64,8 @@ static int numRows[MAXROWSIZE];
 
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
+
+static saCSVType csv;
 
 extern double saConceptLookup(saConceptTypePtr, double);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
@@ -164,9 +167,12 @@ int main(int argc, char* argv[])
     int yIndex = -1;
     int yLowIndex = -1;
     int yHighIndex = -1;
+
+    // open stream for CSV
+    saCSVOpen(&csv, stdin);
  
     // Get the header
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
     if (numFields == 0)
         exit(0);
 
@@ -203,10 +209,10 @@ int main(int argc, char* argv[])
     }
  
     int maxIndex = 0;
-    while(!feof(stdin))
+    while(saCSVEOF(&csv) == false)
     {
         int index = -1;
-        numFields = saCSVGetLine(inbuf, fieldList);
+        numFields = saCSV3GetLine(&csv, inbuf, fieldList);
         if (!feof(stdin))
         {
             index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
