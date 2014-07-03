@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saContext.h"
 #include "saCSV.h"
@@ -34,6 +35,8 @@
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
+
+static saCSVType csv;
 
 extern inline void saContextLookup(saContextTypePtr, double, double *);;;;
 extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
@@ -93,14 +96,19 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsFindMembership-F-103: Can't get info header\n");
         exit(EXIT_FAILURE);
     }
+
     if (saSplunkReadInfoPathFile(p) == false)
     {
         fprintf(stderr, "xsFindMembership-F-105: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
+
+    // open stream for CSV 
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
     if (numFields == 0)
         exit(0);
     contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
@@ -157,8 +165,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done)
     {
-        int fieldCount = saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin) && fieldCount > 0)
+        int fieldCount = saCSV3GetLine(&csv, inbuf, fieldList);
+        if ((saCSVEOF(&csv) == false) && (fieldCount > 0))
         {
             // If the column that we are extracting exists, 
             //    extract the value, look it up in each fuzzy set
@@ -200,7 +208,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            if (feof(stdin))
+            if (saCSVEOF(&csv) == true)
                 done = true;
         }
     }

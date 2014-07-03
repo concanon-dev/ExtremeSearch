@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saContext.h"
 #include "saCSV.h"
@@ -43,6 +44,8 @@ static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
 static char *headerList[SA_CONSTANTS_MAXROWSIZE / 32];
+
+static saCSVType csv;
 
 extern inline saHashtableTypePtr saHashCreateDefault();
 extern inline void *saHashGet(saHashtableTypePtr, char *);
@@ -114,8 +117,11 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Open stream to read CSV
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    if ((numHeaderFields = saCSVGetLine(headerbuf, headerList)) == 0)
+    if ((numHeaderFields = saCSV3GetLine(&csv, headerbuf, headerList)) == 0)
        exit(0);
 
     // Write out the header fields separated by ","
@@ -164,8 +170,8 @@ int main(int argc, char* argv[])
     strcpy(realContextName, contextName);
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             // Find the context in the cache or load it from the file
             contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);
@@ -182,7 +188,8 @@ int main(int argc, char* argv[])
                     {
                         if (!saCSVCompareField(headerList[q], contextName))
                         {
-                            sprintf(realContextName, "%s%s", saCSVExtractField(fieldList[q]), headerList[fieldIndex]);
+                            sprintf(realContextName, "%s%s", saCSVExtractField(fieldList[q]), 
+                                    headerList[fieldIndex]);
                             found = true;
                         }
                         else
@@ -190,7 +197,8 @@ int main(int argc, char* argv[])
                     }
                     if (found == false)
                     {
-                        fprintf(stderr, "xsFindBestConcept-F-109: Can't find field for context: %s\n", contextName);
+                        fprintf(stderr, "xsFindBestConcept-F-109: Can't find field for context: %s\n", 
+                                contextName);
                         exit(EXIT_FAILURE);
                     }
                     contextPtr = (saContextTypePtr)saHashGet(contextTable, realContextName);

@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saConstants.h"
 #include "saContext.h"
 #include "saCSV.h"
@@ -33,6 +34,8 @@
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
 static char tempbuf[SA_CONSTANTS_MAXROWSIZE];
 static char *fieldList[SA_CONSTANTS_MAXROWSIZE / 32];
+
+static saCSVType csv;
 
 extern inline void saContextLookup(saContextTypePtr, double, double *);;;;
 extern inline saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
@@ -107,8 +110,11 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // open stream for CSV
+    saCSVOpen(&csv, stdin);
+
     // Parse the first (header) line of input
-    numFields = saCSVGetLine(inbuf, fieldList);
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
     numConcepts = contextPtr->numConcepts;
 
     // Write out the header fields separated by ","
@@ -130,8 +136,8 @@ int main(int argc, char* argv[])
     bool done = false;
     while(!done)
     {
-        saCSVGetLine(inbuf, fieldList);
-        if (!feof(stdin))
+        saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
         {
             // If the column that we are extracting exists, 
             //    extract the value, look it up in the context
@@ -154,9 +160,11 @@ int main(int argc, char* argv[])
             for(i=0; i<numConcepts; i++)
             {
                 if (found)
-                    fprintf(stdout, "\"%s\",\"%s\",%.10f\n", fieldList[fieldIndex], contextPtr->concepts[i]->name, results[i]);
+                    fprintf(stdout, "\"%s\",\"%s\",%.10f\n", fieldList[fieldIndex], 
+                            contextPtr->concepts[i]->name, results[i]);
                 else
-                    fprintf(stdout, "\"%s\",\"%s\",0.00\n", fieldList[fieldIndex], contextPtr->concepts[i]->name);
+                    fprintf(stdout, "\"%s\",\"%s\",0.00\n", fieldList[fieldIndex], 
+                            contextPtr->concepts[i]->name);
             }
         }
         else

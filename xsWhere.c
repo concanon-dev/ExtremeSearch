@@ -41,9 +41,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saContext.h"
 #include "saCSV.h"
-#include "csv3.h"
 #include "saExpression.h"
 #include "saHash.h"
 #include "saHedge.h"
