@@ -42,6 +42,8 @@ static char *aList[SA_CONSTANTS_MAXAXIS];
 static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
 
+static saCSVType csv;
+
 extern char *optarg;
 extern int optind, optopt;
 
