@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
     bool done = false;
     while(done == false)
     {
-        int numFields = saCSVFGetLine(&csv, inbuf, fields);
+        int numFields = saCSV3GetLine(&csv, inbuf, fields);
         if (numFields != 0)
         {
             int i;

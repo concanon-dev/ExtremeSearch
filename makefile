@@ -190,7 +190,7 @@ xspreregress: $(OBJECTS)
 xsprespearmancorrelate: $(OBJECTS)
 	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsprespearmancorrelate.o $(OBJDIR)/saSpearmanCorrelation.o $(OBJDIR)/saStatistics.o  $(OBJDIR)/saInsertUniqueValue.o $(OBJDIR)/saMatrixArgs.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o  $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
 xsrepredict: $(OBJECTS)
-	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsrepredict.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
+	$(GCC) -o $(BINDIR)/$@ $(CFLAGS) $(OBJDIR)/xsrepredict.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saSignal.o  $(LICENSELIB) $(LDFLAGS)
 
 #
 # Individual C files

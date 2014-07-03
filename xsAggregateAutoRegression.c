@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "csv3.h"
 #include "saCSV.h"
 
 #include "saSignal.h"
@@ -47,6 +48,8 @@ static int numRows[MAXROWSIZE];
 
 static char *indexString[MAXROWSIZE];
 static int numIndexes = 0;
+
+static saCSVType csv;
 
 extern inline char *saSplunkGetRoot(char *);
 extern inline saSplunkInfoPtr saSplunkLoadHeader();
@@ -114,8 +117,11 @@ int main(int argc, char* argv[])
    int numRowsIndex = -1;
    int xIndex = -1;
 
+   // open stream to read CSV
+   saCSVOpen(&csv, stdin);
+
    // Get the csv header
-   numFields = saCSVGetLine(inbuf, fieldList);
+   numFields = saCSV3GetLine(&csv, inbuf, fieldList);
    for(i=0; i<numFields; i++)
    {
        if (!saCSVCompareField(fieldList[i], "bf"))
@@ -136,11 +142,11 @@ int main(int argc, char* argv[])
 
    // load the data
    int maxIndex = 0;
-   while(!feof(stdin))
+   while(saCSVEOF(&csv) == false)
    {
        int index = -1;
-       numFields = saCSVGetLine(inbuf, fieldList);
-       if (!feof(stdin))
+       numFields = saCSV3GetLine(&csv, inbuf, fieldList);
+       if (saCSVEOF(&csv) == false)
        {
            // See if there is already a reference to the class.  A class is the tuple 
            // formed by the values of the fields "x", "bf" and "bv".  This is used to
