@@ -63,7 +63,7 @@ extern inline char *insertUniqueValue(char *[], char *, int *);
 extern inline int saCSVParseFieldList(char *[], char *);
 
 extern dataRecordTypePtr saQuadRegressionInitDataRecord(int, double *, double *, double *);
-extern int saQuadRegressionRegress(dataRecordTypePtr, int, int, int);
+extern int saQuadRegressionRegress(dataRecordTypePtr, int);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -336,8 +336,7 @@ int main(int argc, char* argv[])
                         bList[i], bValues[j]);
                 dataRecordTypePtr p = saQuadRegressionInitDataRecord(numTempDoubles, tempXDoubles, tempYDoubles, 
                                                                      NULL);
-                int status = saQuadRegressionRegress(p, numTempDoubles, 0, numTempDoubles); 
-                                                                         // length, offset, periods
+                int status = saQuadRegressionRegress(p, numTempDoubles);
                 if (totalRows[i] > 0)
                 {
                     fprintf(stdout, ",%.10f,%.10f,%.10f", p->coef[0], p->coef[1], p->coef[2]);
@@ -360,8 +359,7 @@ int main(int argc, char* argv[])
         for(i=0; i<numXAxis; i++)
         {
             dataRecordTypePtr p = saQuadRegressionInitDataRecord(totalRows[i], xAxis[i], yAxis[i], NULL);
-            int status = saQuadRegressionRegress(p, totalRows[i], 0, totalRows[i]);
-                                                                         // length, offset, periods
+            int status = saQuadRegressionRegress(p, totalRows[i]);
             fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
             if (totalRows[i] > 0)
             {

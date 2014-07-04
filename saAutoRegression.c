@@ -28,12 +28,12 @@ bool saAutoRegression(double *inputSeries, int numSeries, double *coef)
     double tmpF[numSeries+1];
     double tmpR[numSeries+1];
     int i, j;
+    double t1, t2;
  
     for(i=1; i<=SA_AUTOREGRESSION_NUMCOEFS; i++) 
     {
         double sNumerator = 0.0;
         double sDenominator = 0.0;
-        double t1, t2;
         int endI = numSeries - i;
         
         for(j=0; j<endI; j++)
@@ -66,23 +66,25 @@ bool saAutoRegression(double *inputSeries, int numSeries, double *coef)
 
     // Get the coefs
     for(i=0; i<SA_AUTOREGRESSION_NUMCOEFS; i++)
-        coef[i] = -autoMatrix[SA_AUTOREGRESSION_NUMCOEFS][i];
+        //coef[i] = -autoMatrix[SA_AUTOREGRESSION_NUMCOEFS][i];
+        coef[i] = g[i+1];
     return(true);
 }
 
 #ifdef _MAIN_
 int main(int argc, char *argv[])
 {
-    double X[10000];
+#define MSIZE 4000
+    double X[MSIZE];
     double coef[3];
     
     int i;
-    for(i=0; i<10000; i++)
-    {
-        X[i] = (double) i * 10.0;
-    }
+    for(i=0; i<2000; i++)
+        X[i] = (double) i ;
+    for(i=20; i<4000; i++)
+        X[i] = (double) 4000.0 - i;
     
-    bool worked = saAutoRegression(X, 10000, coef);
+    bool worked = saAutoRegression(X, MSIZE, coef);
     
     if (worked == true)
         for(i=0; i<3; i++)
