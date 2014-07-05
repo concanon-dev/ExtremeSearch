@@ -7,90 +7,92 @@
 Module: saAutoRegression
 
 Description:
-    performs maxentropy autoregression
+    Perform Auto Regression to generate an algorithm of the form y = coef0*x*x + coef1*x + coef2.  The
+    coef's are returned along with std estimate of error.  In the case of auto regress, x is assumed to
+    represent some order and X[i] is used as Y.
 
 Functions:
     External:
-    saAutoRegression
-
+    saAutoRegressionRegress
 */
 #include <math.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include "saAutoRegression.h"
+#include <stdio.h>
 
-bool saAutoRegression(double *inputSeries, int numSeries, double *coef)
+int saAutoRegressionRegress(double *X, int length, double *coef)
 {
-    double autoMatrix[SA_AUTOREGRESSION_NUMCOEFS+1][SA_AUTOREGRESSION_NUMCOEFS+1];
-    double g[SA_AUTOREGRESSION_NUMCOEFS+2];
-    double h[SA_AUTOREGRESSION_NUMCOEFS+1];
-    double tmpF[numSeries+1];
-    double tmpR[numSeries+1];
-    int i, j;
-    double t1, t2;
- 
-    for(i=1; i<=SA_AUTOREGRESSION_NUMCOEFS; i++) 
+    double a[3][3];
+    double b[3];
+    int i;
+
+    for(i=0; i < length; i++)
     {
-        double sNumerator = 0.0;
-        double sDenominator = 0.0;
-        int endI = numSeries - i;
-        
-        for(j=0; j<endI; j++)
-        {
-            t1 = inputSeries[j+i] + tmpF[j];
-            t2 = inputSeries[j] + tmpR[j];
-            sNumerator -= 2.0 * t1 * t2;
-            sDenominator += (t1 * t1) + (t2 * t2);
-        }
-        g[i] = sNumerator / sDenominator;
-        t1 = g[i];
-        
-        if (i != 1) 
-        {
-            for(j=1; j<i; j++)
-                h[j] = g[j] + t1 * g[i-j];
-            for (j=1; j<i; j++)
-                g[j] = h[j];
-            endI--;
-        }
-        for(j=0; j<endI; j++)
-        {
-            tmpR[j] += t1 * tmpF[j] + t1 * inputSeries[i+j];
-            tmpF[j] = tmpF[j+1] + t1 * tmpR[j+1] + t1 * inputSeries[j+1];
-        }
-
-        for(j=0; j<i; j++)
-            autoMatrix[i][j] = g[j+1];
+       a[0][0] += 1.0;
+       a[0][1] += i;
+       a[0][2] += i*i;
+       a[1][2] += i*i*i;
+       a[2][2] += i*i*i*i;
+       b[0]    += X[i];
+       b[1]    += X[i]*i;
+       b[2]    += X[i]*i*i;
     }
+    a[1][0] = a[0][1];
+    a[1][1] = a[0][2];
+    a[2][0] = a[1][1];
+    a[2][1] = a[1][2];
 
-    // Get the coefs
-    for(i=0; i<SA_AUTOREGRESSION_NUMCOEFS; i++)
-        //coef[i] = -autoMatrix[SA_AUTOREGRESSION_NUMCOEFS][i];
-        coef[i] = g[i+1];
-    return(true);
+    double det = a[0][0]*(a[1][1]*a[2][2]-a[2][1]*a[1][2])
+                -a[0][1]*(a[1][0]*a[2][2]-a[1][2]*a[2][0])
+                +a[0][2]*(a[1][0]*a[2][1]-a[1][1]*a[2][0]);
+
+    double c[3][3];
+    c[0][0] = (a[1][1]*a[2][2] - a[2][1]*a[1][2]) / det;
+    c[0][1] = (a[0][2]*a[2][1] - a[0][1]*a[2][2]) / det;
+    c[0][2] = (a[0][1]*a[1][2] - a[0][2]*a[1][1]) / det;
+    c[1][0] = (a[1][2]*a[2][0] - a[1][0]*a[2][2]) / det;
+    c[1][1] = (a[0][0]*a[2][2] - a[0][2]*a[2][0]) / det;
+    c[1][2] = (a[1][0]*a[0][2] - a[0][0]*a[1][2]) / det;
+    c[2][0] = (a[1][0]*a[2][1] - a[2][0]*a[1][1]) / det;
+    c[2][1] = (a[2][0]*a[0][1] - a[0][0]*a[2][1]) / det;
+    c[2][2] = (a[0][0]*a[1][1] - a[1][0]*a[0][1]) / det;
+
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            coef[i] += c[i][j] * b[j];
+
+    return(0);
 }
+
 
 #ifdef _MAIN_
 int main(int argc, char *argv[])
 {
-#define MSIZE 4000
+#define MSIZE 40
     double X[MSIZE];
     double coef[3];
-    
+
     int i;
-    for(i=0; i<2000; i++)
+    for(i=0; i<MSIZE/2; i++)
         X[i] = (double) i ;
-    for(i=20; i<4000; i++)
-        X[i] = (double) 4000.0 - i;
-    
-    bool worked = saAutoRegression(X, MSIZE, coef);
-    
-    if (worked == true)
-        for(i=0; i<3; i++)
-            fprintf(stderr, "coef[%d]=%.4f\n", i, coef[i]);
+    for(i=MSIZE/2; i<MSIZE; i++)
+        X[i] = (double) MSIZE - i;
+        //X[i] = (double) i ;
+
+    int worked = saAutoRegressionRegress(X, MSIZE, coef);
+
+    if (worked == 0)
+    {
+        for(i=0; i<MSIZE; i++)
+        {
+            double y = coef[2] * X[i] * X[i] + coef[1] * X[i] + coef[0];
+            fprintf(stderr, "%.4f = %.4f\n", y, X[i]);
+        }
+        fprintf(stderr, "%.4f %.4f %.4f\n", coef[2], coef[1], coef[0]);
+    }
     else
         fprintf(stderr, "oops\n");
-    
+
 }
 #endif
+

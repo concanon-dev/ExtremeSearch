@@ -20,9 +20,6 @@ Functions:
 #include <stdlib.h>
 #include "saQuadRegression.h"
 
-static double a[3][3];
-static double c[3][3];
-
 inline dataRecordTypePtr saQuadRegressionInitDataRecord(int size, double *X, double *Y, double *Z)
 {
     bool zExists = false;
