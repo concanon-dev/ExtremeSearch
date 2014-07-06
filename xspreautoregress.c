@@ -54,7 +54,7 @@ static saCSVType csv;
 extern inline char *insertUniqueValue(char *[], char *, int *);
 extern inline int saCSVParseFieldList(char *[], char *);
 
-extern double *saAutoRegressionRegress(double *, int, double *);
+extern void saAutoRegressionRegress(double *, int, double *);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -287,8 +287,8 @@ int main(int argc, char* argv[])
                             bValues[j]);
                 else
                     fprintf(stdout, "%d,%s,%s,%s", numTempDoubles, xList[i], bList[i], bValues[j]);
-                bool worked = saAutoRegressionRegress(tempXDoubles, numTempDoubles, coefs);
-                if (totalRows[i] > 0 && worked == true)
+                saAutoRegressionRegress(tempXDoubles, numTempDoubles, coefs);
+                if (totalRows[i] > 0)
                 {
                     fprintf(stdout, ",%.10f,%.10f,%.10f", coefs[0], coefs[1], coefs[2]);
                     if (showRange == true)

@@ -20,7 +20,7 @@ Functions:
 #include <stdlib.h>
 #include <stdio.h>
 
-int saAutoRegressionRegress(double *X, int length, double *coef)
+void saAutoRegressionRegress(double *X, int length, double *coef)
 {
     double a[3][3];
     double b[3];
@@ -60,39 +60,5 @@ int saAutoRegressionRegress(double *X, int length, double *coef)
     for(int i = 0; i < 3; i++)
         for(int j = 0; j < 3; j++)
             coef[i] += c[i][j] * b[j];
-
-    return(0);
 }
-
-
-#ifdef _MAIN_
-int main(int argc, char *argv[])
-{
-#define MSIZE 40
-    double X[MSIZE];
-    double coef[3];
-
-    int i;
-    for(i=0; i<MSIZE/2; i++)
-        X[i] = (double) i ;
-    for(i=MSIZE/2; i<MSIZE; i++)
-        X[i] = (double) MSIZE - i;
-        //X[i] = (double) i ;
-
-    int worked = saAutoRegressionRegress(X, MSIZE, coef);
-
-    if (worked == 0)
-    {
-        for(i=0; i<MSIZE; i++)
-        {
-            double y = coef[2] * X[i] * X[i] + coef[1] * X[i] + coef[0];
-            fprintf(stderr, "%.4f = %.4f\n", y, X[i]);
-        }
-        fprintf(stderr, "%.4f %.4f %.4f\n", coef[2], coef[1], coef[0]);
-    }
-    else
-        fprintf(stderr, "oops\n");
-
-}
-#endif
 
