@@ -26,15 +26,9 @@ TEST(saParserParse, loadExpStack) {
     char whereLine[MAXROWSIZE / 32] = "Height is Tall";
     strcpy(stackFile, infoPath);
 
-#ifdef _WIN32
-    printf("WIN32\n");
-    char *endStr = strrchr(stackFile, '\\');
-#else
-    char *endStr = strrchr(stackFile, '/');
-#endif
-    //printf("stackFile=%s", stackFile);
-    //printf("endStr=%s", endStr);
-    //exit(0);
+    char *endStr = stackFile + strlen(stackFile) - 1;
+    while(*endStr != 47 && *endStr != 92)
+          endStr--;
     strcpy(endStr+1, "stack.txt");
     FILE *sFile = fopen(stackFile, "r");
     if (sFile == NULL)
