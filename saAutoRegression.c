@@ -15,27 +15,57 @@ Functions:
     External:
     saAutoRegressionRegress
 */
-#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "saAutoRegression.h"
 
-void saAutoRegressionRegress(double *X, int length, double *coef)
+#define MAXSIZE 40
+
+dataRecordTypePtr saAutoRegressionInitDataRecord(int size, double *X)
+{
+    bool zExists = false;
+    dataRecordTypePtr p = malloc(sizeof(dataRecordType));
+    p->XArray = X;
+    p->YArray = NULL;
+    p->evidenceArray = malloc(sizeof(double)*size);
+
+    int i;
+    for(i=0; i<size; i++)
+        p->evidenceArray[i] = 1.0;
+    p->size = size;
+
+    for(i=0; i<SA_AUTOREGRESSION_MAXCOEFFICIENTS; i++)
+        p->coef[i] = 0;
+
+    return(p);
+}
+
+void saAutoRegressionRegress(dataRecordTypePtr p, int length)
 {
     double a[3][3];
     double b[3];
-    int i;
+    int i, j;
+
+    for(i=0; i<3; i++)
+    {
+        b[i] = 0.0;
+        for(j=0; j<3; j++)
+            a[i][j] = 0.0;
+    }
 
     for(i=0; i < length; i++)
     {
+       double y = p->XArray[i];
+       double x = (double)i;
        a[0][0] += 1.0;
-       a[0][1] += i;
-       a[0][2] += i*i;
-       a[1][2] += i*i*i;
-       a[2][2] += i*i*i*i;
-       b[0]    += X[i];
-       b[1]    += X[i]*i;
-       b[2]    += X[i]*i*i;
+       a[0][1] += x;
+       a[0][2] += x*x;
+       a[1][2] += x*x*x;
+       a[2][2] += x*x*x*x;
+       b[0]    += y;
+       b[1]    += y*x;
+       b[2]    += y*x*x;
     }
     a[1][0] = a[0][1];
     a[1][1] = a[0][2];
@@ -57,8 +87,8 @@ void saAutoRegressionRegress(double *X, int length, double *coef)
     c[2][1] = (a[2][0]*a[0][1] - a[0][0]*a[2][1]) / det;
     c[2][2] = (a[0][0]*a[1][1] - a[1][0]*a[0][1]) / det;
 
-    for(int i = 0; i < 3; i++)
-        for(int j = 0; j < 3; j++)
-            coef[i] += c[i][j] * b[j];
+     for(int i = 0; i < 3; i++)
+       for(int j = 0; j < 3; j++)
+           p->coef[i] += c[i][j] * b[j];
 }
 

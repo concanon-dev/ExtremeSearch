@@ -38,7 +38,6 @@ static int bFieldIndex[SA_CONSTANTS_MAXAXIS];
 static int xFieldIndex[SA_CONSTANTS_MAXAXIS];
 static char *bList[SA_CONSTANTS_MAXAXIS];
 static char *xList[SA_CONSTANTS_MAXAXIS];
-static char *yList[SA_CONSTANTS_MAXAXIS];
 
 static char *bAxis[SA_CONSTANTS_MAXROWSIZE];
 static char *bValues[SA_CONSTANTS_MAXROWSIZE];
@@ -54,7 +53,8 @@ static saCSVType csv;
 extern inline char *insertUniqueValue(char *[], char *, int *);
 extern inline int saCSVParseFieldList(char *[], char *);
 
-extern void saAutoRegressionRegress(double *, int, double *);
+extern dataRecordTypePtr saAutoRegressionInitDataRecord(int, double *);
+extern void saAutoRegressionRegress(dataRecordTypePtr, int);
 
 extern char *optarg;
 extern int optind, optopt;
@@ -67,18 +67,15 @@ int main(int argc, char* argv[])
     bool showRange;
     char fieldB[SA_CONSTANTS_MAXSTRING];
     char fieldX[SA_CONSTANTS_MAXSTRING];
-    char fieldY[SA_CONSTANTS_MAXSTRING];
-    double coefs[SA_AUTOREGRESSION_NUMCOEFS];
 
     int c;
 
     initSignalHandler(basename(argv[0]));
-    fieldY[0] = '\0';
     argError = false;
     hasByClause = false;
     mustMatchFields = true;
     showRange = false;
-    while ((c = getopt(argc, argv, "b:irx:y:")) != -1) 
+    while ((c = getopt(argc, argv, "b:irx:")) != -1) 
     {
         switch(c)
         {
@@ -95,9 +92,6 @@ int main(int argc, char* argv[])
             case 'x':
                 strcpy(fieldX, optarg);
                 break;
-            case 'y':
-                strcpy(fieldY, optarg);
-                break;
             case '?':
                 fprintf(stderr, "xspreautoregress-F-101: Unrecognised option: -%c\n", optopt);
                 argError = true;
@@ -106,7 +100,7 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xspreautoregress-F-103: Uage: xspreautoregress [-b field] [-i] [-r] -x fieldList [-y fieldList]");
+                "xspreautoregress-F-103: Uage: xspreautoregress [-b field] [-i] [-r] -x fieldList");
         exit(EXIT_FAILURE);
     }
 
@@ -114,11 +108,10 @@ int main(int argc, char* argv[])
     if (hasByClause)
         numBAxis = saCSVParseFieldList(bList, fieldB);
     int numXAxis = saCSVParseFieldList(xList, fieldX);
-    saCSVParseFieldList(yList, fieldY);
     if ((numBAxis != -1) && (numXAxis != numBAxis))
     {
         fprintf(stderr,
-                "xspreautoregress-F-111: found %d X and %d B parameters but the number of values must be the same\n",
+                "xspreautoregress-F-111: found %d X and %d B parameters but the number of values must be equal\n",
                 numXAxis, numBAxis);
         exit(EXIT_FAILURE);
     }
@@ -254,10 +247,7 @@ int main(int argc, char* argv[])
                 done = true;
         }
     }
-    if (strlen(fieldY) != 0)
-        fputs("numRows,x,y,bf,bv,coef0,coef1,coef2", stdout);
-    else
-        fputs("numRows,x,bf,bv,coef0,coef1,coef2", stdout);
+    fputs("numRows,x,bf,bv,coef0,coef1,coef2", stdout);
     if (showRange == true)
         fputs(",xLow,xHigh", stdout);
     fputs("\n", stdout);
@@ -282,15 +272,12 @@ int main(int argc, char* argv[])
                     }
                     k++;
                 }
-                if (strlen(fieldY) != 0)
-                    fprintf(stdout, "%d,%s,%s,%s,%s", numTempDoubles, xList[i], yList[i], bList[i],
-                            bValues[j]);
-                else
-                    fprintf(stdout, "%d,%s,%s,%s", numTempDoubles, xList[i], bList[i], bValues[j]);
-                saAutoRegressionRegress(tempXDoubles, numTempDoubles, coefs);
+                fprintf(stdout, "%d,%s,%s,%s", numTempDoubles, xList[i], bList[i], bValues[j]);
+                dataRecordTypePtr p = saAutoRegressionInitDataRecord(numTempDoubles, tempXDoubles);
+                saAutoRegressionRegress(p, numTempDoubles);
                 if (totalRows[i] > 0)
                 {
-                    fprintf(stdout, ",%.10f,%.10f,%.10f", coefs[0], coefs[1], coefs[2]);
+                    fprintf(stdout, ",%.10f,%.10f,%.10f", p->coef[0], p->coef[1], p->coef[2]);
                     if (showRange == true)
                         fprintf(stdout, ",%.10f,%.10f", xAxisLow[i], xAxisHigh[i]);
                 }
@@ -308,14 +295,13 @@ int main(int argc, char* argv[])
     {
         for(i=0; i<numXAxis; i++)
         {
-            saAutoRegressionRegress(xAxis[i], totalRows[i], coefs);
-            if (strlen(fieldY) != 0)
-                fprintf(stdout, "%d,%s,%s,*,*", totalRows[i], xList[i], yList[i]);
-            else
-                fprintf(stdout, "%d,%s,*,*", totalRows[i], xList[i]);
+            dataRecordTypePtr p = saAutoRegressionInitDataRecord(totalRows[i], xAxis[i]);
+            saAutoRegressionRegress(p, totalRows[i]);
+
+            fprintf(stdout, "%d,%s,*,*", totalRows[i], xList[i]);
             if (totalRows[i] > 0)
             {
-                fprintf(stdout, ",%.10f,%.10f,%.10f", coefs[0], coefs[1], coefs[2]);
+                fprintf(stdout, ",%.10f,%.10f,%.10f", p->coef[0], p->coef[1], p->coef[2]);
                 if (showRange == true)
                     fprintf(stdout, ",%.10f,%.10f", xAxisLow[i], xAxisHigh[i]);
             }

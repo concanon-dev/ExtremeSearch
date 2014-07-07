@@ -10,5 +10,15 @@
 #include "saConstants.h"
 
 #define SA_AUTOREGRESSION_NUMCOEFS 3
+#define SA_AUTOREGRESSION_MAXCOEFFICIENTS 3
 
+typedef struct dataRecordStructType
+{
+    double coef[SA_AUTOREGRESSION_MAXCOEFFICIENTS]; 
+    double *evidenceArray;
+    double *XArray;
+    double *YArray;
+    int size;
+} dataRecordType;
+typedef dataRecordType *dataRecordTypePtr;
 #endif

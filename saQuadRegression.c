@@ -54,7 +54,14 @@ inline int saQuadRegressionRegress(dataRecordTypePtr p, int length)
 {
     double a[3][3];
     double b[3];
-    int i;
+    int i, j;
+
+    for(i=0; i<3; i++)
+    {
+        b[i] = 0.0;
+        for(j=0; j<3; j++)
+            a[i][j] = 0.0;
+    }
 
     for(i=0; i < length; i++)
     {
