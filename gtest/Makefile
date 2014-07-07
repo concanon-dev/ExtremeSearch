@@ -60,7 +60,7 @@ CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest
+TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -113,6 +113,10 @@ saContext_unittest.o : $(USER_DIR)/saContext_unittest.cc $(GTEST_HEADERS)
 
 saContextCreate_unittest.o : $(USER_DIR)/saContextCreate_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saContextCreate_unittest.cc
+saHash_unittest.o : $(USER_DIR)/saHash_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saHash_unittest.cc
+saHedge_unittest.o : $(USER_DIR)/saHedge_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saHedge_unittest.cc
 
 saConcept_unittest.o : $(USER_DIR)/saConcept_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saConcept_unittest.cc
@@ -127,4 +131,9 @@ saConcept_unittest : saConcept_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
 saContextCreate_unittest : saContextCreate_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
+saHash_unittest : saHash_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHash.o 
+saHedge_unittest : saHedge_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o  $(OBJDIR)/saConcept.o  $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o  $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o
+
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)

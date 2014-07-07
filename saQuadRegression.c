@@ -55,6 +55,7 @@ inline int saQuadRegressionRegress(dataRecordTypePtr p, int length)
     double a[3][3];
     double b[3];
     int i, j;
+<<<<<<< HEAD
 
     for(i=0; i<3; i++)
     {
@@ -62,6 +63,8 @@ inline int saQuadRegressionRegress(dataRecordTypePtr p, int length)
         for(j=0; j<3; j++)
             a[i][j] = 0.0;
     }
+=======
+>>>>>>> FETCH_HEAD
 
     for(i=0; i < length; i++)
     {
@@ -96,8 +99,8 @@ inline int saQuadRegressionRegress(dataRecordTypePtr p, int length)
     c[2][1] = (a[2][0]*a[0][1] - a[0][0]*a[2][1]) / det;
     c[2][2] = (a[0][0]*a[1][1] - a[1][0]*a[0][1]) / det;
 
-    for(int i = 0; i < 3; i++)
-        for(int j = 0; j < 3; j++)
+    for(i = 0; i < 3; i++)
+        for(j = 0; j < 3; j++)
             p->coef[i] += c[i][j] * b[j];
 
     return(0);
