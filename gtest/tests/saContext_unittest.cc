@@ -17,7 +17,7 @@
 #include "gtest/gtest.h"
 
 extern "C" {
-static saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, double sdev, int count, int numConcepts, char *type, char *notes, char *uom);
+saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, double sdev, int count, int numConcepts, char *type, char *notes, char *uom);
 saContextTypePtr saContextLoad(FILE *infile);
 saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2, char *c3Name);
 //char *eatTimestamp(char **cursor);
