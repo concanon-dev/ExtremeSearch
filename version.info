@@ -1,8 +1,11 @@
 Scianta Analytics Extreme Search for Splunk
 
-Version:        4.1.6
+Version:        4.1.23
 
 Release Notes: 
+
+4.1.23: 
+    Migrate all commands to new csv parser for improved performance
 
 4.1.1: 
     Updated xslicense to support key reactivation
