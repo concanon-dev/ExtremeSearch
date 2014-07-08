@@ -60,7 +60,7 @@ CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest
+TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest saAutoRegression_unittest saLinearRegression_unittest saQuadRegression_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -113,13 +113,19 @@ saContext_unittest.o : $(USER_DIR)/saContext_unittest.cc $(GTEST_HEADERS)
 
 saContextCreate_unittest.o : $(USER_DIR)/saContextCreate_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saContextCreate_unittest.cc
+saConcept_unittest.o : $(USER_DIR)/saConcept_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saConcept_unittest.cc
 saHash_unittest.o : $(USER_DIR)/saHash_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saHash_unittest.cc
 saHedge_unittest.o : $(USER_DIR)/saHedge_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saHedge_unittest.cc
+saAutoRegression_unittest.o : $(USER_DIR)/saAutoRegression_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saAutoRegression_unittest.cc
+saLinearRegression_unittest.o : $(USER_DIR)/saLinearRegression_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saLinearRegression_unittest.cc
+saQuadRegression_unittest.o : $(USER_DIR)/saQuadRegression_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saQuadRegression_unittest.cc
 
-saConcept_unittest.o : $(USER_DIR)/saConcept_unittest.cc $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saConcept_unittest.cc
 
 saParser_unittest : saParser_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
@@ -135,5 +141,11 @@ saHash_unittest : saHash_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHash.o 
 saHedge_unittest : saHedge_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o  $(OBJDIR)/saConcept.o  $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o  $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o
+saAutoRegression_unittest : saAutoRegression_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saAutoRegression.o
+saLinearRegression_unittest : saLinearRegression_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saLinearRegression.o
+saQuadRegression_unittest : saQuadRegression_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saQuadRegression.o
 
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
