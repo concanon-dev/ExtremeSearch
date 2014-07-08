@@ -18,8 +18,8 @@ if __name__ == '__main__':
                 outputKeyword="output"
             elif outputKeyword == "output":
                 outfile = arg
-    else:
-        raise Exception("xsAggregateLinearRegression-F-001: Usage: xsAggregateLinearRegression [OUTPUT filename]")
+        if outfile == '':
+            raise Exception("xsAggregateLinearRegression-F-001: Usage: xsAggregateLinearRegression [OUTPUT filename]")
 
     try:
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateLinearRegression"

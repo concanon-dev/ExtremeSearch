@@ -18,8 +18,8 @@ if __name__ == '__main__':
                 outputKeyword="output"
             elif outputKeyword == "output":
                 outfile = arg
-    else:
-        raise Exception("xsAggregateSpearmanCorrelation-F-001: Usage: xsAggregateSpearmanCorrelation [OUTPUT filename]")
+        if outfile == '':
+            raise Exception("xsAggregateSpearmanCorrelation-F-001: Usage: xsAggregateSpearmanCorrelation [OUTPUT filename]")
 
     try:
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateSpearmanCorrelation"

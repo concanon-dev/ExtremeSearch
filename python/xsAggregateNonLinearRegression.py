@@ -18,8 +18,8 @@ if __name__ == '__main__':
                 outputKeyword="output"
             elif outputKeyword == "output":
                 outfile = arg
-    else:
-        raise Exception("xsAggregateNonLinearRegression-F-001: Usage: xsAggregateNonLinearRegression [OUTPUT filename]")
+        if outfile == '':
+            raise Exception("xsAggregateNonLinearRegression-F-001: Usage: xsAggregateNonLinearRegression [OUTPUT filename]")
 
     try:
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsAggregateAutoRegression"
