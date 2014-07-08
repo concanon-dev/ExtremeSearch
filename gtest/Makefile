@@ -60,7 +60,7 @@ CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest saAutoRegression_unittest saLinearRegression_unittest saQuadRegression_unittest saGeoLiteCity_unittest
+TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest saAutoRegression_unittest saLinearRegression_unittest saQuadRegression_unittest saGeoLiteCity_unittest saInsertUniqueValue_unittest saStatistics_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -127,6 +127,10 @@ saQuadRegression_unittest.o : $(USER_DIR)/saQuadRegression_unittest.cc $(GTEST_H
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saQuadRegression_unittest.cc
 saGeoLiteCity_unittest.o : $(USER_DIR)/saGeoLiteCity_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saGeoLiteCity_unittest.cc
+saInsertUniqueValue_unittest.o : $(USER_DIR)/saInsertUniqueValue_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saInsertUniqueValue_unittest.cc
+saStatistics_unittest.o : $(USER_DIR)/saStatistics_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saStatistics_unittest.cc
 
 saParser_unittest : saParser_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
@@ -150,5 +154,9 @@ saQuadRegression_unittest : saQuadRegression_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saQuadRegression.o
 saGeoLiteCity_unittest : saGeoLiteCity_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saGeoLiteCity.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saHash.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o
+saInsertUniqueValue_unittest : saInsertUniqueValue_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saInsertUniqueValue.o
+saStatistics_unittest : saStatistics_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saStatistics.o
 
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
