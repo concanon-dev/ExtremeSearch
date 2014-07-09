@@ -62,7 +62,7 @@ if __name__ == '__main__':
         if isgetinfo:
             reqsop = True
             if rType == "Quad":
-                preop = "xspreautoregress u=maxentropy "
+                preop = "xsprequadregress "
             preop += " x=\"%s\" " % x
             if yCount > 0:
                 preop += " y=\"%s\" " % y
@@ -75,7 +75,7 @@ if __name__ == '__main__':
                 preop += " b=\"%s\" " % by
             si.outputInfo(False, False, False, reqsop, preop) # calls sys.exit()
 
-        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformAutoRegression"
+        binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsPerformQuadRegression"
         if (platform.system() == 'Windows'):
             binary = binary + ".exe"
         if not os.path.isfile(binary):

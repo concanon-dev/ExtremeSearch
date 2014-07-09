@@ -6,10 +6,9 @@
 
  Program: xsprequadregress
 
- Usage: xsprequadregress [-b fieldList] [-i] [-m method] [-r] -x fieldList -y fieldList
+ Usage: xsprequadregress [-b fieldList] [-i] [-r] -x fieldList -y fieldList
     -b the list of BY fields, separated by commas (defaults to none)
     -i don't exit if any BY column doesn't exist (default is to exit if BY column does not exist)    
-    -m the method of auto regression to perform (maxentropy or leastsquares, defaults to maxentropy)
     -r write out the lowest and highest values for each X and Y field in each BY group
     -x the list of X fields to perform quad regression against
     -y the list of Y fields to perform quad regression against
