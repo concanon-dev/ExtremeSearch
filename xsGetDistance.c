@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
             {
                 char *f1 = saCSVExtractField(fieldList[toFieldIndex[0]]);
                 char *f2 = saCSVExtractField(fieldList[toFieldIndex[1]]);
-                if (!saCSVConvertToDouble(f1, &latLon2[0]) || !saCSVConvertToDouble(f2, &latLon2[0]))
+                if (!saCSVConvertToDouble(f1, &latLon2[0]) || !saCSVConvertToDouble(f2, &latLon2[1]))
                 {
                     if (isLatLon2 == false)
                         lookupByCityRegionCountry(f1, f2, "US", latLon2);
