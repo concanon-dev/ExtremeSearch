@@ -1,23 +1,132 @@
 
-proc getDistance { splunk_home login passwd index field zip response} {
+proc getDistanceZipToZip { splunk_home login passwd index zip field response} {
     global errors
     set tt [time {
         send "$splunk_home/bin/splunk search 'index=$index | eval myZip=\"$zip\" | xsGetDistance FROM myZip TO $field' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
 
         expect {
             timeout { 
-                send_user "\nTEST FAIL - xsGetDistance ($zip) - TIMEOUT" 
+                send_user "\nTEST FAIL - xsGetDistance ($zip TO $field) - TIMEOUT" 
                 incr errors
             }
             "ERROR" { 
-                send_user "\nTEST FAIL - xsGetDistance ($zip) - ERROR" 
+                send_user "\nTEST FAIL - xsGetDistance ($zip TO $field) - ERROR" 
                 incr errors
             }
             "$response" { 
-                send_user "\nTEST PASS - xsGetDistance ($zip)" 
+                send_user "\nTEST PASS - xsGetDistance ($zip TO $field)" 
             }
         }
     }]
     send_user "\n$tt"
 }
 
+proc getDistanceZipValToZipVal { splunk_home login passwd zip1 zip2 response} {
+    global errors
+    set tt [time {
+        send "$splunk_home/bin/splunk search '|stats count | eval zip1=\"$zip1\" | eval zip2=\"$zip2\" | xsGetDistance FROM zip1 TO zip2' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
+
+        expect {
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip1 TO $zip2) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip1 TO $zip2) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($zip1 TO $zip2)" 
+            }
+        }
+    }]
+    send_user "\n$tt"
+}
+
+proc getDistanceZipToLatLon { splunk_home login passwd index lat lon field response} {
+    global errors
+    set tt [time {
+        send "$splunk_home/bin/splunk search 'index=$index | eval mylat=\"$lat\"| eval mylon=\"$lon\" | xsGetDistance FROM $field TO mylat mylon' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
+
+        expect {
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($field TO $lat $lon) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($field TO $lat $lon) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($field TO $lat $lon)" 
+            }
+        }
+    }]
+    send_user "\n$tt"
+}
+
+proc getDistanceZipValToLatLonVal { splunk_home login passwd lat lon zip response} {
+    global errors
+    set tt [time {
+        send "$splunk_home/bin/splunk search '| stats count | eval mylat=\"$lat\"| eval mylon=\"$lon\" | eval myzip=\"$zip\" | xsGetDistance FROM myzip TO mylat mylon' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
+
+        expect {
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip TO $lat $lon) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($zip TO $lat $lon) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($zip TO $lat $lon)" 
+            }
+        }
+    }]
+    send_user "\n$tt"
+}
+
+proc getDistanceLatLonToZip { splunk_home login passwd index lat lon field response} {
+    global errors
+    set tt [time {
+        send "$splunk_home/bin/splunk search 'index=$index | eval mylat=\"$lat\" | eval mylon=\"$lon\" | xsGetDistance FROM mylat mylon TO $field' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
+
+        expect {
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($lat $lon TO $field) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($lat $lon TO $field) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($lat $lon TO $field)" 
+            }
+        }
+    }]
+    send_user "\n$tt"
+}
+
+proc getDistanceLatLonValToZipVal { splunk_home login passwd lat lon zip response} {
+    global errors
+    set tt [time {
+        send "$splunk_home/bin/splunk search '| stats count | eval mylat=\"$lat\" | eval mylon=\"$lon\" | eval myzip=\"$zip\" | xsGetDistance FROM mylat mylon TO myzip' -auth $login:$passwd -maxout 1 -header true -output table -preview false\r"
+
+        expect {
+            timeout { 
+                send_user "\nTEST FAIL - xsGetDistance ($lat $lon TO $zip) - TIMEOUT" 
+                incr errors
+            }
+            "ERROR" { 
+                send_user "\nTEST FAIL - xsGetDistance ($lat $lon TO $zip) - ERROR" 
+                incr errors
+            }
+            "$response" { 
+                send_user "\nTEST PASS - xsGetDistance ($lat $lon TO $zip)" 
+            }
+        }
+    }]
+    send_user "\n$tt"
+}

@@ -66,7 +66,9 @@ findMembership $env(SPLUNK_HOME) $login $passwd $index HeightTest private Height
 getCompatibility $env(SPLUNK_HOME) $login $passwd $index HeightTest private Height "Height*Concept*CIX*------"
 
 # GetDistance Tests
-getDistance $env(SPLUNK_HOME) $login $passwd $index Zip 80126 "Age*---"
+getDistanceZipToZip $env(SPLUNK_HOME) $login $passwd $index 80126 Zip "Age*---"
+getDistanceZipToLatLon $env(SPLUNK_HOME) $login $passwd $index 39.5347 -104.9582 Zip "Age*---"
+getDistanceLatLonToZip $env(SPLUNK_HOME) $login $passwd $index 39.5347 -104.9582  Zip "Age*---"
 
 # DiscoverTrend Commands
 discoverTrend $env(SPLUNK_HOME) $login $passwd $index Height Age "" "x*y*bf*bv*concept*trend"
