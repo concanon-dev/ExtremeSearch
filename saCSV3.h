@@ -24,9 +24,13 @@ typedef saCSVType *saCSVTypePtr;
 #endif
 
 #ifndef _CSV3_C
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern inline bool saCSVEOF(saCSVTypePtr);
 extern inline int saCSV3GetLine(saCSVTypePtr, char [], char *[]);
 extern inline void saCSVOpen(saCSVTypePtr, FILE *);
-
+#ifdef __cplusplus
+}
+#endif
 #endif
