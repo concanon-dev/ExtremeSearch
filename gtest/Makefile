@@ -133,19 +133,19 @@ saStatistics_unittest.o : $(USER_DIR)/saStatistics_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saStatistics_unittest.cc
 
 saParser_unittest : saParser_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/saCSV3.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
 saSplunk_unittest : saSplunk_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/saCSV3.o
 saContext_unittest : saContext_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/saCSV3.o
 saConcept_unittest : saConcept_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/saCSV3.o
 saContextCreate_unittest : saContextCreate_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o $(OBJDIR)/saConcept.o $(OBJDIR)/saCSV.o  $(OBJDIR)/saCSV3.o
 saHash_unittest : saHash_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHash.o 
 saHedge_unittest : saHedge_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o  $(OBJDIR)/saConcept.o  $(OBJDIR)/saCSV.o  $(OBJDIR)/csvtest.o  $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saSplunk.o  $(OBJDIR)/saConcept.o  $(OBJDIR)/saCSV.o  $(OBJDIR)/saCSV3.o  $(OBJDIR)/saContext.o  $(OBJDIR)/saContextCreate.o
 saAutoRegression_unittest : saAutoRegression_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saAutoRegression.o
 saLinearRegression_unittest : saLinearRegression_unittest.o gtest_main.a
@@ -153,7 +153,7 @@ saLinearRegression_unittest : saLinearRegression_unittest.o gtest_main.a
 saQuadRegression_unittest : saQuadRegression_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saQuadRegression.o
 saGeoLiteCity_unittest : saGeoLiteCity_unittest.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saGeoLiteCity.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saHash.o $(OBJDIR)/saCSV.o $(OBJDIR)/csvtest.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saGeoLiteCity.o $(OBJDIR)/saStatistics.o $(OBJDIR)/saHash.o $(OBJDIR)/saCSV.o $(OBJDIR)/saCSV3.o
 saInsertUniqueValue_unittest : saInsertUniqueValue_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saInsertUniqueValue.o
 saStatistics_unittest : saStatistics_unittest.o gtest_main.a

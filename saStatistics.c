@@ -39,11 +39,11 @@ Functions:
 #define R (6372.8)
 #define TO_RAD (3.1415926536 / 180)
 
-static inline void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
-static inline void saStatisticsGetInterval(double, double[], double[], int, int *);
-static inline void saStatisticsDataSort(double[], int, int);
-static inline bool saStatisticsRange(double[], int, int, double *, double *, double *);
-static inline bool saStatisticsVar(double[], int, int, double *);
+inline void saStatisticsGenerateIntervals(double, double, double, int, double[], double[]);
+inline void saStatisticsGetInterval(double, double[], double[], int, int *);
+inline void saStatisticsDataSort(double[], int, int);
+inline bool saStatisticsRange(double[], int, int, double *, double *, double *);
+inline bool saStatisticsVar(double[], int, int, double *);
 
 inline bool saStatisticsAvg(double data[], int startIndex, int count, double *avg)
 {

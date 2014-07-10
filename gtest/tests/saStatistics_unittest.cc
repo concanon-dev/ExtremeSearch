@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "gtest/gtest.h"
 
 extern "C" {
@@ -61,28 +62,141 @@ TEST(saStatistics, saStatisticsFreq) {
 }
 
 TEST(saStatistics, saStatisticsHaversineDistance) {
+    double lat1 = 39.553617;
+    double lon1 = -104.942473;
+    double lat2 = 26.314670;
+    double lon2 = -80.078123;
+
+    double result = saStatisticsHaversineDistance(lat1, lon1, lat2, lon2);
+    EXPECT_EQ(1699, round(result));
 }
 
 TEST(saStatistics, saStatisticsMax) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double max = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsMax(data, startIndex, count, &max);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(100, max);
 }
 
-TEST(saStatistics, saStatisticsMeang) {
+TEST(saStatistics, saStatisticsMean) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double mean = 0;
+    double minRange = 0;
+    double maxRange = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsMean(data, startIndex, count, &minRange, &maxRange, &mean);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(50.5, mean);
+    EXPECT_EQ(1, minRange);
+    EXPECT_EQ(100, maxRange);
 }
 
 TEST(saStatistics, saStatisticsMedian) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    int medianSize = 0;
+    double median = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsMedian(data, startIndex, count, &medianSize, &median);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(51.5, median);
+    EXPECT_EQ(1, medianSize);
 }
 
 TEST(saStatistics, saStatisticsMin) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double max = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsMin(data, startIndex, count, &max);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(1, max);
 }
 
 TEST(saStatistics, saStatisticsRange) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double minRange = 0;
+    double maxRange = 0;
+    double range = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsRange(data, startIndex, count, &minRange, &maxRange, &range);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(99, range);
+    EXPECT_EQ(1, minRange);
+    EXPECT_EQ(100, maxRange);
 }
 
 TEST(saStatistics, saStatisticsSdev) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double sdev = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsSdev(data, startIndex, count, &sdev);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(29, round(sdev));
 }
 
 TEST(saStatistics, saStatisticsSkew) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double skew = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsSkew(data, startIndex, count, &skew);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(0, round(skew));
 }
 
 TEST(saStatistics, saStatisticsVar) {
+    double data[100];
+    int startIndex = 0;
+    int count = 100;
+    double var = 0;
+
+    int i;
+    for (i=0; i < 100; i++)
+        data[i] = i+1;
+
+    bool result = saStatisticsVar(data, startIndex, count, &var);
+    EXPECT_EQ(true, result);
+    EXPECT_EQ(833, round(var));
 }

@@ -98,7 +98,11 @@ EXECUTABLES = xsAggregateAutoRegression xsAggregateCorrelation xsAggregateLinear
 
 
 
-all: $(EXECUTABLES)
+all: setup $(EXECUTABLES)
+
+setup:
+	$(shell mkdir -p $(BINDIR))
+	$(shell mkdir -p $(OBJDIR))
 
 #
 # Executables
@@ -344,8 +348,6 @@ xsrelease: all
 		echo "Usage: make xsrelease version=x_y_z where x_y_z is the current version"; \
 	else \
 		echo "Make Extreme Search Release $(VERSION) for platform $(OSTYPE)"; \
-		$(shell mkdir -p $(BINDIR)) \
-		$(shell mkdir -p $(OBJDIR)) \
 		$(shell rm -rf $(RELEASEDIR)) \
 		$(shell mkdir -p $(RELEASEDIR)/appserver/static) \
 		$(shell mkdir -p $(RELEASEDIR)/bin) \
