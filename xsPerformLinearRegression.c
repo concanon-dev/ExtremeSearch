@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "csv3.h"
+#include "saCSV3.h"
 #include "saCSV.h"
 
 #include "saSignal.h"
@@ -224,7 +224,7 @@ int main(int argc, char* argv[])
     // if the outfile is specified then write results
     char tempDir[512];
     FILE *f = NULL;
-    if (outfile[0] !+ '\0')
+    if (outfile[0] != '\0')
     {
         sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
         f = fopen(tempDir, "w");
