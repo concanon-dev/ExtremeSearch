@@ -59,10 +59,13 @@ int main(int argc, char* argv[])
 {
     char outfile[256];
 
+    // Initialize the system
     initSignalHandler(basename(argv[0]));
     outfile[0] = '\0';
     int c;
     bool argError = false;
+
+    // Get the arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch(c)
@@ -81,6 +84,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
 
+    // Load the Splunk Header information to get app & user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -94,6 +98,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+   // Initialize the arrays
    int numFields;
    int i;
    for(i=0; i<MAXROWSIZE; i++)
@@ -133,6 +138,7 @@ int main(int argc, char* argv[])
             xIndex = i;
    }
 
+   // Read the data
    int maxIndex = 0;
    while(saCSVEOF(&csv) == false)
    {
@@ -140,6 +146,7 @@ int main(int argc, char* argv[])
        numFields = saCSV3GetLine(&csv, inbuf, fieldList);
        if (saCSVEOF(&csv) == false)
        {
+           // Determine if the BY index already exists.  If not, then create it
            index = getIndex(xIndex, byFIndex, byVIndex);
            if (byF[index] == NULL)
            {
@@ -157,6 +164,7 @@ int main(int argc, char* argv[])
                strcpy(X[index], fieldList[xIndex]);
            }
 
+           // Load the data for coefs into the correct BY index
            int rowCount = atoi(fieldList[numRowsIndex]);
            if (rowCount > 0)
            {
@@ -186,9 +194,14 @@ int main(int argc, char* argv[])
        }
    }
 
+   // Write out the file if specified
    char tempDir[512];
-   sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = fopen(tempDir, "w");
+   FILE *f = NULL;
+   if (outfile[0] != '\0')
+   {
+       sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
+       f = fopen(tempDir, "w");
+   }
 
    // write out the results
    if (f != NULL)
@@ -202,7 +215,8 @@ int main(int argc, char* argv[])
        coef0[i] = coef0[i] / (float)numRows[i];
        coef1[i] = coef1[i] / (float)numRows[i];
        coef2[i] = coef2[i] / (float)numRows[i];
- 
+
+       // Write data to output stream 
        if (f != NULL) 
            fprintf(f, "%s,%s,%s,%d,%.10f,%.10f,%.10f\n", X[i], byF[i], byV[i],
                    numRows[i], coef0[i], coef1[i], coef2[i]);

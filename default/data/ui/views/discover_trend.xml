@@ -1,4 +1,7 @@
 <form script="single_trend.js" stylesheet="single_trend.css">
+<!--
+    <p>Copyright 2013 Scianta Analytics LLC All Rights Reserved</p>
+-->
   <label>Discover Trend</label>
   <fieldset>
     <input type="text" token="presearch">

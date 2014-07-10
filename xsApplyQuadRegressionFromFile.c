@@ -67,8 +67,11 @@ int main(int argc, char* argv[])
     int numFileRows = 0;
     int regressIndex = -1;
 
+    // Initialize the system
     initSignalHandler(basename(argv[0]));  
     argError = false;
+
+    // get the arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch(c)
@@ -87,6 +90,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Load the Splunk Header information to get app & user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -100,6 +104,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // read the algorithm from the file
     char tempDir[512];
     sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, fileName);
     FILE *f = fopen(tempDir, "r");
@@ -108,6 +113,8 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsApplyQuadRegressionFromFile-F-103: can't open file %s", fileName);
         exit(EXIT_FAILURE);
     }
+
+    // Open the file stream to read CSV data
     saCSVOpen(&csv, f);
     numFileHeader = saCSV3GetLine(&csv, fileInBuf[numFileRows++], fileFieldList);
     bool done = false;
@@ -139,6 +146,7 @@ int main(int argc, char* argv[])
     }
     fclose(f);
 
+    // Open the stdin stream to read CSV data
     saCSVOpen(&csv, stdin);
 
     // Parse the first (header) line of input
@@ -158,7 +166,8 @@ int main(int argc, char* argv[])
         regressIndex = i;
     else
         fprintf(stdout, "%s,", SA_CONSTANTS_PREDICTION_COLUMN);
-        
+    
+    // Write the header fields    
     for(i=0; i<numFields;i++)
     {
         if (i)

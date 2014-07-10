@@ -63,8 +63,11 @@ int main(int argc, char* argv[])
     int numFileRows = 0;
     int regressIndex = -1;
 
+    // Initialize the system
     initSignalHandler(basename(argv[0]));  
     argError = false;
+
+    // Get the arguments
     while ((c = getopt(argc, argv, "0:1:2:x:")) != -1) 
     {
         switch(c)
@@ -92,6 +95,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Load the Splunk Header information for getting app & user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -105,6 +109,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Build the X Field list
     int numXAxis = saCSVParseFieldList(xList, fieldX);
 
     // open stream to read CSV
@@ -127,7 +132,8 @@ int main(int argc, char* argv[])
         regressIndex = i;
     else
         fprintf(stdout, "%s,", SA_CONSTANTS_PREDICTION_COLUMN);
-        
+    
+    // Write the header fields    
     for(i=0; i<numFields;i++)
     {
         if (i)
@@ -174,6 +180,7 @@ int main(int argc, char* argv[])
                 regress = coef0*value*value + coef1*value + coef2;             
             }
 
+            // If the regress field is not found then write out the regress value
             if (regressIndex == -1)
                 fprintf(stdout, "%.10f,", regress);
                 

@@ -66,8 +66,11 @@ int main(int argc, char* argv[])
     int numFileRows = 0;
     int regressIndex = -1;
 
+    // Initialize the system
     initSignalHandler(basename(argv[0]));  
     argError = false;
+
+    // get the arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch(c)
@@ -86,6 +89,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Load the Splunk Header information to get app & user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -99,6 +103,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // read the input file
     char tempDir[512];
     sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, fileName);
     FILE *f = fopen(tempDir, "r");
@@ -108,6 +113,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Open the stream to read csv data from the file
     saCSVOpen(&csv, f);
     numFileHeader = saCSV3GetLine(&csv, fileInBuf[numFileRows++], fileFieldList);
     bool done = false;
@@ -137,6 +143,7 @@ int main(int argc, char* argv[])
     }
     fclose(f);
 
+    // Open the stream to read CSV data from stdin
     saCSVOpen(&csv, stdin);
 
     // Parse the first (header) line of input
@@ -156,7 +163,8 @@ int main(int argc, char* argv[])
         regressIndex = i;
     else
         fprintf(stdout, "%s,", SA_CONSTANTS_PREDICTION_COLUMN);
-        
+       
+    // write out the headers 
     for(i=0; i<numFields;i++)
     {
         if (i)
@@ -224,6 +232,8 @@ int main(int argc, char* argv[])
                         i++;
                 }
             }
+
+            // If the regress index is not found write out the regress field now
             if (regressIndex == -1)
                 fprintf(stdout, "%.10f,", regress);
                 

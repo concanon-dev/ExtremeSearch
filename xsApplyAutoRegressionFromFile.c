@@ -67,9 +67,12 @@ int main(int argc, char* argv[])
     int numFileRows = 0;
     int regressIndex = -1;
 
+    // initialize the system
     initSignalHandler(basename(argv[0]));  
     fileName[0] = '\0';
     argError = false;
+
+    // get the arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch(c)
@@ -88,6 +91,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // Load the Splunk header information to get app and user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -101,6 +105,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    // open the input file
     char tempDir[512];
     sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, fileName);
     FILE *f = fopen(tempDir, "r");
@@ -109,8 +114,12 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsApplyAutoRegressionFromFile-F-103: can't open file %s\n", fileName);
         exit(EXIT_FAILURE);
     }
+
+    // Open the stream to read CSV data
     saCSVOpen(&csv, f);
     numFileHeader = saCSV3GetLine(&csv, fileInBuf[numFileRows++], fileFieldList);
+
+    // Get the data
     bool done = false;
     while (!done)
     {
@@ -140,6 +149,7 @@ int main(int argc, char* argv[])
     }
     fclose(f);
 
+    // open the stream for reading CSV
     saCSVOpen(&csv, stdin);
 
     // Parse the first (header) line of input
@@ -159,7 +169,8 @@ int main(int argc, char* argv[])
         regressIndex = i;
     else
         fprintf(stdout, "%s,", SA_CONSTANTS_PREDICTION_COLUMN);
-        
+    
+    // write out the headers    
     for(i=0; i<numFields;i++)
     {
         if (i)
@@ -192,6 +203,7 @@ int main(int argc, char* argv[])
         {
             // initialize the regression value
             double regress = 0.00;
+
             // If the X and By columns exist
             //    extract the X value
             //    find the right regression algorithm based on the ByValue
@@ -226,6 +238,8 @@ int main(int argc, char* argv[])
                         i++;
                 }
             }
+
+            // write the regession value out if the column is not found
             if (regressIndex == -1)
                 fprintf(stdout, "%.10f,", regress);
                 

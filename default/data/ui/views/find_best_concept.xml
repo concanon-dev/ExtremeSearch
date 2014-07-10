@@ -1,4 +1,7 @@
 <form script="single_trend.js" stylesheet="single_trend.css">
+<!--
+    <p>Copyright 2013 Scianta Analytics LLC All Rights Reserved</p>
+-->
   <label>Find Best Concept</label>
   <fieldset submitButton="false">
     <input type="text" token="field">
@@ -38,7 +41,5 @@
       <option name="changeField">compat</option>
       <option name="trendClassField">trend</option>
     </single>
-    <p><br />Version 20130717.1</p>
-    <p>Copyright 2013 Scianta Analytics LLC All Rights Reserved</p>
 </row>
 </form>

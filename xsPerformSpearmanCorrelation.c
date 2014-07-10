@@ -55,10 +55,13 @@ int main(int argc, char* argv[])
 {
     char outfile[256];
 
+    // Initialize the system
     initSignalHandler(basename(argv[0]));
     outfile[0] = '\0';
     int c;
     bool argError = false;
+
+    // Get the arguments
     while ((c = getopt(argc, argv, "f:")) != -1) 
     {
         switch(c)
@@ -77,6 +80,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
 
+    // Load the Splunk Header information to get app and user
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
@@ -90,111 +94,119 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-   int numFields;
-   int i;
-   for(i=0; i<MAXROWSIZE; i++)
-   {
-       numRows[i] = 0;
-       R[i] = 0.0;
-       X[i] = NULL;
-       Y[i] = NULL;
-   }
-
-   int aIndex = -1;
-   int bIndex = -1;
-   int byFIndex = -1;
-   int byVIndex = -1;
-   int errAIndex = -1;
-   int errBIndex = -1;
-   int numRowsIndex = -1;
-   int r2Index = -1;
-   int xIndex = -1;
-   int yIndex = -1;
-
-   // open stream for CSV
-   saCSVOpen(&csv, stdin);
-
-   // Get the header
-   numFields = saCSV3GetLine(&csv, inbuf, fieldList);
-   for(i=0; i<numFields; i++)
-   {
-       if (!saCSVCompareField(fieldList[i], "bf"))
-           byFIndex = i;
-       else if (!saCSVCompareField(fieldList[i], "bv"))
-           byVIndex = i;
-       else if (!saCSVCompareField(fieldList[i], "numRows"))
-           numRowsIndex = i;
-       else if (!saCSVCompareField(fieldList[i], "R"))
-           r2Index = i;
-       else if (!saCSVCompareField(fieldList[i], "x"))
-            xIndex = i;
-       else if (!saCSVCompareField(fieldList[i], "y"))
-            yIndex = i;
-   }
-
-   int maxIndex = 0;
-   while(saCSVEOF(&csv) == false)
-   {
-       int index = -1;
-       numFields = saCSV3GetLine(&csv, inbuf, fieldList);
-       if (saCSVEOF(&csv) == false)
-       {
-           index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
-           if (byF[index] == NULL)
-           {
-               byF[index] = malloc(strlen(fieldList[byFIndex]));
-               strcpy(byF[index], fieldList[byFIndex]);
-           }
-           if (byV[index] == NULL)
-           {
-               byV[index] = malloc(strlen(fieldList[byVIndex]));
-               strcpy(byV[index], fieldList[byVIndex]);
-           }
-           if (X[index] == NULL)
-           {
-               X[index] = malloc(strlen(fieldList[xIndex]));
-               strcpy(X[index], fieldList[xIndex]);
-           }
-
-           if (Y[index] == NULL)
-           {
-               Y[index] = malloc(strlen(fieldList[yIndex]));
-               strcpy(Y[index], fieldList[yIndex]);
-           }
-
-           int rowCount = atoi(fieldList[numRowsIndex]);
-           if (rowCount > 0)
-           {
-               double thisR = atof(getField(fieldList[r2Index]));
-               numRows[index] = numRows[index] + rowCount;
-
-               R[index] = R[index] + (thisR * rowCount);
-               
-               if (index > maxIndex)
-                   maxIndex = index;
-           }
-       }
-   }
-
-   char tempDir[512];
-   sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
-   FILE *f = fopen(tempDir, "w");
-   if (f != NULL)
-       fputs("x,y,bf,bv,numRows,R\n", f);
-   fputs("x,y,bf,bv,numRows,R\n", stdout);
-
-   
-   // Determine the weighted avg of R
-   for(i=0; i<=maxIndex; i++)
-   {
-       R[i] = R[i] / (float)numRows[i];
+    // Initialize the array
+    int numFields;
+    int i;
+    for(i=0; i<MAXROWSIZE; i++)
+    {
+        numRows[i] = 0;
+        R[i] = 0.0;
+        X[i] = NULL;
+        Y[i] = NULL;
+    }
  
-       if (f != NULL)
-           fprintf(f, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
-       fprintf(stdout, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
-   }
-   if (f != NULL)
-       fclose(f);
+    int aIndex = -1;
+    int bIndex = -1;
+    int byFIndex = -1;
+    int byVIndex = -1;
+    int errAIndex = -1;
+    int errBIndex = -1;
+    int numRowsIndex = -1;
+    int r2Index = -1;
+    int xIndex = -1;
+    int yIndex = -1;
+ 
+    // open stream for CSV
+    saCSVOpen(&csv, stdin);
+ 
+    // Get the header
+    numFields = saCSV3GetLine(&csv, inbuf, fieldList);
+    for(i=0; i<numFields; i++)
+    {
+        if (!saCSVCompareField(fieldList[i], "bf"))
+            byFIndex = i;
+        else if (!saCSVCompareField(fieldList[i], "bv"))
+            byVIndex = i;
+        else if (!saCSVCompareField(fieldList[i], "numRows"))
+            numRowsIndex = i;
+        else if (!saCSVCompareField(fieldList[i], "R"))
+            r2Index = i;
+        else if (!saCSVCompareField(fieldList[i], "x"))
+             xIndex = i;
+        else if (!saCSVCompareField(fieldList[i], "y"))
+             yIndex = i;
+    }
+ 
+    int maxIndex = 0;
+    while(saCSVEOF(&csv) == false)
+    {
+        int index = -1;
+        numFields = saCSV3GetLine(&csv, inbuf, fieldList);
+        if (saCSVEOF(&csv) == false)
+        {
+            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
+            if (byF[index] == NULL)
+            {
+                byF[index] = malloc(strlen(fieldList[byFIndex]));
+                strcpy(byF[index], fieldList[byFIndex]);
+            }
+            if (byV[index] == NULL)
+            {
+                byV[index] = malloc(strlen(fieldList[byVIndex]));
+                strcpy(byV[index], fieldList[byVIndex]);
+            }
+            if (X[index] == NULL)
+            {
+                X[index] = malloc(strlen(fieldList[xIndex]));
+                strcpy(X[index], fieldList[xIndex]);
+            }
+ 
+            if (Y[index] == NULL)
+            {
+                Y[index] = malloc(strlen(fieldList[yIndex]));
+                strcpy(Y[index], fieldList[yIndex]);
+            }
+ 
+            int rowCount = atoi(fieldList[numRowsIndex]);
+            if (rowCount > 0)
+            {
+                double thisR = atof(getField(fieldList[r2Index]));
+                numRows[index] = numRows[index] + rowCount;
+ 
+                R[index] = R[index] + (thisR * rowCount);
+                
+                if (index > maxIndex)
+                    maxIndex = index;
+            }
+        }
+    }
+
+    // If the outfile is specified then open it 
+    char tempDir[512];
+    FILE *f = NULL;
+    if (outfile[0] != '\0')
+    {
+        sprintf(tempDir, "%s/apps/%s/lookups/%s.csv", saSplunkGetRoot(argv[0]), p->app, outfile);
+        f = fopen(tempDir, "w");
+    }
+
+    // Write the headers
+    if (f != NULL)
+        fputs("x,y,bf,bv,numRows,R\n", f);
+    fputs("x,y,bf,bv,numRows,R\n", stdout);
+ 
+    // Determine the weighted avg of R
+    for(i=0; i<=maxIndex; i++)
+    {
+        R[i] = R[i] / (float)numRows[i];
+ 
+        // Write the data 
+        if (f != NULL)
+            fprintf(f, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
+        fprintf(stdout, "%s,%s,%s,%s,%d,%.10f\n", X[i], Y[i], byF[i], byV[i], numRows[i], R[i]);
+    }
+    if (f != NULL)
+        fclose(f);
 }
 
 inline char *getField(char *field)

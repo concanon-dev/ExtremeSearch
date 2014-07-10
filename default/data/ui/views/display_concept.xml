@@ -1,4 +1,7 @@
 <form script="custom_chart.js, autodiscover.js" stylesheet="custom_chart.css">
+<!--
+    <p>Copyright 2013 Scianta Analytics LLC All Rights Reserved</p>
+-->
     <label>Display Concept</label>
     <fieldset autoRun="true" submitButton="false">
         <input type="radio" token="scope">
