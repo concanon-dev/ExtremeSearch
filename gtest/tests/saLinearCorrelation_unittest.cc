@@ -28,7 +28,7 @@ TEST(saLinearCorrelation, saLinearCorrelation) {
         x[i] = i;
         y[i] = i+1;
     }
-    printf("HERE");
+
     bool result = saLinearCorrelation(x, y, startIndex, termCnt, &r);
 
     EXPECT_EQ(true, result);
