@@ -37,8 +37,8 @@ USER_DIR = tests
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-cxx.Cygwin := x86_64-w64-mingw32-g++
-cxx.CYGWIN_NT-6.1 := x86_64-w64-mingw32-g++
+cxx.Cygwin := x86_64-w64-mingw32-g++ -w
+cxx.CYGWIN_NT-6.1 := x86_64-w64-mingw32-g++ -w
 cxx.darwin := g++
 cxx.Darwin := g++
 cxx.linux  := g++

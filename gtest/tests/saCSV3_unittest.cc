@@ -3,7 +3,6 @@
 //
 // Author: joseph.mcglynn@sciantaanalytics.com (Joseph McGlynn)
 
-#include <iostream>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,10 +17,10 @@ extern "C" {
 
 TEST(saCSV3, saCSVOpen_saCSV3GetLine) {
     saCSVType csv;
-    char headerbuf[SA_CONSTANTS_MAXROWSIZE];
-    char inbuf[SA_CONSTANTS_MAXROWSIZE];
-    char *headerList[SA_CONSTANTS_MAXROWSIZE/31];
-    char *fields[SA_CONSTANTS_MAXROWSIZE/32];
+    char headerbuf[2048];
+    char *headerList[32];
+    char inbuf[2048];
+    char *fieldList[32];
     char fileName[256];
     sprintf(fileName, "etc/apps/xtreme/lookups/locations.csv");
 
@@ -33,27 +32,35 @@ TEST(saCSV3, saCSVOpen_saCSV3GetLine) {
 
     saCSVOpen(&csv, f);
 
-    //int numHeaderFields = saCSV3GetLine(&csv, headerbuf, headerList);
-    int numHeaderFields = saCSVFGetHeaderLine(f, headerbuf, headerList);
-    EXPECT_EQ(20,numHeaderFields);
+    int numHeaderFields = saCSV3GetLine(&csv, headerbuf, headerList);
+    EXPECT_EQ(8,numHeaderFields);
+    EXPECT_STREQ("LocId",headerList[0]);
+    EXPECT_STREQ("CountryCode",headerList[1]);
+    EXPECT_STREQ("Country",headerList[2]);
+    EXPECT_STREQ("Region",headerList[3]);
+    EXPECT_STREQ("City",headerList[4]);
+    EXPECT_STREQ("PostalCode",headerList[5]);
+    EXPECT_STREQ("Latitude",headerList[6]);
+    EXPECT_STREQ("Longitude",headerList[7]);
 
-    printf("HERE");
-    exit(0);
     bool done = false;
     while(done == false)
     {
-        int numFields = saCSV3GetLine(&csv, inbuf, fields);
+        int numFields = saCSV3GetLine(&csv, inbuf, fieldList);
+
         if (numFields != 0)
         {
             int i;
+            /*
             for(i=0; i<numFields; i++)
             {
                 if (i == 0)
-                    fputs(fields[0], stdout);
+                    fputs(fieldList[0], stdout);
                 else
-                    fprintf(stdout, ",%s", fields[i]);
+                    fprintf(stdout, ",%s", fieldList[i]);
             }
             fputs("\n", stdout);
+	    */
         }
         else
             done = true;
