@@ -60,7 +60,7 @@ CXXFLAGS := ${cxxflags.${OSTYPE}}
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest saAutoRegression_unittest saLinearRegression_unittest saQuadRegression_unittest saGeoLiteCity_unittest saInsertUniqueValue_unittest saStatistics_unittest saCSV3_unittest
+TESTS = saParser_unittest saSplunk_unittest saContext_unittest saContextCreate_unittest saConcept_unittest saHash_unittest saHedge_unittest saAutoRegression_unittest saLinearRegression_unittest saQuadRegression_unittest saGeoLiteCity_unittest saInsertUniqueValue_unittest saStatistics_unittest saCSV3_unittest saLinearCorrelation_unittest saMatrixArgs_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -133,6 +133,10 @@ saStatistics_unittest.o : $(USER_DIR)/saStatistics_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saStatistics_unittest.cc
 saCSV3_unittest.o : $(USER_DIR)/saCSV3_unittest.cc $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saCSV3_unittest.cc
+saLinearCorrelation_unittest.o : $(USER_DIR)/saLinearCorrelation_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saLinearCorrelation_unittest.cc
+saMatrixArgs_unittest.o : $(USER_DIR)/saMatrixArgs_unittest.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/saMatrixArgs_unittest.cc
 
 saParser_unittest : saParser_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saCSV.o $(OBJDIR)/saCSV3.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o 
@@ -162,5 +166,9 @@ saStatistics_unittest : saStatistics_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saStatistics.o
 saCSV3_unittest : saCSV3_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saCSV3.o $(OBJDIR)/saCSV.o
+saLinearCorrelation_unittest : saLinearCorrelation_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saLinearCorrelation.o $(OBJDIR)/saStatistics.o
+saMatrixArgs_unittest : saMatrixArgs_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@  $(OBJDIR)/saMatrixArgs.o
 
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(OBJDIR)/saHedge.o  $(OBJDIR)/saParser.o $(OBJDIR)/saHash.o $(OBJDIR)/saContext.o  $(OBJDIR)/saConcept.o $(OBJDIR)/saContextCreate.o $(OBJDIR)/saSplunk.o $(OBJDIR)/saOpenFile.o $(OBJDIR)/saCSV.o $(OBJDIR)/saSignal.o $(OBJDIR)/saLicensing.o $(OBJDIR)/saTokenize.tab.o $(OBJDIR)/lex.yy.o $(LICENSELIB) $(LDFLAGS)
