@@ -32,6 +32,7 @@ void saContextDisplay(saContextTypePtr contextPtr);
 void saContextLookup(saContextTypePtr contextPtr, double value, double *results);
 
 saContextTypePtr saSplunkContextLoad(char *name, char *root, int *scope, char *app, char *user);
+bool saSplunkContextSave(saContextTypePtr, char *, int, char *, char *);
 }
 
 TEST(saContext, saContextInit) {
@@ -96,6 +97,59 @@ TEST(saContext, saContextSave) {
 }
 
 TEST(saContext, saContextMerge) {
+
+
+    char path[256] = "etc/apps/xtreme/contexts/TEST.context";
+    char path2[256] = "etc/apps/xtreme/contexts/TEST2.context";
+    char path3[256] = "etc/apps/xtreme/contexts/TESTM.context";
+    char contextNameC[256] = "TESTM";
+
+    FILE *f = fopen(path, "r");
+    saContextTypePtr contextPtrA = saContextLoad(f);
+    fclose(f);
+
+    FILE *f2 = fopen(path2, "r");
+    saContextTypePtr contextPtrB = saContextLoad(f2);
+    fclose(f2);
+
+    saContextTypePtr contextPtrC = saContextMerge(contextPtrA, contextPtrB, contextNameC);
+
+    EXPECT_STREQ("TESTM", contextPtrC->name);
+
+    FILE *f3 = fopen(path3, "w");
+    saContextSave(f3, contextPtrC);
+    fclose(f3);
+
+    /* Alternate Test */
+    char root[128] = "etc";
+    char app[128] = "xtreme";
+    char user[128] = "admin";
+    int scopeA = SA_SPLUNK_SCOPE_GLOBAL;
+    int scopeB = SA_SPLUNK_SCOPE_GLOBAL;
+    int scopeC = SA_SPLUNK_SCOPE_GLOBAL;
+    char contextNameA[256] = "TEST";
+    char contextNameB[256] = "TEST2";
+    char contextNameC2[256] = "TESTM2";
+
+
+    contextPtrA = saSplunkContextLoad(contextNameA, root, &scopeA, app, user);
+    if (contextPtrA == NULL)
+    {
+        fprintf(stderr, "xsMergeContext-F-107: Can't open context: %s\n", contextNameA);
+        exit(EXIT_FAILURE);
+    }
+    contextPtrB= saSplunkContextLoad(contextNameA, root, &scopeB, app, user);
+    if (contextPtrB == NULL)
+    {
+        fprintf(stderr, "xsMergeContext-F-109: Can't open context: %s\n", contextNameB);
+        exit(EXIT_FAILURE);
+    }
+
+    contextPtrC = saContextMerge(contextPtrA, contextPtrB, contextNameC2);
+    EXPECT_STREQ("TESTM2", contextPtrC->name);
+
+    bool result = saSplunkContextSave(contextPtrC, root, scopeC, app, user);
+    EXPECT_EQ(true, result);
 }
 
 TEST(saContext, saContextDisplayWithHeader) {

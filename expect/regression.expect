@@ -52,9 +52,9 @@ listContexts $env(SPLUNK_HOME) $login $passwd private "context*TEST3*TEST6"
 sleep 1
 
 # TEST SUITE: Merge Context Tests
-#mergeContexts $env(SPLUNK_HOME) $login $passwd TEST1 global TEST2 app TESTM12 global "TESTM12*tiny*short*medium*tall*gigantic"
-#mergeContexts $env(SPLUNK_HOME) $login $passwd TEST5 global TEST6 app TESTM56  global "TESTM56*tiny*short*medium*tall*gigantic"
-#listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTM12*TESTM56"
+mergeContexts $env(SPLUNK_HOME) $login $passwd TEST1 global TEST2 app TESTM12 global "ERROR: Contexts merged successfully"
+mergeContexts $env(SPLUNK_HOME) $login $passwd TEST5 app TEST6 private TESTM56  global "ERROR: Contexts merged successfully"
+listContexts $env(SPLUNK_HOME) $login $passwd global "context*TEST1*TEST4*TESTM12*TESTM56"
 
 
 # TEST SUITE: Clone Context Tests

@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     int c;
     int scopeA = saSplunkGetScope(NULL);
     int scopeB = saSplunkGetScope(NULL);
-    int scopeC = saSplunkGetScope("global");
+    int scopeC = saSplunkGetScope(NULL);
 
     initSignalHandler(basename(argv[0]));
 
@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
                 argError = true;
         }
     }
+
     if (argError)
     {
         fprintf(stderr, "xsMergeContext-F-103: Usage: xsMergeContext -a context -b context -c context [-A scope] [-B scope] [-C scope]");
@@ -117,7 +118,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "xsMergeContext-F-107: Can't open context: %s\n", contextNameA);
         exit(EXIT_FAILURE);
     }
-    contextPtrB= saSplunkContextLoad(contextNameA, root, &scopeB, p->app, p->user);
+    contextPtrB= saSplunkContextLoad(contextNameB, root, &scopeB, p->app, p->user);
     if (contextPtrB == NULL)
     {
         fprintf(stderr, "xsMergeContext-F-109: Can't open context: %s\n", contextNameB);

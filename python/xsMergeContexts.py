@@ -50,10 +50,10 @@ if __name__ == '__main__':
                     else:
                         scopeC = arg
         else:
-            raise Exception("xsMergeContexts-F-001: Usage: xsMergeConcept conceptA [IN scopeA] AND conceptB [IN scopeA] INTO conceptC [IN scopeC]");
+            raise Exception("xsMergeContexts-F-001: Usage: xsMergeContexts contextA [IN scopeA] AND contextB [IN scopeA] INTO contextC [IN scopeC]");
 
         if contextA == '' or contextB  == '' or contextC  == '':
-            raise Exception("xsMergeContexts-F-001: Usage: xsMergeConcept conceptA [IN scopeA] AND conceptB [IN scopeA] INTO conceptC [IN scopeC]");
+            raise Exception("xsMergeContexts-F-001: Usage: xsMergeContexts contextA [IN scopeA] AND contextB [IN scopeA] INTO contextC [IN scopeC]");
 
         binary = os.path.dirname(sys.argv[0]) + "/" +  platform.system() + "/" + platform.architecture()[0] + "/xsMergeContexts"
         if (platform.system() == 'Windows'):
