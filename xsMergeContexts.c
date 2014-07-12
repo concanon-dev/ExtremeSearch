@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     int c;
     int scopeA = saSplunkGetScope(NULL);
     int scopeB = saSplunkGetScope(NULL);
-    int scopeC = saSplunkGetScope(NULL);
+    int scopeC = saSplunkGetScope("private");
 
     initSignalHandler(basename(argv[0]));
 
