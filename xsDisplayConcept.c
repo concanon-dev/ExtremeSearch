@@ -39,7 +39,7 @@
 
 #include "saSignal.h"
 #include "saSplunk.h"
-#include "saUtils.h"
+#include "strsep.h"
 
 #define MAXROWSIZE (8192*11)
 

@@ -34,9 +34,6 @@ static char *Y[MAXROWSIZE];
 
 static saCSVType csv;
 
-inline void printLine(char *[], int);
-inline char *getField(char *);
-
 int main(int argc, char* argv[]) 
 {
     double p;
@@ -182,11 +179,11 @@ int main(int argc, char* argv[])
            int rowCount = atoi(fieldList[numRowsIndex]);
            if (rowCount > 0)
            {
-               double thisR = atof(getField(fieldList[r2Index]));
-               double thisA = atof(getField(fieldList[aIndex]));
-               double thisB = atof(getField(fieldList[bIndex]));
-               double thisErrA = atof(getField(fieldList[errAIndex]));
-               double thisErrB = atof(getField(fieldList[errBIndex]));
+               double thisR = atof(saCSVExtractField(fieldList[r2Index]));
+               double thisA = atof(saCSVExtractField(fieldList[aIndex]));
+               double thisB = atof(saCSVExtractField(fieldList[bIndex]));
+               double thisErrA = atof(saCSVExtractField(fieldList[errAIndex]));
+               double thisErrB = atof(saCSVExtractField(fieldList[errBIndex]));
                numRows[index] = numRows[index] + rowCount;
 
                R[index] = R[index] + (thisR * rowCount);
@@ -221,28 +218,3 @@ int main(int argc, char* argv[])
    }
 }
 
-inline char *getField(char *field)
-{
-   if (*field == '"')
-   {
-       strcpy(tempbuf, field+1);
-       tempbuf[strlen(field)-2] = '\0';
-       return(tempbuf);
-   }
-   else
-       return(field);
-}
-
-inline void printLine(char *fieldList[], int numFields)
-{
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
-   {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
-   }
-   fputs("\n", x);
-}

@@ -26,7 +26,6 @@
 
 #include "saSignal.h"
 #include "saSplunk.h"
-#include "saUtils.h"
 
 #define MAXROWSIZE (8192*11)
 

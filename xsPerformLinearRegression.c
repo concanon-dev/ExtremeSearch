@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include "saCSV3.h"
 #include "saCSV.h"
-
+#include "saIndex.h"
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -44,18 +44,11 @@ static double errB[MAXROWSIZE];
 static double R[MAXROWSIZE];
 static int numRows[MAXROWSIZE];
 
-static char *indexString[MAXROWSIZE];
-static int numIndexes = 0;
-
 static saCSVType csv;
 
 extern inline char *saSplunkGetRoot(char *);
 extern inline saSplunkInfoPtr saSplunkLoadHeader();
 extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
-
-inline char *getField(char *);
-inline int getIndex(int, int, int, int);
-inline void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
@@ -160,7 +153,7 @@ int main(int argc, char* argv[])
         if (saCSVEOF(&csv) == false)
         {
             // Determine if the BY index already exists.  If not, then create it
-            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
+            index = getIndex(fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex], fieldList[byVIndex]);
             if (byF[index] == NULL)
             {
                 byF[index] = malloc(strlen(fieldList[byFIndex]));
@@ -188,25 +181,25 @@ int main(int argc, char* argv[])
             if (rowCount > 0)
             {
                 double thisR = 0.0;
-                if (strcmp(getField(fieldList[r2Index]), "nan") &&
-                    strcmp(getField(fieldList[r2Index]), "-nan"))
-                    thisR = atof(getField(fieldList[r2Index]));
+                if (strcmp(saCSVExtractField(fieldList[r2Index]), "nan") &&
+                    strcmp(saCSVExtractField(fieldList[r2Index]), "-nan"))
+                    thisR = atof(saCSVExtractField(fieldList[r2Index]));
                 double thisA = 0.0;
-                if (strcmp(getField(fieldList[aIndex]), "nan") &&
-                    strcmp(getField(fieldList[aIndex]), "-nan"))
-                    thisA = atof(getField(fieldList[aIndex]));
+                if (strcmp(saCSVExtractField(fieldList[aIndex]), "nan") &&
+                    strcmp(saCSVExtractField(fieldList[aIndex]), "-nan"))
+                    thisA = atof(saCSVExtractField(fieldList[aIndex]));
                 double thisB = 0.0;
-                if (strcmp(getField(fieldList[bIndex]), "nan") &&
-                    strcmp(getField(fieldList[bIndex]), "-nan"))
-                    thisB = atof(getField(fieldList[bIndex]));
+                if (strcmp(saCSVExtractField(fieldList[bIndex]), "nan") &&
+                    strcmp(saCSVExtractField(fieldList[bIndex]), "-nan"))
+                    thisB = atof(saCSVExtractField(fieldList[bIndex]));
                 double thisErrA = 0.0;
-                if (strcmp(getField(fieldList[errAIndex]), "nan") &&
-                    strcmp(getField(fieldList[errAIndex]), "-nan"))
-                    thisErrA = atof(getField(fieldList[errAIndex]));
+                if (strcmp(saCSVExtractField(fieldList[errAIndex]), "nan") &&
+                    strcmp(saCSVExtractField(fieldList[errAIndex]), "-nan"))
+                    thisErrA = atof(saCSVExtractField(fieldList[errAIndex]));
                 double thisErrB = 0.0;
-                if (strcmp(getField(fieldList[errBIndex]), "nan") &&
-                    strcmp(getField(fieldList[errBIndex]), "-nan"))
-                    thisErrB = atof(getField(fieldList[errBIndex]));
+                if (strcmp(saCSVExtractField(fieldList[errBIndex]), "nan") &&
+                    strcmp(saCSVExtractField(fieldList[errBIndex]), "-nan"))
+                    thisErrB = atof(saCSVExtractField(fieldList[errBIndex]));
  
                 numRows[index] = numRows[index] + rowCount;
                 R[index] = R[index] + (thisR * rowCount);
@@ -253,52 +246,5 @@ int main(int argc, char* argv[])
     }
     if (f != NULL)
         fclose(f);
- }
- 
-inline char *getField(char *field)
-{
-   if (*field == '"')
-   {
-       strcpy(tempbuf, field+1);
-       tempbuf[strlen(field)-2] = '\0';
-       return(tempbuf);
-   }
-   else
-       return(field);
 }
 
-inline int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
-{
-   sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
-           fieldList[byVIndex]);
-   bool found = false;
-   int i=0;
-   while(i<numIndexes && !found)
-   {
-       if (!strcmp(tempbuf, indexString[i]))
-           found = true;
-       else
-           i++;
-   }
-   if (!found)
-   {
-       indexString[i] = malloc(strlen(tempbuf)+1);
-       strcpy(indexString[i], tempbuf);
-       numIndexes++;
-   }
-   return(i);
-}
-
-inline void printLine(char *fieldList[], int numFields)
-{
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
-   {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
-   }
-   fputs("\n", x);
-}

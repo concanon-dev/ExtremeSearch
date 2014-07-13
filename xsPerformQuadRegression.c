@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include "saCSV3.h"
 #include "saCSV.h"
-
+#include "saIndex.h"
 #include "saSignal.h"
 #include "saSplunk.h"
 
@@ -42,18 +42,11 @@ static double coef1[MAXROWSIZE];
 static double coef2[MAXROWSIZE];
 static int numRows[MAXROWSIZE];
 
-static char *indexString[MAXROWSIZE];
-static int numIndexes = 0;
-
 static saCSVType csv;
 
 extern inline char *saSplunkGetRoot(char *);
 extern inline saSplunkInfoPtr saSplunkLoadHeader();
 extern inline bool saSplunkReadInfoPathFile(saSplunkInfoPtr);
-
-inline char *getField(char *);
-inline int getIndex(int, int, int, int);
-inline void printLine(char *[], int);
 
 int main(int argc, char* argv[]) 
 {
@@ -151,7 +144,7 @@ int main(int argc, char* argv[])
         if (saCSVEOF(&csv) == false)
         {
             // Determine if the BY index already exists.  If not, then create it
-            index = getIndex(xIndex, yIndex, byFIndex, byVIndex);
+            index = getIndex(fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex], fieldList[byVIndex]);
             if (byF[index] == NULL)
             {
                 byF[index] = malloc(strlen(fieldList[byFIndex]));
@@ -178,9 +171,9 @@ int main(int argc, char* argv[])
             int rowCount = atoi(fieldList[numRowsIndex]);
             if (rowCount > 0)
             {
-                double thisCoef0 = atof(getField(fieldList[coef0Index]));
-                double thisCoef1 = atof(getField(fieldList[coef1Index]));
-                double thisCoef2 = atof(getField(fieldList[coef2Index]));
+                double thisCoef0 = atof(saCSVExtractField(fieldList[coef0Index]));
+                double thisCoef1 = atof(saCSVExtractField(fieldList[coef1Index]));
+                double thisCoef2 = atof(saCSVExtractField(fieldList[coef2Index]));
                 numRows[index] = numRows[index] + rowCount;
  
                 coef0[index] = coef0[index] + (thisCoef0 * rowCount);
@@ -223,52 +216,5 @@ int main(int argc, char* argv[])
     }
     if (f != NULL)
         fclose(f);
- }
+}
  
-inline char *getField(char *field)
-{
-   if (*field == '"')
-   {
-       strcpy(tempbuf, field+1);
-       tempbuf[strlen(field)-2] = '\0';
-       return(tempbuf);
-   }
-   else
-       return(field);
-}
-
-inline int getIndex(int xIndex, int yIndex, int byFIndex, int byVIndex)
-{
-   sprintf(tempbuf, "%s,%s,%s,%s", fieldList[xIndex], fieldList[yIndex], fieldList[byFIndex],
-           fieldList[byVIndex]);
-   bool found = false;
-   int i=0;
-   while(i<numIndexes && !found)
-   {
-       if (!strcmp(tempbuf, indexString[i]))
-           found = true;
-       else
-           i++;
-   }
-   if (!found)
-   {
-       indexString[i] = malloc(strlen(tempbuf)+1);
-       strcpy(indexString[i], tempbuf);
-       numIndexes++;
-   }
-   return(i);
-}
-
-inline void printLine(char *fieldList[], int numFields)
-{
-   FILE *x = fopen("./x", "a");
-   int i;
-   for(i=0; i<numFields; i++)
-   {
-       if (!i)
-           fputs(fieldList[i], x);
-       else
-           fprintf(x, ",%s", fieldList[i]);
-   }
-   fputs("\n", x);
-}

@@ -29,6 +29,7 @@
 #include "saGeoLiteCity.h"
 #include "saHash.h"
 #include "saSignal.h"
+#include "strsep.h"
 
 static void lookupByCityRegionCountry(char *, char *, char *, double []);
 static void lookupByZipCode(char *, double *);
@@ -45,9 +46,6 @@ extern saGeoLiteCityTypePtr saGeoLiteCityGetByZipcode(char *);
 
 extern inline char *saSplunkGetRoot(char *);
 extern inline double saStatisticsHaversineDistance(double, double, double, double);
-#ifdef _WIN32 
-extern char *strsep(char **, const char *);
-#endif
 extern char *optarg;
 extern int optind, optopt;
 
