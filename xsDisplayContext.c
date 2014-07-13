@@ -59,7 +59,14 @@ int main(int argc, char* argv[])
 	        strcpy(contextName, optarg);
                 break;
             case 's':
-                scope = saSplunkGetScope(optarg);
+                if ((scope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsDisplayContext-F-111: Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "xsDisplayContext-F-101: Unrecognised option: -%c\n", optopt);
@@ -79,7 +86,7 @@ int main(int argc, char* argv[])
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsDisplayContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsDisplayContext-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -87,7 +94,7 @@ int main(int argc, char* argv[])
     contextPtr = saSplunkContextLoad(contextName, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
-        fprintf(stderr, "xsDisplayContext-F-107: Can't open context: %s\n", contextName);
+        fprintf(stderr, "xsDisplayContext-F-109: Can't open context: %s\n", contextName);
         exit(EXIT_FAILURE);
     }
     saContextDisplay(contextPtr);

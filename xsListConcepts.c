@@ -89,6 +89,13 @@ int main(int argc, char* argv[])
     }
 
     int scope = saSplunkGetScope(scopeString);
+    if (scope == SA_SPLUNK_SCOPE_UNKNOWN)
+    {
+        fprintf(stderr, "xsListConcepts-F-111: Scope %s is not legal, try private, app, or global\n", 
+                scopeString);
+        exit(EXIT_FAILURE);
+    }
+
     contextPtr = saSplunkContextLoad(contextString, saSplunkGetRoot(argv[0]), &scope, p->app, p->user);
     if (contextPtr == NULL)
     {

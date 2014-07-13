@@ -175,7 +175,15 @@ int main(int argc, char* argv[])
             s2 = strtok(NULL, ",");
         } 
 
-        int scope = saSplunkGetScope(scopeList[thisSet]);
+        int scope;
+        if ((scope = saSplunkGetScope(scopeList[thisSet])) == SA_SPLUNK_SCOPE_UNKNOWN)
+        {
+            fprintf(stderr, 
+                    "xsDisplayConcept-F-113: Scope %s is not legal, try private, app, or global\n",
+                    scopeList[thisSet]);
+            exit(EXIT_FAILURE);
+        }
+
         char *cName = NULL;
         if (contextList[thisSet] != NULL && *contextList[thisSet] != '\0')
             cName = contextList[thisSet];

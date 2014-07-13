@@ -51,14 +51,9 @@ inline bool saSplunkGetContextPath(char *path, char *root, int scope, char *app,
         return(false);
     *path = '\0';
 
-    if (scope == SA_SPLUNK_SCOPE_PRIVATE) 
-    {
-        if (app == NULL || user == NULL)
-            return(false);
-        if (*app == '\0' || *user == '\0')
-            return(false);
-        sprintf(path, "%s/users/%s/%s/contexts", root, user, app);
-    } 
+    // Generate the context path, if neither GLOBAL nor APP then default to PRIVATE
+    if (scope == SA_SPLUNK_SCOPE_GLOBAL) 
+        sprintf(path, "%s/apps/xtreme/contexts", root);
     else if (scope == SA_SPLUNK_SCOPE_APP) 
     {
         if (app == NULL)
@@ -68,7 +63,13 @@ inline bool saSplunkGetContextPath(char *path, char *root, int scope, char *app,
         sprintf(path, "%s/apps/%s/contexts", root, app);
     } 
     else 
-        sprintf(path, "%s/apps/xtreme/contexts", root);
+    {
+        if (app == NULL || user == NULL)
+            return(false);
+        if (*app == '\0' || *user == '\0')
+            return(false);
+        sprintf(path, "%s/users/%s/%s/contexts", root, user, app);
+    } 
     return(true);
 }
 
@@ -83,7 +84,6 @@ inline bool saSplunkContextDelete(char *name, char *root, int scope, char *app, 
 
     sprintf(file, "/%s.context", name);
     strcat(path, file);
-    //if (!unlink(path)) 
     if (remove(path) == 0) 
     {
         return(true);
@@ -215,15 +215,18 @@ inline char *saSplunkGetRoot(char *root)
 
 inline int saSplunkGetScope(char *scopeStr)
 {
+    // If no scope specified, return SA_SPLUNK_SCOPE_NONE
     if (scopeStr == NULL)
         return(SA_SPLUNK_SCOPE_NONE);
     else if (scopeStr[0] == '\0')
         return(SA_SPLUNK_SCOPE_NONE);
 
+    // make sure string has only lower case chars
     char *s = scopeStr;
     while(*s != '\0')
     {
-          *s = (char)tolower(*s);
+          if (*s >= 'A' && *s <= 'Z')
+              *s += 32;
           s++;
     }
     if (!strcmp(scopeStr, "none") || !strcmp(scopeStr, "0"))
@@ -233,7 +236,8 @@ inline int saSplunkGetScope(char *scopeStr)
     else if (!strcmp(scopeStr, "app") || !strcmp(scopeStr, "2"))
         return(SA_SPLUNK_SCOPE_APP);
 
-    return(SA_SPLUNK_SCOPE_GLOBAL);
+    // if I got here, then the scope is unknown, so return SA_SPLUNK_SCOPE_UNKNOWN
+    return(SA_SPLUNK_SCOPE_UNKNOWN);
 }
 
 inline saSplunkInfoPtr saSplunkLoadHeader()

@@ -77,7 +77,14 @@ int main(int argc, char* argv[])
                 strcpy(fieldName, optarg);
                 break;
             case 's':
-                scope = saSplunkGetScope(optarg);
+                if ((scope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsFindMembership-F-109: Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "Unrecognised option: -%c\n", optopt);

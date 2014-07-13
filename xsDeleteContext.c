@@ -55,7 +55,14 @@ int main(int argc, char* argv[])
 	        strcpy(contextName, optarg);
                 break;
             case 's':
-                scope = saSplunkGetScope(optarg);
+                if ((scope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsDeleteContext-F-111: Old Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "xsDeleteContext-F-101: Unrecognised option: -%c\n", optopt);

@@ -41,7 +41,14 @@ int main(int argc, char *argv[])
         switch(c)
         {
             case 's':
-                scope = saSplunkGetScope(optarg);
+                if ((scope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsListContexts-F-111: Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "xsListContexts-F-101: Unrecognised option: -%c\n", optopt);

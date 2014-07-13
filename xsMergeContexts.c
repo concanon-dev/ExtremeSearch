@@ -70,13 +70,32 @@ int main(int argc, char* argv[])
         switch(c)
         {
             case 'A':
-                scopeA = saSplunkGetScope(optarg);
+                if ((scopeA = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                      "xsMergeContexts-F-117: Scope %s for Context A is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
                 break;
             case 'B':
-                scopeB = saSplunkGetScope(optarg);
+                if ((scopeB = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                      "xsMergeContexts-F-119: Scope %s for Context B is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
                 break;
             case 'C':
-                scopeC = saSplunkGetScope(optarg);
+                if ((scopeC = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                      "xsMergeContexts-F-121: Scope %s for Context C is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case 'a':
 	        strcpy(contextNameA, optarg);
@@ -92,6 +111,7 @@ int main(int argc, char* argv[])
                 argError = true;
         }
     }
+fprintf(stderr, "a=%s b=%s c=%s\n", contextNameA, contextNameB, contextNameC);
 
     if (argError)
     {
@@ -107,7 +127,7 @@ int main(int argc, char* argv[])
     }
     if (saSplunkReadInfoPathFile(p) == false)
     {
-        fprintf(stderr, "xsMergeContext-F-105: Can't read search results file %s\n",
+        fprintf(stderr, "xsMergeContext-F-107: Can't read search results file %s\n",
                 p->infoPath == NULL ? "NULL" : p->infoPath);
         exit(EXIT_FAILURE);
     }
@@ -115,24 +135,24 @@ int main(int argc, char* argv[])
     contextPtrA = saSplunkContextLoad(contextNameA, root, &scopeA, p->app, p->user);
     if (contextPtrA == NULL)
     {
-        fprintf(stderr, "xsMergeContext-F-107: Can't open context: %s\n", contextNameA);
+        fprintf(stderr, "xsMergeContext-F-109: Can't open context: %s\n", contextNameA);
         exit(EXIT_FAILURE);
     }
     contextPtrB= saSplunkContextLoad(contextNameB, root, &scopeB, p->app, p->user);
     if (contextPtrB == NULL)
     {
-        fprintf(stderr, "xsMergeContext-F-109: Can't open context: %s\n", contextNameB);
+        fprintf(stderr, "xsMergeContext-F-111: Can't open context: %s\n", contextNameB);
         exit(EXIT_FAILURE);
     }
     contextPtrC = saContextMerge(contextPtrA, contextPtrB, contextNameC);
     if (contextPtrC == NULL)
     {
-        fprintf(stderr, "xsMergeContext-F-111: failed to merge contexts\n");
+        fprintf(stderr, "xsMergeContext-F-113: failed to merge contexts\n");
         exit(EXIT_FAILURE);
     }
     if (saSplunkContextSave(contextPtrC, root, scopeC, p->app, p->user) == false)
     {
-        fprintf(stderr, "xsMergeContext-F-113: Can't save context: %s\n", contextNameC);
+        fprintf(stderr, "xsMergeContext-F-115: Can't save context: %s\n", contextNameC);
         exit(EXIT_FAILURE);
     }
     fprintf(stderr, "Contexts merged successfully\n");

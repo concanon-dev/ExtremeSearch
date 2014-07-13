@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
     saSplunkInfoPtr p = saSplunkLoadHeader();
     if (p == NULL)
     {
-        fprintf(stderr, "xsListUOM-F-123: can't get header\n");
+        fprintf(stderr, "xsListUOM-F-105: can't get header\n");
         exit(0);
     }
 
@@ -90,10 +90,17 @@ int main(int argc, char* argv[])
     }
 
     int scope = saSplunkGetScope(scopeString);
+    if (scope == SA_SPLUNK_SCOPE_UNKNOWN)
+    {
+        fprintf(stderr, "xsListUOM-F-107: Old Scope %s is not legal, try private, app, or global\n",
+                scopeString);
+        exit(EXIT_FAILURE);
+    }
+
     contextPtr = saSplunkContextLoad(contextString, root, &scope, p->app, p->user);
     if (contextPtr == NULL)
     {
-        fprintf(stderr, "xsListUOM-F-111: can't open context %s\n", contextString);
+        fprintf(stderr, "xsListUOM-F-109: can't open context %s\n", contextString);
         exit(0);
     }
     fputs("\"UOM\"\n", stdout);

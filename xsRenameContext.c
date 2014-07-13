@@ -64,10 +64,23 @@ int main(int argc, char* argv[])
                 strcpy(destContextName, optarg);
                 break;
             case '0':
-                srcScope = saSplunkGetScope(optarg);
+                if ((srcScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsRenameContext-F-113: Source Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
                 break;
             case '1':
-                destScope = saSplunkGetScope(optarg);
+                if ((destScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                        "xsRenameContext-F-115: Destination Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "xsRenameContext-F-101: Unrecognised option: -%c\n", optopt);

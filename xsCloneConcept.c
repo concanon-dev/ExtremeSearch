@@ -64,10 +64,22 @@ int main(int argc, char* argv[])
         switch(c)
         {
             case 'N':
-                newScope = saSplunkGetScope(optarg);
+                if ((newScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsCloneConcept-F-113: New Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
                 break;
             case 'O':
                 oldScope = saSplunkGetScope(optarg);
+                {
+                    fprintf(stderr, 
+                            "xsCloneConcept-F-113: Old Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
                 break;
             case 'c':
                 strcpy(conceptName, optarg);

@@ -61,13 +61,27 @@ int main(int argc, char* argv[])
 	        strcpy(newName, optarg);
                 break;
             case 'N':
-                newScope = saSplunkGetScope(optarg);
+                if ((newScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsCloneContext-F-113: New Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case 'o':
                 strcpy(oldName, optarg);
                 break;
             case 'O':
-                oldScope = saSplunkGetScope(optarg);
+                if ((oldScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
+                {
+                    fprintf(stderr, 
+                            "xsCloneContext-F-115: Old Scope %s is not legal, try private, app, or global\n",
+                            optarg);
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             case '?':
                 fprintf(stderr, "xsCloneContext-F-101: Unrecognised option: -%c\n", optopt);
