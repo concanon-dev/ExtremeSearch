@@ -127,11 +127,10 @@ int main(int argc, char* argv[])
                 if ((fileScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
                 {
                     fprintf(stderr, 
-                            "xsCloneConcept-F-129: File Scope %s is not legal, try private, app, or global\n",
+                            "xsCreateContext-F-129: File Scope %s is not legal, try private, app, or global\n",
                             optarg);
                     exit(EXIT_FAILURE);
                 }
-
                 break;
             case 'i':
                 strcpy(infoFile, optarg);

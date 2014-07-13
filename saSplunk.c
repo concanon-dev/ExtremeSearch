@@ -235,6 +235,8 @@ inline int saSplunkGetScope(char *scopeStr)
         return(SA_SPLUNK_SCOPE_PRIVATE);
     else if (!strcmp(scopeStr, "app") || !strcmp(scopeStr, "2"))
         return(SA_SPLUNK_SCOPE_APP);
+    else if (!strcmp(scopeStr, "global") || !strcmp(scopeStr, "3"))
+        return(SA_SPLUNK_SCOPE_GLOBAL);
 
     // if I got here, then the scope is unknown, so return SA_SPLUNK_SCOPE_UNKNOWN
     return(SA_SPLUNK_SCOPE_UNKNOWN);
