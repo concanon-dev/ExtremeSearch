@@ -107,8 +107,8 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    if(!saSplunkContextRename(srcContextName, root, srcScope, p->app, p->user,
-                              destContextName, root, destScope, p->app, p->user))
+    if (saSplunkContextRename(srcContextName, root, srcScope, p->app, p->user,
+                              destContextName, root, destScope, p->app, p->user) == false)
     {
         fprintf(stderr, "xsRenameContext-F-109: Can't rename context: %s\n", srcContextName);
         exit(EXIT_FAILURE);

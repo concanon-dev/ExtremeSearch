@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
                 }
                 break;
             case 'O':
-                oldScope = saSplunkGetScope(optarg);
+                if ((oldScope = saSplunkGetScope(optarg)) == SA_SPLUNK_SCOPE_UNKNOWN)
                 {
                     fprintf(stderr, 
                             "xsCloneConcept-F-113: Old Scope %s is not legal, try private, app, or global\n",
