@@ -12,9 +12,11 @@ Functions:
     insertUniqueValue
 
 */
+#define _SA_INSERTUNIQUEVALUE_C
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include "saInsertUniqueValue.h"
 
 inline char *insertUniqueValue(char *values[], char *field, int *numUniqueValues)
 {

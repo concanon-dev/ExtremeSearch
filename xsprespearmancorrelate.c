@@ -23,9 +23,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "saCSV3.h"
 #include "saConstants.h"
+#include "saCSV3.h"
 #include "saCSV.h"
+#include "saInsertUniqueValue.h"
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -51,8 +52,6 @@ static double *yAxis[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
 
-extern inline char *insertUniqueValue(char *[], char *, int *);
-extern inline int saCSVParseFieldList(char *[], char *);
 extern inline void saMatrixArgs(char *, char *, int);
 extern void saSpearmanCorrelation(double [], double [], int, double *);
 

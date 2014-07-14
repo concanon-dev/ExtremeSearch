@@ -27,6 +27,7 @@
 #include "saCSV3.h"
 #include "saConstants.h"
 #include "saCSV.h"
+#include "saInsertUniqueValue.h"
 #include "saLinearRegression.h"
 
 #include "saSignal.h"
@@ -57,9 +58,6 @@ static double yAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double yAxisLow[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
-
-extern inline char *insertUniqueValue(char *[], char *, int *);
-extern inline int saCSVParseFieldList(char *[], char *);
 
 extern saLinearRegressionTypePtr saLinearRegressionCreateLR(double [], double [], int numPoints);
 extern void saLinearRegressionGetLine(saLinearRegressionTypePtr);

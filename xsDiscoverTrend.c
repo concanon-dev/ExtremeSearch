@@ -65,7 +65,6 @@ static int numRows[MAXROWSIZE];
 static saCSVType csv;
 
 extern double saConceptLookup(saConceptTypePtr, double);
-extern inline char *saCSVExtractField(char *);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern inline char *saSplunkGetRoot(char *);
 extern inline saSplunkInfoPtr saSplunkLoadHeader();

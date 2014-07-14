@@ -27,6 +27,7 @@
 #include "saAutoRegression.h"
 #include "saCSV.h"
 #include "saCSV3.h"
+#include "saInsertUniqueValue.h"
 #include "saSignal.h"
 
 static char inbuf[SA_CONSTANTS_MAXROWSIZE];
@@ -49,9 +50,6 @@ static double xAxisHigh[SA_CONSTANTS_MAXAXIS];
 static double xAxisLow[SA_CONSTANTS_MAXAXIS];
 
 static saCSVType csv;
-
-extern inline char *insertUniqueValue(char *[], char *, int *);
-extern inline int saCSVParseFieldList(char *[], char *);
 
 extern dataRecordTypePtr saAutoRegressionInitDataRecord(int, double *);
 extern void saAutoRegressionRegress(dataRecordTypePtr, int);
