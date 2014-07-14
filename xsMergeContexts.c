@@ -111,7 +111,6 @@ int main(int argc, char* argv[])
                 argError = true;
         }
     }
-fprintf(stderr, "a=%s b=%s c=%s\n", contextNameA, contextNameB, contextNameC);
 
     if (argError)
     {
