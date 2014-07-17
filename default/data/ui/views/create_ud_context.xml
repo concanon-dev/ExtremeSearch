@@ -18,6 +18,7 @@ Enter values in each field as necessary to generate the Context
             <label>Context Type</label>
             <choice value="average_centered">Average Centered</choice>
             <choice value="domain">Domain</choice>
+            <choice value="median_centered">Median Centered</choice>
         </input>
         <input type="text" token="terms">
             <default>low,medium,high</default>
@@ -61,6 +62,11 @@ Enter values in each field as necessary to generate the Context
             <label>Average</label>
             <seed>0</seed>
         </input>
+        <input type="text" token="median">
+            <default>0</default>
+            <label>Median</label>
+            <seed>0</seed>
+        </input>
         <input type="text" token="stdev">
             <default>0</default>
             <label>Std. Deviation</label>
@@ -95,7 +101,7 @@ Enter values in each field as necessary to generate the Context
     <row>
         <table id="table1">
     <searchString>
-| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$" uom="$uom$"
+| xsCreateUDContext name=$name$ terms="$terms$" avg=$avg$ count=$count$ max=$max$ median=$median$ min=$min$ stdev=$stdev$ type=$type$ shape=$shape$ endShape=$endShape$ notes="$notes$" scope="$scope$" uom="$uom$"
     </searchString>
         </table>      
     </row>

@@ -16,6 +16,7 @@
 #define SA_CONTEXT_TIMESTAMP_SEPARATOR "::"
 #define SA_CONTEXT_TYPE_AVERAGE_CENTERED "average_centered"
 #define SA_CONTEXT_TYPE_DOMAIN "domain"
+#define SA_CONTEXT_TYPE_MEDIAN_CENTERED "median_centered"
 #define SA_CONTEXT_MAXTERMS 13
 
 typedef struct saContextStruct

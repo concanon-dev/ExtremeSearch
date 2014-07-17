@@ -14,6 +14,7 @@ if __name__ == '__main__':
     context_type = "domain"
     end_shape = 'curve'
     max = '0'
+    median = '0'
     min = '0'
     notes = ''
     scope = 'global'
@@ -36,6 +37,9 @@ if __name__ == '__main__':
                 elif arg.lower().startswith("max="):
                     eqsign = arg.find('=')
                     max = arg[eqsign+1:len(arg)]
+                elif arg.lower().startswith("median="):
+                    eqsign = arg.find('=')
+                    median = arg[eqsign+1:len(arg)]
                 elif arg.lower().startswith("min="):
                     eqsign = arg.find('=')
                     min = arg[eqsign+1:len(arg)]
@@ -81,7 +85,7 @@ if __name__ == '__main__':
         if not os.path.isfile(binary):
             raise Exception("xsCreateContext-F-000: Can't find binary file " + binary)
 
-        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
+        subprocess.call([binary, '-a', avg, '-c', count, '-d', stdev, '-e', end_shape, '-f', scope, '-i', info_file, '-M', median, '-m', min, '-n', set_name, '-o', notes, '-p', shape, '-t', term_list, '-u', uom, '-x', max, '-z', context_type ])
 
         if platform.system() == 'Windows':
             sys.stdout.flush()

@@ -12,6 +12,7 @@ Description:
 Functions:
     External:
     saContextCreateAvgCentered
+    saContextCreateMedianCentered
     saContextCreateConcept
     saContextCreateConcepts
     saContextCreateDomain
@@ -23,7 +24,7 @@ Functions:
 #include <string.h>
 #include "saContext.h"
 
-saContextTypePtr saContextCreateConcepts(char *, double, double, double, double, double, 
+saContextTypePtr saContextCreateConcepts(char *, char *, double, double, double, double, double, 
                                          double, char *[], int, char *, char *, char *, char *);
 
 extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, 
@@ -52,8 +53,8 @@ saContextTypePtr saContextCreateAvgCentered(char *name, double avg, double sdev,
     double domainMin = avg - (domainSize / 2); 
     double domainMax = avg + (domainSize / 2); 
 
-    return(saContextCreateConcepts(name, domainMin, domainMax, avg, sdev, count, halfTerm,
-                                   terms, numTerms, shape, endShape, notes, uom));
+    return(saContextCreateConcepts(name, SA_CONTEXT_TYPE_AVERAGE_CENTERED, domainMin, domainMax, avg, sdev, 
+                                   count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
 }
 
 saContextTypePtr saContextCreateDomain(char *name, double domainMin, double domainMax, 
@@ -67,7 +68,26 @@ saContextTypePtr saContextCreateDomain(char *name, double domainMin, double doma
     double halfTerm = 0;
     if (numTerms >= 2)
         halfTerm = ((domainMax - domainMin) / (numTerms - 1));
-    return(saContextCreateConcepts(name, domainMin, domainMax, (float)0.0, (float)0.0,
+    return(saContextCreateConcepts(name, SA_CONTEXT_TYPE_DOMAIN, domainMin, domainMax, (float)0.0, (float)0.0,
+                                   count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
+}
+
+saContextTypePtr saContextCreateMedianCentered(char *name, double avg, double sdev, char *terms[],
+                                               int numTerms, char *shape, char *endShape, int count,
+                                               char *notes, char *uom)
+{
+    if (numTerms > SA_CONTEXT_MAXTERMS)
+        return(NULL);
+
+    // calculate the necessary sizes
+    double domainSize = sdev * SA_CONCEPT_DEFAULT_SDEV_SIZE;
+    double halfTerm = domainSize / 2;
+    if (numTerms >= 3)
+        domainSize = halfTerm * (numTerms - 1);
+    double domainMin = avg - (domainSize / 2);
+    double domainMax = avg + (domainSize / 2);
+
+    return(saContextCreateConcepts(name, SA_CONTEXT_TYPE_MEDIAN_CENTERED, domainMin, domainMax, avg, sdev, 
                                    count, halfTerm, terms, numTerms, shape, endShape, notes, uom));
 }
 
@@ -103,14 +123,14 @@ void saContextCreateConcept(saContextTypePtr cPtr, char *termName, char *shape, 
                                               min, max, (max+min)/2);
 }
 
-saContextTypePtr saContextCreateConcepts(char *name, double domainMin, double domainMax, 
+saContextTypePtr saContextCreateConcepts(char *name, char *type, double domainMin, double domainMax, 
                                          double avg, double sdev, double count,
                                          double halfTerm, char *terms[], int numTerms,
                                          char *shape, char *endShape, char *notes, char *uom)
 {
     // create the context
     saContextTypePtr p = saContextInit(name, domainMin, domainMax, avg, sdev, count, 
-                                       numTerms, SA_CONTEXT_TYPE_DOMAIN, notes, uom);
+                                       numTerms, type, notes, uom);
 
     if (numTerms == 1)
     {

@@ -51,6 +51,8 @@ extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char 
                                                    char *, int, char *, char *);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *, char *);
+extern saContextTypePtr saContextCreateMedianCentered(char *, double, double, char *[], int, char *,
+                                                      char *, int, char *, char *);
 
 inline saContextTypePtr saContextInit(char *name, double domainMin, double domainMax, double avg, 
                                double sdev, int count, int numConcepts, char *type, 
@@ -296,6 +298,15 @@ inline saContextTypePtr saContextMerge(saContextTypePtr c1, saContextTypePtr c2,
         return(saContextCreateDomain(c3Name, domainMin, domainMax, conceptNames, c1->numConcepts, 
                                      shapeStr, endShapeStr, c3Count, c1->notes, c1->uom));
     }
+    else if (!strcmp(c1->type, SA_CONTEXT_TYPE_MEDIAN_CENTERED))
+    {
+        // adjust the fields by weight
+        double avg = c1->avg * c1Weight + c2->avg * c2Weight;
+        double sdev = c1->sdev * c1Weight + c2->sdev * c2Weight;
+        return(saContextCreateMedianCentered(c3Name, avg, sdev, conceptNames, c1->numConcepts,
+                                             shapeStr, endShapeStr, c3Count, c1->notes, c1->uom));
+    }
+
     return(NULL);
 }
 

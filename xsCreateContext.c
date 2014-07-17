@@ -5,7 +5,7 @@
  contains proprietary trade and business secrets.
 
  Program: xsCreateContext
- Usage: xsCreateContext [-U] [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-n context_name] [-o "notes"] [-p shape] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"concept1,concept2,concept3...\" 
+ Usage: xsCreateContext [-U] [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-M median ] [-m min] [-n context_name] [-o "notes"] [-p shape] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"concept1,concept2,concept3...\" 
     -U updates a context
     -a average of field values (used by average_centered only)
     -c number of events used to create context
@@ -13,6 +13,7 @@
     -e the shape of the end concepts (3 or more concepts only)
     -f where to find the existing context (private/app/global) and where to save the created context
     -i the path and file name of the infoPath.csv file
+    -M median field value (used by median_centered only)
     -m minimum of field values (used by domain only)
     -n the name of the context
     -o notes
@@ -48,6 +49,8 @@ extern saContextTypePtr saContextCreateAvgCentered(char *, double, double, char 
                                                    char *, int, char *, char *);
 extern saContextTypePtr saContextCreateDomain(char *, double, double, char *[], int, char *,
                                               char *, int, char *, char *);
+extern saContextTypePtr saContextCreateMedianCentered(char *, double, double, char *[], int, char *,
+                                                      char *, int, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saContextMerge(saContextTypePtr, saContextTypePtr, char *);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
@@ -68,6 +71,7 @@ int main(int argc, char* argv[])
     bool setAvg = false;
     bool setCount = false;
     bool setMax = false;
+    bool setMedian = false;
     bool setMin = false;
     bool setSDev = false;
     bool update = false;
@@ -85,6 +89,7 @@ int main(int argc, char* argv[])
 
     double avg = 0.0;
     double max = 0.0;
+    double median = 0.0;
     double min = 0.0;
     double sdev = 0.0;
     double width = 2.0;
@@ -135,6 +140,10 @@ int main(int argc, char* argv[])
             case 'i':
                 strcpy(infoFile, optarg);
                 break;
+            case 'M':
+                median = atof(optarg);
+                setMedian = true;
+                break;
             case 'm':
                 min = atof(optarg);
                 setMin = true;
@@ -173,7 +182,7 @@ int main(int argc, char* argv[])
     if (argError)
     {
         fprintf(stderr, 
-                "xsCreateContext-F-103: Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-m min] [-p shape] [-t conceptlist] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" ");
+                "xsCreateContext-F-103: Usage: xsCreateContext [-a avg] [-c count] [-d stdev] [-e endShape] [-f fileScope ] [-i infoFile] [-M median] [-m min] [-p shape] [-t conceptlist] [-u uom] [-w width] [-x max] [-z contextType] -n contextName -t \"term1,term2,term3...\" ");
         exit(EXIT_FAILURE);
     }
 
@@ -251,6 +260,17 @@ int main(int argc, char* argv[])
         cPtr = saContextCreateDomain(name, min, max, conceptNames, numConcepts, shapeStr,
                                      endShapeStr, count, notes, uom);
     }
+    else if (!strcmp(contextType, SA_CONTEXT_TYPE_MEDIAN_CENTERED))
+    {
+        if (sdev == 0)
+        {
+            fprintf(stderr, "xsCreateContext-F-131: For a median_centered context, sdev must be > 0\n");
+            exit(EXIT_FAILURE);
+        }
+        cPtr = saContextCreateMedianCentered(name, median, sdev, conceptNames, numConcepts,
+                                             shapeStr, endShapeStr, count, notes, uom);
+    }
+
     if (cPtr == NULL)
     {
         fprintf(stderr, "xsCreateContext-F-111: Failed to create a context of type %s\n",

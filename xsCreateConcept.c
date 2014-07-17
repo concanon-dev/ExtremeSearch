@@ -32,7 +32,6 @@
 
 static double stdDev(double, double);
 
-extern saContextTypePtr saContextInit(char *, double, double, double, double, int, int, char *, char *, char *);
 extern void saContextDisplay(saContextTypePtr);
 extern saContextTypePtr saSplunkContextLoad(char *, char *, int *, char *, char *);
 extern void saContextCreateConcept(saContextTypePtr, char *, char *, double, double);
