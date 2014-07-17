@@ -26,6 +26,7 @@ void setStringSource(char *line);
 [iI][nN]     { yylval.sval = strdup(yytext); col_num += 2; return (TOKEN_IN); }
 [iI][sS]     { yylval.sval = strdup(yytext); col_num += 2; return (TOKEN_IS); }
 [a-zA-Z\_\-\.]+    { yylval.sval = strdup(yytext); col_num += strlen(yytext); return (TOKEN_FIELD); }
+[0-9]+       { yylval.sval = strdup(yytext); col_num += strlen(yytext); return (TOKEN_FIELD); }
 
 %%
 int yywrap() {
