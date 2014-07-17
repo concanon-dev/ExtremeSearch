@@ -49,6 +49,7 @@ where_basic $env(SPLUNK_HOME) $login $passwd $index Height gigantic "Age*---"
 
 # Other Where Tests
 where_cmd $env(SPLUNK_HOME) $login $passwd $index "Height in HeightTest IS very short" "Age*--"
+where_cmd_error $env(SPLUNK_HOME) $login $passwd $index "Height IS invalidhedge short" "ERROR*"
 
 # Basic DisplayWhere Tests
 displayWhere_basic $env(SPLUNK_HOME) $login $passwd $index Height tiny "set*index*cix*---"

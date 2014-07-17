@@ -593,15 +593,21 @@ inline bool runExpressionStack(char *fieldList[], int numFields, saExpressionTyp
                         exit(0);
                     }
                 }
-                while(expStack[++stackIndex]->type != SA_TOKEN_IS)
+                while(expStack[++stackIndex]->type != SA_TOKEN_IS) {
+
                     concept = processHedge(concept, &synonyms, 
                                                 expStack[stackIndex]->field);
+                    if (concept == NULL) {
+                        fprintf(stderr, "xsWhere-F-120: hedge '%s' is not valid", expStack[stackIndex]->field);
+                        exit(0);
+                    }
+                }
                 saHashSet(conceptTable, tempName, (void *)concept);
             }
             else
                 while(expStack[stackIndex]->type != SA_TOKEN_IS)
                     stackIndex++;
-            
+
             double cix = saConceptLookup(concept, fieldValue);
             if (!strcmp(cixFunction, FCIX_WEIGHTED))
             {
