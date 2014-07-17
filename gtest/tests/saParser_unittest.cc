@@ -201,6 +201,36 @@ TEST(saParserParse, OR_Clause) {
     EXPECT_STREQ(expStack[10]->field, "or");
 }
 
+TEST(saParserParse, Is_Numeric) {
+    char whereLine[MAXROWSIZE / 32] = "Height is 65";
+    char tempbuf[MAXROWSIZE];
+    saExpressionTypePtrArray expStack = generateExpStack();
+    int stackSize = saParserParse(whereLine, tempbuf, expStack);
+    EXPECT_EQ(stackSize, 3);
+    EXPECT_EQ(expStack[0]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[0]->field, "Height");
+    EXPECT_EQ(expStack[1]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[1]->field, "65");
+    EXPECT_EQ(expStack[2]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[2]->field, "is");
+}
+
+TEST(saParserParse, Is_Hedge_Numeric) {
+    char whereLine[MAXROWSIZE / 32] = "Height is very 65";
+    char tempbuf[MAXROWSIZE];
+    saExpressionTypePtrArray expStack = generateExpStack();
+    int stackSize = saParserParse(whereLine, tempbuf, expStack);
+    EXPECT_EQ(stackSize, 4);
+    EXPECT_EQ(expStack[0]->type, SA_TOKEN_FIELD);
+    EXPECT_STREQ(expStack[0]->field, "Height");
+    EXPECT_EQ(expStack[1]->type, SA_TOKEN_FUZZYSET);
+    EXPECT_STREQ(expStack[1]->field, "65");
+    EXPECT_EQ(expStack[2]->type, SA_TOKEN_MODIFIER);
+    EXPECT_STREQ(expStack[2]->field, "very");
+    EXPECT_EQ(expStack[3]->type, SA_TOKEN_IS);
+    EXPECT_STREQ(expStack[3]->field, "is");
+}
+
 /*
 TEST(saParserParse, BY_Clause) {
     char whereLine[MAXROWSIZE / 32] = "Height by Gender is Tall";
