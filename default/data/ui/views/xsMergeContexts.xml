@@ -32,6 +32,7 @@
                                 contributed to each context is taken into account when deciding how to 
                                 create the new context.  If the context type is 'average_centered', the avg
                                 and stdev are weighted.  If the context type is 'domain', the min and max
+                                are weighted.  If the context type is 'median_centered', the median and stdev
                                 are weighted.  If the weight of both contexts are 0, then they are of equal 
                                 weight and the new context count is set to 0.  If only one context is set to 0,
                                 the contexts will be of equal weight and the new context count will be set to 0.

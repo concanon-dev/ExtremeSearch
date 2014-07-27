@@ -31,7 +31,9 @@
                                         If the type is 'average_centered', the fields avg, count,
                                         and stdev must be passed in as parameters.  If the type
                                         is 'domain', the fields count, max and min must be passed in
-                                        as parameters. See <a href="xsUpdateContext">xsCreateUDContext</a> 
+                                        as parameters. If the type is 'median_centered', the fields avg, count,
+                                        and stdev must be passed in as parameters.  
+                                        See <a href="xsUpdateContext">xsCreateUDContext</a> 
                                         for details about creating a User Defined Context
                                         instead of data from a search. </span>
                         </p>
@@ -44,7 +46,8 @@
                                         [notes=string]
                                         [scope=(private|app|global)]
                                         [shape=(pi|trapezoid|triangle|curveincrease|curvedecrease|linearincrease|lineardecrease)]
-                                        (type=average_centered avg=double stdev=double | type=domain min=double max=double)
+                                        (type=average_centered avg=double stdev=double | type=domain min=double max=double
+                                         | type=median_centered median=double stdev=double)
                                         [uom=string]
                                         </span>
                         </p>
@@ -106,6 +109,15 @@
                                         parameter can be passed as part of the command or via search
                                         input using stats max(field).</span>. 
                         </p>
+                        <p>
+                                <span class="para">median</span>
+                        </p>
+                        <p>
+                                <span class="explanation">The median value of the field. This
+                                        parameter can be passed as part of the command or via search
+                                        input using stats median(field).</span>.
+                        </p>
+
                         <p>
                                 <span class="para">min</span>
                         </p>
@@ -186,8 +198,8 @@
                                              Splunk documentation</a>
                                 </span>
                         </p>
-                        <p><br />Version 20140326.4</p>
-<p><br />Copyright 2013 Scianta Analytics LLC All Rights Reserved</p>
+                        <p><br />Version 20140725.5</p>
+<p><br />Copyright 20132014 Scianta Analytics LLC All Rights Reserved</p>
                 </html>
         </row>
 </dashboard>
